@@ -1,2 +1,2 @@
-# Lotus.Fronted
-Комплексное решение для Fronted платформы
+# Lotus.Frontend
+Комплексное решение для Frontend платформы
