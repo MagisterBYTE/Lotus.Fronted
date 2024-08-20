@@ -1,4 +1,5 @@
 export declare class BrowserHelper {
+    static isLocalhost(): boolean;
     /**
      * return true if url is in absolute form
      * see for details: https://stackoverflow.com/a/19709846
