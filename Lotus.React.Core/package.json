@@ -69,13 +69,13 @@
     "@mui/material": "^5.16.7",
     "@mui/x-date-pickers": "^7.13.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "lotus-core": "https://gitpkg.vercel.app/MagisterBYTE/Lotus.Frontend/Lotus.Core?main",
     "material-react-table": "^2.13.1",
     "react": "^18.3.1",
     "react-icons": "^5.3.0",
     "react-redux": "^9.1.2",
     "react-select": "^5.8.0",
-    "react-toastify": "^10.0.5",
-    "lotus-core": "https://gitpkg.vercel.app/MagisterBYTE/Lotus.Frontend/Lotus.Core?main"
+    "react-toastify": "^10.0.5"
   },
   "overrides": {
     "eslint": "^9.9.0",
