@@ -3,7 +3,7 @@
  */
 export interface IPropertyTypeDesc {
     id: number;
-    name: string;
+    type: TPropertyType;
 }
 /**
  * Перечисление для типа свойства
@@ -14,56 +14,56 @@ export declare const PropertyTypeEnum: {
      */
     readonly Boolean: {
         readonly id: 0;
-        readonly name: "Boolean";
+        readonly type: "Boolean";
     };
     /**
      * Целый тип
      */
     readonly Integer: {
         readonly id: 1;
-        readonly name: "Integer";
+        readonly type: "Integer";
     };
     /**
      * Вещественный тип
      */
     readonly Float: {
         readonly id: 2;
-        readonly name: "Float";
+        readonly type: "Float";
     };
     /**
      * Строковый тип
      */
     readonly String: {
         readonly id: 3;
-        readonly name: "String";
+        readonly type: "String";
     };
     /**
      * Перечисление
      */
     readonly Enum: {
         readonly id: 4;
-        readonly name: "Enum";
+        readonly type: "Enum";
     };
     /**
      * Тип даты-времени
      */
     readonly DateTime: {
         readonly id: 5;
-        readonly name: "DateTime";
+        readonly type: "DateTime";
     };
     /**
      * Глобальный идентификатор в формате UUID
      */
     readonly Guid: {
         readonly id: 6;
-        readonly name: "Guid";
+        readonly type: "Guid";
     };
     /**
      * Объект
      */
     readonly Object: {
         readonly id: 7;
-        readonly name: "Object";
+        readonly type: "Object";
     };
 };
 /**

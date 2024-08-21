@@ -37,7 +37,7 @@ export class RequestHelper
             const value = filter.value;
             search.append(`filtering[${index}].propertyName`, filter.propertyName);
             search.append(`filtering[${index}].function`, filter.function.id.toString());
-            search.append(`filtering[${index}].propertyType`, filter.propertyType.id.toString());
+            search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
             search.append(`filtering[${index}].value`, value);
 
             if (filter.isSensitiveCase)
@@ -53,7 +53,7 @@ export class RequestHelper
               const values = filter.values;
               search.append(`filtering[${index}].propertyName`, filter.propertyName);
               search.append(`filtering[${index}].function`, filter.function.id.toString());
-              search.append(`filtering[${index}].propertyType`, filter.propertyType.id.toString());
+              search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
               for (let iv = 0; iv < values.length; iv++) 
               {
                 const val = values[iv]!;

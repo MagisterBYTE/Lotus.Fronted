@@ -6,7 +6,7 @@ import { localizationCore } from 'localization';
 export interface IFilterFunctionDesc
 {
   id: number,
-  name: string,
+  type: TFilterFunction,
   abbr: string,
   desc: string
 }
@@ -22,7 +22,7 @@ export const FilterFunctionEnum =
     Equals:
     {
       id: 0,
-      name: 'equals',
+      type: 'Equals',
       abbr: localizationCore.filters.equalsAbbr,
       desc: localizationCore.filters.equals
     },
@@ -33,7 +33,7 @@ export const FilterFunctionEnum =
     NotEqual:
     {
       id: 1,
-      name: 'notEquals',
+      type: 'NotEqual',
       abbr: localizationCore.filters.notEqualAbbr,
       desc: localizationCore.filters.notEqual
     },
@@ -44,7 +44,7 @@ export const FilterFunctionEnum =
     LessThan:
     {
       id: 2,
-      name: 'lessThan',
+      type: 'LessThan',
       abbr: localizationCore.filters.lessThanAbbr,
       desc: localizationCore.filters.lessThan
     },
@@ -55,7 +55,7 @@ export const FilterFunctionEnum =
     LessThanOrEqual:
     {
       id: 3,
-      name: 'lessThanOrEqualTo',
+      type: 'LessThanOrEqual',
       abbr: localizationCore.filters.lessThanOrEqualAbbr,
       desc: localizationCore.filters.lessThanOrEqual
     },
@@ -66,7 +66,7 @@ export const FilterFunctionEnum =
     GreaterThan:
     {
       id: 4,
-      name: 'greaterThan',
+      type: 'GreaterThan',
       abbr: localizationCore.filters.greaterThanAbbr,
       desc: localizationCore.filters.greaterThan
     },
@@ -77,7 +77,7 @@ export const FilterFunctionEnum =
     GreaterThanOrEqual:
     {
       id: 5,
-      name: 'greaterThanOrEqualTo',
+      type: 'GreaterThanOrEqual',
       abbr: localizationCore.filters.greaterThanOrEqualAbbr,
       desc: localizationCore.filters.greaterThanOrEqual
     },
@@ -88,7 +88,7 @@ export const FilterFunctionEnum =
     Between:
     {
       id: 6,
-      name: 'between',
+      type: 'Between',
       abbr: localizationCore.filters.betweenAbbr,
       desc: localizationCore.filters.between
     },
@@ -99,7 +99,7 @@ export const FilterFunctionEnum =
     Contains:
     {
       id: 7,
-      name: 'contains',
+      type: 'Contains',
       abbr: localizationCore.filters.contains,
       desc: localizationCore.filters.contains
     },
@@ -110,7 +110,7 @@ export const FilterFunctionEnum =
     StartsWith:
     {
       id: 8,
-      name: 'startsWith',
+      type: 'StartsWith',
       abbr: localizationCore.filters.startsWith,
       desc: localizationCore.filters.startsWith
     },
@@ -121,7 +121,7 @@ export const FilterFunctionEnum =
     EndsWith:
     {
       id: 9,
-      name: 'endsWith',
+      type: 'EndsWith',
       abbr: localizationCore.filters.endsWith,
       desc: localizationCore.filters.endsWith
     },
@@ -132,7 +132,7 @@ export const FilterFunctionEnum =
     NotEmpty:
     {
       id: 10,
-      name: 'notEmpty',
+      type: 'NotEmpty',
       abbr: localizationCore.filters.notEmpty,
       desc: localizationCore.filters.notEmpty
     },
@@ -143,7 +143,7 @@ export const FilterFunctionEnum =
     IncludeAny:
     {
       id: 11,
-      name: 'includeAny',
+      type: 'IncludeAny',
       abbr: localizationCore.filters.includeAny,
       desc: localizationCore.filters.includeAny
     },
@@ -154,7 +154,7 @@ export const FilterFunctionEnum =
     IncludeAll:
     {
       id: 12,
-      name: 'includeAll',
+      type: 'IncludeAll',
       abbr: localizationCore.filters.includeAll,
       desc: localizationCore.filters.includeAll
     },
@@ -165,7 +165,7 @@ export const FilterFunctionEnum =
     IncludeEquals:
     {
       id: 13,
-      name: 'includeEquals',
+      type: 'IncludeEquals',
       abbr: localizationCore.filters.includeEquals,
       desc: localizationCore.filters.includeEquals
     },
@@ -176,7 +176,7 @@ export const FilterFunctionEnum =
     IncludeNone:
     {
       id: 14,
-      name: 'includeNone',
+      type: 'IncludeNone',
       abbr: localizationCore.filters.includeNone,
       desc: localizationCore.filters.includeNone
     }

@@ -17,9 +17,9 @@ export interface IFilterProperty
   function: IFilterFunctionDesc;
 
   /**
-   * Тип свойства
+   * Описание типа свойства
    */
-  propertyType: IPropertyTypeDesc;
+  propertyTypeDesc: IPropertyTypeDesc;
 
   /**
    * Статус типа свойства - массив
@@ -47,50 +47,3 @@ export interface IFilterProperty
  * Тип для фильтрации объектов
  */
 export type IFilterObject = IFilterProperty[];
-
-/**
- * Проверка на значение фильтра свойства
- * @param filterProperty Параметры фильтрации свойства
- */
-export const hasFilterPropertyValue = (filterProperty: IFilterProperty): boolean =>
-{
-  if (!filterProperty.value && !filterProperty.values) return false;
-
-  if (filterProperty.value && !filterProperty.values)
-  {
-    if (filterProperty.value === '')
-    {
-      return false;
-    }
-    return true;
-  }
-
-  if (!filterProperty.value && filterProperty.values)
-  {
-    if (filterProperty.values.length === 0)
-    {
-      return false;
-    }
-    return true;
-  }
-
-  return false;
-}
-
-/**
- * Проверка на значение фильтров свойств
- * @param filterProperty Список параметров фильтрации свойства
- */
-export const hasFilterPropertiesValue = (filterProperties: IFilterObject): boolean =>
-{
-  let findValue = false;
-  filterProperties.forEach(x =>
-  {
-    if (findValue === false)
-    {
-      findValue = hasFilterPropertyValue(x);
-    }
-  });
-
-  return findValue;
-}

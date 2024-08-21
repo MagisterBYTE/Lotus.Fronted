@@ -4,7 +4,7 @@
 export interface IPropertyTypeDesc
 {
   id: number,
-  name: string,
+  type: TPropertyType,
 }
 
 /**
@@ -18,7 +18,7 @@ export const PropertyTypeEnum =
     Boolean:
     {
       id: 0,
-      name: 'Boolean'
+      type: 'Boolean'
     },
 
     /**
@@ -27,7 +27,7 @@ export const PropertyTypeEnum =
     Integer:
     {
       id: 1,
-      name: 'Integer'
+      type: 'Integer'
     },
 
     /**
@@ -36,7 +36,7 @@ export const PropertyTypeEnum =
     Float:
     {
       id: 2,
-      name: 'Float'
+      type: 'Float'
     },
 
     /**
@@ -45,7 +45,7 @@ export const PropertyTypeEnum =
     String:
     {
       id: 3,
-      name: 'String'
+      type: 'String'
     },
 
     /**
@@ -54,7 +54,7 @@ export const PropertyTypeEnum =
     Enum:
     {
       id: 4,
-      name: 'Enum'
+      type: 'Enum'
     },
 
     /**
@@ -63,7 +63,7 @@ export const PropertyTypeEnum =
     DateTime:
     {
       id: 5,
-      name: 'DateTime'
+      type: 'DateTime'
     },
 
     /**
@@ -72,7 +72,7 @@ export const PropertyTypeEnum =
     Guid:
     {
       id: 6,
-      name: 'Guid'
+      type: 'Guid'
     },
 
     /**
@@ -81,7 +81,7 @@ export const PropertyTypeEnum =
     Object:
     {
       id: 7,
-      name: 'Object'
+      type: 'Object'
     }
   } as const;
 

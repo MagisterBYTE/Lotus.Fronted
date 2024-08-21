@@ -10,7 +10,7 @@ export interface IPropertyFiltering {
     /**
      * Функция фильтрации по умолчанию
      */
-    functionDefault: IFilterFunctionDesc;
+    functionDefaultDesc: IFilterFunctionDesc;
     /**
      * Вариант фильтра
      */

@@ -13,9 +13,9 @@ export interface IFilterProperty {
      */
     function: IFilterFunctionDesc;
     /**
-     * Тип свойства
+     * Описание типа свойства
      */
-    propertyType: IPropertyTypeDesc;
+    propertyTypeDesc: IPropertyTypeDesc;
     /**
      * Статус типа свойства - массив
      */
@@ -37,13 +37,3 @@ export interface IFilterProperty {
  * Тип для фильтрации объектов
  */
 export type IFilterObject = IFilterProperty[];
-/**
- * Проверка на значение фильтра свойства
- * @param filterProperty Параметры фильтрации свойства
- */
-export declare const hasFilterPropertyValue: (filterProperty: IFilterProperty) => boolean;
-/**
- * Проверка на значение фильтров свойств
- * @param filterProperty Список параметров фильтрации свойства
- */
-export declare const hasFilterPropertiesValue: (filterProperties: IFilterObject) => boolean;

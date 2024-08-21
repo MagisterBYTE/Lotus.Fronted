@@ -2,6 +2,7 @@ export { ArrayHelper } from './ArrayHelper';
 export { BooleanHelper } from './BooleanHelper';
 export { BrowserHelper } from './BrowserHelper';
 export { CookiesHelper } from './CookiesHelper';
+export { DateHelper } from './DateHelper';
 export { EnumHelper } from './EnumHelper';
 export { FunctionHelper } from './FunctionHelper';
 export { NumberHelper } from './NumberHelper';

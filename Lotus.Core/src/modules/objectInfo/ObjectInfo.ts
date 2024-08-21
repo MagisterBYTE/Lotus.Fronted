@@ -68,7 +68,7 @@ export class ObjectInfoBase<TObject = any> implements IObjectInfo<TObject>
     {
       if (x.filtering && x.filtering.enabled)
       {
-        filterFunctions[`${x.fieldName}`] = x.filtering.functionDefault;
+        filterFunctions[`${x.fieldName}`] = x.filtering.functionDefaultDesc;
       }
     })
 

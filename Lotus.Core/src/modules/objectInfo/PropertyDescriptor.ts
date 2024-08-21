@@ -26,9 +26,9 @@ export interface IPropertyDescriptor
   desc?: string;
 
   /**
-   * Тип свойства
+   * Описание типа свойства
    */
-  propertyType: IPropertyTypeDesc;
+  propertyTypeDesc: IPropertyTypeDesc;
 
   /**
    * Типа свойства - массив

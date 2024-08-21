@@ -81,11 +81,53 @@ class BooleanHelper {
         'да',
         'Да'
     ];
-    static Parse(text) {
-        return BooleanHelper.TrueValues.indexOf(text) > -1;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static parse(item) {
+        if (item) {
+            if (typeof item == 'boolean') {
+                return item;
+            }
+            if (typeof item == 'string') {
+                return BooleanHelper.TrueValues.indexOf(item) > -1;
+            }
+            if (typeof item == 'number') {
+                return Boolean(item);
+            }
+        }
+        return false;
     }
-    static getBooleanValue(value, yes = 'Да', no = 'Нет') {
+    static getValue(value, yes = 'Да', no = 'Нет') {
         return (value ? yes : no);
+    }
+    static compare(left, right, isDesc) {
+        let status = 0;
+        if (left) {
+            if (right) {
+                status = 0;
+            }
+            else {
+                status = 1;
+            }
+        }
+        else {
+            if (right) {
+                status = -1;
+            }
+            else {
+                status = 0;
+            }
+        }
+        if (isDesc) {
+            if (status > 0)
+                return -1;
+            else {
+                if (status < 0)
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+        return status;
     }
 }
 
@@ -190,6 +232,64 @@ class CookiesHelper {
     }
 }
 
+class DateHelper {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static parse(item) {
+        if (item) {
+            if (item instanceof Date) {
+                return item;
+            }
+            if (typeof item == 'number') {
+                return new Date(item);
+            }
+            if (typeof item == 'string') {
+                return new Date(Date.parse(item));
+            }
+        }
+        return new Date(Date.now());
+    }
+    static compare(left, right, isDesc) {
+        let status = 0;
+        if (left) {
+            if (right) {
+                if (left > right) {
+                    status = 1;
+                }
+                else {
+                    if (left < right) {
+                        status = -1;
+                    }
+                    else {
+                        status = 0;
+                    }
+                }
+            }
+            else {
+                status = 1;
+            }
+        }
+        else {
+            if (right) {
+                status = -1;
+            }
+            else {
+                status = 0;
+            }
+        }
+        if (isDesc) {
+            if (status > 0)
+                return -1;
+            else {
+                if (status < 0)
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+        return status;
+    }
+}
+
 class EnumHelper {
     /**
      *
@@ -280,6 +380,36 @@ class FunctionHelper {
 }
 
 class NumberHelper {
+    static compare(left, right, isDesc) {
+        let status = 0;
+        if (left) {
+            if (right) {
+                status = Math.sign(left - right);
+            }
+            else {
+                status = 1;
+            }
+        }
+        else {
+            if (right) {
+                status = -1;
+            }
+            else {
+                status = 0;
+            }
+        }
+        if (isDesc) {
+            if (status > 0)
+                return -1;
+            else {
+                if (status < 0)
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+        return status;
+    }
     // #region Integer
     /**
      * Проверка на установленный флаг
@@ -287,7 +417,7 @@ class NumberHelper {
      * @param flag Проверяемый флаг
      * @returns Статус установки флага
      */
-    static IsFlagSet(value, flag) {
+    static isFlagSet(value, flag) {
         return (value & flag) != 0;
     }
     /**
@@ -296,7 +426,7 @@ class NumberHelper {
      * @param flag Флаг
      * @returns Новое значение
      */
-    static SetFlag(value, flags) {
+    static setFlag(value, flags) {
         value |= flags;
         return value;
     }
@@ -306,7 +436,7 @@ class NumberHelper {
      * @param flags Флаг
      * @returns Новое значение
      */
-    static ClearFlag(value, flags) {
+    static clearFlag(value, flags) {
         value &= ~flags;
         return value;
     }
@@ -315,7 +445,7 @@ class NumberHelper {
      * @param text Текст
      * @returns Текст
      */
-    static ParseableTextInt(text) {
+    static parsableTextInt(text) {
         let numberText = '';
         let add_minus = false;
         const max = 11;
@@ -341,8 +471,8 @@ class NumberHelper {
      * @param defaultValue Значение по умолчанию если преобразовать не удалось
      * @returns Значение
      */
-    static ParseInt(text, defaultValue = 0) {
-        text = NumberHelper.ParseableTextInt(text);
+    static parseInt(text, defaultValue = 0) {
+        text = NumberHelper.parsableTextInt(text);
         const resultValue = Number.parseInt(text);
         if (Number.isNaN(resultValue)) {
             return defaultValue;
@@ -356,7 +486,7 @@ class NumberHelper {
      * @param text Текст
      * @returns Текст
      */
-    static ParseableTextFloat(text) {
+    static parsableTextFloat(text) {
         let numberText = '';
         let add_minus = false;
         let add_dot = false;
@@ -384,8 +514,8 @@ class NumberHelper {
      * @param defaultValue Значение по умолчанию если преобразовать не удалось
      * @returns Значение
      */
-    static ParseFloat(text, defaultValue = 0) {
-        text = NumberHelper.ParseableTextFloat(text);
+    static parseFloat(text, defaultValue = 0) {
+        text = NumberHelper.parsableTextFloat(text);
         const resultValue = Number.parseFloat(text);
         if (Number.isNaN(resultValue)) {
             return defaultValue;
@@ -2052,7 +2182,7 @@ const FilterFunctionEnum = {
      */
     Equals: {
         id: 0,
-        name: 'equals',
+        type: 'Equals',
         abbr: localizationCore.filters.equalsAbbr,
         desc: localizationCore.filters.equals
     },
@@ -2061,7 +2191,7 @@ const FilterFunctionEnum = {
      */
     NotEqual: {
         id: 1,
-        name: 'notEquals',
+        type: 'NotEqual',
         abbr: localizationCore.filters.notEqualAbbr,
         desc: localizationCore.filters.notEqual
     },
@@ -2070,7 +2200,7 @@ const FilterFunctionEnum = {
      */
     LessThan: {
         id: 2,
-        name: 'lessThan',
+        type: 'LessThan',
         abbr: localizationCore.filters.lessThanAbbr,
         desc: localizationCore.filters.lessThan
     },
@@ -2079,7 +2209,7 @@ const FilterFunctionEnum = {
      */
     LessThanOrEqual: {
         id: 3,
-        name: 'lessThanOrEqualTo',
+        type: 'LessThanOrEqual',
         abbr: localizationCore.filters.lessThanOrEqualAbbr,
         desc: localizationCore.filters.lessThanOrEqual
     },
@@ -2088,7 +2218,7 @@ const FilterFunctionEnum = {
      */
     GreaterThan: {
         id: 4,
-        name: 'greaterThan',
+        type: 'GreaterThan',
         abbr: localizationCore.filters.greaterThanAbbr,
         desc: localizationCore.filters.greaterThan
     },
@@ -2097,7 +2227,7 @@ const FilterFunctionEnum = {
      */
     GreaterThanOrEqual: {
         id: 5,
-        name: 'greaterThanOrEqualTo',
+        type: 'GreaterThanOrEqual',
         abbr: localizationCore.filters.greaterThanOrEqualAbbr,
         desc: localizationCore.filters.greaterThanOrEqual
     },
@@ -2106,7 +2236,7 @@ const FilterFunctionEnum = {
      */
     Between: {
         id: 6,
-        name: 'between',
+        type: 'Between',
         abbr: localizationCore.filters.betweenAbbr,
         desc: localizationCore.filters.between
     },
@@ -2115,7 +2245,7 @@ const FilterFunctionEnum = {
     */
     Contains: {
         id: 7,
-        name: 'contains',
+        type: 'Contains',
         abbr: localizationCore.filters.contains,
         desc: localizationCore.filters.contains
     },
@@ -2124,7 +2254,7 @@ const FilterFunctionEnum = {
     */
     StartsWith: {
         id: 8,
-        name: 'startsWith',
+        type: 'StartsWith',
         abbr: localizationCore.filters.startsWith,
         desc: localizationCore.filters.startsWith
     },
@@ -2133,7 +2263,7 @@ const FilterFunctionEnum = {
      */
     EndsWith: {
         id: 9,
-        name: 'endsWith',
+        type: 'EndsWith',
         abbr: localizationCore.filters.endsWith,
         desc: localizationCore.filters.endsWith
     },
@@ -2142,7 +2272,7 @@ const FilterFunctionEnum = {
      */
     NotEmpty: {
         id: 10,
-        name: 'notEmpty',
+        type: 'NotEmpty',
         abbr: localizationCore.filters.notEmpty,
         desc: localizationCore.filters.notEmpty
     },
@@ -2151,7 +2281,7 @@ const FilterFunctionEnum = {
      */
     IncludeAny: {
         id: 11,
-        name: 'includeAny',
+        type: 'IncludeAny',
         abbr: localizationCore.filters.includeAny,
         desc: localizationCore.filters.includeAny
     },
@@ -2160,7 +2290,7 @@ const FilterFunctionEnum = {
      */
     IncludeAll: {
         id: 12,
-        name: 'includeAll',
+        type: 'IncludeAll',
         abbr: localizationCore.filters.includeAll,
         desc: localizationCore.filters.includeAll
     },
@@ -2169,7 +2299,7 @@ const FilterFunctionEnum = {
      */
     IncludeEquals: {
         id: 13,
-        name: 'includeEquals',
+        type: 'IncludeEquals',
         abbr: localizationCore.filters.includeEquals,
         desc: localizationCore.filters.includeEquals
     },
@@ -2178,7 +2308,7 @@ const FilterFunctionEnum = {
      */
     IncludeNone: {
         id: 14,
-        name: 'includeNone',
+        type: 'IncludeNone',
         abbr: localizationCore.filters.includeNone,
         desc: localizationCore.filters.includeNone
     }
@@ -2223,29 +2353,6 @@ const GroupFilterFunctionsArray = [
     FilterFunctionEnum.IncludeEquals,
     FilterFunctionEnum.IncludeNone
 ];
-
-class FilterFunctionHelper {
-    static getDescByName(name) {
-        switch (name) {
-            case 'equals': return FilterFunctionEnum.Equals;
-            case 'notEquals': return FilterFunctionEnum.NotEqual;
-            case 'lessThan': return FilterFunctionEnum.LessThan;
-            case 'lessThanOrEqualTo': return FilterFunctionEnum.LessThanOrEqual;
-            case 'greaterThan': return FilterFunctionEnum.GreaterThan;
-            case 'greaterThanOrEqualTo': return FilterFunctionEnum.GreaterThanOrEqual;
-            case 'between': return FilterFunctionEnum.Between;
-            case 'contains': return FilterFunctionEnum.Contains;
-            case 'startsWith': return FilterFunctionEnum.StartsWith;
-            case 'endsWith': return FilterFunctionEnum.EndsWith;
-            case 'notEmpty': return FilterFunctionEnum.NotEmpty;
-            case 'includeAny': return FilterFunctionEnum.IncludeAny;
-            case 'includeAll': return FilterFunctionEnum.IncludeAll;
-            case 'includeEquals': return FilterFunctionEnum.IncludeEquals;
-            case 'includeNone': return FilterFunctionEnum.IncludeNone;
-        }
-        return FilterFunctionEnum.Equals;
-    }
-}
 
 class HumanizerNumber {
     static DEFAULT_FORMAT = '0,0[.][00]';
@@ -2365,7 +2472,7 @@ class ObjectInfoBase {
         const filterFunctions = {};
         this.descriptors.forEach((x) => {
             if (x.filtering && x.filtering.enabled) {
-                filterFunctions[`${x.fieldName}`] = x.filtering.functionDefault;
+                filterFunctions[`${x.fieldName}`] = x.filtering.functionDefaultDesc;
             }
         });
         return filterFunctions;
@@ -2381,93 +2488,177 @@ const PropertyTypeEnum = {
      */
     Boolean: {
         id: 0,
-        name: 'Boolean'
+        type: 'Boolean'
     },
     /**
      * Целый тип
      */
     Integer: {
         id: 1,
-        name: 'Integer'
+        type: 'Integer'
     },
     /**
      * Вещественный тип
      */
     Float: {
         id: 2,
-        name: 'Float'
+        type: 'Float'
     },
     /**
      * Строковый тип
      */
     String: {
         id: 3,
-        name: 'String'
+        type: 'String'
     },
     /**
      * Перечисление
      */
     Enum: {
         id: 4,
-        name: 'Enum'
+        type: 'Enum'
     },
     /**
      * Тип даты-времени
      */
     DateTime: {
         id: 5,
-        name: 'DateTime'
+        type: 'DateTime'
     },
     /**
      * Глобальный идентификатор в формате UUID
      */
     Guid: {
         id: 6,
-        name: 'Guid'
+        type: 'Guid'
     },
     /**
      * Объект
      */
     Object: {
         id: 7,
-        name: 'Object'
+        type: 'Object'
     }
 };
 
-/**
- * Проверка на значение фильтра свойства
- * @param filterProperty Параметры фильтрации свойства
- */
-const hasFilterPropertyValue = (filterProperty) => {
-    if (!filterProperty.value && !filterProperty.values)
+class FilterPropertyHelper {
+    /**
+     * Проверка на значение фильтра свойства
+     * @param filterProperty Параметры фильтрации свойства
+     */
+    static hasValue(filterProperty) {
+        if (!filterProperty.value && !filterProperty.values)
+            return false;
+        if (filterProperty.value && !filterProperty.values) {
+            if (filterProperty.value === '') {
+                return false;
+            }
+            return true;
+        }
+        if (!filterProperty.value && filterProperty.values) {
+            if (filterProperty.values.length === 0) {
+                return false;
+            }
+            return true;
+        }
         return false;
-    if (filterProperty.value && !filterProperty.values) {
-        if (filterProperty.value === '') {
-            return false;
-        }
-        return true;
     }
-    if (!filterProperty.value && filterProperty.values) {
-        if (filterProperty.values.length === 0) {
-            return false;
-        }
-        return true;
+    /**
+     * Проверка на значение фильтров свойств
+     * @param filterProperty Список параметров фильтрации свойства
+     */
+    static hasValues(filterProperties) {
+        let findValue = false;
+        filterProperties.forEach(x => {
+            if (findValue === false) {
+                findValue = FilterPropertyHelper.hasValue(x);
+            }
+        });
+        return findValue;
     }
-    return false;
-};
-/**
- * Проверка на значение фильтров свойств
- * @param filterProperty Список параметров фильтрации свойства
- */
-const hasFilterPropertiesValue = (filterProperties) => {
-    let findValue = false;
-    filterProperties.forEach(x => {
-        if (findValue === false) {
-            findValue = hasFilterPropertyValue(x);
+    /**
+     * Фильтрация массива по указанному фильтру свойства
+     * @param massive Исходный массив
+     * @param filterProperty Параметры фильтрации свойства
+     * @returns Отфильтрованный массив
+     */
+    static filterArrayByProperty(massive, filterProperty) {
+        if (FilterPropertyHelper.hasValue(filterProperty)) {
+            const propertyType = filterProperty.propertyTypeDesc.type;
+            const filterFunction = filterProperty.function.type;
+            switch (propertyType) {
+                case 'Boolean':
+                    {
+                        switch (filterFunction) {
+                            case 'Equals': return massive.filter(x => BooleanHelper.parse((x[filterProperty.propertyName])) === BooleanHelper.parse(filterProperty.value));
+                            case 'NotEqual': return massive.filter(x => BooleanHelper.parse((x[filterProperty.propertyName])) !== BooleanHelper.parse(filterProperty.value));
+                        }
+                    }
+                    break;
+                case 'Integer':
+                case 'Float':
+                    {
+                        switch (filterFunction) {
+                            case 'Equals': return massive.filter(x => Number((x[filterProperty.propertyName])) === Number(filterProperty.value));
+                            case 'NotEqual': return massive.filter(x => Number((x[filterProperty.propertyName])) !== Number(filterProperty.value));
+                            case 'LessThan': return massive.filter(x => Number((x[filterProperty.propertyName])) < Number(filterProperty.value));
+                            case 'LessThanOrEqual': return massive.filter(x => Number((x[filterProperty.propertyName])) <= Number(filterProperty.value));
+                            case 'GreaterThan': return massive.filter(x => Number((x[filterProperty.propertyName])) > Number(filterProperty.value));
+                            case 'GreaterThanOrEqual': return massive.filter(x => Number((x[filterProperty.propertyName])) >= Number(filterProperty.value));
+                            case 'Between': return massive.filter(x => {
+                                const check = Number((x[filterProperty.propertyName]));
+                                const left = Number(filterProperty.values[0]);
+                                const right = Number(filterProperty.values[1]);
+                                return (check > left) && (check < right);
+                            });
+                        }
+                    }
+                    break;
+                case 'String':
+                case 'Guid':
+                    {
+                        switch (filterFunction) {
+                            case 'Equals': return massive.filter(x => String((x[filterProperty.propertyName])) === filterProperty.value);
+                            case 'NotEqual': return massive.filter(x => String((x[filterProperty.propertyName])) !== filterProperty.value);
+                            case 'LessThan': return massive.filter(x => String((x[filterProperty.propertyName])).localeCompare(filterProperty.value) < 0);
+                            case 'LessThanOrEqual': return massive.filter(x => String((x[filterProperty.propertyName])).localeCompare(filterProperty.value) <= 0);
+                            case 'GreaterThan': return massive.filter(x => String((x[filterProperty.propertyName])).localeCompare(filterProperty.value) > 0);
+                            case 'GreaterThanOrEqual': return massive.filter(x => String((x[filterProperty.propertyName])).localeCompare(filterProperty.value) >= 0);
+                        }
+                    }
+                    break;
+                case 'Enum': return massive;
+                case 'DateTime':
+                    {
+                        switch (filterFunction) {
+                            case 'Equals': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) === DateHelper.parse(filterProperty.value));
+                            case 'NotEqual': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) !== DateHelper.parse(filterProperty.value));
+                            case 'LessThan': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) < DateHelper.parse(filterProperty.value));
+                            case 'LessThanOrEqual': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) <= DateHelper.parse(filterProperty.value));
+                            case 'GreaterThan': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) > DateHelper.parse(filterProperty.value));
+                            case 'GreaterThanOrEqual':
+                                return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) >= DateHelper.parse(filterProperty.value));
+                        }
+                    }
+                    break;
+            }
         }
-    });
-    return findValue;
-};
+        return massive;
+    }
+    /**
+     * Фильтрация массива по указанному массиву фильтров свойств
+     * @param massive Исходный массив
+     * @param filterProperties Массив фильтров свойств
+     * @returns Отфильтрованный массив
+     */
+    static filterArrayByProperties(massive, filterProperties) {
+        let result = [...massive];
+        for (const filterProperty of filterProperties) {
+            result = FilterPropertyHelper.filterArrayByProperty(result, filterProperty);
+        }
+        return result;
+    }
+}
 
 class RequestHelper {
     static createURLSearchParams(request) {
@@ -2494,7 +2685,7 @@ class RequestHelper {
                         const value = filter.value;
                         search.append(`filtering[${index}].propertyName`, filter.propertyName);
                         search.append(`filtering[${index}].function`, filter.function.id.toString());
-                        search.append(`filtering[${index}].propertyType`, filter.propertyType.id.toString());
+                        search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
                         search.append(`filtering[${index}].value`, value);
                         if (filter.isSensitiveCase) {
                             search.append(`filtering[${index}].isSensitiveCase`, 'true');
@@ -2505,7 +2696,7 @@ class RequestHelper {
                         const values = filter.values;
                         search.append(`filtering[${index}].propertyName`, filter.propertyName);
                         search.append(`filtering[${index}].function`, filter.function.id.toString());
-                        search.append(`filtering[${index}].propertyType`, filter.propertyType.id.toString());
+                        search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
                         for (let iv = 0; iv < values.length; iv++) {
                             const val = values[iv];
                             search.append(`filtering[${index}].values[${iv}]`, val);
@@ -2872,4 +3063,4 @@ const sleep = (timeoutInMs) => {
     return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
 };
 
-export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, ColorNames, CommandService, CommandServiceClass, CookiesHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, FilterFunctionEnum, FilterFunctionHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, PathHelper, PropertyTypeEnum, RandomHelper, RequestHelper, Route, SelectOptionHelper, StringHelper, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, hasFilterPropertiesValue, hasFilterPropertyValue, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
+export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, ColorNames, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, FilterFunctionEnum, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, PathHelper, PropertyTypeEnum, RandomHelper, RequestHelper, Route, SelectOptionHelper, StringHelper, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };

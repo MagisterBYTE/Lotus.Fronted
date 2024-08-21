@@ -1,15 +1,53 @@
 
 export class NumberHelper
 {
-  // #region Integer
+  public static compare(left?: number, right?: number, isDesc?: boolean):number
+  {
+    let status:number = 0;
+    if(left)
+    {
+      if(right)
+      {
+        status = Math.sign(left - right);
+      }
+      else
+      {
+        status = 1;
+      }
+    }
+    else
+    {
+      if(right)
+      {
+        status = -1;
+      }
+      else
+      {
+        status = 0;
+      }
+    }
 
+    if(isDesc)
+    {
+      if(status > 0) return -1;
+      else
+      {
+        if(status < 0) return 1;
+        else return 0;
+      }
+    }
+
+    return status;
+  }  
+
+  // #region Integer
   /**
    * Проверка на установленный флаг
    * @param value Значение
    * @param flag Проверяемый флаг
    * @returns Статус установки флага
    */
-  public static IsFlagSet(value: number, flag: number): boolean
+  public static isFlagSet(value: number, flag: number): boolean
   {
     return (value & flag) != 0;
   }
@@ -20,7 +58,7 @@ export class NumberHelper
    * @param flag Флаг
    * @returns Новое значение
    */
-  public static SetFlag(value: number, flags: number): number
+  public static setFlag(value: number, flags: number): number
   {
     value |= flags;
     return value;
@@ -32,7 +70,7 @@ export class NumberHelper
    * @param flags Флаг
    * @returns Новое значение
    */
-  public static ClearFlag(value: number, flags: number): number
+  public static clearFlag(value: number, flags: number): number
   {
     value &= ~flags;
     return value;
@@ -43,7 +81,7 @@ export class NumberHelper
    * @param text Текст
    * @returns Текст
    */
-  public static ParseableTextInt(text: string): string
+  public static parsableTextInt(text: string): string
   {
     let numberText: string = '';
 
@@ -80,9 +118,9 @@ export class NumberHelper
    * @param defaultValue Значение по умолчанию если преобразовать не удалось
    * @returns Значение
    */
-  public static ParseInt(text: string, defaultValue: number = 0): number
+  public static parseInt(text: string, defaultValue: number = 0): number
   {
-    text = NumberHelper.ParseableTextInt(text);
+    text = NumberHelper.parsableTextInt(text);
 
     const resultValue = Number.parseInt(text);
 
@@ -96,13 +134,12 @@ export class NumberHelper
   // #endregion
 
   // #region Float
-
   /**
    * Преобразование в текст который можно сконвертировать в вещественный тип
    * @param text Текст
    * @returns Текст
    */
-  public static ParseableTextFloat(text: string): string
+  public static parsableTextFloat(text: string): string
   {
     let numberText = '';
 
@@ -141,9 +178,9 @@ export class NumberHelper
    * @param defaultValue Значение по умолчанию если преобразовать не удалось
    * @returns Значение
    */
-  public static ParseFloat(text: string, defaultValue: number = 0): number
+  public static parseFloat(text: string, defaultValue: number = 0): number
   {
-    text = NumberHelper.ParseableTextFloat(text);
+    text = NumberHelper.parsableTextFloat(text);
 
     const resultValue = Number.parseFloat(text);
 

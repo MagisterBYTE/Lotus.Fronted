@@ -3,7 +3,7 @@
  */
 export interface IFilterFunctionDesc {
     id: number;
-    name: string;
+    type: TFilterFunction;
     abbr: string;
     desc: string;
 }
@@ -16,7 +16,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly Equals: {
         readonly id: 0;
-        readonly name: "equals";
+        readonly type: "Equals";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -25,7 +25,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly NotEqual: {
         readonly id: 1;
-        readonly name: "notEquals";
+        readonly type: "NotEqual";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -34,7 +34,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly LessThan: {
         readonly id: 2;
-        readonly name: "lessThan";
+        readonly type: "LessThan";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -43,7 +43,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly LessThanOrEqual: {
         readonly id: 3;
-        readonly name: "lessThanOrEqualTo";
+        readonly type: "LessThanOrEqual";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -52,7 +52,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly GreaterThan: {
         readonly id: 4;
-        readonly name: "greaterThan";
+        readonly type: "GreaterThan";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -61,7 +61,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly GreaterThanOrEqual: {
         readonly id: 5;
-        readonly name: "greaterThanOrEqualTo";
+        readonly type: "GreaterThanOrEqual";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -70,7 +70,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly Between: {
         readonly id: 6;
-        readonly name: "between";
+        readonly type: "Between";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -79,7 +79,7 @@ export declare const FilterFunctionEnum: {
     */
     readonly Contains: {
         readonly id: 7;
-        readonly name: "contains";
+        readonly type: "Contains";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -88,7 +88,7 @@ export declare const FilterFunctionEnum: {
     */
     readonly StartsWith: {
         readonly id: 8;
-        readonly name: "startsWith";
+        readonly type: "StartsWith";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -97,7 +97,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly EndsWith: {
         readonly id: 9;
-        readonly name: "endsWith";
+        readonly type: "EndsWith";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -106,7 +106,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly NotEmpty: {
         readonly id: 10;
-        readonly name: "notEmpty";
+        readonly type: "NotEmpty";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -115,7 +115,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly IncludeAny: {
         readonly id: 11;
-        readonly name: "includeAny";
+        readonly type: "IncludeAny";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -124,7 +124,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly IncludeAll: {
         readonly id: 12;
-        readonly name: "includeAll";
+        readonly type: "IncludeAll";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -133,7 +133,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly IncludeEquals: {
         readonly id: 13;
-        readonly name: "includeEquals";
+        readonly type: "IncludeEquals";
         readonly abbr: string;
         readonly desc: string;
     };
@@ -142,7 +142,7 @@ export declare const FilterFunctionEnum: {
      */
     readonly IncludeNone: {
         readonly id: 14;
-        readonly name: "includeNone";
+        readonly type: "IncludeNone";
         readonly abbr: string;
         readonly desc: string;
     };
