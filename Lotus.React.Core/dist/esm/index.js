@@ -1,15 +1,16 @@
-import { NumberHelper, SelectOptionHelper, PropertyTypeEnum, FilterFunctionEnum, StringHelper, instanceOfResult, localizationCore, FilterFunctionHelper } from 'lotus-core';
+import { NumberHelper, SelectOptionHelper, PropertyTypeEnum, FilterFunctionEnum, StringHelper, instanceOfResult, localizationCore } from 'lotus-core';
 import * as React from 'react';
 import { useLayoutEffect, useState, useRef, useCallback, createContext, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createAction, createSlice, configureStore } from '@reduxjs/toolkit';
 import { jsx, Fragment, jsxs } from 'react/jsx-runtime';
 import { css, cx } from '@emotion/css';
+import { AppBar, Toolbar, IconButton, MenuItem, Box, Tooltip, Dialog as Dialog$1, DialogTitle, DialogContent, DialogActions, Button as Button$1, Select as Select$1 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import ReactSelect, { components } from 'react-select';
 import { IconContext } from 'react-icons';
 import { Save, Cancel, Edit, Delete } from '@mui/icons-material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { MenuItem, Dialog as Dialog$1, DialogTitle, DialogContent, DialogActions, Button as Button$1, Box, Tooltip, IconButton, Select as Select$1 } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_Localization_RU } from 'material-react-table/locales/ru';
 import { ToastContainer, toast } from 'react-toastify';
@@ -104,7 +105,7 @@ var TBreakpoint;
 class CssTypesHelper {
     static toPixelWidth(value) {
         if (typeof value === 'string') {
-            return NumberHelper.ParseFloat(value) * 16;
+            return NumberHelper.parseFloat(value) * 16;
         }
         if (typeof value === 'number') {
             return value;
@@ -113,7 +114,7 @@ class CssTypesHelper {
     }
     static toPixelHeight(value) {
         if (typeof value === 'string') {
-            return NumberHelper.ParseFloat(value) * 16;
+            return NumberHelper.parseFloat(value) * 16;
         }
         if (typeof value === 'number') {
             return value;
@@ -1547,6 +1548,10 @@ const Chip = ({ color = TColorType.Secondary, size = TControlSize.Medium, varian
     return jsx("span", { ...propsSpan, className: chipClass, children: label });
 };
 
+const DialogAppBar = ({ title, onClose }) => {
+    return (jsx(AppBar, { sx: { position: 'relative' }, children: jsxs(Toolbar, { children: [jsx(IconButton, { edge: 'start', color: 'inherit', onClick: onClose, "aria-label": 'close', children: jsx(CloseIcon, {}) }), title] }) }));
+};
+
 /**
  * Вариант отображения текста
  */
@@ -2107,7 +2112,7 @@ const Select = ({ color = TColorType.Primary, size = TControlSize.Medium, isBack
 
 class MaterialReactTableHelper {
     static getDefaultFilterFunction(property) {
-        switch (property.propertyType) {
+        switch (property.propertyTypeDesc) {
             case PropertyTypeEnum.String: return 'contains';
             case PropertyTypeEnum.Enum: return 'arrIncludesSome';
         }
@@ -2144,7 +2149,7 @@ class MaterialReactTableHelper {
         const filteringAll = columnFilters.map((column) => {
             const filter = {
                 propertyName: '',
-                propertyType: PropertyTypeEnum.Boolean,
+                propertyTypeDesc: PropertyTypeEnum.Boolean,
                 function: FilterFunctionEnum.Equals,
                 value: ''
             };
@@ -2152,7 +2157,7 @@ class MaterialReactTableHelper {
             if (property?.filtering && property?.filtering.enabled && columnFiltersFns) {
                 const filterFn = columnFiltersFns[column.id];
                 filter.propertyName = StringHelper.capitalizeFirstLetter(column.id);
-                filter.propertyType = property.propertyType;
+                filter.propertyTypeDesc = property.propertyTypeDesc;
                 filter.function = MaterialReactTableHelper.convertToFilterFunctionDesc(filterFn);
                 if (filter.function === FilterFunctionEnum.IncludeAll ||
                     filter.function === FilterFunctionEnum.IncludeAny ||
@@ -2219,7 +2224,7 @@ class MaterialReactTableHelper {
         const filterFunctions = {};
         objectInfo.getProperties().forEach((x) => {
             if (x.filtering && x.filtering.enabled) {
-                filterFunctions[`${x.fieldName}`] = MaterialReactTableHelper.convertFromFilterFunctionDesc(x.filtering.functionDefault);
+                filterFunctions[`${x.fieldName}`] = MaterialReactTableHelper.convertFromFilterFunctionDesc(x.filtering.functionDefaultDesc);
             }
         });
         return filterFunctions;
@@ -2415,6 +2420,7 @@ const TableView = (props) => {
         const sorting = sortingColumn.map((column) => {
             const sort = {
                 propertyName: StringHelper.capitalizeFirstLetter(column.id),
+                propertyTypeDesc: objectInfo.getPropertyByName(column.id).propertyTypeDesc,
                 isDesc: column.desc
             };
             return sort;
@@ -2476,7 +2482,7 @@ const TableView = (props) => {
     //
     // #region Редактирование данных
     //
-    const handleEditRow = (table, row) => {
+    const handleEditRow = (table, row) => (event) => {
         table.setEditingRow(row);
         setCurrentEditRow(row);
         setCurrentItem(row.original);
@@ -2533,20 +2539,6 @@ const TableView = (props) => {
         const data = updaterOrValue;
         setColumnFiltersFns(data);
     };
-    //
-    // Методы оформления
-    //
-    const renderRowActions = (props) => {
-        const { table, row } = props;
-        if (currentEditRow && currentEditRow.index === row.index) {
-            return (jsxs(Box, { sx: { display: 'flex', gap: '1rem' }, children: [jsx(Tooltip, { arrow: true, placement: 'left', title: localizationCore.actions.save, children: jsx(IconButton, { size: 'large', disabled: currentItemInvalid, onClick: () => { handleSaveRow(table); }, children: jsx(Save, { color: currentItemInvalid ? 'disabled' : 'primary' }) }) }), jsx(Tooltip, { arrow: true, placement: 'left', title: localizationCore.actions.cancel, children: jsx(IconButton, { size: 'large', onClick: () => { handleCancelRow(table); }, children: jsx(Cancel, {}) }) })] }));
-        }
-        else {
-            return (jsxs(Box, { sx: { display: 'flex', gap: '1rem' }, children: [jsx(Tooltip, { arrow: true, placement: 'left', title: localizationCore.actions.edit, children: jsx(IconButton, { size: 'large', onClick: () => { handleEditRow(table, row); }, children: jsx(Edit, {}) }) }), onDuplicateItem &&
-                        jsx(Tooltip, { arrow: true, placement: 'left', title: localizationCore.actions.duplicate, children: jsx(IconButton, { size: 'large', onClick: () => { }, children: jsx(ContentCopyIcon, {}) }) }), onDeleteItem &&
-                        jsx(Tooltip, { arrow: true, placement: 'right', title: localizationCore.actions.delete, children: jsx(IconButton, { size: 'large', color: 'error', onClick: () => handleDeleteRow(row), children: jsx(Delete, {}) }) })] }));
-        }
-    };
     const renderTopToolbarCustomActions = (props) => {
         if (onAddItem || formCreated) {
             return jsx(Button$1, { color: 'secondary', onClick: () => handleAddRow(), variant: 'contained', children: localizationCore.actions.add });
@@ -2571,7 +2563,23 @@ const TableView = (props) => {
         filterIncludeEquals: localizationCore.filters.includeEquals,
         filterIncludeNone: localizationCore.filters.includeNone
     };
-    return (jsxs(Fragment, { children: [jsx(MaterialReactTable, { ...props, table: undefined, columns: editColumns, data: items, editDisplayMode: 'row', manualSorting: true, manualFiltering: true, enablePagination: true, manualPagination: true, renderRowActions: props.renderRowActions ?? renderRowActions, renderTopToolbarCustomActions: props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions, rowCount: pageInfo.totalCount, onColumnFiltersChange: setColumnFilters, onColumnFilterFnsChange: handleColumnFilterFnsChange, onGlobalFilterChange: setGlobalFilter, filterFns: {
+    return (jsxs(Fragment, { children: [jsx(MaterialReactTable, { ...props, table: undefined, columns: editColumns, data: items, editDisplayMode: 'row', displayColumnDefOptions: {
+                    'mrt-row-actions': {
+                        minSize: 120,
+                        Cell: ({ row, table }) => {
+                            if (currentEditRow && currentEditRow.index === row.index) {
+                                return (jsxs(Box, { sx: { display: 'flex', flexWrap: 'nowrap', gap: '1rem' }, children: [jsx(Tooltip, { arrow: true, placement: 'left', title: localizationCore.actions.save, children: jsx(IconButton, { size: 'large', disabled: currentItemInvalid, onClick: () => { handleSaveRow(table); }, children: jsx(Save, { color: currentItemInvalid ? 'disabled' : 'primary' }) }) }), jsx(Tooltip, { arrow: true, placement: 'left', title: '\u041E\u0442\u043C\u0435\u043D\u0430 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0439', children: jsx(IconButton, { color: 'warning', size: 'large', onClick: () => {
+                                                    handleCancelRow(table);
+                                                }, children: jsx(Cancel, {}) }) })] }));
+                            }
+                            else {
+                                return (jsxs(Box, { sx: { display: 'flex', flexWrap: 'nowrap', gap: '1rem' }, children: [jsx(Tooltip, { arrow: true, placement: 'left', title: localizationCore.actions.edit, children: jsx(IconButton, { size: 'large', onClick: handleEditRow(table, row), children: jsx(Edit, {}) }) }), onDuplicateItem &&
+                                            jsx(Tooltip, { arrow: true, placement: 'left', title: localizationCore.actions.duplicate, children: jsx(IconButton, { size: 'large', onClick: () => { }, children: jsx(ContentCopyIcon, {}) }) }), onDeleteItem &&
+                                            jsx(Tooltip, { arrow: true, placement: 'right', title: localizationCore.actions.delete, children: jsx(IconButton, { size: 'large', color: 'error', onClick: () => handleDeleteRow(row), children: jsx(Delete, {}) }) })] }));
+                            }
+                        }
+                    }
+                }, manualSorting: true, manualFiltering: true, enablePagination: true, manualPagination: true, renderTopToolbarCustomActions: props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions, rowCount: pageInfo.totalCount, onColumnFiltersChange: setColumnFilters, onColumnFilterFnsChange: handleColumnFilterFnsChange, onGlobalFilterChange: setGlobalFilter, filterFns: {
                     includeAny: (row, id, filterValue) => {
                         return true;
                     },
@@ -2737,12 +2745,12 @@ const useFeedbackState = () => {
 
 const SelectFilterFunction = (props) => {
     const { initialFunctionFn, onSelectFilterFunction, groupFilterFunctions } = props;
-    const [selectedValue, setSelectedValue] = useState(initialFunctionFn?.name ?? groupFilterFunctions[0].name);
+    const [selectedValue, setSelectedValue] = useState(initialFunctionFn?.type ?? groupFilterFunctions[0].type);
     const handleSelectFilterFunction = (filterFn) => {
-        setSelectedValue(filterFn.name);
+        setSelectedValue(filterFn.type);
         onSelectFilterFunction(filterFn);
     };
-    return jsx(Select$1, { value: selectedValue, renderValue: (selected) => { return FilterFunctionHelper.getDescByName(selected).desc; }, children: groupFilterFunctions.map((option) => (jsx(MenuItem, { value: option.name, onClick: () => { handleSelectFilterFunction(option); }, children: (option.desc) }, option.id))) });
+    return jsx(Select$1, { value: selectedValue, renderValue: (selected) => { return FilterFunctionEnum[selected].desc; }, children: groupFilterFunctions.map((option) => (jsx(MenuItem, { value: option.type, onClick: () => { handleSelectFilterFunction(option); }, children: (option.desc) }, option.id))) });
 };
 
-export { AppFooter, AppHeader, AppLeftPanel, AppMainLayout, Button, ButtonHelper, Chip, ChipHelper, CssTypesHelper, Dialog, EditActionRow, EditTableFilterArray, EditTableFilterEnum, EditTableFilterString, Grid, HorizontalStack, InputField, InputFieldHelper, Label, LayoutHelper, MaterialReactTableHelper, MultiSelect, ReduxToolkitHelper, Select, SelectFilterFunction, SelectHelper, TBreakpoint, TButtonVariant, TChipVariant, TColorType, TControlPadding, TControlSize, TControlState, TPlacementDensity, TScreenType, TTypographyVariant, TableView, ThemeConstants, ThemeHelper, ThemeProvider, ToastErrorPanel, ToastWrapper, Typography, TypographyHelper, VerticalStack, ViewSettingsConstants, addCommandLeftPanelLayoutAction, collapseFooterLayoutAction, feedbackSlice, hideAlertFeedbackAction, makeStoreCore, openLeftPanelLayoutAction, removeCommandLeftPanelLayoutAction, setCommandsLeftPanelLayoutAction, showAlertFeedbackAction, showFooterLayoutAction, showFooterUserLayoutAction, showHeaderLayoutAction, showHeaderUserLayoutAction, showLeftPanelLayoutAction, storeCore, toastError, toastPromise, useActualGraphicsSize, useAppDispatchCore, useAppSelectorCore, useFeedbackState, useForm, useInterval, useLayoutState, useMediaQuery, useRippleEffect, useScreenResizeOrOrientation, useScreenTypeChanged, useThemeSelector };
+export { AppFooter, AppHeader, AppLeftPanel, AppMainLayout, Button, ButtonHelper, Chip, ChipHelper, CssTypesHelper, Dialog, DialogAppBar, EditActionRow, EditTableFilterArray, EditTableFilterEnum, EditTableFilterString, Grid, HorizontalStack, InputField, InputFieldHelper, Label, LayoutHelper, MaterialReactTableHelper, MultiSelect, ReduxToolkitHelper, Select, SelectFilterFunction, SelectHelper, TBreakpoint, TButtonVariant, TChipVariant, TColorType, TControlPadding, TControlSize, TControlState, TPlacementDensity, TScreenType, TTypographyVariant, TableView, ThemeConstants, ThemeHelper, ThemeProvider, ToastErrorPanel, ToastWrapper, Typography, TypographyHelper, VerticalStack, ViewSettingsConstants, addCommandLeftPanelLayoutAction, collapseFooterLayoutAction, feedbackSlice, hideAlertFeedbackAction, makeStoreCore, openLeftPanelLayoutAction, removeCommandLeftPanelLayoutAction, setCommandsLeftPanelLayoutAction, showAlertFeedbackAction, showFooterLayoutAction, showFooterUserLayoutAction, showHeaderLayoutAction, showHeaderUserLayoutAction, showLeftPanelLayoutAction, storeCore, toastError, toastPromise, useActualGraphicsSize, useAppDispatchCore, useAppSelectorCore, useFeedbackState, useForm, useInterval, useLayoutState, useMediaQuery, useRippleEffect, useScreenResizeOrOrientation, useScreenTypeChanged, useThemeSelector };

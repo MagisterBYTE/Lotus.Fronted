@@ -7,7 +7,7 @@ export class CssTypesHelper
   {
     if (typeof value === 'string')
     {
-      return NumberHelper.ParseFloat(value) * 16
+      return NumberHelper.parseFloat(value) * 16
     }
     if (typeof value === 'number')
     {
@@ -21,7 +21,7 @@ export class CssTypesHelper
   {
     if (typeof value === 'string')
     {
-      return NumberHelper.ParseFloat(value) * 16
+      return NumberHelper.parseFloat(value) * 16
     }
     if (typeof value === 'number')
     {

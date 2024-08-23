@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithRef } from 'react';
+import React, { ComponentPropsWithRef, ReactNode } from 'react';
 import { TColorType, TControlPadding, TControlSize, TControlState } from 'ui/types';
 import { css, cx } from '@emotion/css';
 import { ILabelProps, Label, TypographyHelper } from 'ui/components/Display';
@@ -30,7 +30,12 @@ export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, '
   /**
    * Параметры надписи
    */
-  labelProps?: ILabelProps
+  labelProps?: ILabelProps;
+
+  /**
+   * Дополнительный элемент справа
+   */
+  rightElement?: ReactNode;
 }
 
 export const InputField: React.FC<IInputFieldProps> = ({ color = TColorType.Primary, isBackground = false, size = TControlSize.Medium,

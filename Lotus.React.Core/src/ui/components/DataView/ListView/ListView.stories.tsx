@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FilterFunctionEnum, FilterPropertyHelper, IPropertyDescriptor, IRequest, IResponsePage, ISelectOption, 
   ObjectInfoBase, PropertyTypeEnum, SortPropertyHelper, ValidationResultSuccess } from 'lotus-core';
-import { TableView } from './TableView';
+import { VerticalStack } from 'ui/components/Layout';
+import { TTypographyVariant, Typography } from 'ui/components/Display';
+import { ListView } from './ListView';
 
- 
 const PersonRoles:ISelectOption[] = [{value: 1, text: 'Админ'}, {value: 2, text: 'Модератор'}, {value: 3, text: 'Пользователь'}]
 
 interface IPerson
@@ -186,17 +187,17 @@ const getPersonsAsync = (filter: IRequest):Promise<IResponsePage<IPerson>> =>
 }
 
 const meta = {
-  title: 'DataView/TableView',
-  component: TableView,
+  title: 'DataView/ListView',
+  component: ListView,
   parameters: {
-    layout: 'padded'
+    layout: 'centered'
   },
 
   tags: ['autodocs'],
 
   argTypes: {
   }
-} satisfies Meta<typeof TableView>;
+} satisfies Meta<typeof ListView>;
 
 export default meta;
 
@@ -206,12 +207,25 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     objectInfo: PersonInfoBase.Instance,
-    enableColumnResizing: true,
-    enableEditing:true,
-    enableColumnFilterModes: true,
-    enableRowActions: true,
-    positionActionsColumn: 'last',
-    onGetItems: getPersonsAsync
+    onGetItems: getPersonsAsync,
+    renderList: (list)=>
+    {
+      const persons:IPerson[] = list as IPerson[];
+      return (<>
+        {
+          persons.map((person, index)=>
+          {
+            return (<VerticalStack style={{ minWidth: 280, margin: 2 }}>
+              <Typography key={index} variant={TTypographyVariant.TitleLarge} >
+                {person.name}
+              </Typography>
+              <Typography key={index} variant={TTypographyVariant.TitleLarge} >
+                {person.surname}
+              </Typography>
+            </VerticalStack>)
+          })
+        }
+      </>)
+    }
   }
-};
-
+}

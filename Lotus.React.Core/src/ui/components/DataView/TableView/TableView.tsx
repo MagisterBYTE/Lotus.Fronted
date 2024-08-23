@@ -256,6 +256,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
       const sort: ISortProperty =
       {
         propertyName: StringHelper.capitalizeFirstLetter(column.id),
+        propertyTypeDesc: objectInfo.getPropertyByName(column.id).propertyTypeDesc,
         isDesc: column.desc
       }
 
@@ -347,7 +348,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
   //
   // #region Редактирование данных
   //
-  const handleEditRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => 
+  const handleEditRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => (event:any) =>
   {
     table.setEditingRow(row);
     setCurrentEditRow(row);
@@ -455,14 +456,17 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
     if (currentEditRow && currentEditRow.index === row.index) 
     {
       return (
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '1rem' }}>
           <Tooltip arrow placement='left' title={localizationCore.actions.save}>
             <IconButton size='large' disabled={currentItemInvalid} onClick={() => { handleSaveRow(table, row); }}>
               <Save color={currentItemInvalid ? 'disabled' : 'primary'} />
             </IconButton>
           </Tooltip>
-          <Tooltip arrow placement='left' title={localizationCore.actions.cancel}>
-            <IconButton size='large' onClick={() => { handleCancelRow(table, row); }}>
+          <Tooltip arrow placement='left' title='Отмена изменений'>
+            <IconButton color='warning' size='large' onClick={() => 
+            { 
+              handleCancelRow(table, row); 
+            }}>
               <Cancel />
             </IconButton>
           </Tooltip>
@@ -472,9 +476,9 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
     else 
     {
       return (
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '1rem' }}>
           <Tooltip arrow placement='left' title={localizationCore.actions.edit}>
-            <IconButton size='large' onClick={() => { handleEditRow(table, row) }}>
+            <IconButton size='large' onClick={handleEditRow(table, row)}>
               <Edit />
             </IconButton>
           </Tooltip>
@@ -542,12 +546,65 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
         table={undefined}
         columns={editColumns}
         data={items}
+        
         editDisplayMode='row'
+        displayColumnDefOptions = {{
+          'mrt-row-actions':
+          {
+            minSize: 120,
+            Cell: ({ row, table }) => 
+            {
+              if (currentEditRow && currentEditRow.index === row.index) 
+              {
+                return (
+                  <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '1rem' }}>
+                    <Tooltip arrow placement='left' title={localizationCore.actions.save}>
+                      <IconButton size='large' disabled={currentItemInvalid} onClick={() => { handleSaveRow(table, row); }}>
+                        <Save color={currentItemInvalid ? 'disabled' : 'primary'} />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip arrow placement='left' title='Отмена изменений'>
+                      <IconButton color='warning' size='large' onClick={() => 
+                      { 
+                        handleCancelRow(table, row); 
+                      }}>
+                        <Cancel />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                )
+              }
+              else 
+              {
+                return (
+                  <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '1rem' }}>
+                    <Tooltip arrow placement='left' title={localizationCore.actions.edit}>
+                      <IconButton size='large' onClick={handleEditRow(table, row)}>
+                        <Edit />
+                      </IconButton>
+                    </Tooltip>
+                    {onDuplicateItem &&
+                        <Tooltip arrow placement='left' title={localizationCore.actions.duplicate}>
+                          <IconButton size='large' onClick={() => { handleDuplicateRow(table, row) }}>
+                            <ContentCopyIcon />
+                          </IconButton>
+                        </Tooltip>}
+                    {onDeleteItem &&
+                        <Tooltip arrow placement='right' title={localizationCore.actions.delete}>
+                          <IconButton size='large' color='error' onClick={() => handleDeleteRow(row)}>
+                            <Delete />
+                          </IconButton>
+                        </Tooltip>}
+                  </Box>
+                )
+              }
+            }
+          }
+        }}
         manualSorting={true}
         manualFiltering={true}
         enablePagination={true}
         manualPagination={true}
-        renderRowActions={props.renderRowActions ?? renderRowActions}
         renderTopToolbarCustomActions={props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions}
         rowCount={pageInfo.totalCount}
         onColumnFiltersChange={setColumnFilters}
@@ -571,7 +628,6 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
             return true;
           }
         }}
-
         onSortingChange={setSortingColumn}
         onPaginationChange={setPaginationModel}
         state={

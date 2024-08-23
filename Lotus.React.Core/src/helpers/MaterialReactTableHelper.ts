@@ -9,7 +9,7 @@ export class MaterialReactTableHelper
 {
   public static getDefaultFilterFunction(property: IPropertyDescriptor): MRT_FilterOption
   {
-    switch (property.propertyType)
+    switch (property.propertyTypeDesc)
     {
       case PropertyTypeEnum.String: return 'contains';
       case PropertyTypeEnum.Enum: return 'arrIncludesSome';
@@ -66,7 +66,7 @@ export class MaterialReactTableHelper
       const filter: IFilterProperty =
       {
         propertyName: '',
-        propertyType: PropertyTypeEnum.Boolean,
+        propertyTypeDesc: PropertyTypeEnum.Boolean,
         function: FilterFunctionEnum.Equals,
         value: ''
       };
@@ -78,7 +78,7 @@ export class MaterialReactTableHelper
         const filterFn = columnFiltersFns[column.id];
 
         filter.propertyName = StringHelper.capitalizeFirstLetter(column.id);
-        filter.propertyType = property.propertyType!;
+        filter.propertyTypeDesc = property.propertyTypeDesc!;
         filter.function = MaterialReactTableHelper.convertToFilterFunctionDesc(filterFn);
 
         if (filter.function === FilterFunctionEnum.IncludeAll ||
@@ -162,7 +162,7 @@ export class MaterialReactTableHelper
     {
       if (x.filtering && x.filtering.enabled)
       {
-        filterFunctions[`${x.fieldName}`] = MaterialReactTableHelper.convertFromFilterFunctionDesc(x.filtering.functionDefault);
+        filterFunctions[`${x.fieldName}`] = MaterialReactTableHelper.convertFromFilterFunctionDesc(x.filtering.functionDefaultDesc);
       }
     })
 

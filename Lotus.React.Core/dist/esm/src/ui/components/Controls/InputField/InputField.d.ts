@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithRef } from 'react';
+import React, { ComponentPropsWithRef, ReactNode } from 'react';
 import { TColorType, TControlPadding, TControlSize } from 'ui/types';
 import { ILabelProps } from 'ui/components/Display';
 export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, 'size'> {
@@ -22,5 +22,9 @@ export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, '
      * Параметры надписи
      */
     labelProps?: ILabelProps;
+    /**
+     * Дополнительный элемент справа
+     */
+    rightElement?: ReactNode;
 }
 export declare const InputField: React.FC<IInputFieldProps>;

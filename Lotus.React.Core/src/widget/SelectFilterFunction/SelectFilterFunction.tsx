@@ -1,5 +1,5 @@
 import { MenuItem, Select } from '@mui/material';
-import { FilterFunctionHelper, IFilterFunctionDesc } from 'lotus-core';
+import { FilterFunctionEnum, IFilterFunctionDesc } from 'lotus-core';
 import React, { useState } from 'react';
 
 export interface ISelectFilterFunctionProps
@@ -13,20 +13,20 @@ export const SelectFilterFunction: React.FC<ISelectFilterFunctionProps> = (props
 {
   const { initialFunctionFn, onSelectFilterFunction, groupFilterFunctions } = props;
 
-  const [selectedValue, setSelectedValue] = useState<string>(initialFunctionFn?.name ?? groupFilterFunctions[0].name);
+  const [selectedValue, setSelectedValue] = useState<string>(initialFunctionFn?.type ?? groupFilterFunctions[0].type);
 
   const handleSelectFilterFunction = (filterFn: IFilterFunctionDesc) =>
   {
-    setSelectedValue(filterFn.name);
+    setSelectedValue(filterFn.type);
     onSelectFilterFunction(filterFn);
   }
 
   return <Select
     value={selectedValue}
-    renderValue={(selected) => { return FilterFunctionHelper.getDescByName(selected).desc }}
+    renderValue={(selected) => { return FilterFunctionEnum[selected].desc }}
   >
     {groupFilterFunctions.map((option) => (
-      <MenuItem key={option.id} value={option.name} onClick={() => { handleSelectFilterFunction(option) }}>
+      <MenuItem key={option.id} value={option.type} onClick={() => { handleSelectFilterFunction(option) }}>
         {(option.desc)}
       </MenuItem>
     ))}
