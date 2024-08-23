@@ -23,5 +23,5 @@ export declare class FilterPropertyHelper {
      * @param filterProperties Массив фильтров свойств
      * @returns Отфильтрованный массив
      */
-    static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties: IFilterObject): TItem[];
+    static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties?: IFilterObject): TItem[];
 }

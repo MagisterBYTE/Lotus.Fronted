@@ -14,7 +14,7 @@ export interface IFilterFunctionDesc
 /**
  * Перечисление для типа функции для фильтрации данных
  */
-export const FilterFunctionEnum =
+export const FilterFunctionEnum:Record<string, IFilterFunctionDesc> =
   {
     /**
      * Равно аргументу

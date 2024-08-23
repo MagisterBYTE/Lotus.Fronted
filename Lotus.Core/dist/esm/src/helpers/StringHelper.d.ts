@@ -21,5 +21,11 @@ export declare class StringHelper {
      * @param value
      * @returns
      */
+    static lowercaseFirstLetter(value: string): string;
+    /**
+     *
+     * @param value
+     * @returns
+     */
     static toUpperCaseAllFirstLetters(value: string): string;
 }

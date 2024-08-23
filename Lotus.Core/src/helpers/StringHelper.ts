@@ -26,7 +26,25 @@ export class StringHelper
    */
   public static capitalizeFirstLetter(value: string): string
   {
-    return `${value.slice(0, 1).toUpperCase()}${value.slice(1)}`;
+    if(value.length > 0)
+    {
+      return value[0].toLocaleUpperCase() + value.slice(1);
+    }
+    return value;
+  }
+
+  /**
+   * 
+   * @param value 
+   * @returns 
+   */
+  public static lowercaseFirstLetter(value: string): string
+  {
+    if(value.length > 0)
+    {
+      return value[0].toLocaleLowerCase() + value.slice(1);
+    }
+    return value;
   }
 
   /**

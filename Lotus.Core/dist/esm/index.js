@@ -571,7 +571,21 @@ class StringHelper {
      * @returns
      */
     static capitalizeFirstLetter(value) {
-        return `${value.slice(0, 1).toUpperCase()}${value.slice(1)}`;
+        if (value.length > 0) {
+            return value[0].toLocaleUpperCase() + value.slice(1);
+        }
+        return value;
+    }
+    /**
+     *
+     * @param value
+     * @returns
+     */
+    static lowercaseFirstLetter(value) {
+        if (value.length > 0) {
+            return value[0].toLocaleLowerCase() + value.slice(1);
+        }
+        return value;
     }
     /**
      *
@@ -2586,12 +2600,13 @@ class FilterPropertyHelper {
         if (FilterPropertyHelper.hasValue(filterProperty)) {
             const propertyType = filterProperty.propertyTypeDesc.type;
             const filterFunction = filterProperty.function.type;
+            const key = StringHelper.lowercaseFirstLetter(filterProperty.propertyName);
             switch (propertyType) {
                 case 'Boolean':
                     {
                         switch (filterFunction) {
-                            case 'Equals': return massive.filter(x => BooleanHelper.parse((x[filterProperty.propertyName])) === BooleanHelper.parse(filterProperty.value));
-                            case 'NotEqual': return massive.filter(x => BooleanHelper.parse((x[filterProperty.propertyName])) !== BooleanHelper.parse(filterProperty.value));
+                            case 'Equals': return massive.filter(x => BooleanHelper.parse((x[key])) === BooleanHelper.parse(filterProperty.value));
+                            case 'NotEqual': return massive.filter(x => BooleanHelper.parse((x[key])) !== BooleanHelper.parse(filterProperty.value));
                         }
                     }
                     break;
@@ -2599,14 +2614,14 @@ class FilterPropertyHelper {
                 case 'Float':
                     {
                         switch (filterFunction) {
-                            case 'Equals': return massive.filter(x => Number((x[filterProperty.propertyName])) === Number(filterProperty.value));
-                            case 'NotEqual': return massive.filter(x => Number((x[filterProperty.propertyName])) !== Number(filterProperty.value));
-                            case 'LessThan': return massive.filter(x => Number((x[filterProperty.propertyName])) < Number(filterProperty.value));
-                            case 'LessThanOrEqual': return massive.filter(x => Number((x[filterProperty.propertyName])) <= Number(filterProperty.value));
-                            case 'GreaterThan': return massive.filter(x => Number((x[filterProperty.propertyName])) > Number(filterProperty.value));
-                            case 'GreaterThanOrEqual': return massive.filter(x => Number((x[filterProperty.propertyName])) >= Number(filterProperty.value));
+                            case 'Equals': return massive.filter(x => Number((x[key])) === Number(filterProperty.value));
+                            case 'NotEqual': return massive.filter(x => Number((x[key])) !== Number(filterProperty.value));
+                            case 'LessThan': return massive.filter(x => Number((x[key])) < Number(filterProperty.value));
+                            case 'LessThanOrEqual': return massive.filter(x => Number((x[key])) <= Number(filterProperty.value));
+                            case 'GreaterThan': return massive.filter(x => Number((x[key])) > Number(filterProperty.value));
+                            case 'GreaterThanOrEqual': return massive.filter(x => Number((x[key])) >= Number(filterProperty.value));
                             case 'Between': return massive.filter(x => {
-                                const check = Number((x[filterProperty.propertyName]));
+                                const check = Number((x[key]));
                                 const left = Number(filterProperty.values[0]);
                                 const right = Number(filterProperty.values[1]);
                                 return (check > left) && (check < right);
@@ -2618,12 +2633,16 @@ class FilterPropertyHelper {
                 case 'Guid':
                     {
                         switch (filterFunction) {
-                            case 'Equals': return massive.filter(x => String((x[filterProperty.propertyName])) === filterProperty.value);
-                            case 'NotEqual': return massive.filter(x => String((x[filterProperty.propertyName])) !== filterProperty.value);
-                            case 'LessThan': return massive.filter(x => String((x[filterProperty.propertyName])).localeCompare(filterProperty.value) < 0);
-                            case 'LessThanOrEqual': return massive.filter(x => String((x[filterProperty.propertyName])).localeCompare(filterProperty.value) <= 0);
-                            case 'GreaterThan': return massive.filter(x => String((x[filterProperty.propertyName])).localeCompare(filterProperty.value) > 0);
-                            case 'GreaterThanOrEqual': return massive.filter(x => String((x[filterProperty.propertyName])).localeCompare(filterProperty.value) >= 0);
+                            case 'Equals': return massive.filter(x => String((x[key])) === filterProperty.value);
+                            case 'NotEqual': return massive.filter(x => String((x[key])) !== filterProperty.value);
+                            case 'Contains': return massive.filter(x => (String((x[key]))).includes(filterProperty.value));
+                            case 'StartsWith': return massive.filter(x => (String((x[key]))).startsWith(filterProperty.value));
+                            case 'EndsWith': return massive.filter(x => (String((x[key]))).endsWith(filterProperty.value));
+                            case 'NotEmpty': return massive.filter(x => StringHelper.isNullOrEmpty(String((x[key]))) === false);
+                            case 'LessThan': return massive.filter(x => String((x[key])).localeCompare(filterProperty.value) < 0);
+                            case 'LessThanOrEqual': return massive.filter(x => String((x[key])).localeCompare(filterProperty.value) <= 0);
+                            case 'GreaterThan': return massive.filter(x => String((x[key])).localeCompare(filterProperty.value) > 0);
+                            case 'GreaterThanOrEqual': return massive.filter(x => String((x[key])).localeCompare(filterProperty.value) >= 0);
                         }
                     }
                     break;
@@ -2631,13 +2650,13 @@ class FilterPropertyHelper {
                 case 'DateTime':
                     {
                         switch (filterFunction) {
-                            case 'Equals': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) === DateHelper.parse(filterProperty.value));
-                            case 'NotEqual': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) !== DateHelper.parse(filterProperty.value));
-                            case 'LessThan': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) < DateHelper.parse(filterProperty.value));
-                            case 'LessThanOrEqual': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) <= DateHelper.parse(filterProperty.value));
-                            case 'GreaterThan': return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) > DateHelper.parse(filterProperty.value));
+                            case 'Equals': return massive.filter(x => DateHelper.parse((x[key])) === DateHelper.parse(filterProperty.value));
+                            case 'NotEqual': return massive.filter(x => DateHelper.parse((x[key])) !== DateHelper.parse(filterProperty.value));
+                            case 'LessThan': return massive.filter(x => DateHelper.parse((x[key])) < DateHelper.parse(filterProperty.value));
+                            case 'LessThanOrEqual': return massive.filter(x => DateHelper.parse((x[key])) <= DateHelper.parse(filterProperty.value));
+                            case 'GreaterThan': return massive.filter(x => DateHelper.parse((x[key])) > DateHelper.parse(filterProperty.value));
                             case 'GreaterThanOrEqual':
-                                return massive.filter(x => DateHelper.parse((x[filterProperty.propertyName])) >= DateHelper.parse(filterProperty.value));
+                                return massive.filter(x => DateHelper.parse((x[key])) >= DateHelper.parse(filterProperty.value));
                         }
                     }
                     break;
@@ -2652,6 +2671,8 @@ class FilterPropertyHelper {
      * @returns Отфильтрованный массив
      */
     static filterArrayByProperties(massive, filterProperties) {
+        if (!filterProperties)
+            return massive;
         let result = [...massive];
         for (const filterProperty of filterProperties) {
             result = FilterPropertyHelper.filterArrayByProperty(result, filterProperty);
@@ -2712,6 +2733,80 @@ class RequestHelper {
             search.append('pageInfo.pageSize', '9999');
             return search;
         }
+    }
+}
+
+class SortPropertyHelper {
+    /**
+     * Сортировка массива по указанному свойству сортировки
+     * @param massive Исходный массив
+     * @param sortProperty Параметры сортировки свойства
+     * @returns Отсортированный массив
+     */
+    static sortArrayByProperty(massive, sortProperty) {
+        const propertyType = sortProperty.propertyTypeDesc.type;
+        const result = [...massive];
+        const key = StringHelper.lowercaseFirstLetter(sortProperty.propertyName);
+        switch (propertyType) {
+            case 'Boolean':
+                {
+                    return result.sort((a, b) => {
+                        const l = BooleanHelper.parse(a[key]);
+                        const r = BooleanHelper.parse(b[key]);
+                        return BooleanHelper.compare(l, r, sortProperty.isDesc);
+                    });
+                }
+            case 'Integer':
+            case 'Float':
+                {
+                    return result.sort((a, b) => {
+                        const l = Number(a[key]);
+                        const r = Number(b[key]);
+                        return NumberHelper.compare(l, r, sortProperty.isDesc);
+                    });
+                }
+            case 'String':
+            case 'Guid':
+                {
+                    return result.sort((a, b) => {
+                        const l = String(a[key]);
+                        const r = String(b[key]);
+                        const status = l.localeCompare(r);
+                        if (sortProperty.isDesc) {
+                            if (status > 0)
+                                return -1;
+                            if (status < 0)
+                                return 1;
+                        }
+                        return status;
+                    });
+                }
+            case 'Enum': return result;
+            case 'DateTime':
+                {
+                    return result.sort((a, b) => {
+                        const l = DateHelper.parse(a[key]);
+                        const r = DateHelper.parse(b[key]);
+                        return DateHelper.compare(l, r, sortProperty.isDesc);
+                    });
+                }
+        }
+        return massive;
+    }
+    /**
+     * Сортировка массива по указанному массиву свойств сортировки
+     * @param massive Исходный массив
+     * @param sortProperties Массив свойств сортировки
+     * @returns Отсортированный массив
+     */
+    static sortArrayByProperties(massive, sortProperties) {
+        if (!sortProperties)
+            return massive;
+        let result = [...massive];
+        for (const sortProperty of sortProperties) {
+            result = SortPropertyHelper.sortArrayByProperty(result, sortProperty);
+        }
+        return result;
     }
 }
 
@@ -3063,4 +3158,4 @@ const sleep = (timeoutInMs) => {
     return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
 };
 
-export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, ColorNames, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, FilterFunctionEnum, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, PathHelper, PropertyTypeEnum, RandomHelper, RequestHelper, Route, SelectOptionHelper, StringHelper, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
+export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, ColorNames, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, FilterFunctionEnum, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, PathHelper, PropertyTypeEnum, RandomHelper, RequestHelper, Route, SelectOptionHelper, SortPropertyHelper, StringHelper, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };

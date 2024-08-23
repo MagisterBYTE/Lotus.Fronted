@@ -3,6 +3,7 @@ import { TPropertyType } from 'modules/objectInfo/PropertyType';
 import { TFilterFunction } from 'modules/filter';
 import { BooleanHelper } from 'helpers/BooleanHelper';
 import { DateHelper } from 'helpers/DateHelper';
+import { StringHelper } from 'helpers/StringHelper';
 import { IFilterObject, IFilterProperty } from './FilterProperty';
 
 export class FilterPropertyHelper
@@ -66,6 +67,7 @@ export class FilterPropertyHelper
     {
       const propertyType: TPropertyType = filterProperty.propertyTypeDesc.type;
       const filterFunction: TFilterFunction = filterProperty.function.type;
+      const key = StringHelper.lowercaseFirstLetter(filterProperty.propertyName);
 
       switch (propertyType)
       {
@@ -73,8 +75,8 @@ export class FilterPropertyHelper
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => BooleanHelper.parse(((x as any)[filterProperty.propertyName])) === BooleanHelper.parse(filterProperty.value));
-              case 'NotEqual': return massive.filter(x => BooleanHelper.parse(((x as any)[filterProperty.propertyName])) !== BooleanHelper.parse(filterProperty.value));
+              case 'Equals': return massive.filter(x => BooleanHelper.parse(((x as any)[key])) === BooleanHelper.parse(filterProperty.value));
+              case 'NotEqual': return massive.filter(x => BooleanHelper.parse(((x as any)[key])) !== BooleanHelper.parse(filterProperty.value));
             }
           } break;
         case 'Integer':
@@ -82,15 +84,15 @@ export class FilterPropertyHelper
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => Number(((x as any)[filterProperty.propertyName])) === Number(filterProperty.value));
-              case 'NotEqual': return massive.filter(x => Number(((x as any)[filterProperty.propertyName])) !== Number(filterProperty.value));
-              case 'LessThan': return massive.filter(x => Number(((x as any)[filterProperty.propertyName])) < Number(filterProperty.value));
-              case 'LessThanOrEqual': return massive.filter(x => Number(((x as any)[filterProperty.propertyName])) <= Number(filterProperty.value));
-              case 'GreaterThan': return massive.filter(x => Number(((x as any)[filterProperty.propertyName])) > Number(filterProperty.value));
-              case 'GreaterThanOrEqual': return massive.filter(x => Number(((x as any)[filterProperty.propertyName])) >= Number(filterProperty.value));
+              case 'Equals': return massive.filter(x => Number(((x as any)[key])) === Number(filterProperty.value));
+              case 'NotEqual': return massive.filter(x => Number(((x as any)[key])) !== Number(filterProperty.value));
+              case 'LessThan': return massive.filter(x => Number(((x as any)[key])) < Number(filterProperty.value));
+              case 'LessThanOrEqual': return massive.filter(x => Number(((x as any)[key])) <= Number(filterProperty.value));
+              case 'GreaterThan': return massive.filter(x => Number(((x as any)[key])) > Number(filterProperty.value));
+              case 'GreaterThanOrEqual': return massive.filter(x => Number(((x as any)[key])) >= Number(filterProperty.value));
               case 'Between': return massive.filter(x => 
               {
-                const check = Number(((x as any)[filterProperty.propertyName]))
+                const check = Number(((x as any)[key]))
                 const left = Number(filterProperty.values![0])
                 const right = Number(filterProperty.values![1])
                 return (check > left) && (check < right);
@@ -102,12 +104,16 @@ export class FilterPropertyHelper
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => String(((x as any)[filterProperty.propertyName])) === filterProperty.value);
-              case 'NotEqual': return massive.filter(x => String(((x as any)[filterProperty.propertyName])) !== filterProperty.value);
-              case 'LessThan': return massive.filter(x => String(((x as any)[filterProperty.propertyName])).localeCompare(filterProperty.value!) < 0);
-              case 'LessThanOrEqual': return massive.filter(x => String(((x as any)[filterProperty.propertyName])).localeCompare(filterProperty.value!) <= 0);
-              case 'GreaterThan': return massive.filter(x => String(((x as any)[filterProperty.propertyName])).localeCompare(filterProperty.value!) > 0);
-              case 'GreaterThanOrEqual': return massive.filter(x => String(((x as any)[filterProperty.propertyName])).localeCompare(filterProperty.value!) >= 0);
+              case 'Equals': return massive.filter(x => String(((x as any)[key])) === filterProperty.value);
+              case 'NotEqual': return massive.filter(x => String(((x as any)[key])) !== filterProperty.value);
+              case 'Contains': return massive.filter(x => (String(((x as any)[key]))).includes(filterProperty.value!));
+              case 'StartsWith': return massive.filter(x => (String(((x as any)[key]))).startsWith(filterProperty.value!));
+              case 'EndsWith': return massive.filter(x => (String(((x as any)[key]))).endsWith(filterProperty.value!));
+              case 'NotEmpty': return massive.filter(x => StringHelper.isNullOrEmpty(String(((x as any)[key]))) === false);
+              case 'LessThan': return massive.filter(x => String(((x as any)[key])).localeCompare(filterProperty.value!) < 0);
+              case 'LessThanOrEqual': return massive.filter(x => String(((x as any)[key])).localeCompare(filterProperty.value!) <= 0);
+              case 'GreaterThan': return massive.filter(x => String(((x as any)[key])).localeCompare(filterProperty.value!) > 0);
+              case 'GreaterThanOrEqual': return massive.filter(x => String(((x as any)[key])).localeCompare(filterProperty.value!) >= 0);
             }
           } break;
         case 'Enum': return massive;
@@ -115,13 +121,13 @@ export class FilterPropertyHelper
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => DateHelper.parse(((x as any)[filterProperty.propertyName])) === DateHelper.parse(filterProperty.value!));
-              case 'NotEqual': return massive.filter(x => DateHelper.parse(((x as any)[filterProperty.propertyName])) !== DateHelper.parse(filterProperty.value!));
-              case 'LessThan': return massive.filter(x => DateHelper.parse(((x as any)[filterProperty.propertyName])) < DateHelper.parse(filterProperty.value!));
-              case 'LessThanOrEqual': return massive.filter(x => DateHelper.parse(((x as any)[filterProperty.propertyName])) <= DateHelper.parse(filterProperty.value!));
-              case 'GreaterThan': return massive.filter(x => DateHelper.parse(((x as any)[filterProperty.propertyName])) > DateHelper.parse(filterProperty.value!));
+              case 'Equals': return massive.filter(x => DateHelper.parse(((x as any)[key])) === DateHelper.parse(filterProperty.value!));
+              case 'NotEqual': return massive.filter(x => DateHelper.parse(((x as any)[key])) !== DateHelper.parse(filterProperty.value!));
+              case 'LessThan': return massive.filter(x => DateHelper.parse(((x as any)[key])) < DateHelper.parse(filterProperty.value!));
+              case 'LessThanOrEqual': return massive.filter(x => DateHelper.parse(((x as any)[key])) <= DateHelper.parse(filterProperty.value!));
+              case 'GreaterThan': return massive.filter(x => DateHelper.parse(((x as any)[key])) > DateHelper.parse(filterProperty.value!));
               case 'GreaterThanOrEqual':
-                return massive.filter(x => DateHelper.parse(((x as any)[filterProperty.propertyName])) >= DateHelper.parse(filterProperty.value!));
+                return massive.filter(x => DateHelper.parse(((x as any)[key])) >= DateHelper.parse(filterProperty.value!));
             }
           } break;
         case 'Object':
@@ -137,8 +143,10 @@ export class FilterPropertyHelper
    * @param filterProperties Массив фильтров свойств
    * @returns Отфильтрованный массив
    */
-  public static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties: IFilterObject): TItem[]
+  public static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties?: IFilterObject): TItem[]
   {
+    if(!filterProperties) return massive;
+
     let result: TItem[] = [...massive];
 
     for (const filterProperty of filterProperties) 

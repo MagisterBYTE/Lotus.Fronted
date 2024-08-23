@@ -10,7 +10,7 @@ export interface IPropertyTypeDesc
 /**
  * Перечисление для типа свойства
  */
-export const PropertyTypeEnum =
+export const PropertyTypeEnum:Record<string, IPropertyTypeDesc> =
   {
     /**
      * Логический тип
