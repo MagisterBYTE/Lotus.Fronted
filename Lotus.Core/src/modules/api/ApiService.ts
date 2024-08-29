@@ -54,11 +54,11 @@ export abstract class ApiService
       }
       else
       {
-        const resultError: IResult = 
-        { 
-          succeeded: false, 
-          code: Number(error.response.status ?? 500), 
-          message: error.message 
+        const resultError: IResult =
+        {
+          succeeded: false,
+          code: Number(error.response.status ?? 500),
+          message: error.message
         };
         return Promise.reject(resultError);
       }
@@ -96,15 +96,15 @@ export abstract class ApiService
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any  
-  protected post<TResponse = any, TRequest = any>(path: string, payload: TRequest)
+  protected post<TResponse = any, TRequest = any>(path: string, payload: TRequest, config?: any)
   {
-    return this.api.post<TResponse>(path, payload);
+    return this.api.post<TResponse>(path, payload, config);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any  
-  protected put<TResponse = any, TRequest = any>(path: string, payload: TRequest) 
+  protected put<TResponse = any, TRequest = any>(path: string, payload: TRequest, config?: any) 
   {
-    return this.api.put<TResponse>(path, payload);
+    return this.api.put<TResponse>(path, payload, config);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any  
