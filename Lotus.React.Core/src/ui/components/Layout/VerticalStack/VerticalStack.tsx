@@ -1,33 +1,33 @@
-import React, { ComponentPropsWithRef } from 'react';
+import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
 
-export interface IVerticalStackProps extends ComponentPropsWithRef<'div'>
+export interface IVerticalStackProps extends ComponentPropsWithoutRef<'div'>
 {
   gap?: React.CSSProperties['gap'];
   alignItems?: React.CSSProperties['alignItems'];
   justifyContent?: React.CSSProperties['justifyContent'];
   wrap?: React.CSSProperties['flexWrap'];
   children: React.ReactNode;
-  // eslint-disable-next-line react/boolean-prop-naming
   fullWidth?: boolean;
-  // eslint-disable-next-line react/boolean-prop-naming
   fullHeight?: boolean;
 }
 
-export const VerticalStack: React.FC<IVerticalStackProps> = (props: IVerticalStackProps) => 
+export const VerticalStack = forwardRef<HTMLDivElement, IVerticalStackProps>((props, ref) => 
 {
   const { gap, alignItems, justifyContent, wrap, children, fullWidth, fullHeight, ...divProps } = props
   return (
-    <div {...divProps} style={{
+    <div ref={ref} {...divProps} style={{
       display: 'flex',
       flexDirection: 'column',
       gap: gap,
       alignItems: alignItems ?? 'start',
       justifyContent: justifyContent ?? 'flex-start',
       flexWrap: wrap,
-      width: fullWidth ? '100%' : undefined,
-      height: fullHeight ? '100%' : undefined
+      width: fullWidth ? '100%' : divProps.style?.width,
+      height: fullHeight ? '100%' : divProps.style?.height,
+      ...divProps.style
     }}>
       {children}
     </div>
   );
-};
+}
+);
