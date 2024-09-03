@@ -263,38 +263,6 @@ export class Color
   }
 
   /**
-   * Sets the transparency of a color
-   *
-   * @method alpha
-   * @memberof Color
-   * @param {Number} alpha transparency level between 0 and 1
-   * @return {Color} new Color() instance
-   * @instance
-   *
-   * @example
-   * new Color('#f00').alpha(0.5).toString();  // returns "rgba(255,0,0,0.5)"
-   *
-   */
-  alpha(alpha: number): Color 
-  {
-    if (ColorHelper.isAlphaValue(alpha)) 
-    {
-      if (this.hsl) 
-      {
-        return new Color(this.getHSL(), alpha);
-      }
-      else 
-      {
-        return new Color(this.getRGB(), alpha);
-      }
-    }
-    else 
-    {
-      throw new Error('invalid alpha value');
-    }
-  }
-
-  /**
    * Returns the red component of a color string
    *
    * @method getRed
@@ -314,7 +282,7 @@ export class Color
   /**
    * Set the red component of a color
    *
-   * @method red
+   * @method setRed
    * @memberof Color
    * @param {Number} red red component 0-255
    * @return {Color} new Color() instance
@@ -324,12 +292,12 @@ export class Color
    * new Color('rgb(0,0,255)').red(255).toString();  // returns "#F0F"
    *
    */
-  red(r: number): Color 
+  setRed(red: number): Color 
   {
-    if (ColorHelper.isColorValue(r)) 
+    if (ColorHelper.isColorValue(red)) 
     {
       const rgb = this._getRGB();
-      return new Color( [r, rgb[1], rgb[2]], this.a);
+      return new Color([red, rgb[1], rgb[2]], this.a);
     }
     else throw new Error('invalid red');
   }
@@ -346,7 +314,7 @@ export class Color
    * new Color('#fff').getGreen(); // returns 255
    *
    */
-  getGreen():number 
+  getGreen(): number 
   {
     return this._getRGB()[1];
   }
@@ -354,7 +322,7 @@ export class Color
   /**
    * Set the green component of a color
    *
-   * @method green
+   * @method setGreen
    * @memberof Color
    * @param {Number} green green component 0-255
    * @return {Color} new Color() instance
@@ -364,12 +332,12 @@ export class Color
    * new Color('rgb(255,0,0)').green(255).toString();  // returns "#FF0"
    *
    */
-  green(g: number): Color 
+  setGreen(green: number): Color 
   {
-    if (ColorHelper.isColorValue(g)) 
+    if (ColorHelper.isColorValue(green)) 
     {
       const rgb = this._getRGB();
-      return new Color( [rgb[0], g, rgb[2]], this.a);
+      return new Color([rgb[0], green, rgb[2]], this.a);
     }
     else throw new Error('invalid green');
   }
@@ -394,7 +362,7 @@ export class Color
   /**
    * Set the blue component of a color
    *
-   * @method blue
+   * @method setBlue
    * @memberof Color
    * @param {Number} blue blue component 0-255
    * @return {Color} new Color() instance
@@ -404,12 +372,12 @@ export class Color
    * new Color('#FF0').blue(255).toString();  // returns "#FFF"
    *
    */
-  blue(b: number): Color 
+  setBlue(blue: number): Color 
   {
-    if (ColorHelper.isColorValue(b)) 
+    if (ColorHelper.isColorValue(blue)) 
     {
       const rgb = this._getRGB();
-      return new Color( [rgb[0], rgb[1], b], this.a);
+      return new Color([rgb[0], rgb[1], blue], this.a);
     }
     else throw new Error('invalid blue');
   }
@@ -433,6 +401,38 @@ export class Color
   }
 
   /**
+   * Sets the transparency of a color
+   *
+   * @method setAlpha
+   * @memberof Color
+   * @param {Number} alpha transparency level between 0 and 1
+   * @return {Color} new Color() instance
+   * @instance
+   *
+   * @example
+   * new Color('#f00').alpha(0.5).toString();  // returns "rgba(255,0,0,0.5)"
+   *
+   */
+  setAlpha(alpha: number): Color 
+  {
+    if (ColorHelper.isAlphaValue(alpha)) 
+    {
+      if (this.hsl) 
+      {
+        return new Color(this.getHSL(), alpha);
+      }
+      else 
+      {
+        return new Color(this.getRGB(), alpha);
+      }
+    }
+    else 
+    {
+      throw new Error('invalid alpha value');
+    }
+  }
+
+  /**
    * Return the "saturation" of a color
    *
    * @method getSaturation
@@ -450,6 +450,77 @@ export class Color
   {
     const hsl = this._getHSL();
     return hsl.s;
+  }
+
+  /**
+   * Set the "saturation" of a color
+   *
+   * @method setSaturation
+   * @memberof Color
+   * @param {Number} saturation saturation value between 0 and 1
+   * @return {Color} new Color() instance
+   * @instance
+   *
+   * @example
+   * new Color(100,50,50).saturation(0.5).toString().toBe("#712626");
+   *
+   */
+  setSaturation(saturation: number): Color 
+  {
+    if (ColorHelper.isAlphaValue(saturation)) 
+    {
+      const hsl = this._getHSL();
+      return new Color({
+        h: hsl.h,
+        s: saturation,
+        l: hsl.l
+      }, this.a);
+    }
+    else throw new Error('invalid saturation');
+  }
+
+  /**
+   * Increases the "saturation" of a color value
+   *
+   * @method increaseSaturate
+   * @memberof Color
+   * @param {Number} saturateBy amount to saturate between 0 and 1
+   * @return {Color} new Color() instance
+   * @instance
+   *
+   * @example
+   * new Color('corn silk 3').saturate(0.1).toString(); // returns "#d3ccab"
+   *
+   */
+  increaseSaturate(amount: number): Color 
+  {
+    if (amount >= -1 && amount <= 1) 
+    {
+      let s = this.getSaturation();
+      s += amount;
+      if (s > 1) s = 1;
+      if (s < 0) s = 0;
+      return this.setSaturation(s);
+    }
+    else throw new Error('invalid saturate');
+  }
+
+  /**
+   * Decreases the "saturation" of a color value
+   *
+   * @method decreaseSaturate
+   * @memberof Color
+   * @param {Number} desaturateBy amount to desaturate between 0 and 1
+   * @return {Color} new Color() instance
+   * @instance
+   *
+   * @example
+   * new Color('#d3ccab').desaturate(0.1).toString(); // returns "#cdc8b1"
+   *
+   */
+  decreaseSaturate(amount: number): Color 
+  {
+    return this.increaseSaturate(-amount);
   }
 
   /**
@@ -476,7 +547,7 @@ export class Color
   /**
    * Set the "hue" of a color
    *
-   * @method hue
+   * @method setHue
    * @memberof Color
    * @param {Number} hue hue value between 0 and 1
    * @return {Color} new Color() instance
@@ -488,12 +559,12 @@ export class Color
    * new Color('#00f').hue(0.23).toString(); // returns "#9eff00"
    *
    */
-  hue(hue: number): Color 
+  setHue(hue: number): Color 
   {
     if (ColorHelper.isAlphaValue(hue)) 
     {
       const hsl = this._getHSL();
-      return new Color( {
+      return new Color({
         h: hue,
         s: hsl.s,
         l: hsl.l
@@ -534,82 +605,11 @@ export class Color
       newHue += 1;
     }
 
-    return new Color( {
+    return new Color({
       h: newHue,
       s: hsl.s,
       l: hsl.l
     }, this.a);
-  }
-
-  /**
-   * Set the "saturation" of a color
-   *
-   * @method saturation
-   * @memberof Color
-   * @param {Number} saturation saturation value between 0 and 1
-   * @return {Color} new Color() instance
-   * @instance
-   *
-   * @example
-   * new Color(100,50,50).saturation(0.5).toString().toBe("#712626");
-   *
-   */
-  saturation(saturation: number): Color 
-  {
-    if (ColorHelper.isAlphaValue(saturation)) 
-    {
-      const hsl = this._getHSL();
-      return new Color( {
-        h: hsl.h,
-        s: saturation,
-        l: hsl.l
-      }, this.a);
-    }
-    else throw new Error('invalid saturation');
-  }
-
-  /**
-   * Increases the "saturation" of a color value
-   *
-   * @method saturate
-   * @memberof Color
-   * @param {Number} saturateBy amount to saturate between 0 and 1
-   * @return {Color} new Color() instance
-   * @instance
-   *
-   * @example
-   * new Color('corn silk 3').saturate(0.1).toString(); // returns "#d3ccab"
-   *
-   */
-  saturate(amount: number): Color 
-  {
-    if (amount >= -1 && amount <= 1) 
-    {
-      let s = this.getSaturation();
-      s += amount;
-      if (s > 1) s = 1;
-      if (s < 0) s = 0;
-      return this.saturation(s);
-    }
-    else throw new Error('invalid saturate');
-  }
-
-  /**
-   * Decreases the "saturation" of a color value
-   *
-   * @method desaturate
-   * @memberof Color
-   * @param {Number} desaturateBy amount to desaturate between 0 and 1
-   * @return {Color} new Color() instance
-   * @instance
-   *
-   * @example
-   * new Color('#d3ccab').desaturate(0.1).toString(); // returns "#cdc8b1"
-   *
-   */
-  desaturate(amount: number): Color 
-  {
-    return this.saturate(-amount);
   }
 
   /**
@@ -635,7 +635,7 @@ export class Color
   /**
    * Set the lightness of a color, how close to white or black the color will be
    *
-   * @method lightness
+   * @method setLightness
    * @memberof Color
    * @param {Number} lightness lightness value between 0 and 1
    * @return {Color} new Color() instance
@@ -647,12 +647,12 @@ export class Color
    * new Color('rgb(255,0,0)').lightness(1).toString(); // returns "#FFF"
    *
    */
-  lightness(lightness: number): Color 
+  setLightness(lightness: number): Color 
   {
     if (ColorHelper.isAlphaValue(lightness)) 
     {
       const hsl = this._getHSL();
-      return new Color( {
+      return new Color({
         h: hsl.h,
         s: hsl.s,
         l: lightness
@@ -667,7 +667,7 @@ export class Color
   /**
    * Increases the "lightness" of a color value
    *
-   * @method lighten
+   * @method increaseLighten
    * @memberof Color
    * @param {Number} lightenBy amount to lighten between 0 and 1
    * @return {Color} new Color() instance
@@ -677,7 +677,7 @@ export class Color
    * new Color('#f00').lighten(0.5).toString(); // returns "#FF8080"
    *
    */
-  lighten(amount: number): Color 
+  increaseLightness(amount: number): Color 
   {
     if (amount >= -1 && amount <= 1) 
     {
@@ -685,7 +685,7 @@ export class Color
       let l = hsl.l + amount;
       if (l > 1) l = 1;
       if (l < 0) l = 0;
-      return new Color( {
+      return new Color({
         h: hsl.h,
         s: hsl.s,
         l
@@ -697,7 +697,7 @@ export class Color
   /**
    * Decreases the "lightness" of a color value
    *
-   * @method darken
+   * @method decreaseLighten
    * @memberof Color
    * @param {Number} darkenBy amount to darken between 0 and 1
    * @return {Color} new Color() instance
@@ -707,9 +707,9 @@ export class Color
    * new Color('#f00').darken(0.5).toString(); // returns "#800000"
    *
    */
-  darken(amount: number): Color 
+  decreaseLightness(amount: number): Color 
   {
-    return this.lighten(-amount);
+    return this.increaseLightness(-amount);
   }
 
   /**
@@ -717,7 +717,7 @@ export class Color
    *
    * @method combine
    * @memberof Color
-   * @param {Object} targetColor color string, array, or object
+   * @param {Object} colorValue color string, array, or object
    * @param {Number} [amount=0.5] how close to the target color between 0 and 1 (0.5 is half-way between)
    * @return {Color} new Color() instance
    * @instance
@@ -726,9 +726,9 @@ export class Color
    * new Color('black').combine('red', 0.5).toString(); // returns "#800000"
    *
    */
-  combine(colorValue: any, percentage: number ): Color 
+  combine(colorValue: any, amount: number): Color 
   {
-    if (ColorHelper.isAlphaValue(percentage)) 
+    if (ColorHelper.isAlphaValue(amount)) 
     {
       let color;
       if (colorValue instanceof Color) 
@@ -739,10 +739,10 @@ export class Color
       {
         color = new Color(colorValue);
       }
-      const newRgb = ColorHelper.combine(this._getRGB(), color._getRGB(), percentage);
+      const newRgb = ColorHelper.combine(this._getRGB(), color._getRGB(), amount);
       return new Color(newRgb, this.a);
     }
-    else throw new Error('invalid combine percentage');
+    else throw new Error('invalid combine amount');
   }
 
   /**
@@ -760,7 +760,7 @@ export class Color
    */
   invert(): Color 
   {
-    return new Color(ColorHelper.invert(this._getRGB()), this.a );
+    return new Color(ColorHelper.invert(this._getRGB()), this.a);
   }
 
   /**
@@ -768,7 +768,7 @@ export class Color
    *
    * @method tint
    * @memberof Color
-   * @param {String} targetColor color string or array
+   * @param {String} colorValue color string or array
    * @param {Number} amount amount to shift the hue toward the target color between 0 and 1
    * @return {Color} new Color() instance
    * @instance
@@ -778,7 +778,7 @@ export class Color
    * new Color('rgb(0,0,100)').tint('rgb(100,0,0)',0.1).toString(); // returns "#002864"
    *
    */
-  tint (colorValue: any, percentage: number | undefined): Color 
+  tint(colorValue: any, amount: number | undefined): Color 
   {
     let color;
     if (colorValue instanceof Color) 
@@ -789,11 +789,11 @@ export class Color
     {
       color = new Color(colorValue);
     }
-    if (typeof percentage === 'undefined') 
+    if (typeof amount === 'undefined') 
     {
-      percentage = 0.5;
+      amount = 0.5;
     }
-    const h = ColorHelper.tint(this.getHue(), color.getHue(), percentage);
+    const h = ColorHelper.tint(this.getHue(), color.getHue(), amount);
     return new Color({
       h,
       s: this.hsl!.s,

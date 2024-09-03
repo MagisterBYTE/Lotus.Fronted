@@ -56,7 +56,7 @@ export class ColorHelper
   }
 
   // eslint-disable-next-line consistent-return
-  public static parseColorString(colorString: string): number[]|undefined
+  public static parseColorString(colorString: string): number[] | undefined
   {
     const c = colorString;
 
@@ -104,7 +104,7 @@ export class ColorHelper
   }
 
   // eslint-disable-next-line consistent-return
-  public static getColorName(colorString: string): number[]|undefined
+  public static getColorName(colorString: string): number[] | undefined
   {
     const colStr = colorString.toLowerCase();
     if (colStr in ColorNames)

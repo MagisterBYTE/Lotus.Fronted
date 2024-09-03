@@ -102,20 +102,6 @@ export declare class Color {
      */
     getHSL(): IColorModelHSL;
     /**
-     * Sets the transparency of a color
-     *
-     * @method alpha
-     * @memberof Color
-     * @param {Number} alpha transparency level between 0 and 1
-     * @return {Color} new Color() instance
-     * @instance
-     *
-     * @example
-     * new Color('#f00').alpha(0.5).toString();  // returns "rgba(255,0,0,0.5)"
-     *
-     */
-    alpha(alpha: number): Color;
-    /**
      * Returns the red component of a color string
      *
      * @method getRed
@@ -131,7 +117,7 @@ export declare class Color {
     /**
      * Set the red component of a color
      *
-     * @method red
+     * @method setRed
      * @memberof Color
      * @param {Number} red red component 0-255
      * @return {Color} new Color() instance
@@ -141,7 +127,7 @@ export declare class Color {
      * new Color('rgb(0,0,255)').red(255).toString();  // returns "#F0F"
      *
      */
-    red(r: number): Color;
+    setRed(red: number): Color;
     /**
      * Returns the green component of a color string
      *
@@ -158,7 +144,7 @@ export declare class Color {
     /**
      * Set the green component of a color
      *
-     * @method green
+     * @method setGreen
      * @memberof Color
      * @param {Number} green green component 0-255
      * @return {Color} new Color() instance
@@ -168,7 +154,7 @@ export declare class Color {
      * new Color('rgb(255,0,0)').green(255).toString();  // returns "#FF0"
      *
      */
-    green(g: number): Color;
+    setGreen(green: number): Color;
     /**
      * Returns the blue component of a color string
      *
@@ -185,7 +171,7 @@ export declare class Color {
     /**
      * Set the blue component of a color
      *
-     * @method blue
+     * @method setBlue
      * @memberof Color
      * @param {Number} blue blue component 0-255
      * @return {Color} new Color() instance
@@ -195,7 +181,7 @@ export declare class Color {
      * new Color('#FF0').blue(255).toString();  // returns "#FFF"
      *
      */
-    blue(b: number): Color;
+    setBlue(blue: number): Color;
     /**
      * Returns the transparency of a color
      *
@@ -211,6 +197,20 @@ export declare class Color {
      */
     getAlpha(): number;
     /**
+     * Sets the transparency of a color
+     *
+     * @method setAlpha
+     * @memberof Color
+     * @param {Number} alpha transparency level between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#f00').alpha(0.5).toString();  // returns "rgba(255,0,0,0.5)"
+     *
+     */
+    setAlpha(alpha: number): Color;
+    /**
      * Return the "saturation" of a color
      *
      * @method getSaturation
@@ -225,6 +225,48 @@ export declare class Color {
      *
      */
     getSaturation(): number;
+    /**
+     * Set the "saturation" of a color
+     *
+     * @method setSaturation
+     * @memberof Color
+     * @param {Number} saturation saturation value between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color(100,50,50).saturation(0.5).toString().toBe("#712626");
+     *
+     */
+    setSaturation(saturation: number): Color;
+    /**
+     * Increases the "saturation" of a color value
+     *
+     * @method increaseSaturate
+     * @memberof Color
+     * @param {Number} saturateBy amount to saturate between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('corn silk 3').saturate(0.1).toString(); // returns "#d3ccab"
+     *
+     */
+    increaseSaturate(amount: number): Color;
+    /**
+     * Decreases the "saturation" of a color value
+     *
+     * @method decreaseSaturate
+     * @memberof Color
+     * @param {Number} desaturateBy amount to desaturate between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#d3ccab').desaturate(0.1).toString(); // returns "#cdc8b1"
+     *
+     */
+    decreaseSaturate(amount: number): Color;
     /**
      * Return the "hue" of a color
      *
@@ -244,7 +286,7 @@ export declare class Color {
     /**
      * Set the "hue" of a color
      *
-     * @method hue
+     * @method setHue
      * @memberof Color
      * @param {Number} hue hue value between 0 and 1
      * @return {Color} new Color() instance
@@ -256,7 +298,7 @@ export declare class Color {
      * new Color('#00f').hue(0.23).toString(); // returns "#9eff00"
      *
      */
-    hue(hue: number): Color;
+    setHue(hue: number): Color;
     /**
      * Shifts the "hue" of a color value by a given percentage
      *
@@ -271,48 +313,6 @@ export declare class Color {
      *
      */
     shiftHue(amount: number): Color;
-    /**
-     * Set the "saturation" of a color
-     *
-     * @method saturation
-     * @memberof Color
-     * @param {Number} saturation saturation value between 0 and 1
-     * @return {Color} new Color() instance
-     * @instance
-     *
-     * @example
-     * new Color(100,50,50).saturation(0.5).toString().toBe("#712626");
-     *
-     */
-    saturation(saturation: number): Color;
-    /**
-     * Increases the "saturation" of a color value
-     *
-     * @method saturate
-     * @memberof Color
-     * @param {Number} saturateBy amount to saturate between 0 and 1
-     * @return {Color} new Color() instance
-     * @instance
-     *
-     * @example
-     * new Color('corn silk 3').saturate(0.1).toString(); // returns "#d3ccab"
-     *
-     */
-    saturate(amount: number): Color;
-    /**
-     * Decreases the "saturation" of a color value
-     *
-     * @method desaturate
-     * @memberof Color
-     * @param {Number} desaturateBy amount to desaturate between 0 and 1
-     * @return {Color} new Color() instance
-     * @instance
-     *
-     * @example
-     * new Color('#d3ccab').desaturate(0.1).toString(); // returns "#cdc8b1"
-     *
-     */
-    desaturate(amount: number): Color;
     /**
      * Return the lightness of a color (how close to white or black the color is)
      *
@@ -331,7 +331,7 @@ export declare class Color {
     /**
      * Set the lightness of a color, how close to white or black the color will be
      *
-     * @method lightness
+     * @method setLightness
      * @memberof Color
      * @param {Number} lightness lightness value between 0 and 1
      * @return {Color} new Color() instance
@@ -343,11 +343,11 @@ export declare class Color {
      * new Color('rgb(255,0,0)').lightness(1).toString(); // returns "#FFF"
      *
      */
-    lightness(lightness: number): Color;
+    setLightness(lightness: number): Color;
     /**
      * Increases the "lightness" of a color value
      *
-     * @method lighten
+     * @method increaseLighten
      * @memberof Color
      * @param {Number} lightenBy amount to lighten between 0 and 1
      * @return {Color} new Color() instance
@@ -357,11 +357,11 @@ export declare class Color {
      * new Color('#f00').lighten(0.5).toString(); // returns "#FF8080"
      *
      */
-    lighten(amount: number): Color;
+    increaseLightness(amount: number): Color;
     /**
      * Decreases the "lightness" of a color value
      *
-     * @method darken
+     * @method decreaseLighten
      * @memberof Color
      * @param {Number} darkenBy amount to darken between 0 and 1
      * @return {Color} new Color() instance
@@ -371,13 +371,13 @@ export declare class Color {
      * new Color('#f00').darken(0.5).toString(); // returns "#800000"
      *
      */
-    darken(amount: number): Color;
+    decreaseLightness(amount: number): Color;
     /**
      * Changes the color closer to another color by a given percentage
      *
      * @method combine
      * @memberof Color
-     * @param {Object} targetColor color string, array, or object
+     * @param {Object} colorValue color string, array, or object
      * @param {Number} [amount=0.5] how close to the target color between 0 and 1 (0.5 is half-way between)
      * @return {Color} new Color() instance
      * @instance
@@ -386,7 +386,7 @@ export declare class Color {
      * new Color('black').combine('red', 0.5).toString(); // returns "#800000"
      *
      */
-    combine(colorValue: any, percentage: number): Color;
+    combine(colorValue: any, amount: number): Color;
     /**
      * Inverts the color
      *
@@ -406,7 +406,7 @@ export declare class Color {
      *
      * @method tint
      * @memberof Color
-     * @param {String} targetColor color string or array
+     * @param {String} colorValue color string or array
      * @param {Number} amount amount to shift the hue toward the target color between 0 and 1
      * @return {Color} new Color() instance
      * @instance
@@ -416,7 +416,7 @@ export declare class Color {
      * new Color('rgb(0,0,100)').tint('rgb(100,0,0)',0.1).toString(); // returns "#002864"
      *
      */
-    tint(colorValue: any, percentage: number | undefined): Color;
+    tint(colorValue: any, amount: number | undefined): Color;
     /**
      * Returns the CSS string of the color, either as hex value, or rgba if an alpha value is defined
      *

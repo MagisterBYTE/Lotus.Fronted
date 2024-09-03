@@ -1402,12 +1402,12 @@ class ApiService {
         return this.api.get(path, config);
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any  
-    post(path, payload) {
-        return this.api.post(path, payload);
+    post(path, payload, config) {
+        return this.api.post(path, payload, config);
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any  
-    put(path, payload) {
-        return this.api.put(path, payload);
+    put(path, payload, config) {
+        return this.api.put(path, payload, config);
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any  
     delete(path, config) {
