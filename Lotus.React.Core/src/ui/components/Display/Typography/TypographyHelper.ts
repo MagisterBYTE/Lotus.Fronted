@@ -14,10 +14,10 @@ export class TypographyHelper
     {
       switch (size)
       {
-        case TControlSize.Smaller: return TTypographyVariant.TitleSmaller;
-        case TControlSize.Small: return TTypographyVariant.TitleSmall;
-        case TControlSize.Medium: return TTypographyVariant.TitleMedium;
-        case TControlSize.Large: return TTypographyVariant.TitleLarge;
+        case 'smaller': return TTypographyVariant.TitleSmaller;
+        case 'small': return TTypographyVariant.TitleSmall;
+        case 'medium': return TTypographyVariant.TitleMedium;
+        case 'large': return TTypographyVariant.TitleLarge;
       }
     }
 

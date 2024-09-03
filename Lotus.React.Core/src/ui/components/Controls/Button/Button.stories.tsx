@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TColorType, TControlPadding, TControlSize } from 'ui/types';
 import { GiAnt } from 'react-icons/gi';
 import { HorizontalStack } from 'ui/components/Layout';
 import { Button } from './Button';
-import { TButtonVariant } from './ButtonVariant';
 
 const meta = {
   title: 'Controls/Button',
@@ -18,22 +16,6 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
-    color: {
-      control: 'select',
-      options: Object.values(TColorType)
-    },
-    size: {
-      control: 'select',
-      options: Object.values(TControlSize)
-    },
-    variant: {
-      control: 'select',
-      options: Object.values(TButtonVariant)
-    },
-    paddingControl: {
-      control: 'radio',
-      options: Object.values(TControlPadding)
-    }
   }
 
 } satisfies Meta<typeof Button>;
@@ -65,7 +47,7 @@ export const ButtonIconText: Story = {
 export const Disabled: Story = {
   args: {
     children: 'Button',
-    color: TColorType.Primary,
+    color: 'primary',
     disabled: true
   }
 };

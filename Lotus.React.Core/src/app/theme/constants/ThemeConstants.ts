@@ -6,6 +6,11 @@ export class ThemeConstants
   public static readonly SaveKey: string = 'lotus-theme';
 
   /**
+   * Названия атрибута в документа под которым сохраняется тема сайта
+   */
+  public static readonly DataAttribute: string = 'data-theme';
+
+  /**
    * Скорость переходов анимации/состояния, в миллисекундах
    */
   public static readonly TransitionSpeed: number = 400;

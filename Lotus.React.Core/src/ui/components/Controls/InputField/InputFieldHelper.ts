@@ -6,16 +6,16 @@ export class InputFieldHelper
   {
     switch (state)
     {
-      case TControlState.Normal:
+      case 'normal':
         return `border-color: var(--lotus-color-${'border'});`
-      case TControlState.Hover:
+      case 'hover':
         return `border-color: var(--lotus-color-${color});`
-      case TControlState.Pressed:
+      case 'pressed':
         return `border-color: var(--lotus-color-${color});`
-      case TControlState.Selected:
-      case TControlState.Focus:
+      case 'selected':
+      case 'focus':
         return `border-color: var(--lotus-color-${color}); box-shadow: 0px 0px 0px 3px var(--lotus-shadow-${color});`
-      case TControlState.Disabled:
+      case 'disabled':
         return `border-color: var(--lotus-color-${'border'});`
     }
 

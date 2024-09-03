@@ -7,10 +7,10 @@ export class SelectHelper
   {
     switch (size) 
     {
-      case TControlSize.Smaller: return 0.3;
-      case TControlSize.Small: return 0.35;
-      case TControlSize.Medium: return 0.5;
-      case TControlSize.Large: return 0.65;
+      case 'smaller': return 0.3;
+      case 'small': return 0.35;
+      case 'medium': return 0.5;
+      case 'large': return 0.65;
     }
 
     return 0.5;
@@ -20,10 +20,10 @@ export class SelectHelper
   {
     switch (size) 
     {
-      case TControlSize.Smaller: return 22;
-      case TControlSize.Small: return 28;
-      case TControlSize.Medium: return 36;
-      case TControlSize.Large: return 44;
+      case 'smaller': return 22;
+      case 'small': return 28;
+      case 'medium': return 36;
+      case 'large': return 44;
     }
 
     return 36;
@@ -82,10 +82,10 @@ export class SelectHelper
   {
     switch (size) 
     {
-      case TControlSize.Smaller: return 14;
-      case TControlSize.Small: return 18;
-      case TControlSize.Medium: return 22;
-      case TControlSize.Large: return 24;
+      case 'smaller': return 14;
+      case 'small': return 18;
+      case 'medium': return 22;
+      case 'large': return 24;
     }
 
     return 32;
@@ -95,10 +95,10 @@ export class SelectHelper
   {
     switch (size) 
     {
-      case TControlSize.Smaller: return -4;
-      case TControlSize.Small: return -4;
-      case TControlSize.Medium: return -4;
-      case TControlSize.Large: return -6;
+      case 'smaller': return -4;
+      case 'small': return -4;
+      case 'medium': return -4;
+      case 'large': return -6;
     }
 
     return -4;
@@ -108,10 +108,10 @@ export class SelectHelper
   {
     switch (size) 
     {
-      case TControlSize.Smaller: return 6;
-      case TControlSize.Small: return 8;
-      case TControlSize.Medium: return 10;
-      case TControlSize.Large: return 12;
+      case 'smaller': return 6;
+      case 'small': return 8;
+      case 'medium': return 10;
+      case 'large': return 12;
     }
 
     return 12;

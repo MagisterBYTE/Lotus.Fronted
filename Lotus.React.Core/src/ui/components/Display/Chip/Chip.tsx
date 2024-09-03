@@ -35,10 +35,10 @@ export interface IChipProps extends Omit<ComponentPropsWithRef<'span'>, 'childre
 
 export const Chip: React.FC<IChipProps> = (
   { 
-    color = TColorType.Secondary, 
-    size = TControlSize.Medium, 
+    color = 'secondary', 
+    size = 'medium', 
     variant = TChipVariant.Filled, 
-    paddingControl = TControlPadding.Normal,
+    paddingControl = 'normal',
     label,
     ...propsSpan
   }: IChipProps) => 
@@ -48,24 +48,24 @@ export const Chip: React.FC<IChipProps> = (
   border-width: var(--lotus-border-width);
   border-style: var(--lotus-border-style);
   border-radius: 0.2rem;
-  ${ChipHelper.getBorderColorProps(color, variant, TControlState.Normal)}
-  ${ChipHelper.getColorProps(color, variant, TControlState.Normal)}
-  ${ChipHelper.getBackgroundColorProps(color, variant, TControlState.Normal)}
+  ${ChipHelper.getBorderColorProps(color, variant, 'normal')}
+  ${ChipHelper.getColorProps(color, variant, 'normal')}
+  ${ChipHelper.getBackgroundColorProps(color, variant, 'normal')}
   ${ChipHelper.getPaddingSidesProps(size, paddingControl)}
     &:hover {
-      ${ChipHelper.getBorderColorProps(color, variant, TControlState.Hover)}
-      ${ChipHelper.getBackgroundColorProps(color, variant, TControlState.Hover)}
-      ${ChipHelper.getColorProps(color, variant, TControlState.Hover)}
+      ${ChipHelper.getBorderColorProps(color, variant, 'hover')}
+      ${ChipHelper.getBackgroundColorProps(color, variant, 'hover')}
+      ${ChipHelper.getColorProps(color, variant, 'hover')}
     }
     &:active {
-      ${ChipHelper.getBorderColorProps(color, variant, TControlState.Pressed)}
-      ${ChipHelper.getBackgroundColorProps(color, variant, TControlState.Pressed)}
-      ${ChipHelper.getColorProps(color, variant, TControlState.Pressed)}
+      ${ChipHelper.getBorderColorProps(color, variant, 'pressed')}
+      ${ChipHelper.getBackgroundColorProps(color, variant, 'pressed')}
+      ${ChipHelper.getColorProps(color, variant, 'pressed')}
     }
     &:disabled {
-      ${ChipHelper.getBorderColorProps(color, variant, TControlState.Disabled)}
-      ${ChipHelper.getBackgroundColorProps(color, variant, TControlState.Disabled)}
-      ${ChipHelper.getColorProps(color, variant, TControlState.Disabled)}
+      ${ChipHelper.getBorderColorProps(color, variant, 'disabled')}
+      ${ChipHelper.getBackgroundColorProps(color, variant, 'disabled')}
+      ${ChipHelper.getColorProps(color, variant, 'disabled')}
       ${ThemeHelper.getOpacityPropsForDisabledAsText()}
     }
 `;

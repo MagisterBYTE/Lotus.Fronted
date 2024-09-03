@@ -1,0 +1,25 @@
+.app-left-panel 
+{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  background-color: brown;
+  transition: width ease 0.5s;
+	border-style: solid;
+  width: 120px;
+}
+
+.app-left-panel__active 
+{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  background-color: brown;
+  transition: width ease 0.8s;
+	border-style: solid;
+  width: 240px;
+}

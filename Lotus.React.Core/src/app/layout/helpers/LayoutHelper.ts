@@ -17,10 +17,10 @@ export class LayoutHelper
   {
     if (screen.width > 1800)
     {
-      return TBreakpoint.ExtraLarge;
+      return 'xxl';
     }
 
-    return TBreakpoint.Large;
+    return 'xl';
   }
 
   /**

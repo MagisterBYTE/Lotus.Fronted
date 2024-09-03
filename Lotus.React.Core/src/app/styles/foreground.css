@@ -1,9 +1,17 @@
-.lotus-foreground-primary {
-  color: var(--lotus-color-primary);
+.lotus-foreground {
+  color: var(--lotus-body-color);
 }
 
 .lotus-foreground-secondary {
-  color: var(--lotus-color-secondary);
+  color: var(--lotus-secondary-color);
+}
+
+.lotus-foreground-tertiary {
+  color: var(--lotus-tertiary-color);
+}
+
+.lotus-foreground-primary {
+  color: var(--lotus-color-primary);
 }
 
 .lotus-foreground-success {
@@ -20,16 +28,4 @@
 
 .lotus-foreground-info {
   color: var(--lotus-color-info);
-}
-
-.lotus-foreground-accent {
-  color: var(--lotus-color-accent);
-}
-
-.lotus-foreground-light {
-  color: var(--lotus-color-light);
-}
-
-.lotus-foreground-dark {
-  color: var(--lotus-color-dark);
 }

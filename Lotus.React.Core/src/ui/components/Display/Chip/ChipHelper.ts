@@ -8,7 +8,7 @@ export class ChipHelper
   {
     switch (state)
     {
-      case TControlState.Normal:
+      case 'normal':
         {
           switch (variant)
           {
@@ -16,21 +16,21 @@ export class ChipHelper
             case TChipVariant.Outline: return `border-color: var(--lotus-color-${color});`;
           }
         } break;
-      case TControlState.Hover:
+      case 'hover':
         switch (variant)
         {
           case TChipVariant.Filled: return `border-color: var(--lotus-color-${color}Dark);`;
           case TChipVariant.Outline: return `border-color: var(--lotus-color-${color}Dark);`;
         } break;
-      case TControlState.Pressed:
+      case 'pressed':
         switch (variant)
         {
           case TChipVariant.Filled: return `border-color: var(--lotus-color-${color}Darker);`;
           case TChipVariant.Outline: return `border-color: var(--lotus-color-${color}Darker);`;
         } break;
-      case TControlState.Selected:
-      case TControlState.Focus:
-      case TControlState.Disabled:
+      case 'selected':
+      case 'focus':
+      case 'disabled':
         switch (variant)
         {
           case TChipVariant.Filled: return `border-color: var(--lotus-color-${color}Dark);`;
@@ -46,7 +46,7 @@ export class ChipHelper
   {
     switch (state)
     {
-      case TControlState.Normal:
+      case 'normal':
         {
           switch (variant)
           {
@@ -54,21 +54,21 @@ export class ChipHelper
             case TChipVariant.Outline: return `background-color: var(--lotus-color-${'light'});`;
           }
         } break;
-      case TControlState.Hover:
+      case 'hover':
         switch (variant)
         {
           case TChipVariant.Filled: return `background-color: var(--lotus-color-${color}Dark);`;
           case TChipVariant.Outline: return `background-color: var(--lotus-color-${color}Palest);`;
         } break;
-      case TControlState.Pressed:
+      case 'pressed':
         switch (variant)
         {
           case TChipVariant.Filled: return `background-color: var(--lotus-color-${color}Darker);`;
           case TChipVariant.Outline: return `background-color: var(--lotus-color-${color}Palest);`;
         } break;
-      case TControlState.Selected:
-      case TControlState.Focus:
-      case TControlState.Disabled:
+      case 'selected':
+      case 'focus':
+      case 'disabled':
         switch (variant)
         {
           case TChipVariant.Filled: return `background-color: var(--lotus-color-${color});`;
@@ -83,7 +83,7 @@ export class ChipHelper
   {
     switch (state)
     {
-      case TControlState.Normal:
+      case 'normal':
         {
           switch (variant)
           {
@@ -91,21 +91,21 @@ export class ChipHelper
             case TChipVariant.Outline: return `color: var(--lotus-color-${color});`;
           }
         } break;
-      case TControlState.Hover:
+      case 'hover':
         switch (variant)
         {
           case TChipVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
           case TChipVariant.Outline: return `color: var(--lotus-color-${color}Dark);`;
         } break;
-      case TControlState.Pressed:
+      case 'pressed':
         switch (variant)
         {
           case TChipVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
           case TChipVariant.Outline: return `color: var(--lotus-color-${color}Darker);`;
         } break;
-      case TControlState.Selected:
-      case TControlState.Focus:
-      case TControlState.Disabled:
+      case 'selected':
+      case 'focus':
+      case 'disabled':
         switch (variant)
         {
           case TChipVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
@@ -120,40 +120,40 @@ export class ChipHelper
   {
     switch (size)
     {
-      case TControlSize.Smaller:
+      case 'smaller':
         {
           switch (paddingControl)
           {
-            case TControlPadding.Minimum: return 'padding: 0.08rem; font-size: x-small;'
-            case TControlPadding.Normal: return 'padding: 0.1rem; font-size: x-small;'
-            case TControlPadding.Enlarged: return 'padding: 0.15rem; font-size: x-small;'
+            case 'minimum': return 'padding: 0.08rem; font-size: x-small;'
+            case 'normal': return 'padding: 0.1rem; font-size: x-small;'
+            case 'enlarged': return 'padding: 0.15rem; font-size: x-small;'
           }
         } break;
-      case TControlSize.Small:
+      case 'small':
         {
           switch (paddingControl)
           {
-            case TControlPadding.Minimum: return 'padding: 0.1rem; font-size: small;'
-            case TControlPadding.Normal: return 'padding: 0.15rem; font-size: small;'
-            case TControlPadding.Enlarged: return 'padding: 0.2rem; font-size: small;'
+            case 'minimum': return 'padding: 0.1rem; font-size: small;'
+            case 'normal': return 'padding: 0.15rem; font-size: small;'
+            case 'enlarged': return 'padding: 0.2rem; font-size: small;'
           }
         } break;
-      case TControlSize.Medium:
+      case 'medium':
         {
           switch (paddingControl)
           {
-            case TControlPadding.Minimum: return 'padding: 0.15rem; font-size: medium;'
-            case TControlPadding.Normal: return 'padding: 0.2rem; font-size: medium;'
-            case TControlPadding.Enlarged: return 'padding: 0.25rem; font-size: medium;'
+            case 'minimum': return 'padding: 0.15rem; font-size: medium;'
+            case 'normal': return 'padding: 0.2rem; font-size: medium;'
+            case 'enlarged': return 'padding: 0.25rem; font-size: medium;'
           }
         } break;
-      case TControlSize.Large:
+      case 'large':
         {
           switch (paddingControl)
           {
-            case TControlPadding.Minimum: return 'padding: 0.2rem; font-size: large;'
-            case TControlPadding.Normal: return 'padding: 0.3rem; font-size: large;'
-            case TControlPadding.Enlarged: return 'padding: 0.4rem; font-size: large;'
+            case 'minimum': return 'padding: 0.2rem; font-size: large;'
+            case 'normal': return 'padding: 0.3rem; font-size: large;'
+            case 'enlarged': return 'padding: 0.4rem; font-size: large;'
           }
         } break;
     }

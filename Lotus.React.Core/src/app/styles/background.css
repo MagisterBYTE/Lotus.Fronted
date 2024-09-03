@@ -1,9 +1,17 @@
-.lotus-background-primary {
-  background-color: var(--lotus-color-primary);
+.lotus-background {
+  background-color: var(--lotus-body-bg);
 }
 
 .lotus-background-secondary {
-  background-color: var(--lotus-color-secondary);
+  background-color: var(--lotus-secondary-bg);
+}
+
+.lotus-background-tertiary {
+  background-color: var(--lotus-tertiary-bg);
+}
+
+.lotus-background-primary {
+  background-color: var(--lotus-color-primary);
 }
 
 .lotus-background-success {
@@ -20,16 +28,4 @@
 
 .lotus-background-info {
   background-color: var(--lotus-color-info);
-}
-
-.lotus-background-accent {
-  background-color: var(--lotus-color-accent);
-}
-
-.lotus-background-light {
-  background-color: var(--lotus-color-light);
-}
-
-.lotus-background-dark {
-  background-color: var(--lotus-color-dark);
 }

@@ -1,9 +1,10 @@
 export { type IAdditionalInfo } from './AdditionalInfo';
-export { TBreakpoint } from './Breakpoint';
-export { TControlPadding } from './ControlPadding';
-export { TColorType } from './ColorType';
-export { TControlSize } from './ControlSize';
-export { TControlState } from './ControlState';
-export { type TCssWidth, type TCssHeight, type TCssFontSize } from './CssTypes';
+export { type TBreakpoint } from './Breakpoint';
+export { type TColorAccent } from './ColorAccent';
+export { type TColorType } from './ColorType';
+export { type TControlPadding } from './ControlPadding';
+export { type TControlSize } from './ControlSize';
+export { type TControlState } from './ControlState';
+export { type TCssFontSize, type TCssHeight, type TCssWidth } from './CssTypes';
 export { TPlacementDensity } from './PlacementDensity';
 

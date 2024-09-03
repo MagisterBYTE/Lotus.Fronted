@@ -197,7 +197,7 @@ export const ListView = <TItem extends Record<string, any>>(props: IListViewProp
         <DensityButton
           initialDensity={placementDensity}
           onSetPlacementDensity={setPlacementDensity}/>
-        <Button variant={TButtonVariant.Filled} onClick={handleOpenFilterDialog}>
+        <Button variant={'filled'} onClick={handleOpenFilterDialog}>
           <FaFilter />
         </Button>
       </Stack>
@@ -230,9 +230,9 @@ export const ListView = <TItem extends Record<string, any>>(props: IListViewProp
           />
         </DialogContent>
         <DialogActions>
-          <Button variant={TButtonVariant.Outline} color={TColorType.Warning} onClick={handleClearFilterProperties}>{localizationCore.actions.clear}</Button>
-          <Button variant={TButtonVariant.Outline} onClick={handleCloseFilterDialog}>{localizationCore.actions.cancel}</Button>
-          <Button variant={TButtonVariant.Outline} autoFocus onClick={handleApplyFilterProperties}>{localizationCore.actions.confirm}</Button>
+          <Button variant={'outline'} color={'warning'} onClick={handleClearFilterProperties}>{localizationCore.actions.clear}</Button>
+          <Button variant={'outline'} onClick={handleCloseFilterDialog}>{localizationCore.actions.cancel}</Button>
+          <Button variant={'outline'} autoFocus onClick={handleApplyFilterProperties}>{localizationCore.actions.confirm}</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -2,14 +2,11 @@
   border-width: var(--lotus-border-width);
   border-style: var(--lotus-border-style);
   border-radius: var(--lotus-border-radius);
+  border-color: var(--lotus-border-color);
 }
 
 .lotus-border .lotus-border-primary {
   border-color: var(--lotus-color-primary);
-}
-
-.lotus-border .lotus-border-secondary {
-  border-color: var(--lotus-color-secondary);
 }
 
 .lotus-border .lotus-border-success {
@@ -26,16 +23,4 @@
 
 .lotus-border .lotus-border-info {
   border-color: var(--lotus-color-info);
-}
-
-.lotus-border .lotus-border-accent {
-  border-color: var(--lotus-color-accent);
-}
-
-.lotus-border .lotus-border-light {
-  border-color: var(--lotus-color-light);
-}
-
-.lotus-border .lotus-border-dark {
-  border-color: var(--lotus-color-dark);
 }

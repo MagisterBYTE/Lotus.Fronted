@@ -78,10 +78,10 @@ export const Dialog = forwardRef<IDialogComponent, IDialogProps>(function Dialog
 
         <div className='lotus-dialog-footer'>
           {footer}
-          <Button value='Ок' variant={TButtonVariant.Outline} >
+          <Button value='Ок' variant={'outline'} >
             Ок
           </Button>
-          <Button onClick={handleButtonCloseClick} value='Cancel' variant={TButtonVariant.Outline} >
+          <Button onClick={handleButtonCloseClick} value='Cancel' variant={'outline'} >
             Cancel
           </Button>
         </div>

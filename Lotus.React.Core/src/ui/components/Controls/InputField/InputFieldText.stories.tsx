@@ -37,7 +37,7 @@ type Story = StoryObj<typeof meta>;
 
 export const LabelTop: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     placeholder: 'Введите текст',
     labelProps: { label: 'Имя', variant: TTypographyVariant.TitleMedium, isTopLabel: true }
   }
@@ -46,7 +46,7 @@ export const LabelTop: Story = {
 
 export const LabelLeft: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     isBackground: true,
     placeholder: 'Введите текст',
     labelProps: { label: 'Фамилия', variant: TTypographyVariant.TitleMedium, isTopLabel: false }
@@ -55,7 +55,7 @@ export const LabelLeft: Story = {
 
 export const Password: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     placeholder: 'Введите текст',
     type: 'password'
   }
@@ -63,7 +63,7 @@ export const Password: Story = {
 
 export const Color: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     placeholder: 'Введите текст',
     type: 'color'
   }
@@ -71,7 +71,7 @@ export const Color: Story = {
 
 export const DatetimeLocal: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     placeholder: 'Введите текст',
     type: 'datetime-local'
   }
@@ -79,7 +79,7 @@ export const DatetimeLocal: Story = {
 
 export const NumberLocal: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     placeholder: 'Введите текст',
     type: 'number'
   }
@@ -87,7 +87,7 @@ export const NumberLocal: Story = {
 
 export const Search: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     placeholder: 'Введите текст',
     type: 'search'
   }
@@ -95,7 +95,7 @@ export const Search: Story = {
 
 export const Telephone: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     placeholder: 'Введите текст',
     type: 'tel'
   }
@@ -103,14 +103,14 @@ export const Telephone: Story = {
 
 export const Disabled: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     disabled: true
   }
 };
 
 export const InputFieldWithButton: Story = {
   args: {
-    color: TColorType.Primary,
+    color: 'primary',
     disabled: true
   },
   render: (args) =>

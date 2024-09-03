@@ -11,4 +11,4 @@ export
   showFooterUserLayoutAction,
   collapseFooterLayoutAction
 } from './LayoutActions';
-export { useLayoutState } from './LayoutSelector';
+export { useLayoutState, useLayoutFooterState } from './LayoutSelector';

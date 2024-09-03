@@ -48,14 +48,14 @@ export const Default: Story = {
 
 export const Dark: Story = {
   args: {
-    color: TColorType.Dark,
+    color: 'dark',
     label: 'А'
   }
 };
 
 export const IconBase: Story = {
   args: {
-    color: TColorType.Dark,
+    color: 'dark',
     label: <FcCloth />
   }
 };

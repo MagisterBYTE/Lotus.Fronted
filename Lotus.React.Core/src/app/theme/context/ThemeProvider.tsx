@@ -1,8 +1,10 @@
 import { CSSProperties, useEffect, useState } from 'react';
 import { TControlSize } from 'ui/types';
+import { useMutationObserver } from 'hooks/useMutationObserver';
 import { TThemeMode } from '../types';
 import { ThemeHelper } from '../helpers';
 import { ThemeContext } from './ThemeContext';
+import { ThemeConstants } from '../constants';
 
 export const ThemeProvider = (props: { children: React.ReactNode }) => 
 {
@@ -28,10 +30,29 @@ export const ThemeProvider = (props: { children: React.ReactNode }) =>
 
   const [theme, setTheme] = useState<TThemeMode>(ThemeHelper.loadFromStorage());
 
+  const optionsObserver:MutationObserverInit = 
+  {
+    attributes: true
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleMutation = (mutations: MutationRecord[], observer: MutationObserver) =>
+  {
+    for (const mutation of mutations) 
+    {
+      if (mutation.type === 'attributes' && mutation.attributeName === ThemeConstants.DataAttribute) 
+      {
+        console.log(`The ${mutation.attributeName} attribute was modified.`);
+      }
+    }
+  }
+
+  useMutationObserver({options: optionsObserver, callback: handleMutation});
+
   useEffect(() => 
   {
     ThemeHelper.saveToStorage(theme)
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute(ThemeConstants.DataAttribute, theme);
   }, [theme]);
 
   return (

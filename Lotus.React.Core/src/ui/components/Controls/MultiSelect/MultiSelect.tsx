@@ -71,10 +71,10 @@ export interface IMultiSelectProps<TValueOption extends TKey = TKey> extends Pro
 
 export const MultiSelect = <TValueOption extends TKey = TKey>(
   {
-    color = TColorType.Primary,
-    size = TControlSize.Medium,
+    color = 'primary',
+    size = 'medium',
     isBackground = false,
-    paddingControl = TControlPadding.Normal,
+    paddingControl = 'normal',
     width,
     labelProps,
     hasIcons = false,
@@ -123,7 +123,7 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
         paddingBottom: 0,
         ...ThemeHelper.getFontFamilyPropsAsCSS(),
         ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
-        ...ThemeHelper.getTransitionPropsAsCSS(),
+        ...ThemeHelper.getTransitionColorsPropsAsCSS(),
         ...ThemeHelper.getBorderPropsAsCSS(),
         ...SelectHelper.getBorderColorProps(color, state.isDisabled, state.isFocused),
         ...SelectHelper.getBoxShadowProps(color, state.isDisabled, state.isFocused),
@@ -169,7 +169,7 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
         ...styles,
         ...ThemeHelper.getFontFamilyPropsAsCSS(),
         ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
-        ...ThemeHelper.getTransitionPropsAsCSS(),
+        ...ThemeHelper.getTransitionColorsPropsAsCSS(),
         ... (hasIcons ? SelectHelper.getFlexContainer(size) : {}),
         backgroundColor: isDisabled
           ? undefined
@@ -209,7 +209,7 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
         marginLeft: '2px',
         ...ThemeHelper.getFontFamilyPropsAsCSS(),
         ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
-        ...ThemeHelper.getTransitionPropsAsCSS(),
+        ...ThemeHelper.getTransitionColorsPropsAsCSS(),
         ... (hasIcons ? SelectHelper.getFlexContainer(size) : {})
       };
     },

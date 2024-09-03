@@ -56,7 +56,7 @@ export const SHOW_HEADER_LAYOUT = 'layout/SHOW_HEADER_LAYOUT' as const;
 export const showHeaderLayoutAction = createAction<boolean>(SHOW_HEADER_LAYOUT);
 
 /**
- * Показать/скрыть заголовок полльзователем
+ * Показать/скрыть заголовок пользователем
  */
 export const SHOW_HEADER_USER_LAYOUT = 'layout/SHOW_HEADER_USER_LAYOUT' as const;
 export const showHeaderUserLayoutAction = createAction<boolean>(SHOW_HEADER_USER_LAYOUT);

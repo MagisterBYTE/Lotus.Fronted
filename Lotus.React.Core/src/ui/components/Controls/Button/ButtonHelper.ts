@@ -8,37 +8,37 @@ export class ButtonHelper
   {
     switch (state)
     {
-      case TControlState.Normal:
+      case 'normal':
         {
           switch (variant)
           {
-            case TButtonVariant.Filled: return `border-color: var(--lotus-color-${color}Dark);`;
-            case TButtonVariant.Outline: return `border-color: var(--lotus-color-${color});`;
-            case TButtonVariant.Text: return 'border: none !important;';
+            case 'filled': return `border-color: var(--lotus-color-${color}Dark);`;
+            case 'outline': return `border-color: var(--lotus-color-${color});`;
+            case 'text': return 'border: none !important;';
           }
         } break;
-      case TControlState.Hover:
+      case 'hover':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `border-color: var(--lotus-color-${color}Dark);`;
-          case TButtonVariant.Outline: return `border-color: var(--lotus-color-${color}Dark);`;
-          case TButtonVariant.Text: return 'border: none !important;';
+          case 'filled': return `border-color: var(--lotus-color-${color}Dark);`;
+          case 'outline': return `border-color: var(--lotus-color-${color}Dark);`;
+          case 'text': return 'border: none !important;';
         } break;
-      case TControlState.Pressed:
+      case 'pressed':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `border-color: var(--lotus-color-${color}Darker);`;
-          case TButtonVariant.Outline: return `border-color: var(--lotus-color-${color}Darker);`;
-          case TButtonVariant.Text: return 'border: none !important;';
+          case 'filled': return `border-color: var(--lotus-color-${color}Darker);`;
+          case 'outline': return `border-color: var(--lotus-color-${color}Darker);`;
+          case 'text': return 'border: none !important;';
         } break;
-      case TControlState.Selected:
-      case TControlState.Focus:
-      case TControlState.Disabled:
+      case 'selected':
+      case 'focus':
+      case 'disabled':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `border-color: var(--lotus-color-${color}Dark);`;
-          case TButtonVariant.Outline: return `border-color: var(--lotus-color-${color});`;
-          case TButtonVariant.Text: return 'border: none !important;';
+          case 'filled': return `border-color: var(--lotus-color-${color}Dark);`;
+          case 'outline': return `border-color: var(--lotus-color-${color});`;
+          case 'text': return 'border: none !important;';
         } break;
     }
 
@@ -50,37 +50,37 @@ export class ButtonHelper
   {
     switch (state)
     {
-      case TControlState.Normal:
+      case 'normal':
         {
           switch (variant)
           {
-            case TButtonVariant.Filled: return `background-color: var(--lotus-color-${color});`;
-            case TButtonVariant.Outline: return `background-color: var(--lotus-color-${'light'});`;
-            case TButtonVariant.Text: return `background-color: var(--lotus-color-${'light'});`;
+            case 'filled': return `background-color: var(--lotus-color-${color});`;
+            case 'outline': return `background-color: var(--lotus-color-${'light'});`;
+            case 'text': return `background-color: var(--lotus-color-${'light'});`;
           }
         } break;
-      case TControlState.Hover:
+      case 'hover':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `background-color: var(--lotus-color-${color}Dark);`;
-          case TButtonVariant.Outline: return `background-color: var(--lotus-color-${color}Palest);`;
-          case TButtonVariant.Text: return `background-color: var(--lotus-color-${color}Palest);`;
+          case 'filled': return `background-color: var(--lotus-color-${color}Dark);`;
+          case 'outline': return `background-color: var(--lotus-color-${color}Palest);`;
+          case 'text': return `background-color: var(--lotus-color-${color}Palest);`;
         } break;
-      case TControlState.Pressed:
+      case 'pressed':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `background-color: var(--lotus-color-${color}Darker);`;
-          case TButtonVariant.Outline: return `background-color: var(--lotus-color-${color}Palest);`;
-          case TButtonVariant.Text: return `background-color: var(--lotus-color-${color}Palest);`;
+          case 'filled': return `background-color: var(--lotus-color-${color}Darker);`;
+          case 'outline': return `background-color: var(--lotus-color-${color}Palest);`;
+          case 'text': return `background-color: var(--lotus-color-${color}Palest);`;
         } break;
-      case TControlState.Selected:
-      case TControlState.Focus:
-      case TControlState.Disabled:
+      case 'selected':
+      case 'focus':
+      case 'disabled':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `background-color: var(--lotus-color-${color});`;
-          case TButtonVariant.Outline: return `background-color: var(--lotus-color-${'light'});`;
-          case TButtonVariant.Text: return `background-color: var(--lotus-color-${'light'});`;
+          case 'filled': return `background-color: var(--lotus-color-${color});`;
+          case 'outline': return `background-color: var(--lotus-color-${'light'});`;
+          case 'text': return `background-color: var(--lotus-color-${'light'});`;
         } break;
     }
 
@@ -91,37 +91,37 @@ export class ButtonHelper
   {
     switch (state)
     {
-      case TControlState.Normal:
+      case 'normal':
         {
           switch (variant)
           {
-            case TButtonVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-            case TButtonVariant.Outline: return `color: var(--lotus-color-${color});`;
-            case TButtonVariant.Text: return `color: var(--lotus-color-${color});`;
+            case 'filled': return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
+            case 'outline': return `color: var(--lotus-color-${color});`;
+            case 'text': return `color: var(--lotus-color-${color});`;
           }
         } break;
-      case TControlState.Hover:
+      case 'hover':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case TButtonVariant.Outline: return `color: var(--lotus-color-${color}Dark);`;
-          case TButtonVariant.Text: return `color: var(--lotus-color-${color}Dark);`;;
+          case 'filled': return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
+          case 'outline': return `color: var(--lotus-color-${color}Dark);`;
+          case 'text': return `color: var(--lotus-color-${color}Dark);`;;
         } break;
-      case TControlState.Pressed:
+      case 'pressed':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case TButtonVariant.Outline: return `color: var(--lotus-color-${color}Darker);`;
-          case TButtonVariant.Text: return `color: var(--lotus-color-${color}Darker);`;;
+          case 'filled': return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
+          case 'outline': return `color: var(--lotus-color-${color}Darker);`;
+          case 'text': return `color: var(--lotus-color-${color}Darker);`;;
         } break;
-      case TControlState.Selected:
-      case TControlState.Focus:
-      case TControlState.Disabled:
+      case 'selected':
+      case 'focus':
+      case 'disabled':
         switch (variant)
         {
-          case TButtonVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case TButtonVariant.Outline: return `color: var(--lotus-color-${color});`;
-          case TButtonVariant.Text: return `color: var(--lotus-color-${color});`;;
+          case 'filled': return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
+          case 'outline': return `color: var(--lotus-color-${color});`;
+          case 'text': return `color: var(--lotus-color-${color});`;;
         } break;
     }
 
@@ -132,40 +132,40 @@ export class ButtonHelper
   {
     switch (size)
     {
-      case TControlSize.Smaller:
+      case 'smaller':
         {
           switch (paddingControl)
           {
-            case TControlPadding.Minimum: return 'padding-left: 0.1rem; padding-right: 0.1rem;'
-            case TControlPadding.Normal: return 'padding-left: 0.2rem; padding-right: 0.2rem;'
-            case TControlPadding.Enlarged: return 'padding-left: 0.35rem; padding-right: 0.35rem;'
+            case 'minimum': return 'padding-left: 0.1rem; padding-right: 0.1rem;'
+            case 'normal': return 'padding-left: 0.2rem; padding-right: 0.2rem;'
+            case 'enlarged': return 'padding-left: 0.35rem; padding-right: 0.35rem;'
           }
         } break;
-      case TControlSize.Small:
+      case 'small':
         {
           switch (paddingControl)
           {
-            case TControlPadding.Minimum: return 'padding-left: 0.15rem; padding-right: 0.15rem;'
-            case TControlPadding.Normal: return 'padding-left: 0.25rem; padding-right: 0.25rem;'
-            case TControlPadding.Enlarged: return 'padding-left: 0.35rem; padding-right: 0.35rem;'
+            case 'minimum': return 'padding-left: 0.15rem; padding-right: 0.15rem;'
+            case 'normal': return 'padding-left: 0.25rem; padding-right: 0.25rem;'
+            case 'enlarged': return 'padding-left: 0.35rem; padding-right: 0.35rem;'
           }
         } break;
-      case TControlSize.Medium:
+      case 'medium':
         {
           switch (paddingControl)
           {
-            case TControlPadding.Minimum: return 'padding-left: 0.2rem; padding-right: 0.2rem;'
-            case TControlPadding.Normal: return 'padding-left: 0.5rem; padding-right: 0.5rem;'
-            case TControlPadding.Enlarged: return 'padding-left: 0.75rem; padding-right: 0.75rem;'
+            case 'minimum': return 'padding-left: 0.2rem; padding-right: 0.2rem;'
+            case 'normal': return 'padding-left: 0.5rem; padding-right: 0.5rem;'
+            case 'enlarged': return 'padding-left: 0.75rem; padding-right: 0.75rem;'
           }
         } break;
-      case TControlSize.Large:
+      case 'large':
         {
           switch (paddingControl)
           {
-            case TControlPadding.Minimum: return 'padding-left: 0.25rem; padding-right: 0.25rem;'
-            case TControlPadding.Normal: return 'padding-left: 0.55rem; padding-right: 0.55rem;'
-            case TControlPadding.Enlarged: return 'padding-left: 0.8rem; padding-right: 0.8rem;'
+            case 'minimum': return 'padding-left: 0.25rem; padding-right: 0.25rem;'
+            case 'normal': return 'padding-left: 0.55rem; padding-right: 0.55rem;'
+            case 'enlarged': return 'padding-left: 0.8rem; padding-right: 0.8rem;'
           }
         } break;
     }

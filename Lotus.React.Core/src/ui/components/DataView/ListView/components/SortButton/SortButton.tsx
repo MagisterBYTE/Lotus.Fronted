@@ -71,7 +71,7 @@ export const SortButton: React.FC<ISortButtonProps> = (props:ISortButtonProps) =
 
   return (
     <>
-      <Button variant={TButtonVariant.Outline} size={TControlSize.Medium} onClick={handleOpenMenu}>
+      <Button variant={'outline'} size={'medium'} onClick={handleOpenMenu}>
         <FaSortAmountDown />
       </Button>
       <Menu 

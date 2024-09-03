@@ -61,7 +61,7 @@ export const DensityButton: React.FC<IDensityButtonProps> = (props: IDensityButt
   }
 
   return (
-    <Button {...buttonProps} variant={TButtonVariant.Filled} size={TControlSize.Large} onClick={handleSetDensity}>
+    <Button {...buttonProps} variant={'filled'} size={'large'} onClick={handleSetDensity}>
       {getIcon()}
     </Button>
   )

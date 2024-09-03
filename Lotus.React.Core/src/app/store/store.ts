@@ -7,7 +7,9 @@ export function makeStoreCore()
   return configureStore({
     reducer: {
       feedback: feedbackSlice.reducer,
-      layout: layoutSlice.reducer
+      layout: layoutSlice.reducer,
+      // @ts-expect-error window
+      window: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     }
   });
 }

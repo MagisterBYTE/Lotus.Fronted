@@ -44,7 +44,7 @@ export const Default: Story = {
 
 export const Caption1: Story = {
   args: {
-    color: TColorType.Secondary,
+    color: 'secondary',
     variant: TTypographyVariant.Body2,
     children: 'Имя персонажа'
   }
