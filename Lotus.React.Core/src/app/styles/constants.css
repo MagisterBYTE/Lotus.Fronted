@@ -83,10 +83,16 @@
 
   /* Границы */
   --lotus-border-color-light: rgb(222, 226, 230);
+  --lotus-border-color-lightAlpha04: rgba(222, 226, 230, 0.4);
   --lotus-border-color-dark: rgb(33, 29, 25);
+  --lotus-border-color-darkAlpha04: rgba(33, 29, 25, 0.4);
   --lotus-border-width: 1px;
   --lotus-border-style: solid;
   --lotus-border-radius: 0.4rem;
+  --lotus-border-radius-smaller: 0.2rem;
+  --lotus-border-radius-small: 0.25rem;
+  --lotus-border-radius-medium: 0.375rem;
+  --lotus-border-radius-large: 0.5rem;
 
   /* Семейство шрифтов */
   --lotus-font-main: 'Verdana', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -106,6 +112,7 @@
 
   /* Цвета границ*/
   --lotus-border-color: var(--lotus-border-color-light);
+  --lotus-border-colorAlpha04: var(--lotus-border-color-lightAlpha04);
 }
 
 [data-theme='dark'] {
@@ -122,4 +129,5 @@
 
   /* Цвета границ*/
   --lotus-border-color: var(--lotus-border-color-dark);
+  --lotus-border-colorAlpha04: var(--lotus-border-color-darkAlpha04);
 }

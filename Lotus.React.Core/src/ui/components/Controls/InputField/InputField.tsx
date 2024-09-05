@@ -31,9 +31,9 @@ export const InputField: React.FC<IInputFieldProps> = (props: IInputFieldProps) 
 
   const inputFieldClass = css`
     ${ThemeHelper.getFontPropsAsText(size)}
-    ${ThemeHelper.getBorderPropsAsText(color, undefined, hasRadius)}
+    ${ThemeHelper.getBorderPropsAsText(undefined, undefined, hasRadius, size)}
     ${ThemeHelper.getTransitionColorsPropsAsText()}
-    ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, true)}
+    ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half')}
     ${InputFieldHelper.getBackgroundProps(color, isBackground)}
     ${InputFieldHelper.getBorderColorProps(color, 'normal')}
       &:hover {

@@ -243,9 +243,10 @@ export class ThemeHelper
    * @param color Цвет
    * @param colorAccent Акцент цвета
    * @param hasRadius Включить радиус
+   * @param size Размер элементе UI для получения оптимального радиуса
    * @returns Свойства CSS по границе в виде CSSProperties
    */
-  public static getBorderPropsAsCSS(color?: TColorType, colorAccent?: TColorAccent, hasRadius?: boolean): CSSProperties
+  public static getBorderPropsAsCSS(color?: TColorType, colorAccent?: TColorAccent, hasRadius?: boolean, size?: TControlSize): CSSProperties
   {
     const borderProps: CSSProperties =
     {
@@ -255,7 +256,14 @@ export class ThemeHelper
 
     if (hasRadius)
     {
-      borderProps.borderRadius = 'var(--lotus-border-radius);'
+      if(size)
+      {
+        borderProps.borderRadius = `var(--lotus-border-radius-${size});`
+      }
+      else
+      {
+        borderProps.borderRadius = 'var(--lotus-border-radius);'
+      }
     }
 
     if (color)
@@ -286,11 +294,12 @@ export class ThemeHelper
    * @param color Цвет
    * @param colorAccent Акцент цвета
    * @param hasRadius Включить радиус
+   * @param size Размер элементе UI для получения оптимального радиуса
    * @returns Свойства CSS по границе в виде текста
    */
-  public static getBorderPropsAsText(color?: TColorType, colorAccent?: TColorAccent, hasRadius?: boolean): string
+  public static getBorderPropsAsText(color?: TColorType, colorAccent?: TColorAccent, hasRadius?: boolean, size?: TControlSize): string
   {
-    const borderProps: string = CssPropertiesHelper.toStr(ThemeHelper.getBorderPropsAsCSS(color, colorAccent, hasRadius));
+    const borderProps: string = CssPropertiesHelper.toStr(ThemeHelper.getBorderPropsAsCSS(color, colorAccent, hasRadius, size));
     return borderProps;
   }
   // #endregion
@@ -462,12 +471,12 @@ export class ThemeHelper
                 if (topBottom == 'normal')
                 {
                   paddingProps.paddingTop = '0.06rem';
-                  paddingProps.paddingBottom = '0.06rem';
+                  paddingProps.paddingBottom = '0.08rem';
                 }
                 if (topBottom == 'half')
                 {
                   paddingProps.paddingTop = '0.06rem';
-                  paddingProps.paddingBottom = '0.06rem';
+                  paddingProps.paddingBottom = '0.08rem';
                 }
                 if (leftRight == 'normal')
                 {
@@ -611,69 +620,69 @@ export class ThemeHelper
               {
                 if (topBottom == 'normal')
                 {
-                  paddingProps.paddingTop = '0.2rem';
-                  paddingProps.paddingBottom = '0.2rem';
+                  paddingProps.paddingTop = '0.25rem';
+                  paddingProps.paddingBottom = '0.25rem';
                 }
                 if (topBottom == 'half')
                 {
-                  paddingProps.paddingTop = '0.12rem';
-                  paddingProps.paddingBottom = '0.12rem';
+                  paddingProps.paddingTop = '0.13rem';
+                  paddingProps.paddingBottom = '0.13rem';
                 }
                 if (leftRight == 'normal')
                 {
-                  paddingProps.paddingLeft = '0.2rem';
-                  paddingProps.paddingRight = '0.2rem';
+                  paddingProps.paddingLeft = '0.25rem';
+                  paddingProps.paddingRight = '0.25rem';
                 }
                 if (leftRight == 'half')
                 {
-                  paddingProps.paddingLeft = '0.12rem';
-                  paddingProps.paddingRight = '0.12rem';
+                  paddingProps.paddingLeft = '0.13rem';
+                  paddingProps.paddingRight = '0.13rem';
                 }
               } break;
             case 'normal':
               {
                 if (topBottom == 'normal')
                 {
-                  paddingProps.paddingTop = '0.5rem';
-                  paddingProps.paddingBottom = '0.5rem';
+                  paddingProps.paddingTop = '0.375rem';
+                  paddingProps.paddingBottom = '0.375rem';
                 }
                 if (topBottom == 'half')
                 {
-                  paddingProps.paddingTop = '0.25rem';
-                  paddingProps.paddingBottom = '0.25rem';
+                  paddingProps.paddingTop = '0.2rem';
+                  paddingProps.paddingBottom = '0.2rem';
                 }
                 if (leftRight == 'normal')
                 {
-                  paddingProps.paddingLeft = '0.5rem';
-                  paddingProps.paddingRight = '0.5rem';
+                  paddingProps.paddingLeft = '0.375rem';
+                  paddingProps.paddingRight = '0.375rem';
                 }
                 if (leftRight == 'half')
                 {
-                  paddingProps.paddingLeft = '0.25rem';
-                  paddingProps.paddingRight = '0.25rem';
+                  paddingProps.paddingLeft = '0.2rem';
+                  paddingProps.paddingRight = '0.2rem';
                 }
               } break;
             case 'enlarged':
               {
                 if (topBottom == 'normal')
                 {
-                  paddingProps.paddingTop = '0.8rem';
-                  paddingProps.paddingBottom = '0.8rem';
+                  paddingProps.paddingTop = '0.55rem';
+                  paddingProps.paddingBottom = '0.55rem';
                 }
                 if (topBottom == 'half')
                 {
-                  paddingProps.paddingTop = '0.4rem';
-                  paddingProps.paddingBottom = '0.4rem';
+                  paddingProps.paddingTop = '0.28rem';
+                  paddingProps.paddingBottom = '0.28rem';
                 }
                 if (leftRight == 'normal')
                 {
-                  paddingProps.paddingLeft = '0.8rem';
-                  paddingProps.paddingRight = '0.8rem';
+                  paddingProps.paddingLeft = '0.55rem';
+                  paddingProps.paddingRight = '0.55rem';
                 }
                 if (leftRight == 'half')
                 {
-                  paddingProps.paddingLeft = '0.4rem';
-                  paddingProps.paddingRight = '0.4rem';
+                  paddingProps.paddingLeft = '0.28rem';
+                  paddingProps.paddingRight = '0.28rem';
                 }
               } break;
           }
@@ -709,8 +718,31 @@ export class ThemeHelper
               {
                 if (topBottom == 'normal')
                 {
-                  paddingProps.paddingTop = '1rem';
-                  paddingProps.paddingBottom = '1rem';
+                  paddingProps.paddingTop = '0.75rem';
+                  paddingProps.paddingBottom = '0.75rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.375rem';
+                  paddingProps.paddingBottom = '0.375rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.75rem';
+                  paddingProps.paddingRight = '0.75rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.375rem';
+                  paddingProps.paddingRight = '0.375rem';
+                }
+              } break;
+            case 'enlarged':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '1.0rem';
+                  paddingProps.paddingBottom = '1.0rem';
                 }
                 if (topBottom == 'half')
                 {
@@ -719,36 +751,13 @@ export class ThemeHelper
                 }
                 if (leftRight == 'normal')
                 {
-                  paddingProps.paddingLeft = '1rem';
-                  paddingProps.paddingRight = '1rem';
+                  paddingProps.paddingLeft = '1.0rem';
+                  paddingProps.paddingRight = '1.0rem';
                 }
                 if (leftRight == 'half')
                 {
                   paddingProps.paddingLeft = '0.5rem';
                   paddingProps.paddingRight = '0.5rem';
-                }
-              } break;
-            case 'enlarged':
-              {
-                if (topBottom == 'normal')
-                {
-                  paddingProps.paddingTop = '1.2rem';
-                  paddingProps.paddingBottom = '1.2rem';
-                }
-                if (topBottom == 'half')
-                {
-                  paddingProps.paddingTop = '0.7rem';
-                  paddingProps.paddingBottom = '0.7rem';
-                }
-                if (leftRight == 'normal')
-                {
-                  paddingProps.paddingLeft = '1.2rem';
-                  paddingProps.paddingRight = '1.2rem';
-                }
-                if (leftRight == 'half')
-                {
-                  paddingProps.paddingLeft = '0.7rem';
-                  paddingProps.paddingRight = '0.7rem';
                 }
               } break;
           }
@@ -847,7 +856,14 @@ export class ThemeHelper
     if(c == 'main') c = 'body';
     if(c == 'body' || c == 'secondary' || c == 'tertiary')
     {
-      return 'var(--lotus-border-color);'
+      if(colorAccent)
+      {
+        return `var(--lotus-border-color${StringHelper.capitalizeFirstLetter(colorAccent)});`
+      }
+      else
+      {
+        return 'var(--lotus-border-color);'
+      }
     }
     else
     {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TColorTypes, TControlPaddings, TControlSizes  } from 'ui/types';
+import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
 import { Panel } from './Panel';
 import { TPanelVariants } from './PanelVariant';
 import { SmallText } from '.storydata/SmallText';

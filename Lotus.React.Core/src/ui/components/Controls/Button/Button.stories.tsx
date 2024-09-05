@@ -76,7 +76,7 @@ export const ButtonIconSvg: Story = {
   args: {
     disabled: true,
     style: { margin: '0px' },
-    children: <img src={hydraulicAnalysisIcon} width='24px' height='24px'/>
+    children: <img src={hydraulicAnalysisIcon} width='24px' height='24px' />
   }
 };
 

@@ -24,8 +24,8 @@ export const Panel = forwardRef<HTMLDivElement, IPanelProps>((props, ref) =>
   ${ThemeHelper.getFontPropsAsText(size)}
   ${ThemeHelper.getForegroundColorForBackAsText(color, 'palest')}
   ${ThemeHelper.getBackgroundColorAsText(color, 'palest')}
-  ${ThemeHelper.getBorderPropsAsText(color, undefined, hasRadius)}
-  ${variant === 'elevation' ? ThemeHelper.getBoxShadowPropsAsText(elevation): ''}
+  ${ThemeHelper.getBorderPropsAsText(color, undefined, hasRadius, size)}
+  ${variant === 'elevation' ? ThemeHelper.getBoxShadowPropsAsText(elevation) : ''}
   ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, 'normal', 'normal')}
 `;
 

@@ -135,8 +135,8 @@ export const InputFieldWithButton: Story = {
   {
     return (
       <HorizontalStack gap='0.5rem' >
-        <InputField labelProps={{ label: 'Введите фамилию' }} size={args.size} color={args.color} paddingControl={args.paddingControl} />
-        <Button children='Отправить' size={args.size} color={args.color} paddingControl={args.paddingControl} />
+        <InputField labelProps={{ label: 'Введите фамилию' }} size={args.size} hasRadius={args.hasRadius} color={args.color} paddingControl={args.paddingControl} />
+        <Button children='Отправить' hasRadius={args.hasRadius} size={args.size} color={args.color} paddingControl={args.paddingControl} />
       </HorizontalStack>
     );
   }

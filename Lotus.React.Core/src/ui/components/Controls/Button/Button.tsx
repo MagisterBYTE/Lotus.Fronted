@@ -24,8 +24,8 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
     cursor: pointer;
     display: inline-block;
     ${ThemeHelper.getFontPropsAsText(size)}
-    ${ThemeHelper.getBorderPropsAsText(undefined, undefined, hasRadius)}
-    ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, (variant == 'icon') ? 'half' : 'normal', 'half')}
+    ${ThemeHelper.getBorderPropsAsText(undefined, undefined, hasRadius, size)}
+    ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, (variant == 'icon' || size == 'large') ? 'half' : 'normal', 'half')}
     ${ThemeHelper.getTransitionColorsPropsAsText()}
     ${ButtonHelper.getBorderColorProps(color, variant, 'normal')}
     ${ButtonHelper.getColorProps(color, variant, 'normal')}
