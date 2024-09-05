@@ -5,6 +5,8 @@ import { CssPropertiesHelper } from 'ui/helpers';
 import { ThemeConstants } from '../constants';
 import { TThemeMode } from '../types';
 
+type TControlPaddingOffset = 'normal' | 'half';
+
 export class ThemeHelper
 {
   // #region Load/Save
@@ -440,9 +442,12 @@ export class ThemeHelper
    * Получить свойства CSS по внутреннему отступу в виде CSSProperties
    * @param size Размере элемента UI
    * @param paddingControl Внутренний отступ
+   * @param leftRight Тип отступа слева/справа
+   * @param topBottom Тип отступа сверху/снизу
    * @returns Свойства CSS по внутреннему отступу в виде CSSProperties
    */
-  public static getPaddingPropsAsCSS(size?: TControlSize, paddingControl?: TControlPadding): CSSProperties
+  public static getPaddingPropsAsCSS(size?: TControlSize, paddingControl?: TControlPadding, leftRight?: TControlPaddingOffset,
+    topBottom?: TControlPaddingOffset): CSSProperties
   {
     const paddingProps: CSSProperties = {}
 
@@ -452,36 +457,300 @@ export class ThemeHelper
         {
           switch (paddingControl)
           {
-            case 'minimum': paddingProps.padding = '0.05rem 0.05rem'; break;
-            case 'normal': paddingProps.padding = '0.15rem 0.15rem'; break;
-            case 'enlarged': paddingProps.padding = '0.25rem 0.25rem'; break;
+            case 'minimum':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.06rem';
+                  paddingProps.paddingBottom = '0.06rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.06rem';
+                  paddingProps.paddingBottom = '0.06rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.06rem';
+                  paddingProps.paddingRight = '0.06rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.06rem';
+                  paddingProps.paddingRight = '0.06rem';
+                }
+              } break;
+            case 'normal':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.15rem';
+                  paddingProps.paddingBottom = '0.15rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.1rem';
+                  paddingProps.paddingBottom = '0.15rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.15rem';
+                  paddingProps.paddingRight = '0.15rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.1rem';
+                  paddingProps.paddingRight = '0.1rem';
+                }
+              } break;
+            case 'enlarged':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.25rem';
+                  paddingProps.paddingBottom = '0.25rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.15rem';
+                  paddingProps.paddingBottom = '0.15rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.25rem';
+                  paddingProps.paddingRight = '0.25rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.15rem';
+                  paddingProps.paddingRight = '0.15rem';
+                }
+              } break;
           }
         } break;
       case 'small':
         {
           switch (paddingControl)
           {
-            case 'minimum': paddingProps.padding = '0.1rem 0.1rem'; break;
-            case 'normal': paddingProps.padding = '0.25rem 0.25rem'; break;
-            case 'enlarged': paddingProps.padding = '0.4rem 0.4rem'; break;
+            case 'minimum':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.12rem';
+                  paddingProps.paddingBottom = '0.12rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.08rem';
+                  paddingProps.paddingBottom = '0.1rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.12rem';
+                  paddingProps.paddingRight = '0.12rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.08rem';
+                  paddingProps.paddingRight = '0.08rem';
+                }
+              } break;
+            case 'normal':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.25rem';
+                  paddingProps.paddingBottom = '0.25rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.15rem';
+                  paddingProps.paddingBottom = '0.175rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.25rem';
+                  paddingProps.paddingRight = '0.25rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.15rem';
+                  paddingProps.paddingRight = '0.15rem';
+                }
+              } break;
+            case 'enlarged':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.4rem';
+                  paddingProps.paddingBottom = '0.4rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.2rem';
+                  paddingProps.paddingBottom = '0.25rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.4rem';
+                  paddingProps.paddingRight = '0.4rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.2rem';
+                  paddingProps.paddingRight = '0.2rem';
+                }
+              } break;
           }
         } break;
       case 'medium':
         {
           switch (paddingControl)
           {
-            case 'minimum': paddingProps.padding = '0.2rem 0.2rem'; break;
-            case 'normal': paddingProps.padding = '0.5rem 0.5rem'; break;
-            case 'enlarged': paddingProps.padding = '0.8rem 0.8rem'; break;
+            case 'minimum':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.2rem';
+                  paddingProps.paddingBottom = '0.2rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.12rem';
+                  paddingProps.paddingBottom = '0.12rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.2rem';
+                  paddingProps.paddingRight = '0.2rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.12rem';
+                  paddingProps.paddingRight = '0.12rem';
+                }
+              } break;
+            case 'normal':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.5rem';
+                  paddingProps.paddingBottom = '0.5rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.25rem';
+                  paddingProps.paddingBottom = '0.25rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.5rem';
+                  paddingProps.paddingRight = '0.5rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.25rem';
+                  paddingProps.paddingRight = '0.25rem';
+                }
+              } break;
+            case 'enlarged':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.8rem';
+                  paddingProps.paddingBottom = '0.8rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.4rem';
+                  paddingProps.paddingBottom = '0.4rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.8rem';
+                  paddingProps.paddingRight = '0.8rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.4rem';
+                  paddingProps.paddingRight = '0.4rem';
+                }
+              } break;
           }
         } break;
       case 'large':
         {
           switch (paddingControl)
           {
-            case 'minimum': paddingProps.padding = '0.5rem 0.5rem'; break;
-            case 'normal': paddingProps.padding = '1rem 1rem'; break;
-            case 'enlarged': paddingProps.padding = '1.5rem 1.5rem'; break;
+            case 'minimum':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '0.5rem';
+                  paddingProps.paddingBottom = '0.5rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.25rem';
+                  paddingProps.paddingBottom = '0.25rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '0.5rem';
+                  paddingProps.paddingRight = '0.5rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.25rem';
+                  paddingProps.paddingRight = '0.25rem';
+                }
+              } break;
+            case 'normal':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '1rem';
+                  paddingProps.paddingBottom = '1rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.5rem';
+                  paddingProps.paddingBottom = '0.5rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '1rem';
+                  paddingProps.paddingRight = '1rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.5rem';
+                  paddingProps.paddingRight = '0.5rem';
+                }
+              } break;
+            case 'enlarged':
+              {
+                if (topBottom == 'normal')
+                {
+                  paddingProps.paddingTop = '1.2rem';
+                  paddingProps.paddingBottom = '1.2rem';
+                }
+                if (topBottom == 'half')
+                {
+                  paddingProps.paddingTop = '0.7rem';
+                  paddingProps.paddingBottom = '0.7rem';
+                }
+                if (leftRight == 'normal')
+                {
+                  paddingProps.paddingLeft = '1.2rem';
+                  paddingProps.paddingRight = '1.2rem';
+                }
+                if (leftRight == 'half')
+                {
+                  paddingProps.paddingLeft = '0.7rem';
+                  paddingProps.paddingRight = '0.7rem';
+                }
+              } break;
           }
         } break;
     }
@@ -493,12 +762,104 @@ export class ThemeHelper
    * Получить свойства CSS по внутреннему отступу в виде текста
    * @param size Размере элемента UI
    * @param paddingControl Внутренний отступ
+   * @param leftRight Тип отступа слева/справа
+   * @param topBottom Тип отступа сверху/снизу
    * @returns Свойства CSS по внутреннему отступу в виде текста
    */
-  public static getPaddingPropsAsText(size?: TControlSize, paddingControl?: TControlPadding): string
+  public static getPaddingPropsAsText(size?: TControlSize, paddingControl?: TControlPadding, leftRight?: TControlPaddingOffset,
+    topBottom?: TControlPaddingOffset): string
   {
-    const paddingProps: string = CssPropertiesHelper.toStr(ThemeHelper.getPaddingPropsAsCSS(size, paddingControl));
+    const paddingProps: string = CssPropertiesHelper.toStr(ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, leftRight, topBottom));
     return paddingProps;
+  }
+  // #endregion
+
+  // #region Get Colors
+  /**
+   * 
+   * @param color 
+   * @param colorAccent 
+   * @returns 
+   */
+  public static getColorVar(color?: TColorType|'tertiary', colorAccent?: TColorAccent):string
+  {
+    if(!color) return 'inherit;'
+
+    let c:string = color;
+    if(c == 'main') c = 'body';
+    if(c == 'body' || c == 'secondary' || c == 'tertiary')
+    {
+      return `var(--lotus-${c}-color);`
+    }
+    else
+    {
+      if(colorAccent)
+      {
+        return `var(--lotus-color-${c}${StringHelper.capitalizeFirstLetter(colorAccent)});`
+      }
+      else
+      {
+        return `var(--lotus-color-${c});`
+      }
+    }
+  }
+
+  /**
+   * 
+   * @param color 
+   * @param colorAccent 
+   * @returns 
+   */
+  public static getBackgroundColorVar(color?: TColorType|'tertiary', colorAccent?: TColorAccent):string
+  {
+    if(!color) return 'inherit;'
+
+    let c:string = color;
+    if(c == 'main') c = 'body';
+    if(c == 'body' || c == 'secondary' || c == 'tertiary')
+    {
+      return `var(--lotus-${c}-bg);`
+    }
+    else
+    {
+      if(colorAccent)
+      {
+        return `var(--lotus-color-${c}${StringHelper.capitalizeFirstLetter(colorAccent)});`
+      }
+      else
+      {
+        return `var(--lotus-color-${c});`
+      }
+    }
+  }
+
+  /**
+   * 
+   * @param color 
+   * @param colorAccent 
+   * @returns 
+   */
+  public static getBorderColorVar(color?: TColorType|'tertiary', colorAccent?: TColorAccent):string
+  {
+    if(!color) return 'inherit;'
+
+    let c:string = color;
+    if(c == 'main') c = 'body';
+    if(c == 'body' || c == 'secondary' || c == 'tertiary')
+    {
+      return 'var(--lotus-border-color);'
+    }
+    else
+    {
+      if(colorAccent)
+      {
+        return `var(--lotus-color-${c}${StringHelper.capitalizeFirstLetter(colorAccent)});`
+      }
+      else
+      {
+        return `var(--lotus-color-${c});`
+      }
+    }
   }
   // #endregion
 

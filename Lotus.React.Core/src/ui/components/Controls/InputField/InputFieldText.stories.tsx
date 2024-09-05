@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TColorType, TControlPadding, TControlSize } from 'ui/types';
 import { TTypographyVariant } from 'ui/components/Display';
 import { HorizontalStack } from 'ui/components/Layout';
+import { TColorTypes, TControlSizes, TControlPaddings } from 'ui/types';
 import { Button } from '../Button';
 import { InputField } from './InputField';
 
@@ -16,17 +16,35 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
+    hasRadius: {
+      control: 'boolean'
+    },
     color: {
-      control: 'select',
-      options: Object.values(TColorType)
+      control: 'inline-radio',
+      options: [...TColorTypes, undefined]
     },
     size: {
-      control: 'select',
-      options: Object.values(TControlSize)
+      control: 'inline-radio',
+      options: [...TControlSizes, undefined]
     },
     paddingControl: {
-      control: 'radio',
-      options: Object.values(TControlPadding)
+      control: 'inline-radio',
+      options: [...TControlPaddings, undefined]
+    },
+    onClick:
+    {
+      table:
+      {
+        disable: true
+      }
+    }
+    ,
+    children:
+    {
+      table:
+      {
+        disable: true
+      }
     }
   }
 

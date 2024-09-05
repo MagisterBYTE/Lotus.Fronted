@@ -1,3 +1,4 @@
+export { type ICommonProps } from './CommonProps'
 export * from './Controls'
 export * from './DataView'
 export * from './Display'

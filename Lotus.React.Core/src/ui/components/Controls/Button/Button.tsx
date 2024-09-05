@@ -1,50 +1,35 @@
-import { css, cx } from '@emotion/css';
-import React, { ComponentPropsWithRef } from 'react';
-import { TColorType, TControlPadding } from 'ui/types';
-import { TControlSize } from 'ui/types/ControlSize';
+import { css } from '@emotion/css';
+import React, { ComponentPropsWithoutRef } from 'react';
 import { ThemeHelper } from 'app/theme/helpers';
 import { ThemeConstants } from 'app/theme/constants';
 import { useRippleEffect } from 'hooks/useRippleEffect';
+import { ICommonProps } from 'ui/components/CommonProps';
 import { ButtonHelper } from './ButtonHelper';
 import { TButtonVariant } from './ButtonVariant';
 
-export interface IButtonProps extends ComponentPropsWithRef<'button'>
+export interface IButtonProps extends Omit<ComponentPropsWithoutRef<'button'>, 'color'>, ICommonProps
 {
-  /**
-   * Цвет
-   */
-  color?: TColorType;
-
-  /**
-   * Размер кнопки
-   */
-  size?: TControlSize;
-
   /**
    * Вариант отображения
    */
   variant?: TButtonVariant;
-
-  /**
-   * Внутренний отступ
-   */
-  paddingControl?: TControlPadding;
 }
 
-export const Button: React.FC<IButtonProps> = ({ color = 'primary', size = 'medium', variant = 'filled',
-  paddingControl = 'normal', ...propsButton }: IButtonProps) =>
+export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
 {
-  const buttonMain = css`
-    ${ThemeHelper.getFontFamilyPropsAsText()}
+  const { hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal', variant = 'filled', ...propsButton } = props
+
+  const buttonClass = css`
     font-weight: bold;
     cursor: pointer;
     display: inline-block;
-    ${ThemeHelper.getBorderPropsAsText()}
-    ${ThemeHelper.getTransitionPropsAsText()}
+    ${ThemeHelper.getFontPropsAsText(size)}
+    ${ThemeHelper.getBorderPropsAsText(undefined, undefined, hasRadius)}
+    ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, (variant == 'icon') ? 'half' : 'normal', 'half')}
+    ${ThemeHelper.getTransitionColorsPropsAsText()}
     ${ButtonHelper.getBorderColorProps(color, variant, 'normal')}
     ${ButtonHelper.getColorProps(color, variant, 'normal')}
     ${ButtonHelper.getBackgroundColorProps(color, variant, 'normal')}
-    ${ButtonHelper.getPaddingSidesProps(size, paddingControl)}
       &:hover {
         ${ButtonHelper.getBorderColorProps(color, variant, 'hover')}
         ${ButtonHelper.getBackgroundColorProps(color, variant, 'hover')}
@@ -62,8 +47,6 @@ export const Button: React.FC<IButtonProps> = ({ color = 'primary', size = 'medi
         ${ThemeHelper.getOpacityPropsForDisabledAsText()}
       }
   `;
-
-  const buttonClass = cx(buttonMain, `lotus-size-${size}-${paddingControl}`);
 
   const [ripple, event] = useRippleEffect({ duration: ThemeConstants.TransitionSpeed, color: 'rgba(255, 255, 255, 0.5)', disabled: propsButton.disabled });
 

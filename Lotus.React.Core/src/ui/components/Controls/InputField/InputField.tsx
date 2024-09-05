@@ -1,31 +1,16 @@
 import React, { ComponentPropsWithRef, ReactNode } from 'react';
-import { TColorType, TControlPadding, TControlSize, TControlState } from 'ui/types';
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/css';
 import { ILabelProps, Label, TypographyHelper } from 'ui/components/Display';
 import { ThemeHelper } from 'app/theme';
+import { ICommonProps } from 'ui/components/CommonProps';
 import { InputFieldHelper } from './InputFieldHelper';
 
-export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, 'size'>
+export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, 'size' | 'color'>, ICommonProps
 {
-  /**
-   * Цвет
-   */
-  color?: TColorType;
-
-  /**
-   * Размер поля
-   */
-  size?: TControlSize;
-
   /**
    * Фон поля
    */
   isBackground?: boolean;
-
-  /**
-   * Внутренний отступ
-   */
-  paddingControl?: TControlPadding;
 
   /**
    * Параметры надписи
@@ -38,13 +23,17 @@ export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, '
   rightElement?: ReactNode;
 }
 
-export const InputField: React.FC<IInputFieldProps> = ({ color = 'primary', isBackground = false, size = 'medium',
-  paddingControl = 'normal', labelProps, ...propsInput }: IInputFieldProps) =>
+export const InputField: React.FC<IInputFieldProps> = (props: IInputFieldProps) =>
 {
-  const InputFieldMain = css`
-    ${ThemeHelper.getFontFamilyPropsAsText()}
-    ${ThemeHelper.getBorderPropsAsText()}
-    ${ThemeHelper.getTransitionPropsAsText()}
+  const { hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    isBackground, labelProps, rightElement, ...propsInput } = props
+
+  const inputFieldClass = css`
+    ${ThemeHelper.getFontPropsAsText(size)}
+    ${ThemeHelper.getBorderPropsAsText(color, undefined, hasRadius)}
+    ${ThemeHelper.getTransitionColorsPropsAsText()}
+    ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, true)}
     ${InputFieldHelper.getBackgroundProps(color, isBackground)}
     ${InputFieldHelper.getBorderColorProps(color, 'normal')}
       &:hover {
@@ -59,16 +48,14 @@ export const InputField: React.FC<IInputFieldProps> = ({ color = 'primary', isBa
         ${ThemeHelper.getOpacityPropsForDisabledAsText()}
       }
   `;
-  const InputFieldClass = cx(InputFieldMain, `lotus-size-${size}-${paddingControl}`);
-
   if (labelProps)
   {
     return <Label {...labelProps} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}>
-      <input type='text' {...propsInput} className={InputFieldClass} />
+      <input type='text' {...propsInput} className={inputFieldClass} />
     </Label>
   }
   else
   {
-    return <input type='text' {...propsInput} className={InputFieldClass} />
+    return <input type='text' {...propsInput} className={inputFieldClass} />
   }
 };

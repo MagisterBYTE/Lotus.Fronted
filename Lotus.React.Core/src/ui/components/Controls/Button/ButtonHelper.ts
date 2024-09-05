@@ -1,4 +1,4 @@
-import { TColorType, TControlPadding, TControlSize, TControlState } from 'ui/types';
+import { TColorType, TControlState } from 'ui/types';
 import { ThemeHelper } from 'app/theme';
 import { TButtonVariant } from './ButtonVariant';
 
@@ -12,36 +12,39 @@ export class ButtonHelper
         {
           switch (variant)
           {
-            case 'filled': return `border-color: var(--lotus-color-${color}Dark);`;
-            case 'outline': return `border-color: var(--lotus-color-${color});`;
+            case 'filled': return `border-color: ${ThemeHelper.getBorderColorVar(color, 'dark')}`;
+            case 'outline': return `border-color: ${ThemeHelper.getBorderColorVar(color)}`;
             case 'text': return 'border: none !important;';
+            case 'icon': return 'border-color: transparent;';
           }
         } break;
       case 'hover':
         switch (variant)
         {
-          case 'filled': return `border-color: var(--lotus-color-${color}Dark);`;
-          case 'outline': return `border-color: var(--lotus-color-${color}Dark);`;
+          case 'filled': return `border-color: ${ThemeHelper.getBorderColorVar(color, 'dark')}`;
+          case 'outline': return `border-color: ${ThemeHelper.getBorderColorVar(color, 'dark')}`;
           case 'text': return 'border: none !important;';
+          case 'icon': return `border-color: ${ThemeHelper.getBorderColorVar(color, 'dark')}`;
         } break;
       case 'pressed':
         switch (variant)
         {
-          case 'filled': return `border-color: var(--lotus-color-${color}Darker);`;
-          case 'outline': return `border-color: var(--lotus-color-${color}Darker);`;
+          case 'filled': return `border-color: ${ThemeHelper.getBorderColorVar(color, 'darker')}`;
+          case 'outline': return `border-color: ${ThemeHelper.getBorderColorVar(color, 'darker')}`;
           case 'text': return 'border: none !important;';
+          case 'icon': return `border-color: ${ThemeHelper.getBorderColorVar(color, 'darker')}`;
         } break;
       case 'selected':
       case 'focus':
       case 'disabled':
         switch (variant)
         {
-          case 'filled': return `border-color: var(--lotus-color-${color}Dark);`;
-          case 'outline': return `border-color: var(--lotus-color-${color});`;
+          case 'filled': return `border-color: ${ThemeHelper.getBorderColorVar(color, 'dark')}`;
+          case 'outline': return `border-color: ${ThemeHelper.getBorderColorVar(color)}`;
           case 'text': return 'border: none !important;';
+          case 'icon': return 'border-color: transparent;';
         } break;
     }
-
 
     return ''
   }
@@ -54,33 +57,37 @@ export class ButtonHelper
         {
           switch (variant)
           {
-            case 'filled': return `background-color: var(--lotus-color-${color});`;
-            case 'outline': return `background-color: var(--lotus-color-${'light'});`;
-            case 'text': return `background-color: var(--lotus-color-${'light'});`;
+            case 'filled': return `background-color: ${ThemeHelper.getBackgroundColorVar(color)}`;
+            case 'outline': return `background-color: var(--lotus-body-${'bg'});`;
+            case 'text': return `background-color: var(--lotus-body-${'bg'});`;
+            case 'icon': return 'background-color: transparent;';
           }
         } break;
       case 'hover':
         switch (variant)
         {
-          case 'filled': return `background-color: var(--lotus-color-${color}Dark);`;
-          case 'outline': return `background-color: var(--lotus-color-${color}Palest);`;
-          case 'text': return `background-color: var(--lotus-color-${color}Palest);`;
+          case 'filled': return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'dark')}`;
+          case 'outline': return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'palest')}`;
+          case 'text': return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'palest')}`;
+          case 'icon': return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'palest')}`;
         } break;
       case 'pressed':
         switch (variant)
         {
-          case 'filled': return `background-color: var(--lotus-color-${color}Darker);`;
-          case 'outline': return `background-color: var(--lotus-color-${color}Palest);`;
-          case 'text': return `background-color: var(--lotus-color-${color}Palest);`;
+          case 'filled': return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'darker')}`;
+          case 'outline': return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'palest')}`;
+          case 'text': return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'palest')}`;
+          case 'icon': return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'palest')}`;
         } break;
       case 'selected':
       case 'focus':
       case 'disabled':
         switch (variant)
         {
-          case 'filled': return `background-color: var(--lotus-color-${color});`;
-          case 'outline': return `background-color: var(--lotus-color-${'light'});`;
-          case 'text': return `background-color: var(--lotus-color-${'light'});`;
+          case 'filled': return `background-color: ${ThemeHelper.getBackgroundColorVar(color)}`;
+          case 'outline': return `background-color: var(--lotus-body-${'color'});`;
+          case 'text': return `background-color: var(--lotus-body-${'bg'});`;
+          case 'icon': return 'background-color: transparent;';
         } break;
     }
 
@@ -95,78 +102,37 @@ export class ButtonHelper
         {
           switch (variant)
           {
-            case 'filled': return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-            case 'outline': return `color: var(--lotus-color-${color});`;
-            case 'text': return `color: var(--lotus-color-${color});`;
+            case 'filled': return ThemeHelper.getForegroundColorForBackAsText(color);
+            case 'outline': return `color: ${ThemeHelper.getColorVar(color)}`;
+            case 'text': return `color: ${ThemeHelper.getColorVar(color)}`;
+            case 'icon': return 'color: none !important;';
           }
         } break;
       case 'hover':
         switch (variant)
         {
-          case 'filled': return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case 'outline': return `color: var(--lotus-color-${color}Dark);`;
-          case 'text': return `color: var(--lotus-color-${color}Dark);`;;
+          case 'filled': return ThemeHelper.getForegroundColorForBackAsText(color);
+          case 'outline': return `color: ${ThemeHelper.getColorVar(color, 'dark')}`;
+          case 'text': return `color: ${ThemeHelper.getColorVar(color, 'dark')}`;
+          case 'icon': return 'color: none !important;';
         } break;
       case 'pressed':
         switch (variant)
         {
-          case 'filled': return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case 'outline': return `color: var(--lotus-color-${color}Darker);`;
-          case 'text': return `color: var(--lotus-color-${color}Darker);`;;
+          case 'filled': return ThemeHelper.getForegroundColorForBackAsText(color);
+          case 'outline': return `color: ${ThemeHelper.getColorVar(color, 'darker')}`;
+          case 'text': return `color: ${ThemeHelper.getColorVar(color, 'darker')}`;
+          case 'icon': return 'color: none !important;';
         } break;
       case 'selected':
       case 'focus':
       case 'disabled':
         switch (variant)
         {
-          case 'filled': return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case 'outline': return `color: var(--lotus-color-${color});`;
-          case 'text': return `color: var(--lotus-color-${color});`;;
-        } break;
-    }
-
-    return ''
-  }
-
-  public static getPaddingSidesProps(size: TControlSize, paddingControl: TControlPadding): string
-  {
-    switch (size)
-    {
-      case 'smaller':
-        {
-          switch (paddingControl)
-          {
-            case 'minimum': return 'padding-left: 0.1rem; padding-right: 0.1rem;'
-            case 'normal': return 'padding-left: 0.2rem; padding-right: 0.2rem;'
-            case 'enlarged': return 'padding-left: 0.35rem; padding-right: 0.35rem;'
-          }
-        } break;
-      case 'small':
-        {
-          switch (paddingControl)
-          {
-            case 'minimum': return 'padding-left: 0.15rem; padding-right: 0.15rem;'
-            case 'normal': return 'padding-left: 0.25rem; padding-right: 0.25rem;'
-            case 'enlarged': return 'padding-left: 0.35rem; padding-right: 0.35rem;'
-          }
-        } break;
-      case 'medium':
-        {
-          switch (paddingControl)
-          {
-            case 'minimum': return 'padding-left: 0.2rem; padding-right: 0.2rem;'
-            case 'normal': return 'padding-left: 0.5rem; padding-right: 0.5rem;'
-            case 'enlarged': return 'padding-left: 0.75rem; padding-right: 0.75rem;'
-          }
-        } break;
-      case 'large':
-        {
-          switch (paddingControl)
-          {
-            case 'minimum': return 'padding-left: 0.25rem; padding-right: 0.25rem;'
-            case 'normal': return 'padding-left: 0.55rem; padding-right: 0.55rem;'
-            case 'enlarged': return 'padding-left: 0.8rem; padding-right: 0.8rem;'
-          }
+          case 'filled': return ThemeHelper.getForegroundColorForBackAsText(color);
+          case 'outline': return `color: ${ThemeHelper.getColorVar(color)}`;
+          case 'text': return `color: ${ThemeHelper.getColorVar(color)}`;
+          case 'icon': return 'color: none !important;';
         } break;
     }
 

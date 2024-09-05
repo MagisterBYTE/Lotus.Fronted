@@ -1,31 +1,11 @@
-import React, { ComponentPropsWithoutRef } from 'react';
-import { TColorType, TControlPadding, TControlSize } from 'ui/types';
+import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { css } from '@emotion/css';
 import { ThemeHelper } from 'app/theme';
+import { ICommonProps } from 'ui/components/CommonProps';
 import { TPanelVariant } from './PanelVariant';
 
-export interface IPanelProps extends ComponentPropsWithoutRef<'div'>
+export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'color'>, ICommonProps
 {
-  /**
-   * Радиус скругления
-   */
-  hasRadius?: boolean;
-
-  /**
-   * Размер панели
-   */
-  size?: TControlSize;
-  
-  /**
-   * Цвет
-   */
-  color?: TColorType;
-
-  /**
-   * Внутренний отступ
-   */
-  paddingControl?: TControlPadding;
-
   /**
    * Вариант отображения
    */
@@ -37,7 +17,7 @@ export interface IPanelProps extends ComponentPropsWithoutRef<'div'>
   elevation?: number;
 }
 
-export const Panel: React.FC<IPanelProps> = (props: IPanelProps) => 
+export const Panel = forwardRef<HTMLDivElement, IPanelProps>((props, ref) => 
 {
   const { hasRadius, size = 'medium', color = 'main', paddingControl = 'normal', variant = 'outlined', elevation = 2, ...divProps } = props;
   const panelClass = css`
@@ -46,8 +26,8 @@ export const Panel: React.FC<IPanelProps> = (props: IPanelProps) =>
   ${ThemeHelper.getBackgroundColorAsText(color, 'palest')}
   ${ThemeHelper.getBorderPropsAsText(color, undefined, hasRadius)}
   ${variant === 'elevation' ? ThemeHelper.getBoxShadowPropsAsText(elevation): ''}
-  ${ThemeHelper.getPaddingPropsAsText(size, paddingControl)}
+  ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, 'normal', 'normal')}
 `;
 
-  return <div {...divProps} className={panelClass}>{divProps.children}</div>;
-};
+  return <div ref={ref} {...divProps} className={panelClass}>{divProps.children}</div>;
+})

@@ -88,24 +88,7 @@
   --lotus-border-style: solid;
   --lotus-border-radius: 0.4rem;
 
-  /* Размеры внутренних отступов - Минимальный */
-  --lotus-padding-minimum-smaller: 0.05rem 0.05rem;
-  --lotus-padding-minimum-small: 0.1rem 0.1rem;
-  --lotus-padding-minimum-medium: 0.15rem 0.15rem;
-  --lotus-padding-minimum-large: 0.2rem 0.2rem;
-
-  /* Размеры внутренних отступов - Стандартный */
-  --lotus-padding-normal-smaller: 0.1rem 0.1rem;
-  --lotus-padding-normal-small: 0.2rem 0.2rem;
-  --lotus-padding-normal-medium: 0.3rem 0.3rem;
-  --lotus-padding-normal-large: 0.4rem 0.4rem;
-
-  /* Размеры внутренних отступов - Увеличенный */
-  --lotus-padding-enlarged-smaller: 0.25rem 0.25rem;
-  --lotus-padding-enlarged-small: 0.4rem 0.4rem;
-  --lotus-padding-enlarged-medium: 0.55rem 0.55rem;
-  --lotus-padding-enlarged-large: 0.7rem 0.7rem;
-
+  /* Семейство шрифтов */
   --lotus-font-main: 'Verdana', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
