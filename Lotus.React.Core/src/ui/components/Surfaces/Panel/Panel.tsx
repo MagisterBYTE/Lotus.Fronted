@@ -2,8 +2,8 @@ import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { css } from '@emotion/css';
 import { ThemeHelper } from 'app/theme';
 import { IGeneralPropertiesElements } from 'ui/components/GeneralPropertiesElements';
-import { TPanelVariant } from './PanelVariant';
 import { TColorAccent } from 'ui/types';
+import { TPanelVariant } from './PanelVariant';
 
 export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'color'>, IGeneralPropertiesElements
 {

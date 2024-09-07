@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TColorType } from 'ui/types';
 import { VerticalStack } from 'ui/components/Layout';
+import { TColorTypes } from 'ui/types';
 import { Typography } from './Typography';
-import { TTypographyVariant } from './TypographyVariant';
+import { TTypographyEffects } from './TypographyEffect';
+import { TTypographyVariants } from './TypographyVariant';
 
 const meta = {
   title: 'Display/Typography',
@@ -16,12 +17,16 @@ const meta = {
 
   argTypes: {
     color: {
-      control: 'select',
-      options: Object.values(TColorType)
+      control: 'inline-radio',
+      options: [...TColorTypes, undefined]
     },
     variant: {
-      control: 'select',
-      options: Object.values(TTypographyVariant)
+      control: 'inline-radio',
+      options: [...TTypographyVariants, undefined]
+    },
+    effect: {
+      control: 'inline-radio',
+      options: [...TTypographyEffects, undefined]
     }
   },
 
@@ -33,7 +38,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    variant: TTypographyVariant.Body1,
+    variant: 'body1',
     color: undefined,
     children: `Активная матрица на органических светодиодах (Active Matrix Organic Light-Emitting Diode, AMOLED) — 
     технология создания дисплеев для мобильных устройств, компьютерных мониторов и телевизоров, созданная конгломератом Samsung. 
@@ -45,7 +50,7 @@ export const Default: Story = {
 export const Caption1: Story = {
   args: {
     color: 'secondary',
-    variant: TTypographyVariant.Body2,
+    variant: 'body2',
     children: 'Имя персонажа'
   }
 };
@@ -56,16 +61,16 @@ export const AllTypography: Story = {
   {
     return (
       <VerticalStack alignItems='flex-start' gap='0.5rem' fullWidth={true}>
-        <Typography variant={TTypographyVariant.Heading3} children='Heading3' />
-        <Typography variant={TTypographyVariant.Heading4} children='Heading4' />
-        <Typography variant={TTypographyVariant.Heading5} children='Heading5' />
-        <Typography variant={TTypographyVariant.Heading6} children='Heading6' />
-        <Typography variant={TTypographyVariant.TitleLarge} children='TitleLarge' />
-        <Typography variant={TTypographyVariant.TitleMedium} children='TitleMedium' />
-        <Typography variant={TTypographyVariant.TitleSmall} children='TitleSmall' />
-        <Typography variant={TTypographyVariant.TitleSmaller} children='TitleSmaller' />
-        <Typography variant={TTypographyVariant.Body1} children='Активной матрицы из тонкоплёночных транзисторов (TFT) для управления светодиодами' />
-        <Typography variant={TTypographyVariant.Body2} children='Активной матрицы из тонкоплёночных транзисторов (TFT) для управления светодиодами' />
+        <Typography variant='h3' children='Heading3' />
+        <Typography variant='h4' children='Heading4' />
+        <Typography variant='h5' children='Heading5' />
+        <Typography variant='h6' children='Heading6' />
+        <Typography variant='large' children='TitleLarge' />
+        <Typography variant='medium' children='TitleMedium' />
+        <Typography variant='small' children='TitleSmall' />
+        <Typography variant='smaller' children='TitleSmaller' />
+        <Typography variant='body1' children='Активной матрицы из тонкоплёночных транзисторов (TFT) для управления светодиодами' />
+        <Typography variant='body2' children='Активной матрицы из тонкоплёночных транзисторов (TFT) для управления светодиодами' />
       </VerticalStack>
     );
   }

@@ -30,7 +30,7 @@ export const Label: React.FC<ILabelProps> = (
   {
     label,
     color,
-    variant = TTypographyVariant.TitleMedium,
+    variant = 'medium',
     isTopLabel,
     ...propsLabel
   }: ILabelProps) => 

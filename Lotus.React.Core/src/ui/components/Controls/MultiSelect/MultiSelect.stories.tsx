@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
 import { HorizontalStack } from 'ui/components/Layout';
-import { TTypographyVariant } from 'ui/components/Display/Typography';
 import { InputField } from '../InputField';
 import { Button } from '../Button';
 import { SelectOptionsIconsBase, SelectOptionsIconsSvg, SelectOptionsText } from '../../../../.storydata/SelectOptionsData';
@@ -101,14 +100,14 @@ export const IconsBase: Story = {
 
 export const LabelLeft: Story = {
   args: {
-    labelProps: { label: 'Фамилия', variant: TTypographyVariant.TitleMedium, isTopLabel: false },
+    labelProps: { label: 'Фамилия', variant: 'medium', isTopLabel: false },
     options: SelectOptionsText
   }
 };
 
 export const LabelTop: Story = {
   args: {
-    labelProps: { label: 'Фамилия', variant: TTypographyVariant.TitleMedium, isTopLabel: true, style: { marginLeft: '0.4rem' } },
+    labelProps: { label: 'Фамилия', variant: 'medium', isTopLabel: true, style: { marginLeft: '0.4rem' } },
     options: SelectOptionsText
   }
 };

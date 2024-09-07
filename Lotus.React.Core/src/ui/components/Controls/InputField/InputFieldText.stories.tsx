@@ -57,7 +57,7 @@ export const LabelTop: Story = {
   args: {
     color: 'primary',
     placeholder: 'Введите текст',
-    labelProps: { label: 'Имя', variant: TTypographyVariant.TitleMedium, isTopLabel: true }
+    labelProps: { label: 'Имя', variant: 'medium', isTopLabel: true }
   }
 };
 
@@ -67,7 +67,7 @@ export const LabelLeft: Story = {
     color: 'primary',
     isBackground: true,
     placeholder: 'Введите текст',
-    labelProps: { label: 'Фамилия', variant: TTypographyVariant.TitleMedium, isTopLabel: false }
+    labelProps: { label: 'Фамилия', variant: 'medium', isTopLabel: false }
   }
 };
 

@@ -53,20 +53,20 @@ export const AppHeader: React.FC<IAppHeaderProps> = (props: IAppHeaderProps) =>
     </header>}
   <Dialog ref={refDialog}>
     <VerticalStack>
-      <Typography variant={TTypographyVariant.Heading5}>
+      <Typography variant={'h5'}>
             Настройки макета сайта
       </Typography>
-      <Typography variant={TTypographyVariant.Heading6}>
+      <Typography variant={'h6'}>
             Заголовок
       </Typography>
       <HorizontalStack fullWidth>
-        <Typography style={{flexGrow: '1'}} variant={TTypographyVariant.TitleMedium}>
+        <Typography style={{flexGrow: '1'}} variant={'medium'}>
             Показать
         </Typography>
         <Switch onChange={handleVisibleHeader}/>
       </HorizontalStack>
       <HorizontalStack fullWidth>
-        <Typography style={{flexGrow: '1'}} variant={TTypographyVariant.TitleMedium}>
+        <Typography style={{flexGrow: '1'}} variant={'medium'}>
             Прилипать к верху
         </Typography>
         <Switch onChange={handleVisibleHeader}/>

@@ -216,10 +216,10 @@ export const Default: Story = {
           persons.map((person, index)=>
           {
             return (<VerticalStack style={{ minWidth: 280, margin: 2 }}>
-              <Typography key={index} variant={TTypographyVariant.TitleLarge} >
+              <Typography key={index} variant={'large'} >
                 {person.name}
               </Typography>
-              <Typography key={index} variant={TTypographyVariant.TitleLarge} >
+              <Typography key={index} variant={'large'} >
                 {person.surname}
               </Typography>
             </VerticalStack>)

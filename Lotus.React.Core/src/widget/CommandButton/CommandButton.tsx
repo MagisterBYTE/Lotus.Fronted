@@ -67,7 +67,7 @@ export const CommandButton: React.FC<ICommandButtonProps> = (props:ICommandButto
         return (<Button variant={'text'} style={{margin: 4, width: '90%'}} {...propsButton} disabled={!command.canExecute()} onClick={handleClick}>
           <HorizontalStack gap='0.5rem' alignItems='center'>
             {command.icon}
-            <Typography variant={TTypographyVariant.TitleMedium}>{command.label}</Typography>  
+            <Typography variant={'medium'}>{command.label}</Typography>  
           </HorizontalStack>
         </Button>)
       }

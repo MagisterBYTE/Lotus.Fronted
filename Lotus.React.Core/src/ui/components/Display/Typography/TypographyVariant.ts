@@ -1,55 +1,6 @@
 /**
  * Вариант отображения текста 
  */
-export enum TTypographyVariant 
-{
-  /**
-   * Заголовок 3 уровня
-   */
-  Heading3 = 'h3',
+export type TTypographyVariant =  'h3' | 'h4' | 'h5' | 'h6' | 'large' | 'medium' | 'small' | 'smaller' | 'body1' | 'body2';
 
-  /**
-   * Заголовок 4 уровня
-   */
-  Heading4 = 'h4',
-
-  /**
-   * Заголовок 5 уровня
-   */
-  Heading5 = 'h5',
-
-  /**
-   * Заголовок 6 уровня
-   */
-  Heading6 = 'h6',
-
-  /**
-   * Подзаголовок 1 уровня
-   */
-  TitleLarge = 'large',
-
-  /**
-   * Подзаголовок 2 уровня
-   */
-  TitleMedium = 'medium',
-
-  /**
-   * Подзаголовок 3 уровня
-   */
-  TitleSmall = 'small',
-
-  /**
-   * Подзаголовок 4 уровня
-   */
-  TitleSmaller = 'smaller',
-
-  /**
-   * Основной текст вариант 1
-   */
-  Body1 = 'body1',
-
-  /**
-   * Основной текст вариант 2
-   */
-  Body2 = 'body2',
-}
+export const TTypographyVariants:TTypographyVariant[] =  ['h3', 'h4', 'h5', 'h6', 'large', 'medium', 'small', 'smaller', 'body1', 'body2'];
