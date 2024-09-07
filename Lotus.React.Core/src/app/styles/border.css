@@ -2,7 +2,6 @@
   border-width: var(--lotus-border-width);
   border-style: var(--lotus-border-style);
   border-radius: var(--lotus-border-radius);
-  border-color: var(--lotus-border-color);
 }
 
 .lotus-border .lotus-border-primary {

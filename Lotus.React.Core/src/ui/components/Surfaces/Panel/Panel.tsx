@@ -1,10 +1,11 @@
 import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { css } from '@emotion/css';
 import { ThemeHelper } from 'app/theme';
-import { ICommonProps } from 'ui/components/CommonProps';
+import { IGeneralPropertiesElements } from 'ui/components/GeneralPropertiesElements';
 import { TPanelVariant } from './PanelVariant';
+import { TColorAccent } from 'ui/types';
 
-export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'color'>, ICommonProps
+export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'color'>, IGeneralPropertiesElements
 {
   /**
    * Вариант отображения
@@ -19,11 +20,14 @@ export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'colo
 
 export const Panel = forwardRef<HTMLDivElement, IPanelProps>((props, ref) => 
 {
-  const { hasRadius, size = 'medium', color = 'main', paddingControl = 'normal', variant = 'outlined', elevation = 2, ...divProps } = props;
+  const { hasRadius, size = 'medium', color, paddingControl = 'normal', variant = 'outlined', elevation = 2, ...divProps } = props;
+
+  const colorAccent:TColorAccent|undefined = (color == 'main' || color == 'secondary') ? undefined : 'palest'; 
+
   const panelClass = css`
   ${ThemeHelper.getFontPropsAsText(size)}
-  ${ThemeHelper.getForegroundColorForBackAsText(color, 'palest')}
-  ${ThemeHelper.getBackgroundColorAsText(color, 'palest')}
+  ${ThemeHelper.getForegroundColorForBackAsText(color, colorAccent)}
+  ${ThemeHelper.getBackgroundColorAsText(color, colorAccent)}
   ${ThemeHelper.getBorderPropsAsText(color, undefined, hasRadius, size)}
   ${variant === 'elevation' ? ThemeHelper.getBoxShadowPropsAsText(elevation) : ''}
   ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, 'normal', 'normal')}

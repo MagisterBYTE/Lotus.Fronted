@@ -1,5 +1,5 @@
 import { ThemeHelper } from 'app/theme';
-import { TColorType, TControlState } from 'ui/types';
+import { TColorAccent, TColorType, TControlState } from 'ui/types';
 
 export class InputFieldHelper
 {
@@ -8,16 +8,16 @@ export class InputFieldHelper
     switch (state)
     {
       case 'normal':
-        return `border-color: ${ThemeHelper.getBorderColorVar(color)}`
+        return `border-color: ${ThemeHelper.getBorderPropsAsCSS(color).borderColor}`
       case 'hover':
-        return `border-color:  ${ThemeHelper.getBorderColorVar(color)}`
+        return `border-color:  ${ThemeHelper.getBorderPropsAsCSS(color).borderColor}`
       case 'pressed':
-        return `border-color: ${ThemeHelper.getBorderColorVar(color)}`
+        return `border-color: ${ThemeHelper.getBorderPropsAsCSS(color).borderColor}`
       case 'selected':
       case 'focus':
-        return `border-color: ${ThemeHelper.getBorderColorVar(color)} box-shadow: 0px 0px 0px 3px ${ThemeHelper.getBorderColorVar(color, 'alpha04')}`
+        return `border-color: ${ThemeHelper.getBorderPropsAsCSS(color).borderColor} ${ThemeHelper.getBorderShadowPropsAsText(color)}`
       case 'disabled':
-        return `border-color: var(--lotus-color-${'border'});`
+        return `border-color:  ${ThemeHelper.getBorderPropsAsCSS(color).borderColor}`
     }
 
     return ''
@@ -27,7 +27,8 @@ export class InputFieldHelper
   {
     if (isBackground && isBackground === true)
     {
-      return `background-color: ${ThemeHelper.getBackgroundColorVar(color, 'palest')}`
+      const colorAccent:TColorAccent|undefined = (color == 'main' || color == 'secondary') ? undefined : 'palest'; 
+      return `background-color: ${ThemeHelper.getBackgroundColorAsCSS(color, colorAccent).backgroundColor}`
     }
 
     return ''

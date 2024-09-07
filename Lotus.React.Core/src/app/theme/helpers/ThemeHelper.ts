@@ -1,6 +1,6 @@
-import { TColorAccent, TColorType, TControlPadding, TControlSize, TCssFontSize } from 'ui/types';
+import { TColorAccent, TColorType, TControlPadding, TControlSize, TControlState, TCssFontSize } from 'ui/types';
 import { CSSProperties } from 'react';
-import { StringHelper } from 'lotus-core';
+import { NumberHelper, StringHelper } from 'lotus-core';
 import { CssPropertiesHelper } from 'ui/helpers';
 import { ThemeConstants } from '../constants';
 import { TThemeMode } from '../types';
@@ -50,8 +50,18 @@ export class ThemeHelper
     {
       switch (color)
       {
-        case 'main': return { color: 'var(--lotus-body-color);' };
-        case 'secondary': return { color: 'var(--lotus-secondary-color);' };
+        case 'main': 
+        case 'secondary':
+          {
+            if (colorAccent)
+            {
+              return { color: `var(--lotus-color-${color}Color${StringHelper.capitalizeFirstLetter(colorAccent)});` };
+            }
+            else
+            {
+              return { color: `var(--lotus-color-${color}Color);` };
+            }
+          }break;
         default:
         {
           if (colorAccent)
@@ -93,11 +103,33 @@ export class ThemeHelper
     {
       case 'main':
       {
-        return { color: 'var(--lotus-body-color)' }
+        switch (colorAccent)
+        {
+          case 'palest': return { color: 'var(--lotus-color-mainColorLight)' }
+          case 'lighter': return { color: 'var(--lotus-color-mainColorLight)' }
+          case 'light': return { color: 'var(--lotus-color-mainColorLight)' }
+          case 'dark': return { color: 'var(--lotus-color-mainColor)' }
+          case 'darker': return { color: 'var(--lotus-color-mainColor)' }
+          case 'alpha02': return { color: 'var(--lotus-color-mainColor)' }
+          case 'alpha04': return { color: 'var(--lotus-color-mainColor)' }
+          case 'alpha08': return { color: 'var(--lotus-color-mainColor)' }
+          default: return { color: 'var(--lotus-color-mainColor)' }
+        };
       }
       case 'secondary':
       {
-        return { color: 'var(--lotus-secondary-color)' }
+        switch (colorAccent)
+        {
+          case 'palest': return { color: 'var(--lotus-color-secondaryColorLight)' }
+          case 'lighter': return { color: 'var(--lotus-color-secondaryColorLight)' }
+          case 'light': return { color: 'var(--lotus-color-secondaryColorLight)' }
+          case 'dark': return { color: 'var(--lotus-color-secondaryColor)' }
+          case 'darker': return { color: 'var(--lotus-color-secondaryColor)' }
+          case 'alpha02': return { color: 'var(--lotus-color-secondaryColor)' }
+          case 'alpha04': return { color: 'var(--lotus-color-secondaryColor)' }
+          case 'alpha08': return { color: 'var(--lotus-color-secondaryColor)' }
+          default: return { color: 'var(--lotus-color-secondaryColor)' }
+        };
       }
       case 'primary':
       {
@@ -199,23 +231,99 @@ export class ThemeHelper
    * @param colorAccent Акцент цвета
    * @returns Свойства CSS по цвету фона в виде CSSProperties
    */
-  public static getBackgroundColorAsCSS(color?: TColorType, colorAccent?: TColorAccent): CSSProperties
+  public static getBackgroundColorAsCSS(color?: TColorType, colorAccent?: TColorAccent, state?:TControlState): CSSProperties
   {
     if (color)
     {
       switch (color)
       {
-        case 'main': return { backgroundColor: 'var(--lotus-body-bg);' };
-        case 'secondary': return { backgroundColor: 'var(--lotus-secondary-bg);' };
+        case 'main': 
+        case 'secondary':
+          {
+            if(state)
+            {
+              switch(state)
+              {
+                case 'normal':
+                {
+                  return { backgroundColor: `var(--lotus-color-${color}Bg);` };
+                }
+                case 'hover':
+                {
+                  return { backgroundColor: `var(--lotus-color-${color}BgLighter);` };
+                }
+                case 'pressed':
+                {
+                  return { backgroundColor: `var(--lotus-color-${color}BgDarker);` };
+                }
+                case 'selected':
+                {
+                  return { backgroundColor: `var(--lotus-color-${color}BgDark);` };
+                }
+                case 'focus':
+                {
+                  return { backgroundColor: `var(--lotus-color-${color}BgDarker);` };
+                }
+                case 'disabled':
+                {
+                  return { backgroundColor: `var(--lotus-color-${color}Bg);` };
+                }
+              }
+            }
+            else
+            {
+              if (colorAccent)
+              {
+                return { backgroundColor: `var(--lotus-color-${color}Bg${StringHelper.capitalizeFirstLetter(colorAccent)});` };
+              }
+              else
+              {
+                return { backgroundColor: `var(--lotus-color-${color}Bg);` };
+              }
+            }
+          }break;
         default:
         {
-          if (colorAccent)
+          if(state)
           {
-            return { backgroundColor: `var(--lotus-color-${color}${StringHelper.capitalizeFirstLetter(colorAccent)});` };
+            switch(state)
+            {
+              case 'normal':
+              {
+                return { backgroundColor: `var(--lotus-color-${color});` };
+              }
+              case 'hover':
+              {
+                return { backgroundColor: `var(--lotus-color-${color}Lighter);` };
+              }
+              case 'pressed':
+              {
+                return { backgroundColor: `var(--lotus-color-${color}Dark);` };
+              }
+              case 'selected':
+              {
+                return { backgroundColor: `var(--lotus-color-${color});` };
+              }
+              case 'focus':
+              {
+                return { backgroundColor: `var(--lotus-color-${color}Dark);` };
+              }
+              case 'disabled':
+              {
+                return { backgroundColor: `var(--lotus-color-${color});` };
+              }
+            }
           }
           else
           {
-            return { backgroundColor: `var(--lotus-color-${color});` };
+            if (colorAccent)
+            {
+              return { backgroundColor: `var(--lotus-color-${color}${StringHelper.capitalizeFirstLetter(colorAccent)});` };
+            }
+            else
+            {
+              return { backgroundColor: `var(--lotus-color-${color});` };
+            }
           }
         }
       }
@@ -270,8 +378,18 @@ export class ThemeHelper
     {
       switch (color)
       {
-        case 'main': borderProps.borderColor = 'var(--lotus-border-color);'; break;
-        case 'secondary': borderProps.borderColor = 'var(--lotus-border-color);'; break;
+        case 'main': 
+        case 'secondary': 
+          {
+            if(colorAccent)
+            {
+              borderProps.borderColor = `var(--lotus-color-${color}Color${StringHelper.capitalizeFirstLetter(colorAccent)});`; break;
+            }
+            else
+            {
+              borderProps.borderColor = `var(--lotus-color-${color}ColorAlpha04);`; break;
+            }
+          }break;
         default:
         {
           if (colorAccent)
@@ -301,6 +419,29 @@ export class ThemeHelper
   {
     const borderProps: string = CssPropertiesHelper.toStr(ThemeHelper.getBorderPropsAsCSS(color, colorAccent, hasRadius, size));
     return borderProps;
+  }
+  // #endregion
+
+  // #region BorderShadow
+  /**
+   * Получить свойства CSS по тени для границы в виде CSSProperties
+   * @param color Цвет
+   * @returns Свойства CSS по тени для границы в виде CSSProperties
+   */
+  public static getBorderShadowPropsAsCSS(color?: TColorType): CSSProperties
+  {
+    return {boxShadow: `0px 0px 3px 3px ${ThemeHelper.getBorderPropsAsCSS(color, 'alpha04').borderColor}`}
+  }
+
+  /**
+   * Получить свойства CSS по тени для границы в виде текста
+   * @param color Цвет
+   * @returns Свойства CSS по тени для границы в виде текста
+   */
+  public static getBorderShadowPropsAsText(color?: TColorType): string
+  {
+    const boxShadowProps: string = CssPropertiesHelper.toStr(ThemeHelper.getBorderShadowPropsAsCSS(color));
+    return boxShadowProps;
   }
   // #endregion
 
@@ -783,101 +924,101 @@ export class ThemeHelper
   }
   // #endregion
 
-  // #region Get Colors
+  // #region ControlSize
   /**
-   * 
-   * @param color 
-   * @param colorAccent 
-   * @returns 
+   * Конвертация размера элемента UI в высоту в rem
+   * @param size Размере элемента UI
+   * @returns Соответствующий размер высоты в rem
    */
-  public static getColorVar(color?: TColorType|'tertiary', colorAccent?: TColorAccent):string
+  public static convertControlSizeToHeightRem(size?: TControlSize, paddingControl?: TControlPadding, topBottom?: TControlPaddingOffset): number
   {
-    if(!color) return 'inherit;'
+    let result:number = 0;
+    if (size)
+    {
+      switch (size)
+      {
+        case 'smaller': result = 10 / 16; break;
+        case 'small': result = 13 / 16; break;
+        case 'medium': result = 1; break;
+        case 'large': result = 19 / 16; break;
+      }
+    }
 
-    let c:string = color;
-    if(c == 'main') c = 'body';
-    if(c == 'body' || c == 'secondary' || c == 'tertiary')
-    {
-      return `var(--lotus-${c}-color);`
-    }
-    else
-    {
-      if(colorAccent)
-      {
-        return `var(--lotus-color-${c}${StringHelper.capitalizeFirstLetter(colorAccent)});`
-      }
-      else
-      {
-        return `var(--lotus-color-${c});`
-      }
-    }
+    const css = this.getPaddingPropsAsCSS(size, paddingControl, 'normal', topBottom);
+
+    result += NumberHelper.parseFloat(css.paddingTop as string);
+    result += NumberHelper.parseFloat(css.paddingBottom as string);
+
+    return result;
   }
 
   /**
-   * 
-   * @param color 
-   * @param colorAccent 
-   * @returns 
+   * Конвертация размера элемента UI в высоту в пикселях
+   * @param size Размере элемента UI
+   * @returns Соответствующий размер высоты в пикселях
    */
-  public static getBackgroundColorVar(color?: TColorType|'tertiary', colorAccent?: TColorAccent):string
+  public static convertControlSizeToHeightPixel(size?: TControlSize, paddingControl?: TControlPadding, topBottom?: TControlPaddingOffset): number
   {
-    if(!color) return 'inherit;'
-
-    let c:string = color;
-    if(c == 'main') c = 'body';
-    if(c == 'body' || c == 'secondary' || c == 'tertiary')
-    {
-      return `var(--lotus-${c}-bg);`
-    }
-    else
-    {
-      if(colorAccent)
-      {
-        return `var(--lotus-color-${c}${StringHelper.capitalizeFirstLetter(colorAccent)});`
-      }
-      else
-      {
-        return `var(--lotus-color-${c});`
-      }
-    }
+    const result:number = ThemeHelper.convertControlSizeToHeightRem(size, paddingControl, topBottom);
+    return result * 16;
   }
 
   /**
-   * 
-   * @param color 
-   * @param colorAccent 
-   * @returns 
+   * Конвертация размера элемента UI в соответствующий размер иконки в rem
+   * @param size Размере элемента UI
+   * @returns Соответствующий размер иконки в rem
    */
-  public static getBorderColorVar(color?: TColorType|'tertiary', colorAccent?: TColorAccent):string
+  public static convertControlSizeToIconSizeInRem(size?: TControlSize): number
   {
-    if(!color) return 'inherit;'
+    if (size)
+    {
+      switch (size)
+      {
+        case 'smaller': return 10 / 16 * 1.5;
+        case 'small': return 13 / 16 * 1.5;
+        case 'medium': return 1.5;
+        case 'large': return 19 / 16 * 1.5;
+      }
+    }
 
-    let c:string = color;
-    if(c == 'main') c = 'body';
-    if(c == 'body' || c == 'secondary' || c == 'tertiary')
+    return 1.5;
+  }
+
+  /**
+   * Конвертация размера элемента UI в соответствующий размер иконки в пикселя
+   * @param size Размере элемента UI
+   * @returns Соответствующий размер иконки в пикселя
+   */
+  public static convertControlSizeToIconSizeInPixel(size?: TControlSize): number
+  {
+    if (size)
     {
-      if(colorAccent)
+      switch (size)
       {
-        return `var(--lotus-border-color${StringHelper.capitalizeFirstLetter(colorAccent)});`
-      }
-      else
-      {
-        return 'var(--lotus-border-color);'
+        case 'smaller': return 10 * 1.3;
+        case 'small': return 13 * 1.3;
+        case 'medium': return 16 * 1.3;
+        case 'large': return 19 * 1.3;
       }
     }
-    else
-    {
-      if(colorAccent)
-      {
-        return `var(--lotus-color-${c}${StringHelper.capitalizeFirstLetter(colorAccent)});`
-      }
-      else
-      {
-        return `var(--lotus-color-${c});`
-      }
-    }
+
+    return 16 * 1.3;
   }
   // #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    * Получение оптимального размера шрифта при указанном размере элемента UI
@@ -963,47 +1104,7 @@ export class ThemeHelper
     return 1;
   }
 
-  /**
-   * Конвертация размера элемента UI в соответствующий размер иконки в rem
-   * @param size Размере элемента UI
-   * @returns Соответствующий размер иконки в rem
-   */
-  public static convertControlSizeToIconSizeInRem(size?: TControlSize): number
-  {
-    if (size)
-    {
-      switch (size)
-      {
-        case 'smaller': return 10 / 16 * 1.5;
-        case 'small': return 13 / 16 * 1.5;
-        case 'medium': return 1.5;
-        case 'large': return 19 / 16 * 1.5;
-      }
-    }
 
-    return 1.5;
-  }
-
-  /**
-   * Конвертация размера элемента UI в соответствующий размер иконки в пикселя
-   * @param size Размере элемента UI
-   * @returns Соответствующий размер иконки в пикселя
-   */
-  public static convertControlSizeToIconSizeInPixel(size?: TControlSize): number
-  {
-    if (size)
-    {
-      switch (size)
-      {
-        case 'smaller': return 10 * 1.5;
-        case 'small': return 13 * 1.5;
-        case 'medium': return 16 * 1.5;
-        case 'large': return 19 * 1.5;
-      }
-    }
-
-    return 16 * 1.5;
-  }
 
 
 

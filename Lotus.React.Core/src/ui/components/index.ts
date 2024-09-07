@@ -1,4 +1,4 @@
-export { type ICommonProps } from './CommonProps'
+export { type IGeneralPropertiesElements } from './GeneralPropertiesElements'
 export * from './Controls'
 export * from './DataView'
 export * from './Display'

@@ -3,33 +3,20 @@ import { ISelectOption, SelectOptionHelper, TKey } from 'lotus-core';
 import { ReactNode, useState } from 'react';
 import ReactSelect, { ActionMeta, components, MultiValue, MultiValueProps, OptionProps, Props, StylesConfig } from 'react-select';
 import { ILabelProps, Label } from 'ui/components/Display/Label';
-import { TColorType, TControlPadding, TControlSize, TCssWidth } from 'ui/types';
+import { TColorAccent, TCssWidth } from 'ui/types';
 import { ThemeHelper } from 'app/theme';
 import { IconContext } from 'react-icons';
 import { TypographyHelper } from 'ui/components/Display/Typography';
+import { IGeneralPropertiesElements } from 'ui/components/GeneralPropertiesElements';
 import { SelectHelper } from '../Select/SelectHelper';
 
-export interface IMultiSelectProps<TValueOption extends TKey = TKey> extends Props<ISelectOption, true> 
+
+export interface IMultiSelectProps<TValueOption extends TKey = TKey> extends Props<ISelectOption, true>, IGeneralPropertiesElements 
 {
-  /**
-   * Цвет
-   */
-  color?: TColorType;
-
-  /**
-   * Размер
-   */
-  size?: TControlSize;
-
   /**
    * Фон поля
    */
   isBackground?: boolean;
-
-  /**
-   * Внутренний отступ
-   */
-  paddingControl?: TControlPadding;
 
   /**
    * Ширина
@@ -69,12 +56,10 @@ export interface IMultiSelectProps<TValueOption extends TKey = TKey> extends Pro
   rightElement?: ReactNode;
 }
 
-export const MultiSelect = <TValueOption extends TKey = TKey>(
-  {
-    color = 'primary',
-    size = 'medium',
+export const MultiSelect = <TValueOption extends TKey = TKey>(props: IMultiSelectProps<TValueOption>) => 
+{
+  const  { hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal',
     isBackground = false,
-    paddingControl = 'normal',
     width,
     labelProps,
     hasIcons = false,
@@ -82,9 +67,8 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
     onSetSelectedValues,
     initialSelectedValues,
     rightElement,
-    ...propsReactSelect
-  }: IMultiSelectProps<TValueOption>) => 
-{
+    ...propsReactSelect } = props;
+
   const [selectedOptions, setSelectedOptions] = useState<ISelectOption[]>(SelectOptionHelper.getSelectOptionsByValues(options,
     initialSelectedValues));
 
@@ -113,18 +97,18 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
     container: (base) => ({
       ...base,
       width: width,
-      minHeight: hasIcons ? `${SelectHelper.getMainContainerHeightFromSize(size)}px` : base.minHeight
+      minHeight: `${ThemeHelper.convertControlSizeToHeightPixel(size, paddingControl, 'half')}px`
     }),
     control: (styles, state) =>
       ({
         ...styles,
-        minHeight: hasIcons ? `${SelectHelper.getMainContainerHeightFromSize(size)}px` : styles.minHeight,
+        minHeight: `${ThemeHelper.convertControlSizeToHeightPixel(size, paddingControl, 'half')}px`,
         paddingTop: 0,
         paddingBottom: 0,
-        ...ThemeHelper.getFontFamilyPropsAsCSS(),
-        ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
+        borderRadius: 0,
+        ...ThemeHelper.getFontPropsAsCSS(size),
         ...ThemeHelper.getTransitionColorsPropsAsCSS(),
-        ...ThemeHelper.getBorderPropsAsCSS(),
+        ...ThemeHelper.getBorderPropsAsCSS(undefined, undefined, hasRadius, size),
         ...SelectHelper.getBorderColorProps(color, state.isDisabled, state.isFocused),
         ...SelectHelper.getBoxShadowProps(color, state.isDisabled, state.isFocused),
         ':hover':
@@ -143,9 +127,8 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
     }),
     valueContainer: (base) => ({
       ...base,
-      padding: '2px',
-      paddingTop: 0,
-      paddingBottom: 0
+      padding: 0,
+      columnGap: `${SelectHelper.getGapFromSize(size, paddingControl)}rem`
     }),
     clearIndicator: (base) => ({
       ...base,
@@ -155,44 +138,49 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
     input: (base) => (
       {
         ...base,
-        marginLeft: 0,
+        marginLeft: selectedOptions.length == 0 ? '-2px' : '-8px',
         marginRight: 0,
         marginTop: 0,
         marginBottom: 0,
-        padding: `var(--lotus-padding-${paddingControl}-${size})`
+        ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half')
       }
     ),
 
     option: (styles, { data, isDisabled, isFocused, isSelected }) => 
     {
+      const bgSelected = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'selected').backgroundColor;
+      const bgHover = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'hover').backgroundColor;
+      const bgPressed = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'pressed').backgroundColor
+      const colorSelected = ThemeHelper.getForegroundColorForBackAsCSS(color).color;
+      const colorHover = ThemeHelper.getForegroundColorForBackAsCSS(color, 'light').color;
       return {
         ...styles,
-        ...ThemeHelper.getFontFamilyPropsAsCSS(),
-        ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
+        ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
+        ...ThemeHelper.getFontPropsAsCSS(size),
         ...ThemeHelper.getTransitionColorsPropsAsCSS(),
-        ... (hasIcons ? SelectHelper.getFlexContainer(size) : {}),
+        ... (hasIcons ? SelectHelper.getFlexContainer(size, paddingControl) : {}),
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? `var(--lotus-color-${color})`
+            ? bgSelected
             : isFocused
-              ? `var(--lotus-color-${color}Light)`
+              ? bgHover
               : undefined,
         color: isDisabled
           ? 'gray'
           : isSelected
-            ? `var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)})`
+            ? colorSelected
             : isFocused
-              ? `var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)})`
+              ? colorHover
               : 'black',
         cursor: isDisabled ? 'not-allowed' : 'default',
-
+  
         ':active': {
           ...styles[':active'],
           backgroundColor: !isDisabled
             ? isSelected
               ? 'inherit'
-              : `var(--lotus-color-${color}Dark)`
+              : bgPressed
             : undefined
         }
       };
@@ -200,17 +188,15 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
 
     multiValue: (styles, { data, isDisabled }) =>
     {
+      const colorAccent:TColorAccent|undefined = (color == 'main' || color == 'secondary') ? undefined : 'palest'; 
+
       return {
         ...styles,
-        backgroundColor: `var(--lotus-color-${color}Palest)`,
-        borderColor: `var(--lotus-color-${color}Light)`,
-        ...ThemeHelper.getBorderPropsAsCSS(),
-        padding: hasIcons ? `var(--lotus-padding-${paddingControl}-${size})` : 1,
-        marginLeft: '2px',
-        ...ThemeHelper.getFontFamilyPropsAsCSS(),
-        ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
-        ...ThemeHelper.getTransitionColorsPropsAsCSS(),
-        ... (hasIcons ? SelectHelper.getFlexContainer(size) : {})
+        fontSize: '100%',
+        backgroundColor: ThemeHelper.getBackgroundColorAsCSS(color, colorAccent).backgroundColor,
+        ...ThemeHelper.getBorderPropsAsCSS(color, undefined, hasRadius),
+        ...ThemeHelper.getFontPropsAsCSS(size),
+        ...ThemeHelper.getTransitionColorsPropsAsCSS()
       };
     },
 
@@ -220,7 +206,7 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
         ...styles,
         ':hover':
         {
-          backgroundColor: `var(--lotus-color-${color}Light)`
+          backgroundColor: ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'hover').backgroundColor
         }
       };
     },
@@ -229,12 +215,10 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
     {
       return {
         ...styles,
+        fontSize: '95%',
         padding: 0,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        gap: '0.4rem'
+        paddingLeft: hasIcons ? '2px' : styles.paddingLeft,
+        ... (hasIcons ? SelectHelper.getFlexContainer(size, paddingControl) : {})
       };
     }
   };
@@ -248,7 +232,7 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
       {
         const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
         return (<Option {...props}>
-          <img src={props.data.icon} width={sizeIcon} height={sizeIcon} />
+          <img src={props.data.icon} style={{margin: '1px'}} width={sizeIcon} height={sizeIcon}  />
           {props.data.text}
         </Option>)
       }
@@ -278,7 +262,7 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(
       {
         const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
         return (<MultiValue {...props}>
-          <img src={props.data.icon} width={sizeIcon} height={sizeIcon} />
+          <img src={props.data.icon} style={{margin: '1px'}} width={sizeIcon} height={sizeIcon} />
           {props.data.text}
         </MultiValue>)
       }

@@ -3,7 +3,7 @@ import { TColorType, TControlPadding, TControlSize } from 'ui/types';
 /**
  * Общие свойства для элементов UI
  */
-export interface ICommonProps
+export interface IGeneralPropertiesElements
 {
   /**
    * Статус скругления

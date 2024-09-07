@@ -3,33 +3,19 @@ import { ISelectOption, TKey } from 'lotus-core';
 import { ReactNode, useState } from 'react';
 import ReactSelect, { ActionMeta, components, OptionProps, Props, SingleValue, SingleValueProps, StylesConfig } from 'react-select';
 import { ILabelProps, Label } from 'ui/components/Display/Label';
-import { TColorType, TControlPadding, TControlSize, TCssWidth } from 'ui/types';
+import { TCssWidth } from 'ui/types';
 import { ThemeHelper } from 'app/theme';
 import { IconContext } from 'react-icons';
 import { TypographyHelper } from 'ui/components/Display/Typography';
+import { IGeneralPropertiesElements } from 'ui/components/GeneralPropertiesElements';
 import { SelectHelper } from './SelectHelper';
 
-export interface ISelectProps<TValueOption extends TKey = TKey> extends Props<ISelectOption, false> 
+export interface ISelectProps<TValueOption extends TKey = TKey> extends Props<ISelectOption, false>, IGeneralPropertiesElements
 {
-  /**
-   * Цвет
-   */
-  color?: TColorType;
-
-  /**
-   * Размер
-   */
-  size?: TControlSize;
-
   /**
    * Фон поля
    */
   isBackground?: boolean;
-
-  /**
-   * Внутренний отступ
-   */
-  paddingControl?: TControlPadding;
 
   /**
    * Ширина
@@ -69,12 +55,10 @@ export interface ISelectProps<TValueOption extends TKey = TKey> extends Props<IS
   rightElement?: ReactNode;
 }
 
-export const Select = <TValueOption extends TKey = TKey>(
-  {
-    color = 'primary',
-    size = 'medium',
+export const Select = <TValueOption extends TKey = TKey>(props:ISelectProps<TValueOption>) => 
+{
+  const  { hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal',
     isBackground = false,
-    paddingControl = 'normal',
     width,
     labelProps,
     hasIcons = false,
@@ -82,8 +66,8 @@ export const Select = <TValueOption extends TKey = TKey>(
     onSetSelectedValue,
     initialSelectedValue,
     rightElement,
-    ...propsReactSelect }: ISelectProps<TValueOption>) => 
-{
+    ...propsReactSelect } = props;
+
   const [selectedOption, setSelectedOption] = useState<ISelectOption | undefined>(options.find(x => x.value === initialSelectedValue));
 
   const handleSelect = (newValue: SingleValue<ISelectOption>, _actionMeta: ActionMeta<ISelectOption>) => 
@@ -110,18 +94,18 @@ export const Select = <TValueOption extends TKey = TKey>(
     container: (base) => ({
       ...base,
       width: width,
-      minHeight: hasIcons ? `${SelectHelper.getMainContainerHeightFromSize(size)}px` : base.minHeight
+      minHeight: `${ThemeHelper.convertControlSizeToHeightPixel(size, paddingControl, 'half')}px`
     }),
     control: (styles, state) =>
       ({
         ...styles,
-        minHeight: hasIcons ? `${SelectHelper.getMainContainerHeightFromSize(size)}px` : styles.minHeight,
+        minHeight: `${ThemeHelper.convertControlSizeToHeightPixel(size, paddingControl, 'half')}px`,
         paddingTop: 0,
         paddingBottom: 0,
-        ...ThemeHelper.getFontFamilyPropsAsCSS(),
-        ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
+        borderRadius: 0,
+        ...ThemeHelper.getFontPropsAsCSS(size),
         ...ThemeHelper.getTransitionColorsPropsAsCSS(),
-        ...ThemeHelper.getBorderPropsAsCSS(),
+        ...ThemeHelper.getBorderPropsAsCSS(undefined, undefined, hasRadius, size),
         ...SelectHelper.getBorderColorProps(color, state.isDisabled, state.isFocused),
         ...SelectHelper.getBoxShadowProps(color, state.isDisabled, state.isFocused),
         ':hover':
@@ -140,7 +124,9 @@ export const Select = <TValueOption extends TKey = TKey>(
     }),
     valueContainer: (base) => ({
       ...base,
-      zIndex: 200,
+      zIndex: 0,
+      padding: 0,
+      ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
       paddingTop: 0,
       paddingBottom: 0
     }),
@@ -152,37 +138,40 @@ export const Select = <TValueOption extends TKey = TKey>(
     input: (base) => (
       {
         ...base,
-        marginLeft: hasIcons ? `${SelectHelper.getMarginOffsetInput(size)}px` : 0,
+        marginLeft: hasIcons ? `${SelectHelper.getMarginOffsetInput(size, selectedOption)}px` : 0,
         marginRight: 0,
         marginTop: 0,
         marginBottom: 0,
-        padding: `var(--lotus-padding-${paddingControl}-${size})`
+        ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half')
       }
     ),
 
     option: (styles, { data, isDisabled, isFocused, isSelected }) => 
     {
+      const bgSelected = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'selected').backgroundColor;
+      const bgHover = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'hover').backgroundColor;
+      const bgPressed = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'pressed').backgroundColor
+      const colorSelected = ThemeHelper.getForegroundColorForBackAsCSS(color).color;
+      const colorHover = ThemeHelper.getForegroundColorForBackAsCSS(color, 'light').color;
       return {
         ...styles,
-        padding: `var(--lotus-padding-${paddingControl}-${size})`,
-        paddingLeft: `${SelectHelper.getPaddingLeftOption(size)}px`,
-        ...ThemeHelper.getFontFamilyPropsAsCSS(),
-        ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
+        ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
+        ...ThemeHelper.getFontPropsAsCSS(size),
         ...ThemeHelper.getTransitionColorsPropsAsCSS(),
-        ... (hasIcons ? SelectHelper.getFlexContainer(size) : {}),
+        ... (hasIcons ? SelectHelper.getFlexContainer(size, paddingControl) : {}),
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? `var(--lotus-color-${color})`
+            ? bgSelected
             : isFocused
-              ? `var(--lotus-color-${color}Light)`
+              ? bgHover
               : undefined,
         color: isDisabled
           ? 'gray'
           : isSelected
-            ? `var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)})`
+            ? colorSelected
             : isFocused
-              ? `var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)})`
+              ? colorHover
               : 'black',
         cursor: isDisabled ? 'not-allowed' : 'default',
 
@@ -191,7 +180,7 @@ export const Select = <TValueOption extends TKey = TKey>(
           backgroundColor: !isDisabled
             ? isSelected
               ? 'inherit'
-              : `var(--lotus-color-${color}Dark)`
+              : bgPressed
             : undefined
         }
       };
@@ -201,12 +190,10 @@ export const Select = <TValueOption extends TKey = TKey>(
     {
       return {
         ...styles,
-        padding: hasIcons ? `var(--lotus-padding-${paddingControl}-${size})` : 0,
-        marginLeft: hasIcons ? `${SelectHelper.getMarginOffsetSingleValue(size)}px` : '2px',
-        ...ThemeHelper.getFontFamilyPropsAsCSS(),
-        ...ThemeHelper.getFontSizeByControlSizeAsCSS(size),
+        marginLeft: hasIcons ? `${SelectHelper.getMarginOffsetSingleValue(size, data)}px` : '2px',
+        ...ThemeHelper.getFontPropsAsCSS(size),
         ...ThemeHelper.getTransitionColorsPropsAsCSS(),
-        ... (hasIcons ? SelectHelper.getFlexContainer(size) : {})
+        ... (hasIcons ? SelectHelper.getFlexContainer(size, paddingControl) : {})
       };
     }
   };

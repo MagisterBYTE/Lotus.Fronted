@@ -1,13 +1,9 @@
-.lotus-background {
-  background-color: var(--lotus-body-bg);
+.lotus-background-main {
+  background-color: var(--lotus-color-mainBg);
 }
 
 .lotus-background-secondary {
-  background-color: var(--lotus-secondary-bg);
-}
-
-.lotus-background-tertiary {
-  background-color: var(--lotus-tertiary-bg);
+  background-color: var(--lotus-color-secondaryBg);
 }
 
 .lotus-background-primary {

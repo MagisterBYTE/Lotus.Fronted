@@ -1,23 +1,4 @@
 :root {
-
-  /* Цвета фона*/
-  --lotus-body-bg-light: rgb(253, 253, 253);
-  --lotus-secondary-bg-light: rgb(233, 236, 239);
-  --lotus-tertiary-bg-light: rgb(248, 249, 250);
-
-  --lotus-body-bg-dark: rgb(2, 2, 2);
-  --lotus-secondary-bg-dark: rgb(22, 19, 16);
-  --lotus-tertiary-bg-dark: rgb(7, 6, 5);
-
-  /* Цвета текста*/
-  --lotus-body-color-light: rgb(33, 37, 41);
-  --lotus-secondary-color-light:rgba(33, 37, 41, 0.75);
-  --lotus-tertiary-color-light: rgb(33, 37, 41, 0.5);
-
-  --lotus-body-color-dark: rgb(222, 218, 214);
-  --lotus-secondary-color-dark:rgba(222, 218, 214, 0.75);
-  --lotus-tertiary-color-dark: rgb(222, 218, 214, 0.5);
-
   /* Базовые цвета (за основу взять Bootstrap)*/
   --lotus-color-primary: rgb(13, 110, 253);
   --lotus-color-success: rgb(25, 135, 84);
@@ -82,10 +63,6 @@
   --lotus-color-infoAlpha08: rgba(13, 202, 240, 0.8);
 
   /* Границы */
-  --lotus-border-color-light: rgb(222, 226, 230);
-  --lotus-border-color-lightAlpha04: rgba(222, 226, 230, 0.4);
-  --lotus-border-color-dark: rgb(33, 29, 25);
-  --lotus-border-color-darkAlpha04: rgba(33, 29, 25, 0.4);
   --lotus-border-width: 1px;
   --lotus-border-style: solid;
   --lotus-border-radius: 0.4rem;
@@ -100,34 +77,88 @@
 
 [data-theme='light'] {
 
-  /* Цвета фона*/
-  --lotus-body-bg: var(--lotus-body-bg-light);
-  --lotus-secondary-bg:var(--lotus-secondary-bg-light);
-  --lotus-tertiary-bg: var(--lotus-tertiary-bg-light);
+  /* Базовые цвета темы*/
+  --lotus-color-mainBg: rgb(253, 253, 253);
+  --lotus-color-mainBgDark: color-mix(in srgb, var(--lotus-color-mainBg) 75%, black);
+  --lotus-color-mainBgDarker: color-mix(in srgb, var(--lotus-color-mainBg) 50%, black);
+  --lotus-color-mainBgLight: color-mix(in srgb, var(--lotus-color-mainBg) 75%, rgb(200, 200, 255));
+  --lotus-color-mainBgLighter: color-mix(in srgb, var(--lotus-color-mainBg) 50%, rgb(200, 200, 255));
+  --lotus-color-mainBgPalest: color-mix(in srgb, var(--lotus-color-mainBg) 10%, rgba(220, 220, 220, 0.5));
+  --lotus-color-mainBgAlpha02: rgba(253, 253, 253, 0.2);
+  --lotus-color-mainBgAlpha04: rgba(253, 253, 253, 0.4);
+  --lotus-color-mainBgAlpha08: rgba(253, 253, 253, 0.8);
 
-  /* Цвета текста*/
-  --lotus-body-color: var(--lotus-body-color-light);
-  --lotus-secondary-color: var(--lotus-secondary-color-light);
-  --lotus-tertiary-color: var(--lotus-tertiary-color-light);
+  --lotus-color-secondaryBg: rgb(233, 236, 239);
+  --lotus-color-secondaryBgDark: color-mix(in srgb, var(--lotus-color-secondaryBg) 75%, black);
+  --lotus-color-secondaryBgDarker: color-mix(in srgb, var(--lotus-color-secondaryBg) 50%, black);
+  --lotus-color-secondaryBgLight: color-mix(in srgb, var(--lotus-color-secondaryBg) 75%, rgb(200, 200, 255));
+  --lotus-color-secondaryBgLighter: color-mix(in srgb, var(--lotus-color-secondaryBg) 50%, rgb(200, 200, 255));
+  --lotus-color-secondaryBgPalest: color-mix(in srgb, var(--lotus-color-secondaryBg) 10%, rgba(220, 220, 220, 0.5));
+  --lotus-color-secondaryBgAlpha02: rgba(233, 236, 239, 0.2);
+  --lotus-color-secondaryBgAlpha04: rgba(233, 236, 239, 0.4);
+  --lotus-color-secondaryBgAlpha08: rgba(233, 236, 239, 0.8);
 
-  /* Цвета границ*/
-  --lotus-border-color: var(--lotus-border-color-light);
-  --lotus-border-colorAlpha04: var(--lotus-border-color-lightAlpha04);
+  --lotus-color-mainColor: rgb(2, 2, 2);
+  --lotus-color-mainColorDark: color-mix(in srgb, var(--lotus-color-mainColor) 75%, rgb(200, 200, 255));
+  --lotus-color-mainColorDarker: color-mix(in srgb, var(--lotus-color-mainColor) 50%, rgb(200, 200, 255));
+  --lotus-color-mainColorLight: color-mix(in srgb, var(--lotus-color-mainColor) 75%, white);
+  --lotus-color-mainColorLighter: color-mix(in srgb, var(--lotus-color-mainColor) 50%, white);
+  --lotus-color-mainColorPalest: color-mix(in srgb, var(--lotus-color-mainColor) 10%, white);
+  --lotus-color-mainColorAlpha02: rgba(2, 2, 2, 0.2);
+  --lotus-color-mainColorAlpha04: rgba(2, 2, 2, 0.4);
+  --lotus-color-mainColorAlpha08: rgba(2, 2, 2, 0.8);
+
+  --lotus-color-secondaryColor: rgb(22, 19, 16);
+  --lotus-color-secondaryColorDark: color-mix(in srgb, var(--lotus-color-secondaryColor) 75%, rgb(200, 200, 255));
+  --lotus-color-secondaryColorDarker: color-mix(in srgb, var(--lotus-color-secondaryColor) 50%, rgb(200, 200, 255));
+  --lotus-color-secondaryColorLight: color-mix(in srgb, var(--lotus-color-secondaryColor) 75%, white);
+  --lotus-color-secondaryColorLighter: color-mix(in srgb, var(--lotus-color-secondaryColor) 50%, white);
+  --lotus-color-secondaryColorPalest: color-mix(in srgb, var(--lotus-color-secondaryColor) 10%, white);
+  --lotus-color-secondaryColorAlpha02: rgba(22, 19, 16, 0.2);
+  --lotus-color-secondaryColorAlpha04: rgba(22, 19, 16, 0.4);
+  --lotus-color-secondaryColorAlpha08: rgba(22, 19, 16, 0.8);
 }
 
 [data-theme='dark'] {
 
-  /* Цвета фона*/
-  --lotus-body-bg: var(--lotus-body-bg-dark);
-  --lotus-secondary-bg:var(--lotus-secondary-bg-dark);
-  --lotus-tertiary-bg: var(--lotus-tertiary-bg-dark);
+  /* Базовые цвета темы*/
+  --lotus-color-mainBg: rgb(2, 2, 2);
+  --lotus-color-mainBgDark: color-mix(in srgb, var(--lotus-color-mainBg) 75%, rgb(200, 200, 255));
+  --lotus-color-mainBgDarker: color-mix(in srgb, var(--lotus-color-mainBg) 50%, rgb(200, 200, 255));
+  --lotus-color-mainBgLight: color-mix(in srgb, var(--lotus-color-mainBg) 75%, white);
+  --lotus-color-mainBgLighter: color-mix(in srgb, var(--lotus-color-mainBg) 50%, white);
+  --lotus-color-mainBgPalest: color-mix(in srgb, var(--lotus-color-mainBg) 10%, rgba(220, 220, 220, 0.5));
+  --lotus-color-mainBgAlpha02: rgba(2, 2, 2, 0.2);
+  --lotus-color-mainBgAlpha04: rgba(2, 2, 2, 0.4);
+  --lotus-color-mainBgAlpha08: rgba(2, 2, 2, 0.8);
 
-  /* Цвета текста*/
-  --lotus-body-color: var(--lotus-body-color-dark);
-  --lotus-secondary-color: var(--lotus-secondary-color-dark);
-  --lotus-tertiary-color: var(--lotus-tertiary-color-dark);
+  --lotus-color-secondaryBg: rgb(22, 19, 16);
+  --lotus-color-secondaryBgDark: color-mix(in srgb, var(--lotus-color-secondaryBg) 75%, rgb(200, 200, 255));
+  --lotus-color-secondaryBgDarker: color-mix(in srgb, var(--lotus-color-secondaryBg) 50%, rgb(200, 200, 255));
+  --lotus-color-secondaryBgLight: color-mix(in srgb, var(--lotus-color-secondaryBg) 75%, white);
+  --lotus-color-secondaryBgLighter: color-mix(in srgb, var(--lotus-color-secondaryBg) 50%, white);
+  --lotus-color-secondaryBgPalest: color-mix(in srgb, var(--lotus-color-secondaryBg) 10%, rgba(220, 220, 220, 0.5));
+  --lotus-color-secondaryBgAlpha02: rgba(22, 19, 16, 0.2);
+  --lotus-color-secondaryBgAlpha04: rgba(22, 19, 16, 0.4);
+  --lotus-color-secondaryBgAlpha08: rgba(22, 19, 16, 0.8);
 
-  /* Цвета границ*/
-  --lotus-border-color: var(--lotus-border-color-dark);
-  --lotus-border-colorAlpha04: var(--lotus-border-color-darkAlpha04);
+  --lotus-color-mainColor: rgb(253, 253, 253);
+  --lotus-color-mainColorDark: color-mix(in srgb, var(--lotus-color-mainColor) 75%, black);
+  --lotus-color-mainColorDarker: color-mix(in srgb, var(--lotus-color-mainColor) 50%, black);
+  --lotus-color-mainColorLight: color-mix(in srgb, var(--lotus-color-mainColor) 75%, rgb(200, 200, 255));
+  --lotus-color-mainColorLighter: color-mix(in srgb, var(--lotus-color-mainColor) 50%, rgb(200, 200, 255));
+  --lotus-color-mainColorPalest: color-mix(in srgb, var(--lotus-color-mainColor) 10%, rgb(230, 230, 255));
+  --lotus-color-mainColorAlpha02: rgba(253, 253, 253, 0.2);
+  --lotus-color-mainColorAlpha04: rgba(253, 253, 253, 0.4);
+  --lotus-color-mainColorAlpha08: rgba(253, 253, 253, 0.8);
+
+  --lotus-color-secondaryColor: rgb(233, 236, 239);
+  --lotus-color-secondaryColorDark: color-mix(in srgb, var(--lotus-color-secondaryColor) 75%, black);
+  --lotus-color-secondaryColorDarker: color-mix(in srgb, var(--lotus-color-secondaryColor) 50%, black);
+  --lotus-color-secondaryColorLight: color-mix(in srgb, var(--lotus-color-secondaryColor) 75%, rgb(200, 200, 255));
+  --lotus-color-secondaryColorLighter: color-mix(in srgb, var(--lotus-color-secondaryColor) 50%, rgb(200, 200, 255));
+  --lotus-color-secondaryColorPalest: color-mix(in srgb, var(--lotus-color-secondaryColor) 10%, rgb(230, 230, 255));
+  --lotus-color-secondaryColorAlpha02: rgba(233, 236, 239, 0.2);
+  --lotus-color-secondaryColorAlpha04: rgba(233, 236, 239, 0.4);
+  --lotus-color-secondaryColorAlpha08: rgba(233, 236, 239, 0.8);
 }

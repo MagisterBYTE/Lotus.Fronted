@@ -3,11 +3,11 @@ import React, { ComponentPropsWithoutRef } from 'react';
 import { ThemeHelper } from 'app/theme/helpers';
 import { ThemeConstants } from 'app/theme/constants';
 import { useRippleEffect } from 'hooks/useRippleEffect';
-import { ICommonProps } from 'ui/components/CommonProps';
+import { IGeneralPropertiesElements } from 'ui/components/GeneralPropertiesElements';
 import { ButtonHelper } from './ButtonHelper';
 import { TButtonVariant } from './ButtonVariant';
 
-export interface IButtonProps extends Omit<ComponentPropsWithoutRef<'button'>, 'color'>, ICommonProps
+export interface IButtonProps extends Omit<ComponentPropsWithoutRef<'button'>, 'color'>, IGeneralPropertiesElements
 {
   /**
    * Вариант отображения
@@ -25,7 +25,7 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
     display: inline-block;
     ${ThemeHelper.getFontPropsAsText(size)}
     ${ThemeHelper.getBorderPropsAsText(undefined, undefined, hasRadius, size)}
-    ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, (variant == 'icon' || size == 'large') ? 'half' : 'normal', 'half')}
+    ${ThemeHelper.getPaddingPropsAsText(size, paddingControl, 'normal', 'half')}
     ${ThemeHelper.getTransitionColorsPropsAsText()}
     ${ButtonHelper.getBorderColorProps(color, variant, 'normal')}
     ${ButtonHelper.getColorProps(color, variant, 'normal')}

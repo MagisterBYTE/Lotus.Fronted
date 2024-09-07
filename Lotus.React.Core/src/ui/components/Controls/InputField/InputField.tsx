@@ -2,10 +2,10 @@ import React, { ComponentPropsWithRef, ReactNode } from 'react';
 import { css } from '@emotion/css';
 import { ILabelProps, Label, TypographyHelper } from 'ui/components/Display';
 import { ThemeHelper } from 'app/theme';
-import { ICommonProps } from 'ui/components/CommonProps';
+import { IGeneralPropertiesElements } from 'ui/components/GeneralPropertiesElements';
 import { InputFieldHelper } from './InputFieldHelper';
 
-export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, 'size' | 'color'>, ICommonProps
+export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, 'size' | 'color'>, IGeneralPropertiesElements
 {
   /**
    * Фон поля

@@ -5,11 +5,45 @@ import { ThemeHelper } from './helpers';
 const DivColors = () =>
 {
   return <div style={{display: 'flex', flexDirection: 'row'}}>
-    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 10}}>
-      <div style={{backgroundColor: 'var(--lotus-body-bg)', ...ThemeHelper.getForegroundColorForBackAsCSS('main'),
+    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 10, backgroundColor: 'lightcoral'}}>
+      <div style={{backgroundColor: 'var(--lotus-color-mainBgDarker)', ...ThemeHelper.getForegroundColorForBackAsCSS('main', 'darker'),
+        margin: 10, padding: 5, minWidth: 100}}>MainDarker</div>
+      <div style={{backgroundColor: 'var(--lotus-color-mainBgDark)', ...ThemeHelper.getForegroundColorForBackAsCSS('main', 'dark'),
+        margin: 10, padding: 5, minWidth: 100}}>MainDark</div>
+      <div style={{backgroundColor: 'var(--lotus-color-mainBg)', ...ThemeHelper.getForegroundColorForBackAsCSS('main'),
         margin: 10, padding: 5, minWidth: 100}}>Main</div>
-      <div style={{backgroundColor: 'var(--lotus-secondary-bg)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary'),
+      <div style={{backgroundColor: 'var(--lotus-color-mainBgLight)', ...ThemeHelper.getForegroundColorForBackAsCSS('main', 'light'),
+        margin: 10, padding: 5, minWidth: 100}}>MainLight</div>
+      <div style={{backgroundColor: 'var(--lotus-color-mainBgLighter)', ...ThemeHelper.getForegroundColorForBackAsCSS('main', 'lighter'),
+        margin: 10, padding: 5, minWidth: 100}}>MainLighter</div>
+      <div style={{backgroundColor: 'var(--lotus-color-mainBgPalest)', ...ThemeHelper.getForegroundColorForBackAsCSS('main', 'palest'),
+        margin: 10, padding: 5, minWidth: 100}}>MainPalest</div>
+      <div style={{backgroundColor: 'var(--lotus-color-mainBgAlpha02)', ...ThemeHelper.getForegroundColorForBackAsCSS('main', 'alpha02'),
+        margin: 10, padding: 5, minWidth: 100}}>MainAlpha02</div>
+      <div style={{backgroundColor: 'var(--lotus-color-mainBgAlpha04)', ...ThemeHelper.getForegroundColorForBackAsCSS('main', 'alpha04'),
+        margin: 10, padding: 5, minWidth: 100}}>MainAlpha04</div>
+      <div style={{backgroundColor: 'var(--lotus-color-mainBgAlpha08)', ...ThemeHelper.getForegroundColorForBackAsCSS('main', 'alpha08'),
+        margin: 10, padding: 5, minWidth: 100}}>MainAlpha08</div>
+    </div>
+    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 10, backgroundColor: 'lightsalmon'}}>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBgDarker)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary', 'darker'),
+        margin: 10, padding: 5, minWidth: 100}}>SecondaryDarker</div>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBgDark)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary', 'dark'),
+        margin: 10, padding: 5, minWidth: 100}}>SecondaryDark</div>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBg)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary'),
         margin: 10, padding: 5, minWidth: 100}}>Secondary</div>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBgLight)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary', 'light'),
+        margin: 10, padding: 5, minWidth: 100}}>SecondaryLight</div>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBgLighter)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary', 'lighter'),
+        margin: 10, padding: 5, minWidth: 100}}>SecondaryLighter</div>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBgPalest)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary', 'palest'),
+        margin: 10, padding: 5, minWidth: 100}}>SecondaryPalest</div>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBgAlpha02)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary', 'alpha02'),
+        margin: 10, padding: 5, minWidth: 100}}>SecondaryAlpha02</div>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBgAlpha04)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary', 'alpha04'),
+        margin: 10, padding: 5, minWidth: 100}}>SecondaryAlpha04</div>
+      <div style={{backgroundColor: 'var(--lotus-color-secondaryBgAlpha08)', ...ThemeHelper.getForegroundColorForBackAsCSS('secondary', 'alpha08'),
+        margin: 10, padding: 5, minWidth: 100}}>SecondaryAlpha08</div>
     </div>
     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 10}}>
       <div style={{backgroundColor: 'var(--lotus-color-primaryDarker)', ...ThemeHelper.getForegroundColorForBackAsCSS('primary', 'darker'),
@@ -132,46 +166,6 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-export const Body: Story = {
-  args: {
-  },
-
-  render: ()=>
-  {
-    return <>
-      <div style={{display: 'flex', flexDirection: 'row'}}>
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 10}}>
-          <div style={{backgroundColor: 'var(--lotus-body-bg)', color: 'var(--lotus-body-color)',  margin: 10, padding: 5, minWidth: 100}}>Main block</div>
-          <div style={{backgroundColor: 'var(--lotus-secondary-bg)', color: 'var(--lotus-secondary-color)',  margin: 10, padding: 5, minWidth: 100}}>Secondary block</div>
-          <div style={{backgroundColor: 'var(--lotus-tertiary-bg)', color: 'var(--lotus-tertiary-color)',  margin: 10, padding: 5, minWidth: 100}}>Tertiary block</div>
-        </div>
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 10}}>
-          <div style={{backgroundColor: 'var(--lotus-body-bg)', color: 'var(--lotus-body-color)', borderColor:'var(--lotus-border-color)',
-            ...ThemeHelper.getBorderPropsAsCSS(),
-            margin: 10, padding: 5, minWidth: 100}}>Main block</div>
-          <div style={{backgroundColor: 'var(--lotus-secondary-bg)', color: 'var(--lotus-secondary-color)', borderColor:'var(--lotus-border-color)',
-            ...ThemeHelper.getBorderPropsAsCSS(),
-            margin: 10, padding: 5, minWidth: 100}}>Secondary block</div>
-          <div style={{backgroundColor: 'var(--lotus-tertiary-bg)', color: 'var(--lotus-tertiary-color)', borderColor:'var(--lotus-border-color)',
-            ...ThemeHelper.getBorderPropsAsCSS(),
-            margin: 10, padding: 5, minWidth: 100}}>Tertiary block</div>
-        </div>
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 10}}>
-          <div style={{backgroundColor: 'var(--lotus-body-bg)', color: 'var(--lotus-body-color)', borderColor:'var(--lotus-border-color)',
-            ...ThemeHelper.getBorderPropsAsCSS(),
-            margin: 10, padding: 5, minWidth: 100}}>Main block</div>
-          <div style={{backgroundColor: 'var(--lotus-secondary-bg)', color: 'var(--lotus-secondary-color)', borderColor:'var(--lotus-border-color)',
-            ...ThemeHelper.getBorderPropsAsCSS(),
-            margin: 10, padding: 5, minWidth: 100}}>Secondary block</div>
-          <div style={{backgroundColor: 'var(--lotus-tertiary-bg)', color: 'var(--lotus-tertiary-color)', borderColor:'var(--lotus-border-color)',
-            ...ThemeHelper.getBorderPropsAsCSS(),
-            margin: 10, padding: 5, minWidth: 100}}>Tertiary block</div>
-        </div>
-      </div>
-    </>
-  }
-};
 
 export const Colors: Story = {
   args: {
