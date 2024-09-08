@@ -310,17 +310,49 @@ class ObjectHelper {
      * @param value Проверяемое значение
      * @returns Статус проверки
      */
-    static isNullOrUndefined = (value) => {
+    static isNullOrUndefined(value) {
         return value === undefined || value === null;
-    };
+    }
     /**
      * Проверка объекта на то, что все его свойства имеют значения undefined
      * @param object Проверяемый объект
      * @returns Статус проверки
      */
-    static isObjectValuesEmpty = (object) => {
+    static isObjectValuesEmpty(object) {
         return !Object.values(object).some((value) => value !== undefined);
-    };
+    }
+    /**
+     * Получить значение по условию if
+     * @param check Проверяемое значение
+     * @param positive Значение возвращаемое в случае не нулевого значения
+     * @param negative Значение возвращаемое в случае нулевого значения
+     * @returns Значение
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static getIf(check, positive, negative) {
+        if (check) {
+            return positive;
+        }
+        else {
+            return negative;
+        }
+    }
+    /**
+     * Получить значение по условию if
+     * @param check Проверяемое значение
+     * @param positive Функция вызываемая в случае не нулевого значения
+     * @param negative Функция вызываемая в случае нулевого значения
+     * @returns Значение
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static getIfFun(check, positive, negative) {
+        if (check) {
+            return positive(check);
+        }
+        else {
+            return negative(check);
+        }
+    }
     /**
      * Searches the supplied object, and then down it's prototype chain until it
      * finds the object where `prop` is its own property. In other words, finds
@@ -541,12 +573,12 @@ class PathHelper {
 }
 
 class RandomHelper {
-    static getMinMax = (min, max) => {
+    static getMinMax(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
-    };
-    static getMax = (max) => {
+    }
+    static getMax(max) {
         return Math.floor(Math.random() * max);
-    };
+    }
 }
 
 class StringHelper {
