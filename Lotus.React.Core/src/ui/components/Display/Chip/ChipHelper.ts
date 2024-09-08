@@ -1,10 +1,11 @@
-import { TColorType, TControlPadding, TControlSize, TControlState } from 'ui/types';
+import { TColorType, TControlState } from 'ui/types';
 import { ThemeHelper } from 'app/theme';
+import { CSSProperties } from 'react';
 import { TChipVariant } from './ChipVariant';
 
 export class ChipHelper
 {
-  public static getBorderColorProps(color: TColorType, variant: TChipVariant, state: TControlState): string
+  public static getBorderColorProps(color: TColorType, variant: TChipVariant, state: TControlState): CSSProperties['borderColor']
   {
     switch (state)
     {
@@ -12,29 +13,29 @@ export class ChipHelper
         {
           switch (variant)
           {
-            case TChipVariant.Filled: return `border-color: var(--lotus-color-${color}Dark);`;
-            case TChipVariant.Outline: return `border-color: var(--lotus-color-${color});`;
+            case 'filled': return ThemeHelper.getBorderPropsAsCSS(color, 'dark').borderColor;
+            case 'outline': return ThemeHelper.getBorderPropsAsCSS(color).borderColor;
           }
         } break;
       case 'hover':
         switch (variant)
         {
-          case TChipVariant.Filled: return `border-color: var(--lotus-color-${color}Dark);`;
-          case TChipVariant.Outline: return `border-color: var(--lotus-color-${color}Dark);`;
+          case 'filled': return ThemeHelper.getBorderPropsAsCSS(color, 'dark').borderColor;
+          case 'outline': return ThemeHelper.getBorderPropsAsCSS(color, 'dark').borderColor;
         } break;
       case 'pressed':
         switch (variant)
         {
-          case TChipVariant.Filled: return `border-color: var(--lotus-color-${color}Darker);`;
-          case TChipVariant.Outline: return `border-color: var(--lotus-color-${color}Darker);`;
+          case 'filled': return ThemeHelper.getBorderPropsAsCSS(color, 'darker').borderColor;
+          case 'outline': return ThemeHelper.getBorderPropsAsCSS(color, 'darker').borderColor;
         } break;
       case 'selected':
       case 'focus':
       case 'disabled':
         switch (variant)
         {
-          case TChipVariant.Filled: return `border-color: var(--lotus-color-${color}Dark);`;
-          case TChipVariant.Outline: return `border-color: var(--lotus-color-${color});`;
+          case 'filled': return ThemeHelper.getBorderPropsAsCSS(color, 'dark').borderColor;
+          case 'outline': return ThemeHelper.getBorderPropsAsCSS(color).borderColor;
         } break;
     }
 
@@ -42,7 +43,7 @@ export class ChipHelper
     return ''
   }
 
-  public static getBackgroundColorProps(color: TColorType, variant: TChipVariant, state: TControlState): string
+  public static getBackgroundColorProps(color: TColorType, variant: TChipVariant, state: TControlState): CSSProperties['backgroundColor']
   {
     switch (state)
     {
@@ -50,36 +51,36 @@ export class ChipHelper
         {
           switch (variant)
           {
-            case TChipVariant.Filled: return `background-color: var(--lotus-color-${color}Palest);`;
-            case TChipVariant.Outline: return `background-color: var(--lotus-color-${'light'});`;
+            case 'filled': return ThemeHelper.getBackgroundColorAsCSS(color, 'palest').backgroundColor;
+            case 'outline': return 'transparent';
           }
         } break;
       case 'hover':
         switch (variant)
         {
-          case TChipVariant.Filled: return `background-color: var(--lotus-color-${color}Dark);`;
-          case TChipVariant.Outline: return `background-color: var(--lotus-color-${color}Palest);`;
+          case 'filled': return ThemeHelper.getBackgroundColorAsCSS(color, 'dark').backgroundColor;
+          case 'outline': return ThemeHelper.getBackgroundColorAsCSS(color, 'palest').backgroundColor;
         } break;
       case 'pressed':
         switch (variant)
         {
-          case TChipVariant.Filled: return `background-color: var(--lotus-color-${color}Darker);`;
-          case TChipVariant.Outline: return `background-color: var(--lotus-color-${color}Palest);`;
+          case 'filled': return ThemeHelper.getBackgroundColorAsCSS(color, 'darker').backgroundColor;
+          case 'outline': return ThemeHelper.getBackgroundColorAsCSS(color, 'palest').backgroundColor;
         } break;
       case 'selected':
       case 'focus':
       case 'disabled':
         switch (variant)
         {
-          case TChipVariant.Filled: return `background-color: var(--lotus-color-${color});`;
-          case TChipVariant.Outline: return `background-color: var(--lotus-color-${'light'});`;
+          case 'filled': return ThemeHelper.getBackgroundColorAsCSS(color).backgroundColor;
+          case 'outline': return 'transparent';
         } break;
     }
 
     return ''
   }
 
-  public static getColorProps(color: TColorType, variant: TChipVariant, state: TControlState): string
+  public static getColorProps(color: TColorType, variant: TChipVariant, state: TControlState): CSSProperties['color']
   {
     switch (state)
     {
@@ -87,74 +88,29 @@ export class ChipHelper
         {
           switch (variant)
           {
-            case TChipVariant.Filled: return `color: var(--lotus-color-${color});`;
-            case TChipVariant.Outline: return `color: var(--lotus-color-${color});`;
+            case 'filled': return ThemeHelper.getForegroundColorForBackAsCSS(color, 'palest').color;
+            case 'outline': return ThemeHelper.getForegroundColorAsCSS(color).color;
           }
         } break;
       case 'hover':
         switch (variant)
         {
-          case TChipVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case TChipVariant.Outline: return `color: var(--lotus-color-${color}Dark);`;
+          case 'filled': return ThemeHelper.getForegroundColorForBackAsCSS(color, 'dark').color;
+          case 'outline': return ThemeHelper.getForegroundColorForBackAsCSS(color, 'palest').color;
         } break;
       case 'pressed':
         switch (variant)
         {
-          case TChipVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case TChipVariant.Outline: return `color: var(--lotus-color-${color}Darker);`;
+          case 'filled': return ThemeHelper.getForegroundColorForBackAsCSS(color, 'darker').color;
+          case 'outline': return ThemeHelper.getForegroundColorForBackAsCSS(color, 'palest').color;
         } break;
       case 'selected':
       case 'focus':
       case 'disabled':
         switch (variant)
         {
-          case TChipVariant.Filled: return `color: var(--lotus-color-${ThemeHelper.getOptimalForegroundColor(color)});`;
-          case TChipVariant.Outline: return `color: var(--lotus-color-${color});`;
-        } break;
-    }
-
-    return ''
-  }
-
-  public static getPaddingSidesProps(size: TControlSize, paddingControl: TControlPadding): string
-  {
-    switch (size)
-    {
-      case 'smaller':
-        {
-          switch (paddingControl)
-          {
-            case 'minimum': return 'padding: 0.08rem; font-size: x-small;'
-            case 'normal': return 'padding: 0.1rem; font-size: x-small;'
-            case 'enlarged': return 'padding: 0.15rem; font-size: x-small;'
-          }
-        } break;
-      case 'small':
-        {
-          switch (paddingControl)
-          {
-            case 'minimum': return 'padding: 0.1rem; font-size: small;'
-            case 'normal': return 'padding: 0.15rem; font-size: small;'
-            case 'enlarged': return 'padding: 0.2rem; font-size: small;'
-          }
-        } break;
-      case 'medium':
-        {
-          switch (paddingControl)
-          {
-            case 'minimum': return 'padding: 0.15rem; font-size: medium;'
-            case 'normal': return 'padding: 0.2rem; font-size: medium;'
-            case 'enlarged': return 'padding: 0.25rem; font-size: medium;'
-          }
-        } break;
-      case 'large':
-        {
-          switch (paddingControl)
-          {
-            case 'minimum': return 'padding: 0.2rem; font-size: large;'
-            case 'normal': return 'padding: 0.3rem; font-size: large;'
-            case 'enlarged': return 'padding: 0.4rem; font-size: large;'
-          }
+          case 'filled': return ThemeHelper.getForegroundColorForBackAsCSS(color).color;
+          case 'outline': return ThemeHelper.getForegroundColorAsCSS(color).color;
         } break;
     }
 

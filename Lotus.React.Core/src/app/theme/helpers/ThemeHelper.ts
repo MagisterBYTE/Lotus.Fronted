@@ -1,4 +1,4 @@
-import { TColorAccent, TColorType, TControlPadding, TControlSize, TControlState, TCssFontSize } from 'ui/types';
+import { TColorAccent, TColorType, TControlPadding, TControlSize, TControlState } from 'ui/types';
 import { CSSProperties } from 'react';
 import { NumberHelper, StringHelper } from 'lotus-core';
 import { CssPropertiesHelper } from 'ui/helpers';
@@ -531,26 +531,6 @@ export class ThemeHelper
   }
   // #endregion
 
-  // #region FontFamily
-  /**
-   * Получить свойства CSS по семейству шрифтов в виде CSSProperties
-   * @returns Свойства CSS по семейству шрифтов в виде CSSProperties
-   */
-  public static getFontFamilyPropsAsCSS(): CSSProperties
-  {
-    return { fontFamily: 'var(--lotus-font-main);' }
-  }
-
-  /**
-   * Получить свойства CSS по семейству шрифтов в виде текста
-   * @returns Свойства CSS по семейству шрифтов в виде текста
-   */
-  public static getFontFamilyPropsAsText(): string
-  {
-    return 'font-family: var(--lotus-font-main);'
-  }
-  // #endregion
-
   // #region Font
   /**
    * Получить свойства CSS по настройкам шрифта в виде CSSProperties
@@ -584,6 +564,26 @@ export class ThemeHelper
   {
     const fontProps: string = CssPropertiesHelper.toStr(ThemeHelper.getFontPropsAsCSS(size));
     return fontProps;
+  }
+  // #endregion
+
+  // #region FontFamily
+  /**
+   * Получить свойства CSS по семейству шрифтов в виде CSSProperties
+   * @returns Свойства CSS по семейству шрифтов в виде CSSProperties
+   */
+  public static getFontFamilyPropsAsCSS(): CSSProperties
+  {
+    return { fontFamily: 'var(--lotus-font-main);' }
+  }
+
+  /**
+   * Получить свойства CSS по семейству шрифтов в виде текста
+   * @returns Свойства CSS по семейству шрифтов в виде текста
+   */
+  public static getFontFamilyPropsAsText(): string
+  {
+    return 'font-family: var(--lotus-font-main);'
   }
   // #endregion
 
@@ -924,6 +924,42 @@ export class ThemeHelper
   }
   // #endregion
 
+  // #region Opacity
+  /**
+   * Получить свойства CSS по прозрачности для неактивного элемента UI в виде CSSProperties
+   * @param pointerEventsNone Блокировать события
+   * @returns Свойства CSS по прозрачности для неактивного элемента UI в виде CSSProperties
+   */
+  public static getOpacityPropsForDisabledAsCSS(pointerEventsNone?: boolean): CSSProperties
+  {
+    const opacityProps:CSSProperties = { opacity: `${ThemeConstants.OpacityForDisabled};` }
+
+    if(pointerEventsNone)
+    {
+      opacityProps.pointerEvents = 'none';
+    }
+
+    return opacityProps;
+  }
+
+  /**
+   * Получить свойства CSS по прозрачности для неактивного элемента UI в виде текста
+   * @param pointerEventsNone Блокировать события
+   * @returns Свойства CSS по прозрачности для неактивного элемента UI в виде текста
+   */
+  public static getOpacityPropsForDisabledAsText(pointerEventsNone?: boolean): string
+  {
+    if(pointerEventsNone)
+    {
+      return `opacity: ${ThemeConstants.OpacityForDisabled}; pointer-events: none;`
+    }
+    else
+    {
+      return `opacity: ${ThemeConstants.OpacityForDisabled};`;
+    }
+  }
+  // #endregion
+
   // #region ControlSize
   /**
    * Конвертация размера элемента UI в высоту в rem
@@ -1005,137 +1041,4 @@ export class ThemeHelper
     return 16 * 1.3;
   }
   // #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /**
-   * Получение оптимального размера шрифта при указанном размере элемента UI
-   * @param size Размере элемента UI
-   * @returns Оптимальный размера шрифта
-   */
-  public static getFontSizeByControlSize(size?: TControlSize): TCssFontSize
-  {
-    if (size)
-    {
-      switch (size)
-      {
-        case 'smaller': return 'x-small'
-        case 'small': return 'small'
-        case 'medium': return 'medium'
-        case 'large': return 'large'
-      }
-    }
-
-    return 'medium';
-  }
-
-  /**
-   * Получение оптимального размера шрифта при указанном размере элемента UI как свойства CSS
-   * @param size Размере элемента UI
-   * @returns Оптимальный размера шрифта как свойства CSS
-   */
-  public static getFontSizeByControlSizeAsCSS(size?: TControlSize): CSSProperties
-  {
-    if (size)
-    {
-      switch (size)
-      {
-        case 'smaller': return { fontSize: 'x-small' };
-        case 'small': return { fontSize: 'small' };
-        case 'medium': return { fontSize: 'medium' };
-        case 'large': return { fontSize: 'large' };
-      }
-    }
-
-    return { fontSize: 'medium' };
-  }
-
-  /**
-   * Конвертация размера элемента UI в соответствующий размер шрифта в пикселях
-   * @param size Размере элемента UI
-   * @returns Соответствующий размер шрифта в пикселях
-   */
-  public static convertControlSizeToFontSizeInPixel(size?: TControlSize): number
-  {
-    if (size)
-    {
-      switch (size)
-      {
-        case 'smaller': return 10;
-        case 'small': return 13;
-        case 'medium': return 16;
-        case 'large': return 19;
-      }
-    }
-
-    return 16;
-  }
-
-  /**
-   * Конвертация размера элемента UI в соответствующий размер шрифта в rem
-   * @param size Размере элемента UI
-   * @returns Соответствующий размер шрифта в rem
-   */
-  public static convertControlSizeToFontSizeInRem(size?: TControlSize): number
-  {
-    if (size)
-    {
-      switch (size)
-      {
-        case 'smaller': return 10 / 16;
-        case 'small': return 13 / 16;
-        case 'medium': return 1;
-        case 'large': return 19 / 16;
-      }
-    }
-
-    return 1;
-  }
-
-
-
-
-
-
-
-  /**
-   * Получить свойства CSS по переходу ширины в виде CSSProperties
-   * @returns Свойства CSS по переходу ширины и тени в виде CSSProperties
-   */
-  public static getTransitionWidthPropsAsCSS(): CSSProperties
-  {
-    return {
-      transition: `width ${200}ms ease-in-out`
-    }
-  }
-
-  /**
-   * Получить свойства CSS по прозрачности для неактивного элемента UI в виде текста
-   * @returns Свойства CSS по прозрачности для неактивного элемента UI в виде текста
-   */
-  public static getOpacityPropsForDisabledAsText(): string
-  {
-    return `opacity: ${ThemeConstants.OpacityForDisabled};`;
-  }
-
-  /**
-   * Получить свойства CSS по прозрачности для неактивного элемента UI в виде текста
-   * @returns Свойства CSS по прозрачности для неактивного элемента UI в виде текста
-   */
-  public static getOpacityPropsForDisabledAsCSS(): CSSProperties
-  {
-    return { opacity: `${ThemeConstants.OpacityForDisabled};` }
-  }
 }

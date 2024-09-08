@@ -304,7 +304,7 @@ export const MultiSelect = <TValueOption extends TKey = TKey>(props: IMultiSelec
 
   if (labelProps)
   {
-    return <Label {...labelProps} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)} >
+    return <Label {...labelProps} size={size} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)} >
       {RenderReactSelect()}
     </Label>
   }

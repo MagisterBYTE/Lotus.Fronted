@@ -1,15 +1,15 @@
-import React, { ComponentPropsWithRef, forwardRef } from 'react';
+import React, { ComponentPropsWithRef, CSSProperties, forwardRef } from 'react';
 
 export interface IGridProps extends ComponentPropsWithRef<'div'>
 {
-  gridTemplateColumns: React.CSSProperties['gridTemplateColumns'];
-  gridTemplateRows: React.CSSProperties['gridTemplateRows'];
-  columnGap?: React.CSSProperties['columnGap'];
-  rowGap?: React.CSSProperties['rowGap'];
-  horizontalAlign?: React.CSSProperties['justifyContent'];
-  verticalAlign?: React.CSSProperties['alignContent'];
-  horizontalContentAlign?: React.CSSProperties['justifyItems'];
-  verticalContentAlign?: React.CSSProperties['alignItems'];
+  gridTemplateColumns: CSSProperties['gridTemplateColumns'];
+  gridTemplateRows: CSSProperties['gridTemplateRows'];
+  columnGap?: CSSProperties['columnGap'];
+  rowGap?: CSSProperties['rowGap'];
+  horizontalAlign?: CSSProperties['justifyContent'];
+  verticalAlign?: CSSProperties['alignContent'];
+  horizontalContentAlign?: CSSProperties['justifyItems'];
+  verticalContentAlign?: CSSProperties['alignItems'];
 }
 
 export const Grid = forwardRef<HTMLDivElement, IGridProps>((props, ref) => 

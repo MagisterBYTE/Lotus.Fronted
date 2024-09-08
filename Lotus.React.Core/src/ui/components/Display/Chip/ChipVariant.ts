@@ -1,15 +1,6 @@
 /**
  * Вариант отображения чипа 
  */
-export enum TChipVariant 
-{
-  /**
-   * Фоновый цвет
-   */
-  Filled = 'Filled',
+export type TChipVariant = 'filled' | 'outline';
 
-  /**
-   * Только граница
-   */
-  Outline = 'Outline'
-}
+export const TChipVariants:TChipVariant[] = ['filled', 'outline'] as const;

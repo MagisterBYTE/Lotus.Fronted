@@ -1,11 +1,11 @@
 import { cx } from '@emotion/css';
-import React, { ComponentPropsWithRef } from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 import { TColorType } from 'ui/types';
 import { TTypographyEffect } from './TypographyEffect';
 import { TTypographyVariant } from './TypographyVariant';
 import './Typography.css';
 
-export interface ITypographyProps extends ComponentPropsWithRef<'p'>
+export interface ITypographyProps extends ComponentPropsWithoutRef<'p'>
 {
   /**
    * Цвет
@@ -27,14 +27,21 @@ export interface ITypographyProps extends ComponentPropsWithRef<'p'>
    * Эффект отображения
    */
   effect?: TTypographyEffect;
+
+  /**
+   * Дополнительный класс для отображения
+   */
+  extraClass?: string;
 }
 
-export const Typography: React.FC<ITypographyProps> = ({ color, variant = 'body1', bold, effect, ...propsElem }: ITypographyProps) => 
+export const Typography: React.FC<ITypographyProps> = (props: ITypographyProps) => 
 {
+  const { color, variant = 'body1', bold, effect, extraClass, ...propsElem } = props;
+  
   const typographyClass = cx(`lotus-typography-${variant}`, 
     color && `lotus-foreground-${color}`, 
     (bold === undefined || bold == false) ? 'lotus-typography-font-normal' : 'lotus-typography-font-bold',
-    effect && `lotus-typography-effect-${effect}`);
+    effect && `lotus-typography-effect-${effect}`, extraClass);
 
   switch (variant)
   {

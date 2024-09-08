@@ -41,8 +41,8 @@ export class SelectHelper
           switch(controlPadding)
           {
             case 'minimum': return 0.2;
-            case 'normal': return 0.3;
-            case 'enlarged': return 0.4;
+            case 'normal': return 0.35;
+            case 'enlarged': return 0.45;
           }
         }break;
     }

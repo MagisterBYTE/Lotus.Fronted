@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { HorizontalStack } from 'ui/components/Layout';
 import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
-import { SelectOptionsIconsBase, SelectOptionsIconsSvg, SelectOptionsText } from '../../../../.storydata/SelectOptionsData';
 import { Button } from '../Button';
 import { InputField } from '../InputField';
 import { Select } from './Select';
+import { SelectOptionsIconsBase, SelectOptionsIconsSvg, SelectOptionsText } from '.storydata/SelectOptionsData';
 
 const meta = {
   title: 'Controls/Select',

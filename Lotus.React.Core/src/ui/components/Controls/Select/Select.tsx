@@ -276,7 +276,7 @@ export const Select = <TValueOption extends TKey = TKey>(props:ISelectProps<TVal
 
   if (labelProps)
   {
-    return <Label {...labelProps} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}>
+    return <Label {...labelProps} size={size} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}>
       {
         RenderReactSelect()
       }

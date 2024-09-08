@@ -4,8 +4,8 @@ import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
 import { HorizontalStack } from 'ui/components/Layout';
 import { InputField } from '../InputField';
 import { Button } from '../Button';
-import { SelectOptionsIconsBase, SelectOptionsIconsSvg, SelectOptionsText } from '../../../../.storydata/SelectOptionsData';
 import { MultiSelect } from './MultiSelect';
+import { SelectOptionsIconsBase, SelectOptionsIconsSvg, SelectOptionsText } from '.storydata/SelectOptionsData';
 
 const meta = {
   title: 'Controls/MultiSelect',

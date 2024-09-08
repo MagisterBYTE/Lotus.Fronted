@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TTypographyVariant } from 'ui/components/Display';
 import { HorizontalStack } from 'ui/components/Layout';
 import { TColorTypes, TControlSizes, TControlPaddings } from 'ui/types';
 import { Button } from '../Button';

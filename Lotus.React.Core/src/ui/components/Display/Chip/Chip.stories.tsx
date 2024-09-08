@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TColorType, TControlPadding, TControlSize } from 'ui/types';
 import { FcCloth } from 'react-icons/fc';
+import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
 import { Chip } from './Chip';
-import { TChipVariant } from './ChipVariant';
+import { TChipVariants } from './ChipVariant';
+import { collapseAnalysisIcon } from '.storydata/IconsBase64';
 
 const meta = {
   title: 'Display/Chip',
@@ -17,21 +18,31 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
+    hasRadius: {
+      control: 'boolean'
+    },
     color: {
-      control: 'select',
-      options: Object.values(TColorType)
+      control: 'inline-radio',
+      options: [...TColorTypes, undefined]
     },
     size: {
-      control: 'select',
-      options: Object.values(TControlSize)
-    },
-    variant: {
-      control: 'select',
-      options: Object.values(TChipVariant)
+      control: 'inline-radio',
+      options: [...TControlSizes, undefined]
     },
     paddingControl: {
-      control: 'radio',
-      options: Object.values(TControlPadding)
+      control: 'inline-radio',
+      options: [...TControlPaddings, undefined]
+    },
+    variant: {
+      control: 'inline-radio',
+      options: [...TChipVariants, undefined]
+    },
+    onClick:
+    {
+      table:
+      {
+        disable: true
+      }
     }
   }
 } satisfies Meta<typeof Chip>;
@@ -48,14 +59,21 @@ export const Default: Story = {
 
 export const Dark: Story = {
   args: {
-    color: 'dark',
+    color: 'danger',
     label: 'А'
+  }
+};
+
+export const IconSvg: Story = {
+  args: {
+    color: 'info',
+    label: <FcCloth />
   }
 };
 
 export const IconBase: Story = {
   args: {
-    color: 'dark',
-    label: <FcCloth />
+    color: 'info',
+    label: collapseAnalysisIcon
   }
 };

@@ -8,14 +8,14 @@ import { InputFieldHelper } from './InputFieldHelper';
 export interface IInputFieldProps extends Omit<ComponentPropsWithRef<'input'>, 'size' | 'color'>, IGeneralPropertiesElements
 {
   /**
-   * Фон поля
-   */
-  isBackground?: boolean;
-
-  /**
    * Параметры надписи
    */
   labelProps?: ILabelProps;
+
+  /**
+   * Фон поля
+   */
+  isBackground?: boolean;
 
   /**
    * Дополнительный элемент справа
@@ -27,9 +27,23 @@ export const InputField: React.FC<IInputFieldProps> = (props: IInputFieldProps) 
 {
   const { hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal',
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    isBackground, labelProps, rightElement, ...propsInput } = props
+    labelProps, isBackground, width, rightElement, ...propsInput } = props
+
+  const getWidth = ():string =>
+  {
+    if(width)
+    {
+      return `width: ${width};`;
+    }
+    else
+    {
+      return '';
+    }
+  }
 
   const inputFieldClass = css`
+    box-sizing: border-box;
+    ${getWidth()}
     ${ThemeHelper.getFontPropsAsText(size)}
     ${ThemeHelper.getBorderPropsAsText(undefined, undefined, hasRadius, size)}
     ${ThemeHelper.getTransitionColorsPropsAsText()}
@@ -50,7 +64,7 @@ export const InputField: React.FC<IInputFieldProps> = (props: IInputFieldProps) 
   `;
   if (labelProps)
   {
-    return <Label {...labelProps} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}>
+    return <Label {...labelProps} size={size} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}>
       <input type='text' {...propsInput} className={inputFieldClass} />
     </Label>
   }

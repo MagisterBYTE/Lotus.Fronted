@@ -3,8 +3,8 @@ import { fn } from '@storybook/test';
 import { GiAnt } from 'react-icons/gi';
 import { HorizontalStack } from 'ui/components/Layout';
 import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
-import { hydraulicAnalysisIcon } from '../../../../.storydata/IconsBase64';
 import { Button } from './Button';
+import { hydraulicAnalysisIcon } from '.storydata/IconsBase64';
 
 const meta = {
   title: 'Controls/Button',
