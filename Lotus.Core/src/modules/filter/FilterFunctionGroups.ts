@@ -3,7 +3,7 @@ import { FilterFunctionEnum, IFilterFunctionDesc } from './FilterFunction';
 /**
  * Группа функций фильтрации для числовых типов
  */
-export const GroupFilterFunctionsNumber: IFilterFunctionDesc[] =
+export const GroupFilterFunctionsNumber: readonly IFilterFunctionDesc[] =
   [
     FilterFunctionEnum.Equals,
     FilterFunctionEnum.NotEqual,
@@ -17,7 +17,7 @@ export const GroupFilterFunctionsNumber: IFilterFunctionDesc[] =
 /**
  * Группа функций фильтрации для строк
  */
-export const GroupFilterFunctionsString: IFilterFunctionDesc[] =
+export const GroupFilterFunctionsString: readonly IFilterFunctionDesc[] =
   [
     FilterFunctionEnum.Equals,
     FilterFunctionEnum.Contains,
@@ -30,7 +30,7 @@ export const GroupFilterFunctionsString: IFilterFunctionDesc[] =
 /**
  * Группа функций фильтрации для перечисления
  */
-export const GroupFilterFunctionsEnum: IFilterFunctionDesc[] =
+export const GroupFilterFunctionsEnum: readonly IFilterFunctionDesc[] =
   [
     FilterFunctionEnum.Equals,
     FilterFunctionEnum.NotEqual
@@ -39,7 +39,7 @@ export const GroupFilterFunctionsEnum: IFilterFunctionDesc[] =
 /**
  * Группа функций фильтрации для массива
  */
-export const GroupFilterFunctionsArray: IFilterFunctionDesc[] =
+export const GroupFilterFunctionsArray: readonly IFilterFunctionDesc[] =
   [
     FilterFunctionEnum.IncludeAll,
     FilterFunctionEnum.IncludeAny,

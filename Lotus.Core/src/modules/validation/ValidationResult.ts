@@ -17,4 +17,4 @@ export interface IValidationResult
 /**
  * Успешный результат валидации
  */
-export const ValidationResultSuccess: IValidationResult = { error: false };
+export const ValidationResultSuccess: IValidationResult = { error: false } as const;

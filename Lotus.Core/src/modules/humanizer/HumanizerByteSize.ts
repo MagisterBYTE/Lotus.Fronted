@@ -7,7 +7,7 @@ export class HumanizerByteSize
    * @param sizeInBytes 
    * @returns 
    */
-  public static ByteSize(sizeInBytes: number): string
+  public static byteSize(sizeInBytes: number): string
   {
     let size = sizeInBytes / 1024;
     if (size < 1000) 

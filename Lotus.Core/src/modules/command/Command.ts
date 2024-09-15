@@ -24,17 +24,17 @@ export interface ICommand<TCommandParameter = any>
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  execute(): void;
+  execute: ()=>void;
 
   /**
    * Метод определяющий возможность выполнения команды
    */
-  canExecute(): boolean;
+  canExecute: ()=>boolean;
 
   /**
    * Статус выбора
    */
-  isSelected(): boolean;
+  isSelected: ()=>boolean;
 
   //
   // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
@@ -82,12 +82,27 @@ export class BaseCommand<TCommandParameter = any> implements ICommand<TCommandPa
   /**
    * Имя команды
    */
-  name: string;
+  public name: string;
 
   /**
    * Параметр команды
    */
-  parameter?: TCommandParameter;
+  public parameter?: TCommandParameter;
+
+  /**
+   * Основной метод команды отвечающий за ее выполнение
+   */
+  public execute: ()=>void;
+
+  /**
+   * Метод определяющий возможность выполнения команды
+   */
+  public canExecute: ()=>boolean;
+
+  /**
+   * Статус выбора
+   */
+  public isSelected: ()=>boolean;
 
   //
   // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
@@ -95,7 +110,7 @@ export class BaseCommand<TCommandParameter = any> implements ICommand<TCommandPa
   /**
    * Маршрут команды 
    */
-  route?: IRoute;
+  public route?: IRoute;
 
   //
   // СВЯЗЬ С ВИЗУАЛЬНОЙ ЧАСТЬЮ
@@ -103,42 +118,49 @@ export class BaseCommand<TCommandParameter = any> implements ICommand<TCommandPa
   /**
    * Надпись
    */
-  label: string;
+  public label: string;
 
   /**
    * Иконка
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon?: any;
+  public icon?: any;
 
   /**
    * Порядок при сортировке команд
    */
-  order?: number;
+  public order?: number;
 
   /**
    * Группа к которой относиться команда
    */
-  group?: string;
+  public group?: string;
 
   constructor(name: string) 
   {
     this.name = name;
     this.label = '';
+    this.executeDefault = this.executeDefault.bind(this);
+    this.canExecuteDefault = this.canExecuteDefault.bind(this);
+    this.isSelectedDefault = this.isSelectedDefault.bind(this);
+    this.execute = this.executeDefault;
+    this.canExecute = this.canExecuteDefault;
+    this.isSelected = this.isSelectedDefault;
   }
 
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  public execute(): void
+  public executeDefault(): void
   {
-    // TODO document why this method 'execute' is empty
+
   }
+
 
   /**
    * Метод определяющий возможность выполнения команды
    */
-  public canExecute(): boolean
+  public canExecuteDefault(): boolean
   {
     return true;
   }
@@ -146,7 +168,7 @@ export class BaseCommand<TCommandParameter = any> implements ICommand<TCommandPa
   /**
    * Статус выбора
    */
-  public isSelected(): boolean
+  public isSelectedDefault(): boolean
   {
     return false;
   }

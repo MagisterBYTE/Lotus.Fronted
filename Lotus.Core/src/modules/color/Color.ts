@@ -510,7 +510,7 @@ export class Color
    *
    * @method decreaseSaturate
    * @memberof Color
-   * @param {Number} desaturateBy amount to desaturate between 0 and 1
+   * @param {Number} amount amount to desaturate between 0 and 1
    * @return {Color} new Color() instance
    * @instance
    *
@@ -660,7 +660,7 @@ export class Color
     }
     else
     {
-      return ColorNames.white;
+      return new Color(ColorNames.white);
     }
   }
 
@@ -802,6 +802,17 @@ export class Color
   }
 
   /**
+   * Вернуть этот же цвет, но с модифицированным альфа значением
+   * @param amount Альфа значение от 0 до 1
+   * @returns {Color} new Color() instance
+   */
+  toModifyAlpha(amount: number): Color
+  {
+    const rgb = this._getRGB();
+    return new Color(rgb[0], rgb[1], rgb[2], amount);
+  }
+
+  /**
    * Returns the CSS string of the color, either as hex value, or rgba if an alpha value is defined
    *
    * @method toString
@@ -813,7 +824,7 @@ export class Color
    * new Color('rgb(0,0,255)').toString(); // returns "#00f"
    *
    */
-  toString(): string 
+  toString(isHex?:boolean): string 
   {
     if (this.a === 0) 
     {
@@ -826,7 +837,33 @@ export class Color
     }
     else 
     {
-      return this.getHex();
+      if(isHex)
+      {
+        return this.getHex();
+      }
+      else
+      {
+        const rgb = this._getRGB();
+        return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+      }
+    }
+  }
+
+  toStrCSSValue(): string 
+  {
+    if (this.a === 0) 
+    {
+      return 'transparent;';
+    }
+    if (this.a < 1) 
+    {
+      const rgb = this._getRGB();
+      return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ');';
+    }
+    else 
+    {
+      const rgb = this._getRGB();
+      return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ');';
     }
   }
 

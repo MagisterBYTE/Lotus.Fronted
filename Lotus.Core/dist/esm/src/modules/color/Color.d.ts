@@ -258,7 +258,7 @@ export declare class Color {
      *
      * @method decreaseSaturate
      * @memberof Color
-     * @param {Number} desaturateBy amount to desaturate between 0 and 1
+     * @param {Number} amount amount to desaturate between 0 and 1
      * @return {Color} new Color() instance
      * @instance
      *
@@ -418,6 +418,12 @@ export declare class Color {
      */
     tint(colorValue: any, amount: number | undefined): Color;
     /**
+     * Вернуть этот же цвет, но с модифицированным альфа значением
+     * @param amount Альфа значение от 0 до 1
+     * @returns {Color} new Color() instance
+     */
+    toModifyAlpha(amount: number): Color;
+    /**
      * Returns the CSS string of the color, either as hex value, or rgba if an alpha value is defined
      *
      * @method toString
@@ -429,7 +435,8 @@ export declare class Color {
      * new Color('rgb(0,0,255)').toString(); // returns "#00f"
      *
      */
-    toString(): string;
+    toString(isHex?: boolean): string;
+    toStrCSSValue(): string;
     /**
      * Returns the array of named color values
      *

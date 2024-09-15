@@ -16,7 +16,7 @@ export class NavigationCommand<TCommandParameter = any> extends BaseCommand<TCom
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  public override execute(): void
+  public override executeDefault(): void
   {
     // TODO document why this method 'execute' is empty
   }
@@ -24,7 +24,7 @@ export class NavigationCommand<TCommandParameter = any> extends BaseCommand<TCom
   /**
    * Метод определяющий возможность выполнения команды
    */
-  public override canExecute(): boolean
+  public override canExecuteDefault(): boolean
   {
     return true;
   }
@@ -32,7 +32,7 @@ export class NavigationCommand<TCommandParameter = any> extends BaseCommand<TCom
   /**
    * Статус выбора
    */
-  public override isSelected(): boolean
+  public override isSelectedDefault(): boolean
   {
     if (window.location.pathname === this.route?.path)
     {

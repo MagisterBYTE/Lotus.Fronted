@@ -1,7 +1,6 @@
 /**
  * Определение интерфейса для представления ответа/результата выполнения операции
  */
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface IResult<TData = any>
 {

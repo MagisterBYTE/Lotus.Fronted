@@ -4,9 +4,9 @@ export class StringHelper
    * see for details: https://stackoverflow.com/a/2140644
    * (warning: function may not work with Unicode special characters)
    */
-  public static EqualIgnoreCase(first: string, second: string): boolean
+  public static equalIgnoreCase(first: string, second: string): boolean
   {
-    return first.toUpperCase() === second.toUpperCase();
+    return first.toLocaleUpperCase() === second.toLocaleUpperCase();
   }
 
   /**

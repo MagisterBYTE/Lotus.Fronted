@@ -17,7 +17,6 @@ export interface IGrouping<TItem = any>
   items: TItem[];
 }
 
-
 /**
  * Проверка объекта на поддержку интерфейса IGrouping
  * @param value Проверяемый объект

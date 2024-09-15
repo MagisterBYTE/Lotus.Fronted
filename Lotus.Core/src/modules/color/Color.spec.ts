@@ -1,5 +1,6 @@
 
 import { Color } from './Color';
+import { ColorHelper } from './ColorHelper';
 
 describe('Color class constructor', function () 
 {
@@ -34,13 +35,13 @@ describe('Color class constructor', function ()
       h: 0,
       s: 1,
       l: 0.5
-    }).toString()).toBe('#f00');
+    }).toString(true)).toBe('#f00');
 
     expect(new Color({
       h: 0,
       s: 1,
       l: 0.5
-    }, 0.5).toString()).toBe('rgba(255,0,0,0.5)');
+    }, 0.5).toString(true)).toBe('rgba(255,0,0,0.5)');
 
     expect(new Color({
       h: 0.5,
@@ -60,10 +61,10 @@ describe('Color class constructor', function ()
 
   it('toString() converts the supplied color into a CSS compatible hex, rgb, rgba string', function (done) 
   {
-    expect(new Color('red').toString()).toBe('#f00');
-    expect(new Color('tan').toString()).toBe('#d2b48c');
-    expect(new Color('#FF0000').toString()).toBe('#f00');
-    expect(new Color('rgb(255,0,0)').toString()).toBe('#f00');
+    expect(new Color('red').toString(true)).toBe('#f00');
+    expect(new Color('tan').toString(true)).toBe('#d2b48c');
+    expect(new Color('#FF0000').toString(true)).toBe('#f00');
+    expect(new Color('rgb(255,0,0)').toString(true)).toBe('#f00');
     expect(new Color('rgba(255, 0, 0, 0.5)').toString()).toBe('rgba(255,0,0,0.5)');
     expect(new Color('rgba(255, 255, 255, 0)').toString()).toBe('transparent');
     expect(new Color([255, 0, 0], 0.5).toString()).toBe('rgba(255,0,0,0.5)');
@@ -120,15 +121,15 @@ describe('.setAlpha()', function ()
   {
     expect(new Color('red').setAlpha(0.5).toString()).toBe('rgba(255,0,0,0.5)');
     expect(new Color('red').setAlpha(0).toString()).toBe('transparent');
-    expect(new Color([255, 0, 0], 0.5).setAlpha(1).toString()).toBe('#f00');
+    expect(new Color([255, 0, 0], 0.5).setAlpha(1).toString(true)).toBe('#f00');
     done();
   });
   it('alpha does not modify existing color', function (done) 
   {
     const myColor = new Color('red');
-    expect(myColor.toString()).toBe('#f00');
+    expect(myColor.toString(true)).toBe('#f00');
     expect(myColor.setAlpha(0.5).toString()).toBe('rgba(255,0,0,0.5)');
-    expect(myColor.toString()).toBe('#f00');
+    expect(myColor.toString(true)).toBe('#f00');
     done();
   });
 });
@@ -137,8 +138,8 @@ describe('.setSaturation()', function ()
 {
   it('sets the saturation value', function (done) 
   {
-    expect(new Color(100, 50, 50).setSaturation(0).toString()).toBe('#4b4b4b');
-    expect(new Color(100, 50, 50).setSaturation(1).toString()).toBe('#960000');
+    expect(new Color(100, 50, 50).setSaturation(0).toString(true)).toBe('#4b4b4b');
+    expect(new Color(100, 50, 50).setSaturation(1).toString(true)).toBe('#960000');
     done();
   });
 });
@@ -149,11 +150,11 @@ describe('.increaseSaturate()', function ()
   {
     const cornsilk = new Color('corn silk 3');
     expect(cornsilk.getSaturation()).toBe(0.2187500000000001);
-    expect(cornsilk.toString()).toBe('#cdc8b1');
+    expect(cornsilk.toString(true)).toBe('#cdc8b1');
     expect(cornsilk.increaseSaturate(0.1).getSaturation()).toBe(0.3187500000000001);
-    expect(cornsilk.increaseSaturate(0.1).toString()).toBe('#d3ccab');
+    expect(cornsilk.increaseSaturate(0.1).toString(true)).toBe('#d3ccab');
 
-    expect(new Color('red').increaseSaturate(0.1).toString()).toBe('#f00'); // already fully saturated
+    expect(new Color('red').increaseSaturate(0.1).toString(true)).toBe('#f00'); // already fully saturated
     done();
   });
 });
@@ -163,9 +164,9 @@ describe('.decreaseSaturate()', function ()
   it('decreaseSaturate the saturation by a percentage (1.0 = 100%)', function (done) 
   {
     expect(new Color('#d3ccab').getSaturation()).toBe(0.31249999999999994); // not the same numbers as above due to hsl/rgb calculations
-    expect(new Color('#d3ccab').decreaseSaturate(0.1).toString()).toBe('#cdc8b1');
+    expect(new Color('#d3ccab').decreaseSaturate(0.1).toString(true)).toBe('#cdc8b1');
     expect(new Color('#d3ccab').decreaseSaturate(0.1).getSaturation()).toBe(0.21249999999999994);
-    expect(new Color('#888').decreaseSaturate(0.1).toString()).toBe('#888'); // already fully desaturated
+    expect(new Color('#888').decreaseSaturate(0.1).toString(true)).toBe('#888'); // already fully desaturated
     done();
   });
 });
@@ -174,9 +175,9 @@ describe('.setHue', function ()
 {
   it('sets the hue', function (done) 
   {
-    expect(new Color('red').setHue(2 / 3).toString()).toBe('#00f');
-    expect(new Color('blue').setHue(1 / 3).toString()).toBe('#0f0');
-    expect(new Color('red').setHue(0.23).toString()).toBe('#9eff00');
+    expect(new Color('red').setHue(2 / 3).toString(true)).toBe('#00f');
+    expect(new Color('blue').setHue(1 / 3).toString(true)).toBe('#0f0');
+    expect(new Color('red').setHue(0.23).toString(true)).toBe('#9eff00');
     done();
   });
 });
@@ -185,12 +186,12 @@ describe('.shiftHue()', function ()
 {
   it('shifts the hue', function (done) 
   {
-    expect(new Color(255, 255, 0).shiftHue(0.25).toString()).toBe('#00ff7f');
-    expect(new Color(255, 0, 0).shiftHue(0.1).toString()).toBe('#f90');
-    expect(new Color(255, 0, 0).shiftHue(1.1).toString()).toBe('#f90');
-    expect(new Color(255, 0, 0).shiftHue(1).toString()).toBe('#f00');
-    expect(new Color(255, 0, 0).shiftHue(-0.1).toString()).toBe('#f09');
-    expect(new Color(255, 0, 0).shiftHue(-1.1).toString()).toBe('#f09');
+    expect(new Color(255, 255, 0).shiftHue(0.25).toString(true)).toBe('#00ff7f');
+    expect(new Color(255, 0, 0).shiftHue(0.1).toString(true)).toBe('#f90');
+    expect(new Color(255, 0, 0).shiftHue(1.1).toString(true)).toBe('#f90');
+    expect(new Color(255, 0, 0).shiftHue(1).toString(true)).toBe('#f00');
+    expect(new Color(255, 0, 0).shiftHue(-0.1).toString(true)).toBe('#f09');
+    expect(new Color(255, 0, 0).shiftHue(-1.1).toString(true)).toBe('#f09');
     done();
   });
 });
@@ -199,7 +200,7 @@ describe('.setLightness()', function ()
 {
   it('sets the lightness value', function (done) 
   {
-    expect(new Color('#cdc8b1').setLightness(0.5).toString()).toBe('#9b9164');
+    expect(new Color('#cdc8b1').setLightness(0.5).toString(true)).toBe('#9b9164');
     done();
   });
 });
@@ -208,8 +209,8 @@ describe('.increaseLightness()', function ()
 {
   it('lightens', function (done) 
   {
-    expect(new Color('red').increaseLightness(0.1).toString()).toBe('#f33');
-    expect(new Color('blue').increaseLightness(0.1).toString()).toBe('#33f');
+    expect(new Color('red').increaseLightness(0.1).toString(true)).toBe('#f33');
+    expect(new Color('blue').increaseLightness(0.1).toString(true)).toBe('#33f');
     done();
   });
 });
@@ -218,8 +219,8 @@ describe('.decreaseLightness()', function ()
 {
   it('darkens', function (done) 
   {
-    expect(new Color('red').decreaseLightness(0.1).toString()).toBe('#c00');
-    expect(new Color('tan').decreaseLightness(0.1).toString()).toBe('#c49c67');
+    expect(new Color('red').decreaseLightness(0.1).toString(true)).toBe('#c00');
+    expect(new Color('tan').decreaseLightness(0.1).toString(true)).toBe('#c49c67');
     done();
   });
 });
@@ -249,14 +250,14 @@ describe('.combine', function ()
 {
   it('combines colors', function (done) 
   {
-    expect(new Color('black').combine(new Color('red'), 0.5).toString()).toBe('#800000');
-    expect(new Color('black').combine('red', 0.5).toString()).toBe('#800000');
-    expect(new Color('black').combine('red', 0.2).toString()).toBe('#300');
-    expect(new Color('red').combine('#00f', 0.7).toString()).toBe('#4d00b3');
-    expect(new Color('red').combine([0, 0, 255], 0.5).toString()).toBe('#800080');
-    expect(new Color('red').combine([0, 0, 1], 0.5).toString()).toBe('#800001');
-    expect(new Color(25, 135, 84).combine('black', 0.5).toString()).toBe('#0d442a');
-    expect(new Color(25, 135, 84).combine('white', 0.25).toString()).toBe('#53a57f');
+    expect(new Color('black').combine(new Color('red'), 0.5).toString(true)).toBe('#800000');
+    expect(new Color('black').combine('red', 0.5).toString(true)).toBe('#800000');
+    expect(new Color('black').combine('red', 0.2).toString(true)).toBe('#300');
+    expect(new Color('red').combine('#00f', 0.7).toString(true)).toBe('#4d00b3');
+    expect(new Color('red').combine([0, 0, 255], 0.5).toString(true)).toBe('#800080');
+    expect(new Color('red').combine([0, 0, 1], 0.5).toString(true)).toBe('#800001');
+    expect(new Color(25, 135, 84).combine('black', 0.5).toString(true)).toBe('#0d442a');
+    expect(new Color(25, 135, 84).combine('white', 0.25).toString(true)).toBe('#53a57f');
     done();
   });
   it('maintains alpha channel', function (done) 
@@ -270,16 +271,16 @@ describe('.tint', function ()
 {
   it('tint colors', function (done) 
   {
-    expect(new Color('red').tint('blue', 0.5).toString()).toBe('#0f0'); // green is half way between red and blue
-    expect(new Color('red').tint('blue', 1).toString()).toBe('#00f');
-    expect(new Color('red').tint('blue', 0).toString()).toBe('#f00');
-    expect(new Color('rgb(0,0,100)').tint('rgb(100,0,0)', 0.1).toString()).toBe('#002864');
+    expect(new Color('red').tint('blue', 0.5).toString(true)).toBe('#0f0'); // green is half way between red and blue
+    expect(new Color('red').tint('blue', 1).toString(true)).toBe('#00f');
+    expect(new Color('red').tint('blue', 0).toString(true)).toBe('#f00');
+    expect(new Color('rgb(0,0,100)').tint('rgb(100,0,0)', 0.1).toString(true)).toBe('#002864');
     done();
   });
   it('only adjusts the hue', function (done) 
   {
-    expect(new Color('red').tint([0, 0, 255], 0.5).toString()).toBe('#0f0');
-    expect(new Color('red').tint([0, 0, 1], 0.5).toString()).toBe('#0f0'); // same as above, because tint only adjusts the hue
+    expect(new Color('red').tint([0, 0, 255], 0.5).toString(true)).toBe('#0f0');
+    expect(new Color('red').tint([0, 0, 1], 0.5).toString(true)).toBe('#0f0'); // same as above, because tint only adjusts the hue
     done();
   });
   it('maintains alpha channel', function (done) 
@@ -293,8 +294,8 @@ describe('.invert', function ()
 {
   it('inverts', function (done) 
   {
-    expect(new Color('#f00').invert().toString()).toBe('#0ff');
-    expect(new Color('white').invert().toString()).toBe('#000');
+    expect(new Color('#f00').invert().toString(true)).toBe('#0ff');
+    expect(new Color('white').invert().toString(true)).toBe('#000');
     done();
   });
 });
@@ -383,6 +384,19 @@ describe('Color.getNames', function ()
   it('returns the color names literal', function (done) 
   {
     expect(Color.getNames()['red']).toStrictEqual([255, 0, 0]);
+    done();
+  });
+});
+
+describe('ColorHelper.createMatchingColor', function () 
+{
+  it('returns matchingColor', function (done) 
+  {
+    // background-color: rgb(221, 238, 224); color: rgb(0, 51, 10); text-shadow: rgb(187, 221, 194) 1px 2px 5px;
+    expect(ColorHelper.createMatchingColor(new Color(221, 238, 224)).text.toString()).toBe('rgb(0,51,9)');
+
+    // background-color: rgb(110, 97, 152); color: rgb(235, 230, 255); text-shadow: rgb(23, 20, 31) 1px 2px 5px;
+    expect(ColorHelper.createMatchingColor(new Color(110, 97, 152)).text.toString()).toBe('rgb(236,229,255)');
     done();
   });
 });

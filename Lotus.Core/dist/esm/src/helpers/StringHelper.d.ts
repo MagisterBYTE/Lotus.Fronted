@@ -3,7 +3,7 @@ export declare class StringHelper {
      * see for details: https://stackoverflow.com/a/2140644
      * (warning: function may not work with Unicode special characters)
      */
-    static EqualIgnoreCase(first: string, second: string): boolean;
+    static equalIgnoreCase(first: string, second: string): boolean;
     /**
      *
      * @param value

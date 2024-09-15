@@ -3,7 +3,7 @@
  */
 export interface IPageInfoRequest {
     /**
-     * Номер старницы, отсчет от нуля
+     * Номер страницы, отсчет от нуля
      */
     pageNumber: number;
     /**
@@ -16,7 +16,7 @@ export interface IPageInfoRequest {
  */
 export interface IPageInfoResponse {
     /**
-     * Номер старницы, отсчет от нуля
+     * Номер страницы, отсчет от нуля
      */
     pageNumber: number;
     /**

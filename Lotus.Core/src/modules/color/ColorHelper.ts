@@ -1,3 +1,4 @@
+import { Color } from './Color';
 import { IColorModelHSL } from './ColorModel';
 import { ColorNames } from './ColorNames';
 
@@ -13,13 +14,13 @@ export class ColorHelper
     return value >= 0 && value <= 1;
   }
 
-  public static isRGBArray(rgba: number[]): boolean
+  public static isRGBArray(rgb: number[]): boolean
   {
-    if (rgba.length === 3)
+    if (rgb.length === 3)
     {
       for (let i = 0; i < 3; i++)
       {
-        if (!ColorHelper.isColorValue(rgba[i]))
+        if (!ColorHelper.isColorValue(rgb[i]))
         {
           return false;
         }
@@ -249,5 +250,80 @@ export class ColorHelper
     if (newh < 0) newh += 1;
     if (newh > 1) newh -= 1;
     return newh;
+  }
+
+  public static createMatchingColor(color: Color): { text: Color, shadow: Color }
+  {
+    const hsl = color.getHSL();
+    let h = hsl.h * 360;
+    let s = hsl.s * 100;
+    let l = hsl.l * 100;
+
+    /* originals*/
+    const o_h = h, o_s = s, o_l = l;
+    s = 100;
+    if (o_s <= 25)
+    {
+      if (o_l > 60)
+      {
+        l = 10;
+      }
+      else 
+      {
+        l = 95;
+      }
+    }
+    else 
+    {
+      if ((o_h >= 25 && o_h <= 195) || o_h >= 295)
+      {
+        l = 10;
+      }
+      else if ((o_h >= 285 && o_h < 295) || (o_h > 195 && o_h <= 205))
+      {
+        h = 60;
+        l = 50;
+      }
+      else 
+      {
+        l = 95;
+      }
+    }
+    if ((o_h >= 295 || (o_h > 20 && o_h < 200)) && o_l <= 35)
+    {
+      l = 95;
+    }
+    else if (((o_h < 25 || o_h > 275) && o_l >= 60) || (o_h > 195 && o_l >= 70)
+    )
+    {
+      l = 10;
+    }
+
+    let s_l = l;
+    let s_h = h;
+    const s_s = o_s;
+
+    /* shadow*/
+    if (l < 25)
+    {
+      s_l = 80;
+    }
+    else 
+    {
+      s_l = 10;
+    }
+    if (h == 60 && (l < 90 || l > 20))
+    {
+      s_h = 320;
+    }
+    else 
+    {
+      s_h = h;
+    }
+
+    const textColor: IColorModelHSL = { h: h / 360, s: s / 100, l: l / 100 };
+    const shadowColor: IColorModelHSL = { h: s_h / 360, s: s_s / 100, l: s_l / 100 };
+
+    return { text: new Color(textColor, 1), shadow: new Color(shadowColor, 0.5) };
   }
 }

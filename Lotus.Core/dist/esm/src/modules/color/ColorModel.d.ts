@@ -3,7 +3,7 @@
  */
 export interface IColorModelHSL {
     /**
-     * Тон [0; 360]
+     * Тон [0; 1]
      */
     h: number;
     /**

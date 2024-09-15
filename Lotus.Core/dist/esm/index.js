@@ -586,8 +586,8 @@ class StringHelper {
      * see for details: https://stackoverflow.com/a/2140644
      * (warning: function may not work with Unicode special characters)
      */
-    static EqualIgnoreCase(first, second) {
-        return first.toUpperCase() === second.toUpperCase();
+    static equalIgnoreCase(first, second) {
+        return first.toLocaleUpperCase() === second.toLocaleUpperCase();
     }
     /**
      *
@@ -1334,9 +1334,6 @@ class Vector2 {
 }
 
 /**
- * Определение интерфейса для представления ответа/результата выполнения операции
- */
-/**
  * Проверка объекта на поддержку интерфейса IResult
  * @param value Проверяемый объект
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
@@ -1457,7 +1454,6 @@ class ApiService {
 
 // This is a slightly modified version of this list:
 //   https://www.color-hex.com/color-names.html
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ColorNames = {
     'alice blue': [240, 248, 255],
     'antique white': [250, 235, 215],
@@ -1967,6 +1963,1152 @@ const ColorNames = {
     'yellow green': [154, 205, 50]
 };
 
+class ColorHelper {
+    static isColorValue(value) {
+        return value >= 0 && value <= 255;
+    }
+    static isAlphaValue(value) {
+        return value >= 0 && value <= 1;
+    }
+    static isRGBArray(rgb) {
+        if (rgb.length === 3) {
+            for (let i = 0; i < 3; i++) {
+                if (!ColorHelper.isColorValue(rgb[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    static isRGBAArray(rgba) {
+        if (rgba.length === 4) {
+            for (let i = 0; i < 3; i++) {
+                if (!ColorHelper.isColorValue(rgba[i])) {
+                    return false;
+                }
+            }
+            return ColorHelper.isAlphaValue(rgba[3]);
+        }
+        return false;
+    }
+    static isHex3(colorString) {
+        return /^#[0-9a-fA-F]{3}/.test(colorString);
+    }
+    static isHex6(colorString) {
+        return /^#[0-9a-fA-F]{6}/.test(colorString);
+    }
+    // eslint-disable-next-line consistent-return
+    static parseColorString(colorString) {
+        const c = colorString;
+        if (ColorHelper.isHex6(c)) {
+            return [parseInt(c.substring(1, 3), 16), parseInt(c.substring(3, 5), 16), parseInt(c.substring(5, 7), 16)];
+        }
+        if (ColorHelper.isHex3(c)) {
+            return [parseInt(c[1] + c[1], 16), parseInt(c[2] + c[2], 16), parseInt(c[3] + c[3], 16)];
+        }
+        let m;
+        // eslint-disable-next-line no-cond-assign
+        if (m = c.match(/rgb\( ?(\d+), ?(\d+), ?(\d+) ?\)/)) {
+            const r = parseInt(m[1], 10);
+            const g = parseInt(m[2], 10);
+            const b = parseInt(m[3], 10);
+            if (ColorHelper.isColorValue(r) && ColorHelper.isColorValue(g) && ColorHelper.isColorValue(b)) {
+                return [r, g, b];
+            }
+        }
+        // eslint-disable-next-line no-cond-assign
+        if (m = c.match(/rgba\( ?(\d+), ?(\d+), ?(\d+), ?(\d+.?\d*) ?\)/)) {
+            const r = parseInt(m[1], 10);
+            const g = parseInt(m[2], 10);
+            const b = parseInt(m[3], 10);
+            const a = parseFloat(m[4]);
+            if (ColorHelper.isColorValue(r) && ColorHelper.isColorValue(g) && ColorHelper.isColorValue(b) && ColorHelper.isAlphaValue(a)) {
+                return [r, g, b, a];
+            }
+        }
+        const name = ColorHelper.getColorName(c);
+        if (name) {
+            return name;
+        }
+    }
+    // eslint-disable-next-line consistent-return
+    static getColorName(colorString) {
+        const colStr = colorString.toLowerCase();
+        if (colStr in ColorNames) {
+            return ColorNames[colStr];
+        }
+        if (/ 1$/.test(colStr)) {
+            // some color names had a 1 (eg. "blue 1') but none without the 1
+            // the 1's were removed from colorNames, and this code was added to support either case
+            const noOne = colStr.replace(/ 1$/, '');
+            if (noOne in ColorNames) {
+                return ColorNames[noOne];
+            }
+        }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static isHSL(hsla) {
+        return (typeof hsla === 'object' &&
+            'h' in hsla && ColorHelper.isAlphaValue(hsla.h) &&
+            's' in hsla && ColorHelper.isAlphaValue(hsla.s) &&
+            'l' in hsla && ColorHelper.isAlphaValue(hsla.l) &&
+            !('a' in hsla));
+    }
+    static rgb2hex(c) {
+        const r = ColorHelper.int2hex(Math.round(c[0]));
+        const g = ColorHelper.int2hex(Math.round(c[1]));
+        const b = ColorHelper.int2hex(Math.round(c[2]));
+        if (r[0] === r[1] && g[0] === g[1] && b[0] === b[1])
+            return ('#' + r[0] + g[0] + b[0]); // .toLowerCase();
+        return ('#' + r + g + b); // .toLowerCase();
+    }
+    static int2hex(i) {
+        const v = i.toString(16);
+        return v.length === 1 ? '0' + v : v;
+    }
+    static hslval(x, y, r) {
+        if (r < 0)
+            r += 1;
+        if (r > 1)
+            r -= 1;
+        let c;
+        if (6 * r < 1)
+            c = x + (y - x) * 6 * r;
+        else if (2 * r < 1)
+            c = y;
+        else if (3 * r < 2)
+            c = x + (y - x) * ((2 / 3) - r) * 6;
+        else
+            c = x;
+        return c * 255;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static hsl2rgb(hsl) {
+        const h = hsl.h, s = hsl.s, l = hsl.l;
+        let r, g, b;
+        if (s === 0) {
+            r = g = b = l * 255;
+        }
+        else {
+            let y;
+            if (l < 0.5)
+                y = l * (1 + s);
+            else
+                y = l + s - l * s;
+            const x = 2 * l - y;
+            r = ColorHelper.hslval(x, y, h + 1 / 3);
+            g = ColorHelper.hslval(x, y, h);
+            b = ColorHelper.hslval(x, y, h - 1 / 3);
+        }
+        r = Math.round(r);
+        g = Math.round(g);
+        b = Math.round(b);
+        return [r, g, b];
+    }
+    static rgb2hsl(rgb) {
+        const r = rgb[0] / 255;
+        const g = rgb[1] / 255;
+        const b = rgb[2] / 255;
+        const x = Math.max(r, g, b);
+        const n = Math.min(r, g, b);
+        const l = (x + n) / 2;
+        let s = 0, h = 0;
+        if (x === n) {
+            s = 0;
+            h = 0;
+        }
+        else {
+            const d = x - n;
+            if (l > 0.5)
+                s = d / (2 - x - n);
+            else
+                s = d / (x + n);
+            if (x === r)
+                h = (g - b) / d + (g < b ? 6 : 0);
+            if (x === g)
+                h = 2 + (b - r) / d;
+            if (x === b)
+                h = 4 + (r - g) / d;
+            h /= 6;
+            if (h < 0)
+                h += 1;
+        }
+        return {
+            h,
+            s,
+            l
+        };
+    }
+    static combine(s, t, amount) {
+        amount = typeof amount === 'number' ? amount : 0.5;
+        const r = Math.round((t[0] - s[0]) * amount);
+        const g = Math.round((t[1] - s[1]) * amount);
+        const b = Math.round((t[2] - s[2]) * amount);
+        const rgb = [s[0] + r, s[1] + g, s[2] + b];
+        if (s.length === 4)
+            rgb[3] = s[3];
+        return rgb;
+    }
+    static invert(c) {
+        const rgba = c.slice();
+        for (let i = 0; i < 3; i++) {
+            rgba[i] = 255 - rgba[i];
+        }
+        return rgba;
+    }
+    static tint(sourceHue, targetHue, amount) {
+        const sH = sourceHue;
+        const tH = targetHue;
+        const diff = tH - sH;
+        const dH = diff * amount;
+        let newh = sH + dH;
+        if (newh < 0)
+            newh += 1;
+        if (newh > 1)
+            newh -= 1;
+        return newh;
+    }
+    static createMatchingColor(color) {
+        const hsl = color.getHSL();
+        let h = hsl.h * 360;
+        let s = hsl.s * 100;
+        let l = hsl.l * 100;
+        /* originals*/
+        const o_h = h, o_s = s, o_l = l;
+        s = 100;
+        if (o_s <= 25) {
+            if (o_l > 60) {
+                l = 10;
+            }
+            else {
+                l = 95;
+            }
+        }
+        else {
+            if ((o_h >= 25 && o_h <= 195) || o_h >= 295) {
+                l = 10;
+            }
+            else if ((o_h >= 285 && o_h < 295) || (o_h > 195 && o_h <= 205)) {
+                h = 60;
+                l = 50;
+            }
+            else {
+                l = 95;
+            }
+        }
+        if ((o_h >= 295 || (o_h > 20 && o_h < 200)) && o_l <= 35) {
+            l = 95;
+        }
+        else if (((o_h < 25 || o_h > 275) && o_l >= 60) || (o_h > 195 && o_l >= 70)) {
+            l = 10;
+        }
+        let s_l = l;
+        let s_h = h;
+        const s_s = o_s;
+        /* shadow*/
+        if (l < 25) {
+            s_l = 80;
+        }
+        else {
+            s_l = 10;
+        }
+        if (h == 60 && (l < 90 || l > 20)) {
+            s_h = 320;
+        }
+        else {
+            s_h = h;
+        }
+        const textColor = { h: h / 360, s: s / 100, l: l / 100 };
+        const shadowColor = { h: s_h / 360, s: s_s / 100, l: s_l / 100 };
+        return { text: new Color(textColor, 1), shadow: new Color(shadowColor, 0.5) };
+    }
+}
+
+/* eslint-disable prefer-rest-params */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/** @class Color
+* Color class accepts a CSS color string, rgb, hsl data as the input, manipulate the color, and returns a CSS-compatible color string.
+* @constructor
+*
+* @example
+* new Color('red')  // named CSS colors
+*
+* @example
+* new Color('red', 0.5)  // named CSS colors and transparency
+*
+* @example
+* new Color('#f00')  // hex 3 characters
+*
+* @example
+* new Color('#e2b644')  // hex 6 characters
+*
+* @example
+* new Color('rgb(255, 0, 100)')  // rgb()
+*
+* @example
+* new Color('rgba(255, 0, 100, 0.5)')  // rgba()
+*
+* @example
+* new Color('rgba(255, 0, 100, 0.5)', 0.1)  // 0.1 overrides alpha from rgba
+*
+* @example
+* new Color([255,0,0])  // rgb array
+*
+* @example
+* new Color([255,0,0], 0.5)  // rgb and transparency
+*
+* @example
+* new Color({  // hsl object
+*     h: 0.2,
+*     s: 0.5,
+*     l: 1
+* })
+*
+* @example
+* new Color({  // hsl object and transparency
+*     h: 0.5,
+*     s: 1,
+*     l: 1
+* }, 0.5)
+*/
+class Color {
+    rgb;
+    hsl;
+    a;
+    constructor(red, green, blue, alpha) {
+        if (arguments.length === 0) {
+            this.rgb = [0, 0, 0];
+            this.a = 0;
+        }
+        else if (typeof arguments[0] === 'number') {
+            if (arguments.length === 3 && ColorHelper.isRGBArray([red, green, blue])) {
+                this.rgb = [red, green, blue];
+                this.a = 1;
+            }
+            else if (arguments.length === 4 && ColorHelper.isRGBAArray([red, green, blue, alpha])) {
+                this.rgb = [red, green, blue];
+                this.a = alpha;
+            }
+            else
+                throw Error('invalid color');
+        }
+        else if (typeof arguments[0] === 'string') {
+            const rgba = ColorHelper.parseColorString(arguments[0]);
+            if (rgba) {
+                this.rgb = rgba.slice(0, 3);
+                if (arguments.length === 2 && ColorHelper.isAlphaValue(arguments[1])) {
+                    this.a = arguments[1];
+                }
+                else if (rgba.length === 4) {
+                    this.a = rgba[3];
+                }
+                else {
+                    this.a = 1;
+                }
+            }
+            else
+                throw Error('invalid color');
+        }
+        else if (typeof arguments[0] === 'object') {
+            const obj = arguments[0];
+            if (obj.length > 0) {
+                if (obj.length === 3 && ColorHelper.isRGBArray(obj)) {
+                    this.rgb = obj.slice(0, 3);
+                    if (arguments.length === 2) {
+                        if (ColorHelper.isAlphaValue(arguments[1])) {
+                            this.a = arguments[1];
+                        }
+                        else
+                            throw new Error('invalid alpha value');
+                    }
+                    else {
+                        this.a = 1;
+                    }
+                }
+                else
+                    throw Error('invalid color');
+            }
+            else {
+                if (obj instanceof Color) {
+                    if (obj.hsl) {
+                        this.hsl = {
+                            h: obj.hsl.h,
+                            s: obj.hsl.s,
+                            l: obj.hsl.l
+                        };
+                    }
+                    if (obj.rgb) {
+                        this.rgb = obj.rgb.slice();
+                    }
+                    if (arguments.length === 2) {
+                        if (ColorHelper.isAlphaValue(arguments[1])) {
+                            this.a = arguments[1];
+                        }
+                        else
+                            throw new Error('invalid alpha value');
+                    }
+                    else {
+                        this.a = obj.a;
+                    }
+                }
+                else if (ColorHelper.isHSL(obj)) {
+                    this.hsl = {
+                        h: obj.h,
+                        s: obj.s,
+                        l: obj.l
+                    };
+                    if (arguments.length === 2) {
+                        if (ColorHelper.isAlphaValue(arguments[1])) {
+                            this.a = arguments[1];
+                        }
+                        else
+                            throw new Error('invalid alpha value');
+                    }
+                    else {
+                        this.a = 1;
+                    }
+                }
+                else
+                    throw Error('invalid color');
+            }
+        }
+        else
+            throw new Error('invalid color');
+    }
+    _getRGB() {
+        if (!this.rgb) {
+            this.rgb = ColorHelper.hsl2rgb(this.hsl);
+        }
+        return this.rgb;
+    }
+    /**
+     * Return the red, green, blue color values with the alpha channel as an array
+     *
+     * @method getRGB
+     * @memberof Color
+     * @return {Array} rgba the array of color values
+     * @instance
+     *
+     * @example
+     * new Color('red).getRGB();   // returns [255,0,0]
+     *
+     */
+    getRGB() {
+        return this._getRGB().slice();
+    }
+    /**
+     * Returns the hexadecimal value of the color
+     *
+     * @method getHex
+     * @memberof Color
+     * @return {String} hex color value
+     * @instance
+     *
+     * @example
+     * new Color('rgba(255,0,0,0.5)').getHex(); // returns "#f00"
+     *
+     */
+    getHex() {
+        return ColorHelper.rgb2hex(this._getRGB());
+    }
+    _getHSL() {
+        if (!this.hsl) {
+            this.hsl = ColorHelper.rgb2hsl(this.rgb);
+        }
+        return this.hsl;
+    }
+    /**
+     * Returns an [h,s,l] array from color string
+     *
+     * @method getHSL
+     * @memberof Color
+     * @return {Number[]} hsl array of [hue,saturation,lightness]
+     * @instance
+     *
+     * @example
+     * new Color('#f00').getHSL(); // returns [0,1,0.5]
+     *
+     */
+    getHSL() {
+        const hsl = this._getHSL();
+        return {
+            h: hsl.h,
+            s: hsl.s,
+            l: hsl.l
+        };
+    }
+    /**
+     * Returns the red component of a color string
+     *
+     * @method getRed
+     * @memberof Color
+     * @return {Number} red component 0-255
+     * @instance
+     *
+     * @example
+     * new Color('#fff').getRed(); // returns 255
+     *
+     */
+    getRed() {
+        return this._getRGB()[0];
+    }
+    /**
+     * Set the red component of a color
+     *
+     * @method setRed
+     * @memberof Color
+     * @param {Number} red red component 0-255
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('rgb(0,0,255)').red(255).toString();  // returns "#F0F"
+     *
+     */
+    setRed(red) {
+        if (ColorHelper.isColorValue(red)) {
+            const rgb = this._getRGB();
+            return new Color([red, rgb[1], rgb[2]], this.a);
+        }
+        else
+            throw new Error('invalid red');
+    }
+    /**
+     * Returns the green component of a color string
+     *
+     * @method getGreen
+     * @memberof Color
+     * @return {Number} green component 0-255
+     * @instance
+     *
+     * @example
+     * new Color('#fff').getGreen(); // returns 255
+     *
+     */
+    getGreen() {
+        return this._getRGB()[1];
+    }
+    /**
+     * Set the green component of a color
+     *
+     * @method setGreen
+     * @memberof Color
+     * @param {Number} green green component 0-255
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('rgb(255,0,0)').green(255).toString();  // returns "#FF0"
+     *
+     */
+    setGreen(green) {
+        if (ColorHelper.isColorValue(green)) {
+            const rgb = this._getRGB();
+            return new Color([rgb[0], green, rgb[2]], this.a);
+        }
+        else
+            throw new Error('invalid green');
+    }
+    /**
+     * Returns the blue component of a color string
+     *
+     * @method getBlue
+     * @memberof Color
+     * @return {Number} blue component 0-255
+     * @instance
+     *
+     * @example
+     * new Color('#fff').getBlue(); // returns 255
+     *
+     */
+    getBlue() {
+        return this._getRGB()[2];
+    }
+    /**
+     * Set the blue component of a color
+     *
+     * @method setBlue
+     * @memberof Color
+     * @param {Number} blue blue component 0-255
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#FF0').blue(255).toString();  // returns "#FFF"
+     *
+     */
+    setBlue(blue) {
+        if (ColorHelper.isColorValue(blue)) {
+            const rgb = this._getRGB();
+            return new Color([rgb[0], rgb[1], blue], this.a);
+        }
+        else
+            throw new Error('invalid blue');
+    }
+    /**
+     * Returns the transparency of a color
+     *
+     * @method getAlpha
+     * @memberof Color
+     * @return {Number} alpha transparency level between 0 and 1
+     * @instance
+     *
+     * @example
+     * new Color('#F00').getAlpha(); // returns 0
+     * new Color('rgba(255,0,0,0.5)').getAlpha(); // returns 0.5
+     *
+     */
+    getAlpha() {
+        return this.a;
+    }
+    /**
+     * Sets the transparency of a color
+     *
+     * @method setAlpha
+     * @memberof Color
+     * @param {Number} alpha transparency level between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#f00').alpha(0.5).toString();  // returns "rgba(255,0,0,0.5)"
+     *
+     */
+    setAlpha(alpha) {
+        if (ColorHelper.isAlphaValue(alpha)) {
+            if (this.hsl) {
+                return new Color(this.getHSL(), alpha);
+            }
+            else {
+                return new Color(this.getRGB(), alpha);
+            }
+        }
+        else {
+            throw new Error('invalid alpha value');
+        }
+    }
+    /**
+     * Return the "saturation" of a color
+     *
+     * @method getSaturation
+     * @memberof Color
+     * @return {Number} saturation saturation value between 0 and 1
+     * @instance
+     v
+     * @example
+     * new Color('rgb(100,100,100)').getSaturation(); // returns 0
+     * new Color('rgb(100,50,100)').getSaturation();  // returns 0.8333333333333334
+     * new Color('rgb(100,0,100)').getSaturation();   // returns 1
+     *
+     */
+    getSaturation() {
+        const hsl = this._getHSL();
+        return hsl.s;
+    }
+    /**
+     * Set the "saturation" of a color
+     *
+     * @method setSaturation
+     * @memberof Color
+     * @param {Number} saturation saturation value between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color(100,50,50).saturation(0.5).toString().toBe("#712626");
+     *
+     */
+    setSaturation(saturation) {
+        if (ColorHelper.isAlphaValue(saturation)) {
+            const hsl = this._getHSL();
+            return new Color({
+                h: hsl.h,
+                s: saturation,
+                l: hsl.l
+            }, this.a);
+        }
+        else
+            throw new Error('invalid saturation');
+    }
+    /**
+     * Increases the "saturation" of a color value
+     *
+     * @method increaseSaturate
+     * @memberof Color
+     * @param {Number} saturateBy amount to saturate between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('corn silk 3').saturate(0.1).toString(); // returns "#d3ccab"
+     *
+     */
+    increaseSaturate(amount) {
+        if (amount >= -1 && amount <= 1) {
+            let s = this.getSaturation();
+            s += amount;
+            if (s > 1)
+                s = 1;
+            if (s < 0)
+                s = 0;
+            return this.setSaturation(s);
+        }
+        else
+            throw new Error('invalid saturate');
+    }
+    /**
+     * Decreases the "saturation" of a color value
+     *
+     * @method decreaseSaturate
+     * @memberof Color
+     * @param {Number} amount amount to desaturate between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#d3ccab').desaturate(0.1).toString(); // returns "#cdc8b1"
+     *
+     */
+    decreaseSaturate(amount) {
+        return this.increaseSaturate(-amount);
+    }
+    /**
+     * Return the "hue" of a color
+     *
+     * @method getHue
+     * @memberof Color
+     * @return {Number} hue hue value between 0 and 1
+     * @instance
+     *
+     * @example
+     * new Color('#a1b2c1').getHue(); // returns "0.578125"}
+     * new Color('#f00').getHue(); // returns 0
+     * new Color('#0f0').getHue(); // returns 0.3333333333333333
+     * new Color('#00f').getHue(); // returns 0.6666666666666666
+     *
+     */
+    getHue() {
+        const hsl = this._getHSL();
+        return hsl.h;
+    }
+    /**
+     * Set the "hue" of a color
+     *
+     * @method setHue
+     * @memberof Color
+     * @param {Number} hue hue value between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#f00').hue(2/3).toString(); // returns "#00f"
+     * new Color('#0f0').hue(1/3).toString(); // returns "#0f0"
+     * new Color('#00f').hue(0.23).toString(); // returns "#9eff00"
+     *
+     */
+    setHue(hue) {
+        if (ColorHelper.isAlphaValue(hue)) {
+            const hsl = this._getHSL();
+            return new Color({
+                h: hue,
+                s: hsl.s,
+                l: hsl.l
+            }, this.a);
+        }
+        else
+            throw new Error('invalid hue');
+    }
+    /**
+     * Shifts the "hue" of a color value by a given percentage
+     *
+     * @method shiftHue
+     * @memberof Color
+     * @param {Number} hueShift amount to modify the hue by between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color(255,255,0).shiftHue(0.25).toString(); // returns "#00ff7f"
+     *
+     */
+    shiftHue(amount) {
+        const hsl = this._getHSL();
+        let newHue = hsl.h + amount;
+        if (newHue > 1) {
+            const x = Math.floor(newHue);
+            newHue -= x;
+        }
+        if (newHue < -1) {
+            const x = Math.floor(newHue);
+            newHue += Math.abs(x);
+        }
+        if (newHue < 0) {
+            newHue += 1;
+        }
+        return new Color({
+            h: newHue,
+            s: hsl.s,
+            l: hsl.l
+        }, this.a);
+    }
+    /**
+     * Return the lightness of a color (how close to white or black the color is)
+     *
+     * @method getLightness
+     * @memberof Color
+     * @return {Number} lightness lightness value between 0 and 1
+     * @instance
+     *
+     * @example
+     * new Color('rgb(0,0,0)').getLightness();       // returns 0
+     * new Color('rgb(100,50,100)').getLightness();  // returns 0.29411764705882354
+     * new Color('rgb(255,255,255)').getLightness(); // returns 1
+     *
+     */
+    getLightness() {
+        const hsl = this._getHSL();
+        return hsl.l;
+    }
+    /**
+     * Set the lightness of a color, how close to white or black the color will be
+     *
+     * @method setLightness
+     * @memberof Color
+     * @param {Number} lightness lightness value between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('rgb(255,0,0)').lightness(0).toString(); // returns "#000"
+     * new Color('rgb(255,0,0)').lightness(0.5).toString(); // returns "#F00"
+     * new Color('rgb(255,0,0)').lightness(1).toString(); // returns "#FFF"
+     *
+     */
+    setLightness(lightness) {
+        if (ColorHelper.isAlphaValue(lightness)) {
+            const hsl = this._getHSL();
+            return new Color({
+                h: hsl.h,
+                s: hsl.s,
+                l: lightness
+            }, this.a);
+        }
+        else {
+            return new Color(ColorNames.white);
+        }
+    }
+    /**
+     * Increases the "lightness" of a color value
+     *
+     * @method increaseLighten
+     * @memberof Color
+     * @param {Number} lightenBy amount to lighten between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#f00').lighten(0.5).toString(); // returns "#FF8080"
+     *
+     */
+    increaseLightness(amount) {
+        if (amount >= -1 && amount <= 1) {
+            const hsl = this._getHSL();
+            let l = hsl.l + amount;
+            if (l > 1)
+                l = 1;
+            if (l < 0)
+                l = 0;
+            return new Color({
+                h: hsl.h,
+                s: hsl.s,
+                l
+            }, this.a);
+        }
+        else
+            throw new Error('invalid lighten');
+    }
+    /**
+     * Decreases the "lightness" of a color value
+     *
+     * @method decreaseLighten
+     * @memberof Color
+     * @param {Number} darkenBy amount to darken between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#f00').darken(0.5).toString(); // returns "#800000"
+     *
+     */
+    decreaseLightness(amount) {
+        return this.increaseLightness(-amount);
+    }
+    /**
+     * Changes the color closer to another color by a given percentage
+     *
+     * @method combine
+     * @memberof Color
+     * @param {Object} colorValue color string, array, or object
+     * @param {Number} [amount=0.5] how close to the target color between 0 and 1 (0.5 is half-way between)
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('black').combine('red', 0.5).toString(); // returns "#800000"
+     *
+     */
+    combine(colorValue, amount) {
+        if (ColorHelper.isAlphaValue(amount)) {
+            let color;
+            if (colorValue instanceof Color) {
+                color = colorValue;
+            }
+            else {
+                color = new Color(colorValue);
+            }
+            const newRgb = ColorHelper.combine(this._getRGB(), color._getRGB(), amount);
+            return new Color(newRgb, this.a);
+        }
+        else
+            throw new Error('invalid combine amount');
+    }
+    /**
+     * Inverts the color
+     *
+     * @method invert
+     * @memberof Color
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#f00').invert(1).toString(); // returns "#0FF"
+     * new Color('#fff').invert().toString();  // returns "#000"
+     *
+     */
+    invert() {
+        return new Color(ColorHelper.invert(this._getRGB()), this.a);
+    }
+    /**
+     * Shifts only the hue of a color closer to another color by a given percentage
+     *
+     * @method tint
+     * @memberof Color
+     * @param {String} colorValue color string or array
+     * @param {Number} amount amount to shift the hue toward the target color between 0 and 1
+     * @return {Color} new Color() instance
+     * @instance
+     *
+     * @example
+     * new Color('#f00').tint('#00f',0.5).toString(); // returns "#0f0"
+     * new Color('rgb(0,0,100)').tint('rgb(100,0,0)',0.1).toString(); // returns "#002864"
+     *
+     */
+    tint(colorValue, amount) {
+        let color;
+        if (colorValue instanceof Color) {
+            color = colorValue;
+        }
+        else {
+            color = new Color(colorValue);
+        }
+        if (typeof amount === 'undefined') {
+            amount = 0.5;
+        }
+        const h = ColorHelper.tint(this.getHue(), color.getHue(), amount);
+        return new Color({
+            h,
+            s: this.hsl.s,
+            l: this.hsl.l
+        }, this.a);
+    }
+    /**
+     * Вернуть этот же цвет, но с модифицированным альфа значением
+     * @param amount Альфа значение от 0 до 1
+     * @returns {Color} new Color() instance
+     */
+    toModifyAlpha(amount) {
+        const rgb = this._getRGB();
+        return new Color(rgb[0], rgb[1], rgb[2], amount);
+    }
+    /**
+     * Returns the CSS string of the color, either as hex value, or rgba if an alpha value is defined
+     *
+     * @method toString
+     * @memberof Color
+     * @return {String} css color value
+     * @instance
+     *
+     * @example
+     * new Color('rgb(0,0,255)').toString(); // returns "#00f"
+     *
+     */
+    toString(isHex) {
+        if (this.a === 0) {
+            return 'transparent';
+        }
+        if (this.a < 1) {
+            const rgb = this._getRGB();
+            return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ')';
+        }
+        else {
+            if (isHex) {
+                return this.getHex();
+            }
+            else {
+                const rgb = this._getRGB();
+                return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+            }
+        }
+    }
+    toStrCSSValue() {
+        if (this.a === 0) {
+            return 'transparent;';
+        }
+        if (this.a < 1) {
+            const rgb = this._getRGB();
+            return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ');';
+        }
+        else {
+            const rgb = this._getRGB();
+            return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ');';
+        }
+    }
+    /**
+     * Returns the array of named color values
+     *
+     * @method getNames
+     * @memberof Color
+     * @return {Array} named color values
+     * @instance
+     *
+     * @example
+     * new Color('#f00').tint('#00f',0.5).toString(); // returns "#0f0"
+     * new Color('rgb(0,0,100)').tint('rgb(100,0,0)',0.1).toString(); // returns "#002864"
+     *
+     */
+    static getNames() {
+        return ColorNames;
+    }
+}
+
+const TColorVariantIndexWhite = 1;
+const TColorVariantIndexLighter = 3;
+const TColorVariantIndexLight = 4;
+const TColorVariantIndexMain = 5;
+const TColorVariantIndexDark = 6;
+const TColorVariantIndexDarker = 7;
+const TColorVariantIndexDarkest = 8;
+const TColorVariantIndexBlack = 9;
+/**
+ * Массив всех именованных типов в вариативности цветов
+ */
+const TColorVariantNames = ['white', 'palest', 'lighter', 'light', 'main', 'dark', 'darker', 'darkest', 'black'];
+
+class ColorVarianHelper {
+    /**
+     * Получить цвет по его индексу
+     * @param index Числовой индекс в палитре цветов
+     * @returns Именованный тип в палитре цветов
+     */
+    static getNameByIndex(index) {
+        return TColorVariantNames[(index ?? TColorVariantIndexMain) - 1];
+    }
+    /**
+     * Получить индексу по имени цвета
+     * @param name Именованный тип в палитре цветов
+     * @returns Числовой индекс в палитре цветов
+     */
+    static getIndexByName(name) {
+        if (name) {
+            const index = TColorVariantNames.findIndex((x => x === name));
+            return (index + 1);
+        }
+        return TColorVariantIndexMain;
+    }
+    /**
+     * Получить индекс смещенный на определенную величину
+     * @param index Числовой индекс в палитре цветов
+     * @param delta Смещение
+     * @returns Числовой индекс в палитре цветов
+     */
+    static getNextIndex(index, delta) {
+        const next = (index ?? TColorVariantIndexMain) + (delta ?? 0);
+        if (next > TColorVariantIndexBlack) {
+            return (next % TColorVariantIndexBlack);
+        }
+        else {
+            if (next < TColorVariantIndexWhite) {
+                return (next + TColorVariantIndexBlack);
+            }
+            else {
+                return next;
+            }
+        }
+    }
+}
+
+/**
+ * Вариативность цветов
+ */
+class ColorVariant {
+    white; // 1
+    palest; // 2
+    lighter; // 3
+    light; // 4
+    main; // 5
+    dark; // 6
+    darker; // 7
+    darkest; // 8
+    black; // 9
+    constructor(white, palest, lighter, light, main, dark, darker, darkest, black) {
+        this.white = white;
+        this.palest = palest;
+        this.lighter = lighter;
+        this.light = light;
+        this.main = main;
+        this.dark = dark;
+        this.darker = darker;
+        this.darkest = darkest;
+        this.black = black;
+        this.getByName = this.getByName.bind(this);
+        this.getByIndex = this.getByIndex.bind(this);
+    }
+    /**
+     * Получить цвет по его имени
+     * @param name Именованный тип в палитре цветов
+     * @param modifyAlpha Модификация значения альфы от 0 до 1
+     */
+    getByName(name, modifyAlpha) {
+        if (name) {
+            const color = this[name];
+            if (modifyAlpha) {
+                return color.toModifyAlpha(modifyAlpha);
+            }
+            else {
+                return color;
+            }
+        }
+        else {
+            if (modifyAlpha) {
+                return this.main.toModifyAlpha(modifyAlpha);
+            }
+            else {
+                return this.main;
+            }
+        }
+    }
+    /**
+     * Получить цвет по его индексу
+     * @param index  Числовой индекс в палитре цветов
+     * @param modifyAlpha Модификация значения альфы от 0 до 1
+     */
+    getByIndex(index, modifyAlpha) {
+        const name = ColorVarianHelper.getNameByIndex(index);
+        return this.getByName(name, modifyAlpha);
+    }
+}
+
 /**
  * Базовый класс команды
  */
@@ -1983,6 +3125,18 @@ class BaseCommand {
      * Параметр команды
      */
     parameter;
+    /**
+     * Основной метод команды отвечающий за ее выполнение
+     */
+    execute;
+    /**
+     * Метод определяющий возможность выполнения команды
+     */
+    canExecute;
+    /**
+     * Статус выбора
+     */
+    isSelected;
     //
     // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
     //
@@ -2013,23 +3167,28 @@ class BaseCommand {
     constructor(name) {
         this.name = name;
         this.label = '';
+        this.executeDefault = this.executeDefault.bind(this);
+        this.canExecuteDefault = this.canExecuteDefault.bind(this);
+        this.isSelectedDefault = this.isSelectedDefault.bind(this);
+        this.execute = this.executeDefault;
+        this.canExecute = this.canExecuteDefault;
+        this.isSelected = this.isSelectedDefault;
     }
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute() {
-        // TODO document why this method 'execute' is empty
+    executeDefault() {
     }
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecute() {
+    canExecuteDefault() {
         return true;
     }
     /**
      * Статус выбора
      */
-    isSelected() {
+    isSelectedDefault() {
         return false;
     }
 }
@@ -2087,67 +3246,9 @@ const CommandService = CommandServiceClass.Instance;
  * Фейковая команда предназначенная для визуального разделения команд в списках
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-class DelimiterCommand {
-    //
-    // ОСНОВНЫЕ ДАННЫЕ
-    //
-    /**
-     * Имя команды
-     */
-    name;
-    /**
-     * Параметр команды
-     */
-    parameter;
-    //
-    // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
-    //
-    /**
-     * Маршрут команды
-     */
-    route;
-    //
-    // СВЯЗЬ С ВИЗУАЛЬНОЙ ЧАСТЬЮ
-    //
-    /**
-     * Надпись
-     */
-    label;
-    /**
-     * Иконка
-     */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    icon;
-    /**
-     * Порядок при сортировке команд
-     */
-    order;
-    /**
-     * Группа к которой относиться команда
-     */
-    group;
+class DelimiterCommand extends BaseCommand {
     constructor(name) {
-        this.name = name;
-        this.label = '';
-        CommandService.addCommands([this]);
-    }
-    /**
-     * Основной метод команды отвечающий за ее выполнение
-     */
-    execute() {
-        // TODO document why this method 'execute' is empty
-    }
-    /**
-     * Метод определяющий возможность выполнения команды
-     */
-    canExecute() {
-        return true;
-    }
-    /**
-     * Статус выбора
-     */
-    isSelected() {
-        return false;
+        super(name);
     }
 }
 /**
@@ -2156,9 +3257,12 @@ class DelimiterCommand {
 const DelimiterCommandDefault = new DelimiterCommand('delimiter');
 
 /**
+ * Наименование(тип) события который посылают команды для генерирования пользовательских событий
+ */
+const EventCommandKey = 'EventCommand';
+/**
  * Класс команды для генерирования пользовательских событий
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class EventCommand extends BaseCommand {
     constructor(name) {
         super(name);
@@ -2166,20 +3270,20 @@ class EventCommand extends BaseCommand {
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute() {
-        const event = new Event('openModal');
+    executeDefault() {
+        const event = new CustomEvent(EventCommandKey, { detail: this.parameter });
         window.dispatchEvent(event);
     }
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecute() {
+    canExecuteDefault() {
         return true;
     }
     /**
      * Статус выбора
      */
-    isSelected() {
+    isSelectedDefault() {
         if (window.location.pathname === this.route?.path) {
             return true;
         }
@@ -2199,19 +3303,19 @@ class NavigationCommand extends BaseCommand {
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute() {
+    executeDefault() {
         // TODO document why this method 'execute' is empty
     }
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecute() {
+    canExecuteDefault() {
         return true;
     }
     /**
      * Статус выбора
      */
-    isSelected() {
+    isSelectedDefault() {
         if (window.location.pathname === this.route?.path) {
             return true;
         }
@@ -2421,7 +3525,7 @@ class HumanizerByteSize {
      * @param sizeInBytes
      * @returns
      */
-    static ByteSize(sizeInBytes) {
+    static byteSize(sizeInBytes) {
         let size = sizeInBytes / 1024;
         if (size < 1000) {
             return `${HumanizerNumber.formatNumber(size)} КБ`;
@@ -2462,12 +3566,13 @@ class HumanizerPerson {
      * @param substitutes
      * @returns
      */
-    static getNameWithPatronymic = (firstName, patronymic, substitutes) => {
+    static getNameWithPatronymic(firstName, patronymic, substitutes) {
         if (!firstName) {
             return ((substitutes && substitutes.find((sub) => !!sub)) || '');
         }
         return StringHelper.toUpperCaseAllFirstLetters(`${firstName}${patronymic ? ` ${patronymic}` : ''}`);
-    };
+    }
+    ;
     /**
      *
      * @param lastName
@@ -3190,4 +4295,4 @@ const sleep = (timeoutInMs) => {
     return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
 };
 
-export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, ColorNames, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, FilterFunctionEnum, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, PathHelper, PropertyTypeEnum, RandomHelper, RequestHelper, Route, SelectOptionHelper, SortPropertyHelper, StringHelper, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
+export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariant, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionEnum, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, PathHelper, PropertyTypeEnum, RandomHelper, RequestHelper, Route, SelectOptionHelper, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };

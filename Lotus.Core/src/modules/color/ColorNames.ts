@@ -1,8 +1,7 @@
 // This is a slightly modified version of this list:
 //   https://www.color-hex.com/color-names.html
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const ColorNames: { [index: string]: any } =
+export const ColorNames: { [index: string]: number[] } =
 {
   'alice blue': [240, 248, 255],
   'antique white': [250, 235, 215],

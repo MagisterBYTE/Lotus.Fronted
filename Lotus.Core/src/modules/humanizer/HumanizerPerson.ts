@@ -28,7 +28,7 @@ export class HumanizerPerson
    * @param substitutes 
    * @returns 
    */
-  public static getNameWithPatronymic = (firstName: string | null, patronymic: string | null, substitutes?: Array<string | null>) => 
+  public static getNameWithPatronymic(firstName: string | null, patronymic: string | null, substitutes?: Array<string | null>)
   {
     if (!firstName) 
     {

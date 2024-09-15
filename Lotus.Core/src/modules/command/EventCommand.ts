@@ -1,10 +1,25 @@
 import { BaseCommand } from './Command';
 
 /**
+ * Наименование(тип) события который посылают команды для генерирования пользовательских событий
+ */
+export const EventCommandKey: string = 'EventCommand' as const;
+
+/**
+ * Базовый интерфейс для предоставления данных пользовательского события
+ */
+export interface IBaseEventCommandData 
+{
+  /**
+   * Дискриминатор данных, должны быть уникальным для каждого типа пользовательского события
+   */
+  discriminator: string;
+}
+
+/**
  * Класс команды для генерирования пользовательских событий
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class EventCommand<TCommandParameter = any> extends BaseCommand<TCommandParameter>
+export class EventCommand<TCommandParameter extends IBaseEventCommandData> extends BaseCommand<TCommandParameter>
 {
   constructor(name: string) 
   {
@@ -14,16 +29,16 @@ export class EventCommand<TCommandParameter = any> extends BaseCommand<TCommandP
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  public override execute(): void
+  public override executeDefault(): void
   {
-    const event = new Event('openModal');
+    const event = new CustomEvent<IBaseEventCommandData>(EventCommandKey, { detail: this.parameter });
     window.dispatchEvent(event);
   }
 
   /**
    * Метод определяющий возможность выполнения команды
    */
-  public override canExecute(): boolean
+  public override canExecuteDefault(): boolean
   {
     return true;
   }
@@ -31,7 +46,7 @@ export class EventCommand<TCommandParameter = any> extends BaseCommand<TCommandP
   /**
    * Статус выбора
    */
-  public override isSelected(): boolean
+  public override isSelectedDefault(): boolean
   {
     if (window.location.pathname === this.route?.path)
     {

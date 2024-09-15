@@ -16,15 +16,15 @@ export interface ICommand<TCommandParameter = any> {
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute(): void;
+    execute: () => void;
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecute(): boolean;
+    canExecute: () => boolean;
     /**
      * Статус выбора
      */
-    isSelected(): boolean;
+    isSelected: () => boolean;
     /**
      * Маршрут команды
      */
@@ -59,6 +59,18 @@ export declare class BaseCommand<TCommandParameter = any> implements ICommand<TC
      */
     parameter?: TCommandParameter;
     /**
+     * Основной метод команды отвечающий за ее выполнение
+     */
+    execute: () => void;
+    /**
+     * Метод определяющий возможность выполнения команды
+     */
+    canExecute: () => boolean;
+    /**
+     * Статус выбора
+     */
+    isSelected: () => boolean;
+    /**
      * Маршрут команды
      */
     route?: IRoute;
@@ -82,13 +94,13 @@ export declare class BaseCommand<TCommandParameter = any> implements ICommand<TC
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute(): void;
+    executeDefault(): void;
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecute(): boolean;
+    canExecuteDefault(): boolean;
     /**
      * Статус выбора
      */
-    isSelected(): boolean;
+    isSelectedDefault(): boolean;
 }

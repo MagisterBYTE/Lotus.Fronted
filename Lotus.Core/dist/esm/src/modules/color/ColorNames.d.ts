@@ -1,3 +1,3 @@
 export declare const ColorNames: {
-    [index: string]: any;
+    [index: string]: number[];
 };

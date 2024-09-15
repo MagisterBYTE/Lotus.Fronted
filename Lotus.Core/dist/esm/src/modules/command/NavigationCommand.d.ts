@@ -8,13 +8,13 @@ export declare class NavigationCommand<TCommandParameter = any> extends BaseComm
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute(): void;
+    executeDefault(): void;
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecute(): boolean;
+    canExecuteDefault(): boolean;
     /**
      * Статус выбора
      */
-    isSelected(): boolean;
+    isSelectedDefault(): boolean;
 }

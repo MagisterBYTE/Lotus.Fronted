@@ -16,7 +16,7 @@ export interface ISelectOption
   text: string;
 
   /**
-   * Путь к изображению
+   * Путь к изображению / либо компонент иконки / либо индекс изображения в базе 
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon?: any;
