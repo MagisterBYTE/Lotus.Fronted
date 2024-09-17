@@ -7,6 +7,7 @@ import { TColorVariantIndex, TColorVariantName } from './ColorVariantTypes';
 export interface IColorVariant {
     readonly white: Color;
     readonly palest: Color;
+    readonly pale: Color;
     readonly lighter: Color;
     readonly light: Color;
     readonly main: Color;
@@ -19,8 +20,11 @@ export interface IColorVariant {
  * Вариативность цветов
  */
 export declare class ColorVariant implements IColorVariant {
+    static createFromColorLightness(red: number, green: number, blue: number): ColorVariant;
+    static createFromColorCombine(red: number, green: number, blue: number): ColorVariant;
     readonly white: Color;
     readonly palest: Color;
+    readonly pale: Color;
     readonly lighter: Color;
     readonly light: Color;
     readonly main: Color;
@@ -28,7 +32,7 @@ export declare class ColorVariant implements IColorVariant {
     readonly darker: Color;
     readonly darkest: Color;
     readonly black: Color;
-    constructor(white: Color, palest: Color, lighter: Color, light: Color, main: Color, dark: Color, darker: Color, darkest: Color, black: Color);
+    constructor(white: Color, palest: Color, pale: Color, lighter: Color, light: Color, main: Color, dark: Color, darker: Color, darkest: Color, black: Color);
     /**
      * Получить цвет по его имени
      * @param name Именованный тип в палитре цветов
@@ -41,4 +45,11 @@ export declare class ColorVariant implements IColorVariant {
      * @param modifyAlpha Модификация значения альфы от 0 до 1
      */
     getByIndex(index?: TColorVariantIndex, modifyAlpha?: number): Color;
+    /**
+     * Получить следующий цвет по его имени
+     * @param name Именованный тип в палитре цветов
+     * @param delta Смещение
+     * @param modifyAlpha Модификация значения альфы от 0 до 1
+     */
+    getNextByName(name?: TColorVariantName, delta?: number, modifyAlpha?: number): Color;
 }

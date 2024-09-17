@@ -1,6 +1,4 @@
-
 import { Color } from './Color';
-import { ColorHelper } from './ColorHelper';
 
 describe('Color class constructor', function () 
 {
@@ -388,15 +386,15 @@ describe('Color.getNames', function ()
   });
 });
 
-describe('ColorHelper.createMatchingColor', function () 
+describe('Color.createMatchingColor', function () 
 {
   it('returns matchingColor', function (done) 
   {
     // background-color: rgb(221, 238, 224); color: rgb(0, 51, 10); text-shadow: rgb(187, 221, 194) 1px 2px 5px;
-    expect(ColorHelper.createMatchingColor(new Color(221, 238, 224)).text.toString()).toBe('rgb(0,51,9)');
+    expect(new Color(221, 238, 224).createMatchingColor().text.toString()).toBe('rgb(0,51,9)');
 
     // background-color: rgb(110, 97, 152); color: rgb(235, 230, 255); text-shadow: rgb(23, 20, 31) 1px 2px 5px;
-    expect(ColorHelper.createMatchingColor(new Color(110, 97, 152)).text.toString()).toBe('rgb(236,229,255)');
+    expect(new Color(110, 97, 152).createMatchingColor().text.toString()).toBe('rgb(236,229,255)');
     done();
   });
 });

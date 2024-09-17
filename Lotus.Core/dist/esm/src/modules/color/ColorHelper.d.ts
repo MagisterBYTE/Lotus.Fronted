@@ -1,4 +1,3 @@
-import { Color } from './Color';
 import { IColorModelHSL } from './ColorModel';
 export declare class ColorHelper {
     static isColorValue(value: number): boolean;
@@ -18,8 +17,4 @@ export declare class ColorHelper {
     static combine(s: number[], t: number[], amount: number): number[];
     static invert(c: number[]): number[];
     static tint(sourceHue: number, targetHue: number, amount: number): number;
-    static createMatchingColor(color: Color): {
-        text: Color;
-        shadow: Color;
-    };
 }

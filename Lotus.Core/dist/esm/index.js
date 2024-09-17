@@ -2169,60 +2169,6 @@ class ColorHelper {
             newh -= 1;
         return newh;
     }
-    static createMatchingColor(color) {
-        const hsl = color.getHSL();
-        let h = hsl.h * 360;
-        let s = hsl.s * 100;
-        let l = hsl.l * 100;
-        /* originals*/
-        const o_h = h, o_s = s, o_l = l;
-        s = 100;
-        if (o_s <= 25) {
-            if (o_l > 60) {
-                l = 10;
-            }
-            else {
-                l = 95;
-            }
-        }
-        else {
-            if ((o_h >= 25 && o_h <= 195) || o_h >= 295) {
-                l = 10;
-            }
-            else if ((o_h >= 285 && o_h < 295) || (o_h > 195 && o_h <= 205)) {
-                h = 60;
-                l = 50;
-            }
-            else {
-                l = 95;
-            }
-        }
-        if ((o_h >= 295 || (o_h > 20 && o_h < 200)) && o_l <= 35) {
-            l = 95;
-        }
-        else if (((o_h < 25 || o_h > 275) && o_l >= 60) || (o_h > 195 && o_l >= 70)) {
-            l = 10;
-        }
-        let s_l = l;
-        let s_h = h;
-        const s_s = o_s;
-        /* shadow*/
-        if (l < 25) {
-            s_l = 80;
-        }
-        else {
-            s_l = 10;
-        }
-        if (h == 60 && (l < 90 || l > 20)) {
-            s_h = 320;
-        }
-        else {
-            s_h = h;
-        }
-        const textColor = { h: h / 360, s: s / 100, l: l / 100 };
-        const shadowColor = { h: s_h / 360, s: s_s / 100, l: s_l / 100 };
-        return { text: new Color(textColor, 1), shadow: new Color(shadowColor, 0.5) };
-    }
 }
 
 /* eslint-disable prefer-rest-params */
@@ -2803,7 +2749,7 @@ class Color {
      *
      * @method increaseLighten
      * @memberof Color
-     * @param {Number} lightenBy amount to lighten between 0 and 1
+     * @param {Number} amount amount to lighten between 0 and 1
      * @return {Color} new Color() instance
      * @instance
      *
@@ -2961,7 +2907,16 @@ class Color {
             }
         }
     }
-    toStrCSSValue() {
+    /**
+     * Преобразование в CSS rgb/rgba значения
+     * @param modifyAlpha Модификация значения альфы от 0 до 1
+     * @returns {String} CSS rgb/rgba значение
+     */
+    toCSSRgbValue(modifyAlpha) {
+        if (modifyAlpha) {
+            const rgb = this._getRGB();
+            return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + modifyAlpha + ');';
+        }
         if (this.a === 0) {
             return 'transparent;';
         }
@@ -2973,6 +2928,60 @@ class Color {
             const rgb = this._getRGB();
             return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ');';
         }
+    }
+    createMatchingColor() {
+        const hsl = this._getHSL();
+        let h = hsl.h * 360;
+        let s = hsl.s * 100;
+        let l = hsl.l * 100;
+        /* originals*/
+        const o_h = h, o_s = s, o_l = l;
+        s = 100;
+        if (o_s <= 25) {
+            if (o_l > 60) {
+                l = 10;
+            }
+            else {
+                l = 95;
+            }
+        }
+        else {
+            if ((o_h >= 25 && o_h <= 195) || o_h >= 295) {
+                l = 10;
+            }
+            else if ((o_h >= 285 && o_h < 295) || (o_h > 195 && o_h <= 205)) {
+                h = 60;
+                l = 50;
+            }
+            else {
+                l = 95;
+            }
+        }
+        if ((o_h >= 295 || (o_h > 20 && o_h < 200)) && o_l <= 35) {
+            l = 95;
+        }
+        else if (((o_h < 25 || o_h > 275) && o_l >= 60) || (o_h > 195 && o_l >= 70)) {
+            l = 10;
+        }
+        let s_l = l;
+        let s_h = h;
+        const s_s = o_s;
+        /* shadow*/
+        if (l < 25) {
+            s_l = 80;
+        }
+        else {
+            s_l = 10;
+        }
+        if (h == 60 && (l < 90 || l > 20)) {
+            s_h = 320;
+        }
+        else {
+            s_h = h;
+        }
+        const textColor = { h: h / 360, s: s / 100, l: l / 100 };
+        const shadowColor = { h: s_h / 360, s: s_s / 100, l: s_l / 100 };
+        return { text: new Color(textColor, 1), shadow: new Color(shadowColor, 0.5) };
     }
     /**
      * Returns the array of named color values
@@ -2993,17 +3002,18 @@ class Color {
 }
 
 const TColorVariantIndexWhite = 1;
-const TColorVariantIndexLighter = 3;
-const TColorVariantIndexLight = 4;
-const TColorVariantIndexMain = 5;
-const TColorVariantIndexDark = 6;
-const TColorVariantIndexDarker = 7;
-const TColorVariantIndexDarkest = 8;
-const TColorVariantIndexBlack = 9;
+const TColorVariantIndexPale = 3;
+const TColorVariantIndexLighter = 4;
+const TColorVariantIndexLight = 5;
+const TColorVariantIndexMain = 6;
+const TColorVariantIndexDark = 7;
+const TColorVariantIndexDarker = 8;
+const TColorVariantIndexDarkest = 9;
+const TColorVariantIndexBlack = 10;
 /**
  * Массив всех именованных типов в вариативности цветов
  */
-const TColorVariantNames = ['white', 'palest', 'lighter', 'light', 'main', 'dark', 'darker', 'darkest', 'black'];
+const TColorVariantNames = ['white', 'palest', 'pale', 'lighter', 'light', 'main', 'dark', 'darker', 'darkest', 'black'];
 
 class ColorVarianHelper {
     /**
@@ -3052,18 +3062,48 @@ class ColorVarianHelper {
  * Вариативность цветов
  */
 class ColorVariant {
+    // #region  Static methods
+    static createFromColorLightness(red, green, blue) {
+        const main = new Color(red, green, blue);
+        const white = main.increaseLightness(0.95);
+        const palest = main.increaseLightness(0.87);
+        const pale = main.increaseLightness(0.82);
+        const lighter = main.increaseLightness(0.77);
+        const light = main.increaseLightness(0.67);
+        const dark = main.decreaseLightness(0.15);
+        const darker = main.decreaseLightness(0.40);
+        const darkest = main.decreaseLightness(0.60);
+        const black = main.decreaseLightness(0.80);
+        return new ColorVariant(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+    }
+    static createFromColorCombine(red, green, blue) {
+        const main = new Color(red, green, blue);
+        const white = main.combine(ColorNames['white'], 0.95);
+        const palest = main.combine(ColorNames['white'], 0.87);
+        const pale = main.combine(ColorNames['white'], 0.82);
+        const lighter = main.combine(ColorNames['white'], 0.77);
+        const light = main.combine(ColorNames['white'], 0.67);
+        const dark = main.combine(ColorNames['black'], 0.15);
+        const darker = main.combine(ColorNames['black'], 0.40);
+        const darkest = main.combine(ColorNames['black'], 0.60);
+        const black = main.combine(ColorNames['black'], 0.80);
+        return new ColorVariant(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+    }
+    // #endregion
     white; // 1
     palest; // 2
-    lighter; // 3
-    light; // 4
-    main; // 5
-    dark; // 6
-    darker; // 7
-    darkest; // 8
-    black; // 9
-    constructor(white, palest, lighter, light, main, dark, darker, darkest, black) {
+    pale; // 3
+    lighter; // 4
+    light; // 5
+    main; // 6
+    dark; // 7
+    darker; // 8
+    darkest; // 9
+    black; // 10
+    constructor(white, palest, pale, lighter, light, main, dark, darker, darkest, black) {
         this.white = white;
         this.palest = palest;
+        this.pale = pale;
         this.lighter = lighter;
         this.light = light;
         this.main = main;
@@ -3106,6 +3146,22 @@ class ColorVariant {
     getByIndex(index, modifyAlpha) {
         const name = ColorVarianHelper.getNameByIndex(index);
         return this.getByName(name, modifyAlpha);
+    }
+    /**
+     * Получить следующий цвет по его имени
+     * @param name Именованный тип в палитре цветов
+     * @param delta Смещение
+     * @param modifyAlpha Модификация значения альфы от 0 до 1
+     */
+    getNextByName(name, delta, modifyAlpha) {
+        const nextName = ColorVarianHelper.getNameByIndex(ColorVarianHelper.getNextIndex(ColorVarianHelper.getIndexByName(name), delta));
+        const color = this[nextName];
+        if (modifyAlpha) {
+            return color.toModifyAlpha(modifyAlpha);
+        }
+        else {
+            return color;
+        }
     }
 }
 
@@ -4295,4 +4351,4 @@ const sleep = (timeoutInMs) => {
     return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
 };
 
-export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariant, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionEnum, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, PathHelper, PropertyTypeEnum, RandomHelper, RequestHelper, Route, SelectOptionHelper, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
+export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariant, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionEnum, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, PathHelper, PropertyTypeEnum, RandomHelper, RequestHelper, Route, SelectOptionHelper, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };

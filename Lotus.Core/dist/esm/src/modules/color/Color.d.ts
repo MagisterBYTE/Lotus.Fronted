@@ -349,7 +349,7 @@ export declare class Color {
      *
      * @method increaseLighten
      * @memberof Color
-     * @param {Number} lightenBy amount to lighten between 0 and 1
+     * @param {Number} amount amount to lighten between 0 and 1
      * @return {Color} new Color() instance
      * @instance
      *
@@ -436,7 +436,16 @@ export declare class Color {
      *
      */
     toString(isHex?: boolean): string;
-    toStrCSSValue(): string;
+    /**
+     * Преобразование в CSS rgb/rgba значения
+     * @param modifyAlpha Модификация значения альфы от 0 до 1
+     * @returns {String} CSS rgb/rgba значение
+     */
+    toCSSRgbValue(modifyAlpha?: number): string;
+    createMatchingColor(): {
+        text: Color;
+        shadow: Color;
+    };
     /**
      * Returns the array of named color values
      *
