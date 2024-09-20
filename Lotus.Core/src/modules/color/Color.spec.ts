@@ -1,4 +1,5 @@
 import { Color } from './Color';
+import { ColorNames } from './ColorNames';
 
 describe('Color class constructor', function () 
 {
@@ -381,7 +382,7 @@ describe('Color.getNames', function ()
 {
   it('returns the color names literal', function (done) 
   {
-    expect(Color.getNames()['red']).toStrictEqual([255, 0, 0]);
+    expect(ColorNames['red']).toStrictEqual([255, 0, 0]);
     done();
   });
 });

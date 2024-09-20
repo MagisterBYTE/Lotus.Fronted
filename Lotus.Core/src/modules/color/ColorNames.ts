@@ -1,7 +1,7 @@
 // This is a slightly modified version of this list:
 //   https://www.color-hex.com/color-names.html
 
-export const ColorNames: { [index: string]: number[] } =
+export const ColorNames: Record<string, number[]> =
 {
   'alice blue': [240, 248, 255],
   'antique white': [250, 235, 215],

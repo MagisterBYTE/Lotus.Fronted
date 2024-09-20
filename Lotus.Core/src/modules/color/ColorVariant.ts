@@ -1,6 +1,6 @@
 import { Color } from './Color';
 import { ColorNames } from './ColorNames';
-import { ColorVarianHelper } from './ColorVarianHelper';
+import { ColorVariantHelper } from './ColorVariantHelper';
 import { TColorVariantIndex, TColorVariantName } from './ColorVariantTypes';
 
 /**
@@ -144,7 +144,7 @@ export class ColorVariant implements IColorVariant
    */
   public getByIndex(index?: TColorVariantIndex, modifyAlpha?: number):Color
   {
-    const name = ColorVarianHelper.getNameByIndex(index);
+    const name = ColorVariantHelper.getNameByIndex(index);
     return this.getByName(name, modifyAlpha);
   }
 
@@ -156,7 +156,7 @@ export class ColorVariant implements IColorVariant
    */
   public getNextByName(name?: TColorVariantName, delta?: number, modifyAlpha?: number):Color
   {
-    const nextName = ColorVarianHelper.getNameByIndex(ColorVarianHelper.getNextIndex(ColorVarianHelper.getIndexByName(name), delta));
+    const nextName = ColorVariantHelper.getNameByIndex(ColorVariantHelper.getNextIndex(ColorVariantHelper.getIndexByName(name), delta));
     const color = this[nextName] as Color;
     if(modifyAlpha)
     {

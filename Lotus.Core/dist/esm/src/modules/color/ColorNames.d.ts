@@ -1,3 +1,1 @@
-export declare const ColorNames: {
-    [index: string]: number[];
-};
+export declare const ColorNames: Record<string, number[]>;

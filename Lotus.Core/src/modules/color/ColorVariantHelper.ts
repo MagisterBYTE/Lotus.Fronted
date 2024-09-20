@@ -1,6 +1,6 @@
 import { TColorVariantIndex, TColorVariantName, TColorVariantNames, TColorVariantIndexMain, TColorVariantIndexBlack, TColorVariantIndexWhite } from './ColorVariantTypes';
 
-export class ColorVarianHelper
+export class ColorVariantHelper
 {
   /**
    * Получить цвет по его индексу

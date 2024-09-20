@@ -439,25 +439,12 @@ export declare class Color {
     /**
      * Преобразование в CSS rgb/rgba значения
      * @param modifyAlpha Модификация значения альфы от 0 до 1
+     * @param removeSemicolon Удалить точку с запятой в конце
      * @returns {String} CSS rgb/rgba значение
      */
-    toCSSRgbValue(modifyAlpha?: number): string;
+    toCSSRgbValue(modifyAlpha?: number, removeSemicolon?: boolean): string;
     createMatchingColor(): {
         text: Color;
         shadow: Color;
     };
-    /**
-     * Returns the array of named color values
-     *
-     * @method getNames
-     * @memberof Color
-     * @return {Array} named color values
-     * @instance
-     *
-     * @example
-     * new Color('#f00').tint('#00f',0.5).toString(); // returns "#0f0"
-     * new Color('rgb(0,0,100)').tint('rgb(100,0,0)',0.1).toString(); // returns "#002864"
-     *
-     */
-    static getNames(): any;
 }

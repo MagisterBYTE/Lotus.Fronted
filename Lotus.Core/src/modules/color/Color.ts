@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ColorHelper } from './ColorHelper';
 import { IColorModelHSL } from './ColorModel';
-import { ColorNames } from './ColorNames';
 
 /** @class Color
 * Color class accepts a CSS color string, rgb, hsl data as the input, manipulate the color, and returns a CSS-compatible color string.
@@ -660,7 +659,7 @@ export class Color
     }
     else
     {
-      return new Color(ColorNames.white);
+      return new Color(255, 255, 255);
     }
   }
 
@@ -852,30 +851,46 @@ export class Color
   /**
    * Преобразование в CSS rgb/rgba значения 
    * @param modifyAlpha Модификация значения альфы от 0 до 1
+   * @param removeSemicolon Удалить точку с запятой в конце
    * @returns {String} CSS rgb/rgba значение
    */
-  toCSSRgbValue(modifyAlpha?: number): string 
+  toCSSRgbValue(modifyAlpha?: number, removeSemicolon?: boolean): string 
   {
+    let textColor = '';
     if(modifyAlpha)
     {
       const rgb = this._getRGB();
-      return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + modifyAlpha + ');';
+      textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + modifyAlpha + ');';
+      
+      if(removeSemicolon)
+      {
+        textColor = textColor.replace(';', '');
+      }
+
+      return textColor;
     }
 
     if (this.a === 0) 
     {
-      return 'transparent;';
+      textColor = 'transparent;';
     }
     if (this.a < 1) 
     {
       const rgb = this._getRGB();
-      return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ');';
+      textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ');';
     }
     else 
     {
       const rgb = this._getRGB();
-      return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ');';
+      textColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ');';
     }
+
+    if(removeSemicolon)
+    {
+      textColor = textColor.replace(';', '');
+    }
+
+    return textColor;
   }
 
   public createMatchingColor(): { text: Color, shadow: Color }
@@ -951,23 +966,5 @@ export class Color
     const shadowColor: IColorModelHSL = { h: s_h / 360, s: s_s / 100, l: s_l / 100 };
 
     return { text: new Color(textColor, 1), shadow: new Color(shadowColor, 0.5) };
-  }
-
-  /**
-   * Returns the array of named color values
-   *
-   * @method getNames
-   * @memberof Color
-   * @return {Array} named color values
-   * @instance
-   *
-   * @example
-   * new Color('#f00').tint('#00f',0.5).toString(); // returns "#0f0"
-   * new Color('rgb(0,0,100)').tint('rgb(100,0,0)',0.1).toString(); // returns "#002864"
-   *
-   */
-  static getNames(): any 
-  {
-    return ColorNames;
   }
 }
