@@ -1,4 +1,4 @@
-import { ThemeHelper } from 'app/theme';
+import { ThemeHelper } from 'ui/theme';
 import { ISelectOption } from 'lotus-core';
 import { CSSProperties } from 'react';
 import { TColorType, TControlPadding, TControlSize } from 'ui/types';
@@ -54,17 +54,17 @@ export class SelectHelper
   {
     if (isDisabled)
     {
-      return { borderColor: `${ThemeHelper.getBorderPropsAsCSS(color).borderColor}`, ...ThemeHelper.getOpacityPropsForDisabledAsCSS() };
+      return { borderColor: `${ThemeHelper.getBorderProps(color).borderColor}`, ...ThemeHelper.getOpacityForDisabledProps() };
     }
     else
     {
       if (isFocused)
       {
-        return { borderColor: `${ThemeHelper.getBorderPropsAsCSS(color).borderColor}` };
+        return { borderColor: `${ThemeHelper.getBorderProps(color).borderColor}` };
       }
       else
       {
-        return { borderColor: `${ThemeHelper.getBorderPropsAsCSS(color).borderColor}` };
+        return { borderColor: `${ThemeHelper.getBorderProps(color).borderColor}` };
       }
     }
   }
@@ -79,7 +79,7 @@ export class SelectHelper
     {
       if (isFocused)
       {
-        return ThemeHelper.getBorderShadowPropsAsCSS(color);
+        return ThemeHelper.getBorderShadowProps(color);
       }
       else
       {

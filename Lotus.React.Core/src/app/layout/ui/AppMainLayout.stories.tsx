@@ -1,14 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { BaseCommand, CommandService, CommandServiceClass, ICommand } from 'lotus-core';
+import { BaseCommand, CommandService, CommandServiceClass, EventCommandKey, ICommand } from 'lotus-core';
 import { useAppDispatchCore } from 'app/store';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoPersonSharp, IoSettingsOutline } from 'react-icons/io5';
 import { AiOutlineProfile } from 'react-icons/ai';
 import { SiCondaforge } from 'react-icons/si';
 import { setCommandsLeftPanelLayoutAction } from '../store';
+import { LayoutHelper } from '../helpers';
 import { AppMainLayout } from './AppMainLayout';
-import { BigText } from '../../../.storydata/BigText';
-import { SmallText } from '../../../.storydata/SmallText';
+import { DialogViewSettings } from './components/DialogViewSettings';
+import { BigText } from '.storydata/BigText';
+import { SmallText } from '.storydata/SmallText';
 
 const meta = {
   title: 'App Template/AppMainLayout',
@@ -90,6 +92,12 @@ class ClassicalCommandsClass extends CommandServiceClass
     this.settings.label = 'Настройки';
     this.settings.group = 'account';
     this.settings.icon = <IoSettingsOutline />;
+    this.settings.execute = () =>
+    {
+      console.log('settings execute');
+      const event = LayoutHelper.createOpenViewSettingsEvent();
+      window.dispatchEvent(event);
+    }
     this.commands.push(this.settings);
 
     this.notification = new BaseCommand('forge');
@@ -106,15 +114,41 @@ class ClassicalCommandsClass extends CommandServiceClass
 const AppMainLayoutWrapper = (args:any) => 
 {
   const dispatch = useAppDispatchCore()
-  const instance = ClassicalCommandsClass.Instance;
+  const instance = useRef<ClassicalCommandsClass>(ClassicalCommandsClass.Instance);
+
+  const [openDialogViewSettings, setOpenDialogViewSettings] = useState(false);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleEventCommand = (event: any) => 
+  {
+    console.log('event', event);
+
+    const customEvent = event as CustomEvent;
+    if(!customEvent || !customEvent.detail) return;
+
+    const openViewSettingsEvent = LayoutHelper.isOpenViewSettingsEvent(customEvent.detail);
+    if(openViewSettingsEvent)
+    {
+      setOpenDialogViewSettings(true);
+    }
+  }
   
   useEffect(() => 
   {
-    dispatch(setCommandsLeftPanelLayoutAction([...instance.getCommands().map(x => x.name)]));
+    dispatch(setCommandsLeftPanelLayoutAction([...instance.current.getCommands().map(x => x.name)]));
+    window.addEventListener(EventCommandKey, handleEventCommand);
+
+    return () => 
+    {
+      window.removeEventListener(EventCommandKey, handleEventCommand);
+    };
   }, [])
 
   return (
-    <AppMainLayout {...args}/>
+    <>
+      <AppMainLayout {...args}/>
+      <DialogViewSettings isOpen={openDialogViewSettings} />
+    </>
   )
 }
 

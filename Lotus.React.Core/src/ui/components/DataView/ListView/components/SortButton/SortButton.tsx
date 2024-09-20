@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Menu } from '@mui/material';
 import { IObjectInfo, ISortProperty, StringHelper } from 'lotus-core';
 import { FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
-import { Button, TButtonVariant } from 'ui/components/Controls';
-import { TControlSize } from 'ui/types';
+import { Button } from 'ui/components/Controls';
 
 export interface ISortButtonProps
 {
@@ -71,7 +70,7 @@ export const SortButton: React.FC<ISortButtonProps> = (props:ISortButtonProps) =
 
   return (
     <>
-      <Button variant={'outline'} size={'medium'} onClick={handleOpenMenu}>
+      <Button variant='icon' size='medium' onClick={handleOpenMenu}>
         <FaSortAmountDown />
       </Button>
       <Menu 

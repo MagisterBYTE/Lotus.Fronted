@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { GiAnt } from 'react-icons/gi';
 import { HorizontalStack } from 'ui/components/Layout';
-import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
+import { TControlPaddings, TControlSizes, TTextEffects } from 'ui/types';
+import { TThemeColors } from 'ui/theme';
 import { Button } from './Button';
 import { hydraulicAnalysisIcon } from '.storydata/IconsBase64';
 
@@ -18,12 +19,16 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
-    hasRadius: {
+    borderRounded: {
       control: 'boolean'
+    },
+    borderStyle:
+    {
+      control: 'inline-radio'
     },
     color: {
       control: 'inline-radio',
-      options: [...TColorTypes, undefined]
+      options: [...TThemeColors, undefined]
     },
     size: {
       control: 'inline-radio',
@@ -33,10 +38,20 @@ const meta = {
       control: 'inline-radio',
       options: [...TControlPaddings, undefined]
     },
+    textEffect: {
+      control: 'inline-radio',
+      options: [...TTextEffects, undefined]
+    },
+    textAlign:
+    {
+      control: 'inline-radio',
+      options: ['left', 'right', 'center', undefined]
+    },
     variant:
     {
       control: 'inline-radio'
     },
+
     onClick:
     {
       table:
@@ -61,7 +76,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Button'
+    disabled: false,
+    children: 'Button',
+    style: {width: '200px'}
   }
 };
 

@@ -1,13 +1,15 @@
 import { TBreakpoint } from 'ui/types/Breakpoint';
 import { CssTypesHelper } from 'ui/helpers';
 import { defaultStateDesktop, ILayoutState } from '../store/LayoutState';
+import { IOpenViewSettingsEventData, OpenViewSettingsEventDiscriminator } from '../events';
+import { EventCommandKey } from 'lotus-core';
 
 export class LayoutHelper
 {
   /**
    * Ключ под которым сохраняется макет сайта
    */
-  public static readonly KeyLayoutState: string = 'lotus-layoutState' as const;
+  public static readonly LayoutStateKey: string = 'lotus-layoutState' as const;
 
   /**
    * Получение оптимальной точки Breakpoint для текущей ширины
@@ -80,7 +82,7 @@ export class LayoutHelper
    */
   public static loadFromStorage(): ILayoutState
   {
-    const value = localStorage.getItem(LayoutHelper.KeyLayoutState);
+    const value = localStorage.getItem(LayoutHelper.LayoutStateKey);
     if (value)
     {
       const layoutState: ILayoutState = JSON.parse(value);
@@ -96,9 +98,31 @@ export class LayoutHelper
    * Сохранение текущего макета сайта в локальное хранилище
    * @param layoutState Макет сайта
    */
-  public static saveToStorage = (layoutState: ILayoutState) =>
+  public static saveToStorage(layoutState: ILayoutState)
   {
     const value = JSON.stringify(layoutState);
-    localStorage.setItem(LayoutHelper.KeyLayoutState, value);
+    localStorage.setItem(LayoutHelper.LayoutStateKey, value);
+  }
+
+  public static createOpenViewSettingsEvent():CustomEvent
+  {
+    const data: IOpenViewSettingsEventData = { discriminator: OpenViewSettingsEventDiscriminator, sender: 'buttonMenu' };
+    const event = new CustomEvent<IOpenViewSettingsEventData>(EventCommandKey, { detail: data });
+    return event;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public static isOpenViewSettingsEvent(value: any):IOpenViewSettingsEventData|undefined
+  {
+    if (value)
+    {
+      if(('discriminator' in value) && value.discriminator === OpenViewSettingsEventDiscriminator)
+      {
+        return value as IOpenViewSettingsEventData;
+      }
+    }
+
+    // eslint-disable-next-line consistent-return
+    return undefined;
   }
 }

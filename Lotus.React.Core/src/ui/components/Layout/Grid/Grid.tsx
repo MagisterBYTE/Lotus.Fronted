@@ -1,6 +1,6 @@
-import React, { ComponentPropsWithRef, CSSProperties, forwardRef } from 'react';
+import React, { ComponentPropsWithoutRef, CSSProperties, forwardRef } from 'react';
 
-export interface IGridProps extends ComponentPropsWithRef<'div'>
+export interface IGridProps extends ComponentPropsWithoutRef<'div'>
 {
   gridTemplateColumns: CSSProperties['gridTemplateColumns'];
   gridTemplateRows: CSSProperties['gridTemplateRows'];

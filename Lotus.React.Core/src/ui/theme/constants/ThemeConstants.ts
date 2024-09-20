@@ -24,4 +24,14 @@ export class ThemeConstants
    * Прозрачность для элементов UI которые недоступны
    */
   public static readonly OpacityForDisabled: number = 0.65;
+
+  /**
+   * Прозрачность для границы элементов UI которые при наведении
+   */
+  public static readonly OpacityForBorderShadowHover: number = 0.4;
+
+  /**
+   * Прозрачность для границы элементов UI которые при активном состоянии
+   */
+  public static readonly OpacityForBorderShadowActive: number = 0.8;
 }

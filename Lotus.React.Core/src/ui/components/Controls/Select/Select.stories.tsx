@@ -16,7 +16,7 @@ const meta = {
   tags: ['autodocs'],
   args: { onSetSelectedValue: fn() },
   argTypes: {
-    hasRadius: {
+    borderRounded: {
       control: 'boolean'
     },
     color: {
@@ -128,11 +128,11 @@ export const HorizontalSpaceText: Story = {
   {
     return (
       <HorizontalStack alignItems='end' gap='0.5rem' fullWidth={true}>
-        <Select isClearable options={args.options} hasRadius={args.hasRadius} isDisabled={args.isDisabled}
+        <Select isClearable options={args.options} borderRounded={args.borderRounded} isDisabled={args.isDisabled}
           color={args.color} size={args.size} paddingControl={args.paddingControl} width='200px' />
-        <InputField disabled={args.isDisabled} labelProps={{ label: 'Введите фамилию', isTopLabel: false }} hasRadius={args.hasRadius} size={args.size} color={args.color}
+        <InputField disabled={args.isDisabled} labelProps={{ label: 'Введите фамилию', isTopLabel: false }} borderRounded={args.borderRounded} size={args.size} color={args.color}
           paddingControl={args.paddingControl} />
-        <Button disabled={args.isDisabled} children='Отправить' size={args.size} hasRadius={args.hasRadius} color={args.color} paddingControl={args.paddingControl} />
+        <Button disabled={args.isDisabled} children='Отправить' size={args.size} borderRounded={args.borderRounded} color={args.color} paddingControl={args.paddingControl} />
       </HorizontalStack>
     );
   }
@@ -147,11 +147,11 @@ export const HorizontalSpaceIconsSvg: Story = {
   {
     return (
       <HorizontalStack alignItems='end' gap='0.5rem' fullWidth={true}>
-        <Select hasIcons={true} isClearable options={args.options} hasRadius={args.hasRadius} isDisabled={args.isDisabled}
+        <Select hasIcons={true} isClearable options={args.options} borderRounded={args.borderRounded} isDisabled={args.isDisabled}
           color={args.color} size={args.size} paddingControl={args.paddingControl} width='200px' />
-        <InputField disabled={args.isDisabled} labelProps={{ label: 'Введите фамилию', isTopLabel: false }} hasRadius={args.hasRadius} size={args.size} color={args.color}
+        <InputField disabled={args.isDisabled} labelProps={{ label: 'Введите фамилию', isTopLabel: false }} borderRounded={args.borderRounded} size={args.size} color={args.color}
           paddingControl={args.paddingControl} />
-        <Button disabled={args.isDisabled} children='Отправить' size={args.size} hasRadius={args.hasRadius} color={args.color} paddingControl={args.paddingControl} />
+        <Button disabled={args.isDisabled} children='Отправить' size={args.size} borderRounded={args.borderRounded} color={args.color} paddingControl={args.paddingControl} />
       </HorizontalStack>
     );
   }
@@ -166,11 +166,11 @@ export const HorizontalSpaceIconsBase: Story = {
   {
     return (
       <HorizontalStack alignItems='end' gap='0.5rem' fullWidth={true}>
-        <Select hasIcons={true} isClearable options={args.options} hasRadius={args.hasRadius} isDisabled={args.isDisabled}
+        <Select hasIcons={true} isClearable options={args.options} borderRounded={args.borderRounded} isDisabled={args.isDisabled}
           color={args.color} size={args.size} paddingControl={args.paddingControl} width='400px' />
-        <InputField disabled={args.isDisabled} labelProps={{ label: 'Введите фамилию', isTopLabel: false }} hasRadius={args.hasRadius} size={args.size} color={args.color}
+        <InputField disabled={args.isDisabled} labelProps={{ label: 'Введите фамилию', isTopLabel: false }} borderRounded={args.borderRounded} size={args.size} color={args.color}
           paddingControl={args.paddingControl} />
-        <Button disabled={args.isDisabled} children='Отправить' size={args.size} hasRadius={args.hasRadius} color={args.color} paddingControl={args.paddingControl} />
+        <Button disabled={args.isDisabled} children='Отправить' size={args.size} borderRounded={args.borderRounded} color={args.color} paddingControl={args.paddingControl} />
       </HorizontalStack>
     );
   }

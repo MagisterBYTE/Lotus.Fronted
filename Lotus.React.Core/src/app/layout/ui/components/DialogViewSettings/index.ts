@@ -1,0 +1,1 @@
+export { DialogViewSettings, type IDialogViewSettingsProps } from './DialogViewSettings';

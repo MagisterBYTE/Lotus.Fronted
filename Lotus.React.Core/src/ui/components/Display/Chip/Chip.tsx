@@ -1,13 +1,13 @@
 import { css } from '@emotion/css';
-import { ThemeHelper } from 'app/theme';
+import { ThemeHelper } from 'ui/theme';
 import React, { ComponentPropsWithoutRef, ReactNode } from 'react';
-import { IGeneralPropertiesElements } from 'ui/components/GeneralPropertiesElements';
+import { IGeneralPropertiesElement } from 'ui/components/GeneralPropertiesElements';
 import { IconContext } from 'react-icons';
 import { ObjectHelper } from 'lotus-core';
 import { ChipHelper } from './ChipHelper';
 import { TChipVariant } from './ChipVariant';
 
-export interface IChipProps extends Omit<ComponentPropsWithoutRef<'span'>, 'children'|'color'>, IGeneralPropertiesElements
+export interface IChipProps extends Omit<ComponentPropsWithoutRef<'span'>, 'children'|'color'>, IGeneralPropertiesElement
 {
   /**
    * Вариант отображения
@@ -33,20 +33,20 @@ export interface IChipProps extends Omit<ComponentPropsWithoutRef<'span'>, 'chil
 
 export const Chip: React.FC<IChipProps> = (props: IChipProps) => 
 {
-  const { hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal', variant = 'filled', 
+  const { borderRounded: hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal', variant = 'filled', 
     label, disabled, hasIcon, ...propsSpan } = props
   
   const chipClass = css(
     {
-      ...ThemeHelper.getFontPropsAsCSS(size),
-      ...ThemeHelper.getBorderPropsAsCSS(undefined, undefined, hasRadius, size),
-      ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, 'half', 'half'),
+      ...ThemeHelper.getFontProps(size),
+      ...ThemeHelper.getBorderProps(undefined, undefined, hasRadius, size),
+      ...ThemeHelper.getPaddingProps(size, paddingControl, 'half', 'half'),
       lineHeight: ObjectHelper.getIf<string|number>(hasIcon, 0, 'normal'),
       borderColor: ChipHelper.getBorderColorProps(color, variant, 'normal'),
       backgroundColor: ChipHelper.getBackgroundColorProps(color, variant, 'normal'),
       color: ChipHelper.getColorProps(color, variant, 'normal'),
       userSelect: ObjectHelper.getIf(hasIcon, 'none', undefined),
-      ...(ObjectHelper.getIf(disabled, ThemeHelper.getOpacityPropsForDisabledAsCSS(true), {})),
+      ...(ObjectHelper.getIf(disabled, ThemeHelper.getOpacityForDisabledProps(true), {})),
       '&:hover':
       {
         borderColor: ChipHelper.getBorderColorProps(color, variant, 'hover'),
@@ -64,7 +64,7 @@ export const Chip: React.FC<IChipProps> = (props: IChipProps) =>
         borderColor: ChipHelper.getBorderColorProps(color, variant, 'disabled'),
         backgroundColor: ChipHelper.getBackgroundColorProps(color, variant, 'disabled'),
         color: ChipHelper.getColorProps(color, variant, 'disabled'),
-        ...ThemeHelper.getOpacityPropsForDisabledAsCSS()
+        ...ThemeHelper.getOpacityForDisabledProps()
       }
     });
 

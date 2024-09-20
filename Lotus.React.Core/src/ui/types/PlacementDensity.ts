@@ -1,20 +1,6 @@
 /**
  * Плотность размещения элементов UI
  */
-export enum TPlacementDensity
-{
-  /**
-   * Плотное размещение
-   */
-  Density = 'Density',
+export type TPlacementDensity = 'density' | 'normal' | 'spacious';
 
-  /**
-   * Обычное размещение
-   */
-  Normal = 'Normal',
-
-  /**
-   * Просторное размещение
-   */
-  Spacious = 'Spacious'
-}
+export const TPlacementDensities: readonly TPlacementDensity[] = ['density', 'normal', 'spacious'] as const;

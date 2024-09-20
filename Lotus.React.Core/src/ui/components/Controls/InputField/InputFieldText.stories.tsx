@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { HorizontalStack } from 'ui/components/Layout';
-import { TColorTypes, TControlSizes, TControlPaddings } from 'ui/types';
+import { TControlSizes, TControlPaddings, TTextEffects } from 'ui/types';
+import { TThemeColors } from 'ui/theme';
 import { Button } from '../Button';
 import { InputField } from './InputField';
 
@@ -15,12 +16,16 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
-    hasRadius: {
+    borderRounded: {
       control: 'boolean'
+    },    
+    borderStyle:
+    {
+      control: 'inline-radio'
     },
     color: {
       control: 'inline-radio',
-      options: [...TColorTypes, undefined]
+      options: [...TThemeColors, undefined]
     },
     size: {
       control: 'inline-radio',
@@ -29,6 +34,15 @@ const meta = {
     paddingControl: {
       control: 'inline-radio',
       options: [...TControlPaddings, undefined]
+    },
+    textEffect: {
+      control: 'inline-radio',
+      options: [...TTextEffects, undefined]
+    },
+    textAlign:
+    {
+      control: 'inline-radio',
+      options: ['left', 'right', 'center', undefined]
     },
     onClick:
     {
@@ -134,8 +148,20 @@ export const InputFieldWithButton: Story = {
   {
     return (
       <HorizontalStack gap='0.5rem' >
-        <InputField labelProps={{ label: 'Введите фамилию' }} size={args.size} hasRadius={args.hasRadius} color={args.color} paddingControl={args.paddingControl} />
-        <Button children='Отправить' hasRadius={args.hasRadius} size={args.size} color={args.color} paddingControl={args.paddingControl} />
+        <InputField labelProps={{ label: 'Введите фамилию' }} 
+          size={args.size} 
+          textEffect={args.textEffect}
+          fontBold={args.fontBold}
+          borderRounded={args.borderRounded} 
+          color={args.color} paddingControl={args.paddingControl} />
+        <Button children='Отправить' 
+          borderRounded={args.borderRounded} 
+          size={args.size} 
+          color={args.color} 
+          textEffect={args.textEffect}
+          fontBold={args.fontBold}
+          hasShadowEffect={true}
+          paddingControl={args.paddingControl} />
       </HorizontalStack>
     );
   }

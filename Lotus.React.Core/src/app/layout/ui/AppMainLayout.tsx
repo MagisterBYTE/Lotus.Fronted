@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CSSProperties, ReactElement } from 'react';
-import { HorizontalStack, VerticalStack } from 'ui/components';
+import { HorizontalStack } from 'ui/components';
 import { useLayoutState } from '../store/LayoutSelector';
 import { TScreenType } from '../domain/ScreenType';
 import { useScreenTypeChanged } from '../hooks';

@@ -1,8 +1,8 @@
-import React from 'react';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, SxProps, Theme, useTheme } from '@mui/material';
-import { Navigate } from 'react-router-dom';
-import { Button, HorizontalStack, IButtonProps, TButtonVariant, TTypographyVariant, Typography } from 'ui/components';
 import { ICommand, NavigationCommand } from 'lotus-core';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { Button, HorizontalStack, IButtonProps, Typography } from 'ui/components';
 import { TCommandButtonType } from './CommandButtonType';
 
 export interface ICommandButtonProps extends IButtonProps
@@ -64,16 +64,16 @@ export const CommandButton: React.FC<ICommandButtonProps> = (props:ICommandButto
     {
       if(isVisibleLabel && command.label !== '')
       {
-        return (<Button variant={'text'} style={{margin: 4, width: '90%'}} {...propsButton} disabled={!command.canExecute()} onClick={handleClick}>
+        return (<Button variant='text' style={{margin: 4, width: '90%'}} {...propsButton} disabled={!command.canExecute()} onClick={handleClick}>
           <HorizontalStack gap='0.5rem' alignItems='center'>
             {command.icon}
-            <Typography variant={'medium'}>{command.label}</Typography>  
+            <Typography variant='medium'>{command.label}</Typography>  
           </HorizontalStack>
         </Button>)
       }
       else
       {
-        return (<Button {...propsButton} style={{margin: 4}} variant={'text'} disabled={!command.canExecute()} onClick={handleClick}>
+        return (<Button {...propsButton} style={{margin: 4}} variant='text' disabled={!command.canExecute()} onClick={handleClick}>
           {command.icon}
         </Button>)
       }

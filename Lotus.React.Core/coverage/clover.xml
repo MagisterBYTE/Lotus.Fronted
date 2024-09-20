@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1725342807092" clover="3.2.0">
-  <project timestamp="1725342807092" name="All files">
+<coverage generated="1726203840074" clover="3.2.0">
+  <project timestamp="1726203840074" name="All files">
     <metrics statements="29" coveredstatements="15" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="1" elements="32" coveredelements="17" complexity="0" loc="29" ncloc="29" packages="1" files="1" classes="1"/>
     <file name="CssPropertiesHelper.ts" path="D:\CODE\LotusPlatform\Lotus.Frontend\Lotus.React.Core\src\ui\helpers\CssPropertiesHelper.ts">
       <metrics statements="29" coveredstatements="15" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="1"/>

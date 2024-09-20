@@ -3,4 +3,4 @@
  */
 export type TControlPadding = 'minimum' | 'normal' | 'enlarged';
 
-export const TControlPaddings:TControlPadding[] = ['minimum', 'normal', 'enlarged'] as const;
+export const TControlPaddings: readonly TControlPadding[] = ['minimum', 'normal', 'enlarged'] as const;

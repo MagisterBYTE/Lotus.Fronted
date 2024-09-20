@@ -1,57 +1,53 @@
 .lotus-dialog {
-  font-family: var(--lotus-font-main);
-  border-color: var(--lotus-color-border);
-  border-width: var(--lotus-border-width);
-  border-style: var(--lotus-border-style);
-  border-radius: var(--lotus-border-radius);
-  padding: 0;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .lotus-dialog-main {
   display: flex;
   flex-direction: column;
   justify-content: start;
+  height: 100%;
 }
 
 .lotus-dialog-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom-color: var(--lotus-color-border);
   border-bottom-width: var(--lotus-border-width);
   border-bottom-style: var(--lotus-border-style);
-  margin-top: 1rem;
-  margin-bottom: 1rem;
   padding: 0.5rem;
-  background-color: var(--lotus-color-light);
+  flex-grow: 0;
 }
 
 .lotus-dialog-header-text {
-  margin-top: -1rem;
+  margin-top: -0.5rem;
   margin-left: 0.5rem;
+  text-shadow: .07em .07em 0 rgba(0, 0, 0, 0.15);
 }
 
 .lotus-dialog-header-button {
   outline: none;
   border: none;
   background-color: transparent;
-  margin-top: -1rem;
+  margin-top: -0.5rem;
   margin-right: 0.5rem;
 }
 
 .lotus-dialog-body {
   padding: 0.5rem;
-  background-color: var(--lotus-color-light);
+  flex-grow: 1;
 }
 
 .lotus-dialog-footer {
   display: flex;
   flex-direction: row;
   justify-content: end;
-  border-top-color: var(--lotus-color-border);
   border-top-width: var(--lotus-border-width);
   border-top-style: var(--lotus-border-style);
   padding: 0.5rem;
-  background-color: var(--lotus-color-light);
+  column-gap: 1rem;
+  flex-grow: 0;
 }

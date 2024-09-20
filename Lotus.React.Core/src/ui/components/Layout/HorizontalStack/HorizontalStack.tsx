@@ -1,6 +1,6 @@
-import React, { ComponentPropsWithRef, forwardRef } from 'react';
+import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
 
-export interface IHorizontalStackProps extends ComponentPropsWithRef<'div'>
+export interface IHorizontalStackProps extends ComponentPropsWithoutRef<'div'>
 {
   gap?: React.CSSProperties['gap'];
   alignItems?: React.CSSProperties['alignItems'];

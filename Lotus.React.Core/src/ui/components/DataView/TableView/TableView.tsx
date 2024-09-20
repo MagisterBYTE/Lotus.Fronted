@@ -165,7 +165,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
         const id = cell.getValue() as TKey;
         const options = property.options!;
 
-        return <Select size={'medium'}
+        return <Select size='medium'
           width='100%'
           menuPortalTarget={document.body}
           initialSelectedValue={id}
@@ -201,7 +201,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
       {
         const massive = cell.getValue() as any[];
         const options = property.options!;
-        return <MultiSelect size={'medium'}
+        return <MultiSelect size='medium'
           width='100%'
           initialSelectedValues={massive}
           onSetSelectedValues={(selectedValues) => { setSelectedValues(property.fieldName, selectedValues) }}

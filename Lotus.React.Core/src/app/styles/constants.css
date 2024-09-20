@@ -11,6 +11,7 @@
   --lotus-color-danger: rgb(220, 53, 69);
   --lotus-color-warning: rgb(255, 193, 7);
   --lotus-color-info: rgb(13, 202, 240);
+  --lotus-color-academic: rgb(0, 128, 192);
 
   /* Темнее +25% черного */
   --lotus-color-primaryDark: color-mix(in srgb, var(--lotus-color-primary) 75%, black);
@@ -18,6 +19,7 @@
   --lotus-color-dangerDark: color-mix(in srgb, var(--lotus-color-danger) 75%, black);
   --lotus-color-warningDark: color-mix(in srgb, var(--lotus-color-warning) 75%, black);
   --lotus-color-infoDark: color-mix(in srgb, var(--lotus-color-info) 75%, black);
+  --lotus-color-academicDark: color-mix(in srgb, var(--lotus-color-academic) 75%, black);
 
   /* Темнее +50% черного */
   --lotus-color-primaryDarker: color-mix(in srgb, var(--lotus-color-primary) 50%, black);
@@ -25,6 +27,7 @@
   --lotus-color-dangerDarker: color-mix(in srgb, var(--lotus-color-danger) 50%, black);
   --lotus-color-warningDarker: color-mix(in srgb, var(--lotus-color-warning) 50%, black);
   --lotus-color-infoDarker: color-mix(in srgb, var(--lotus-color-info) 50%, black);
+  --lotus-color-academicDarker: color-mix(in srgb, var(--lotus-color-academic) 50%, black);
 
   /* Светлее +25% белого */
   --lotus-color-primaryLight: color-mix(in srgb, var(--lotus-color-primary) 75%, white);
@@ -32,6 +35,7 @@
   --lotus-color-dangerLight: color-mix(in srgb, var(--lotus-color-danger) 75%, white);
   --lotus-color-warningLight: color-mix(in srgb, var(--lotus-color-warning) 75%, white);
   --lotus-color-infoLight: color-mix(in srgb, var(--lotus-color-info) 75%, white);
+  --lotus-color-academicLight: color-mix(in srgb, var(--lotus-color-academic) 75%, white);
 
   /* Светлее +50% белого */
   --lotus-color-primaryLighter: color-mix(in srgb, var(--lotus-color-primary) 50%, white);
@@ -39,6 +43,7 @@
   --lotus-color-dangerLighter: color-mix(in srgb, var(--lotus-color-danger) 50%, white);
   --lotus-color-warningLighter: color-mix(in srgb, var(--lotus-color-warning) 50%, white);
   --lotus-color-infoLighter: color-mix(in srgb, var(--lotus-color-info) 50%, white);
+  --lotus-color-academicLighter: color-mix(in srgb, var(--lotus-color-academic) 50%, white);
 
   /* Светлее +90% белого (Максимально бледный цвет) */
   --lotus-color-primaryPalest: color-mix(in srgb, var(--lotus-color-primary) 10%, white);
@@ -46,6 +51,7 @@
   --lotus-color-dangerPalest: color-mix(in srgb, var(--lotus-color-danger) 10%, white);
   --lotus-color-warningPalest: color-mix(in srgb, var(--lotus-color-warning) 10%, white);
   --lotus-color-infoPalest: color-mix(in srgb, var(--lotus-color-info) 10%, white);
+  --lotus-color-academicPalest: color-mix(in srgb, var(--lotus-color-academic) 10%, white);
 
   /* Прозрачность 100-20% */
   --lotus-color-primaryAlpha02: rgba(13, 110, 253, 0.2);
@@ -53,6 +59,7 @@
   --lotus-color-dangerAlpha02: rgba(220, 53, 69, 0.2);
   --lotus-color-warningAlpha02: rgba(255, 193, 7, 0.2);
   --lotus-color-infoAlpha02: rgba(13, 202, 240, 0.2);
+  --lotus-color-academicAlpha02: rgba(0, 128, 192, 0.2);
 
   /* Прозрачность 100-40% */
   --lotus-color-primaryAlpha04: rgba(13, 110, 253, 0.4);
@@ -60,6 +67,7 @@
   --lotus-color-dangerAlpha04: rgba(220, 53, 69, 0.4);
   --lotus-color-warningAlpha04: rgba(255, 193, 7, 0.4);
   --lotus-color-infoAlpha04: rgba(13, 202, 240, 0.4);
+  --lotus-color-academicAlpha04: rgba(0, 128, 192, 0.4);
 
   /* Прозрачность 100-80% */
   --lotus-color-primaryAlpha08: rgba(13, 110, 253, 0.8);
@@ -67,9 +75,14 @@
   --lotus-color-dangerAlpha08: rgba(220, 53, 69, 0.8);
   --lotus-color-warningAlpha08: rgba(255, 193, 7, 0.8);
   --lotus-color-infoAlpha08: rgba(13, 202, 240, 0.8);
+  --lotus-color-academicAlpha04: rgba(0, 128, 192, 0.4);
 
   /* Границы */
   --lotus-border-width: 1px;
+  --lotus-border-width-smaller: 1px;
+  --lotus-border-width-small: 1px;
+  --lotus-border-width-medium: 1px;
+  --lotus-border-width-large: 2px;
   --lotus-border-style: solid;
   --lotus-border-radius: 0.4rem;
   --lotus-border-radius-smaller: 0.2rem;

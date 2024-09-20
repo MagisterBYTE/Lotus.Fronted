@@ -1,5 +1,5 @@
 import { TColorType, TControlState } from 'ui/types';
-import { ThemeHelper } from 'app/theme';
+import { ThemeHelper } from 'ui/theme';
 import { CSSProperties } from 'react';
 import { TChipVariant } from './ChipVariant';
 
@@ -13,29 +13,29 @@ export class ChipHelper
         {
           switch (variant)
           {
-            case 'filled': return ThemeHelper.getBorderPropsAsCSS(color, 'dark').borderColor;
-            case 'outline': return ThemeHelper.getBorderPropsAsCSS(color).borderColor;
+            case 'filled': return ThemeHelper.getBorderProps(color, 'dark').borderColor;
+            case 'outline': return ThemeHelper.getBorderProps(color).borderColor;
           }
         } break;
       case 'hover':
         switch (variant)
         {
-          case 'filled': return ThemeHelper.getBorderPropsAsCSS(color, 'dark').borderColor;
-          case 'outline': return ThemeHelper.getBorderPropsAsCSS(color, 'dark').borderColor;
+          case 'filled': return ThemeHelper.getBorderProps(color, 'dark').borderColor;
+          case 'outline': return ThemeHelper.getBorderProps(color, 'dark').borderColor;
         } break;
       case 'pressed':
         switch (variant)
         {
-          case 'filled': return ThemeHelper.getBorderPropsAsCSS(color, 'darker').borderColor;
-          case 'outline': return ThemeHelper.getBorderPropsAsCSS(color, 'darker').borderColor;
+          case 'filled': return ThemeHelper.getBorderProps(color, 'darker').borderColor;
+          case 'outline': return ThemeHelper.getBorderProps(color, 'darker').borderColor;
         } break;
       case 'selected':
       case 'focus':
       case 'disabled':
         switch (variant)
         {
-          case 'filled': return ThemeHelper.getBorderPropsAsCSS(color, 'dark').borderColor;
-          case 'outline': return ThemeHelper.getBorderPropsAsCSS(color).borderColor;
+          case 'filled': return ThemeHelper.getBorderProps(color, 'dark').borderColor;
+          case 'outline': return ThemeHelper.getBorderProps(color).borderColor;
         } break;
     }
 
@@ -51,28 +51,28 @@ export class ChipHelper
         {
           switch (variant)
           {
-            case 'filled': return ThemeHelper.getBackgroundColorAsCSS(color, 'palest').backgroundColor;
+            case 'filled': return ThemeHelper.getBackgroundColorProps(color, 'palest').backgroundColor;
             case 'outline': return 'transparent';
           }
         } break;
       case 'hover':
         switch (variant)
         {
-          case 'filled': return ThemeHelper.getBackgroundColorAsCSS(color, 'dark').backgroundColor;
-          case 'outline': return ThemeHelper.getBackgroundColorAsCSS(color, 'palest').backgroundColor;
+          case 'filled': return ThemeHelper.getBackgroundColorProps(color, 'dark').backgroundColor;
+          case 'outline': return ThemeHelper.getBackgroundColorProps(color, 'palest').backgroundColor;
         } break;
       case 'pressed':
         switch (variant)
         {
-          case 'filled': return ThemeHelper.getBackgroundColorAsCSS(color, 'darker').backgroundColor;
-          case 'outline': return ThemeHelper.getBackgroundColorAsCSS(color, 'palest').backgroundColor;
+          case 'filled': return ThemeHelper.getBackgroundColorProps(color, 'darker').backgroundColor;
+          case 'outline': return ThemeHelper.getBackgroundColorProps(color, 'palest').backgroundColor;
         } break;
       case 'selected':
       case 'focus':
       case 'disabled':
         switch (variant)
         {
-          case 'filled': return ThemeHelper.getBackgroundColorAsCSS(color).backgroundColor;
+          case 'filled': return ThemeHelper.getBackgroundColorProps(color).backgroundColor;
           case 'outline': return 'transparent';
         } break;
     }
@@ -89,7 +89,7 @@ export class ChipHelper
           switch (variant)
           {
             case 'filled': return ThemeHelper.getForegroundColorForBackAsCSS(color, 'palest').color;
-            case 'outline': return ThemeHelper.getForegroundColorAsCSS(color).color;
+            case 'outline': return ThemeHelper.getForegroundColorProps(color).color;
           }
         } break;
       case 'hover':
@@ -110,7 +110,7 @@ export class ChipHelper
         switch (variant)
         {
           case 'filled': return ThemeHelper.getForegroundColorForBackAsCSS(color).color;
-          case 'outline': return ThemeHelper.getForegroundColorAsCSS(color).color;
+          case 'outline': return ThemeHelper.getForegroundColorProps(color).color;
         } break;
     }
 

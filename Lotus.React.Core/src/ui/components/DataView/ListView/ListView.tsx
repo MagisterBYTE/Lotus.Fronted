@@ -4,16 +4,15 @@ import { useScreenResizeOrOrientation } from 'hooks/useScreenResizeOrOrientation
 import { IRequest, IResponsePage, IGrouping, IObjectInfo, IPageInfoResponse, IFilterProperty, ISortProperty, 
   IPageInfoRequest, localizationCore, FilterPropertyHelper } from 'lotus-core';
 import { toastError, ToastWrapper } from 'ui/components/Feedback';
-import { TColorType, TPlacementDensity } from 'ui/types';
+import { TPlacementDensity } from 'ui/types';
 import { LayoutHelper } from 'app/layout';
-import { Button, TButtonVariant } from 'ui/components/Controls';
+import { Button } from 'ui/components/Controls';
 import { FaFilter } from 'react-icons/fa';
 import { DialogAppBar } from 'ui/components/Display';
 import { DensityButton } from './components/DensityButton';
 import { FormFilter } from './components/FormFilter';
 import { IFormFilterRefType } from './components/FormFilter/FormFilter';
 import { SortButton } from './components/SortButton';
-
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface IListViewProps<TItem extends Record<string, any>> 
@@ -47,7 +46,7 @@ export const ListView = <TItem extends Record<string, any>>(props: IListViewProp
   const [sortProperties, setSortProperties] = useState<ISortProperty[]>([]);
 
   // Плотность размещения
-  const [placementDensity, setPlacementDensity] = useState<TPlacementDensity>(TPlacementDensity.Normal);
+  const [placementDensity, setPlacementDensity] = useState<TPlacementDensity>('normal');
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [autoCloseToastify, setAutoCloseToastify] = useState<number | false>(2000);
@@ -197,7 +196,7 @@ export const ListView = <TItem extends Record<string, any>>(props: IListViewProp
         <DensityButton
           initialDensity={placementDensity}
           onSetPlacementDensity={setPlacementDensity}/>
-        <Button variant={'filled'} onClick={handleOpenFilterDialog}>
+        <Button variant='filled' onClick={handleOpenFilterDialog}>
           <FaFilter />
         </Button>
       </Stack>
@@ -230,9 +229,9 @@ export const ListView = <TItem extends Record<string, any>>(props: IListViewProp
           />
         </DialogContent>
         <DialogActions>
-          <Button variant={'outline'} color={'warning'} onClick={handleClearFilterProperties}>{localizationCore.actions.clear}</Button>
-          <Button variant={'outline'} onClick={handleCloseFilterDialog}>{localizationCore.actions.cancel}</Button>
-          <Button variant={'outline'} autoFocus onClick={handleApplyFilterProperties}>{localizationCore.actions.confirm}</Button>
+          <Button variant='outline' color='warning' onClick={handleClearFilterProperties}>{localizationCore.actions.clear}</Button>
+          <Button variant='outline' onClick={handleCloseFilterDialog}>{localizationCore.actions.cancel}</Button>
+          <Button variant='outline' autoFocus onClick={handleApplyFilterProperties}>{localizationCore.actions.confirm}</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
+import { TControlPaddings, TControlSizes } from 'ui/types';
+import { TThemeColors, TThemeColorVariants } from 'ui/theme';
+import { HorizontalStack, VerticalStack } from 'ui/components/Layout';
+import { Button } from 'ui/components/Controls';
 import { Panel } from './Panel';
 import { TPanelVariants } from './PanelVariant';
 import { SmallText } from '.storydata/SmallText';
@@ -17,12 +20,12 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
-    hasRadius: {
+    borderRounded: {
       control: 'boolean'
     },
     color: {
       control: 'inline-radio',
-      options: [...TColorTypes, undefined]
+      options: [...TThemeColors, undefined]
     },
     size: {
       control: 'inline-radio',
@@ -31,6 +34,10 @@ const meta = {
     paddingControl: {
       control: 'inline-radio',
       options: [...TControlPaddings, undefined]
+    },
+    colorVariant: {
+      control: 'inline-radio',
+      options: [...TThemeColorVariants, undefined]
     },
     variant:
     {
@@ -74,5 +81,26 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: SmallText()
+  }
+};
+
+export const Dialog: Story = {
+  args: {
+  },
+
+  render: (args) =>
+  {
+    return (
+      <Panel borderRounded={args.borderRounded} size={args.size}
+        color={args.color} paddingControl={args.paddingControl} colorVariant={args.colorVariant} variant={args.variant}  >
+        <VerticalStack gap={2}>
+          {SmallText()}
+          <HorizontalStack fullWidth gap={2} justifyContent='end'>
+            <Button borderRounded={args.borderRounded} size={args.size} color={args.color} paddingControl={args.paddingControl} children='Отмена' />
+            <Button borderRounded={args.borderRounded} size={args.size} color={args.color} paddingControl={args.paddingControl} children='Подтверждаю' />
+          </HorizontalStack>
+        </VerticalStack>
+      </Panel>
+    )
   }
 };

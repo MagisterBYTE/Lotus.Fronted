@@ -78,7 +78,7 @@ export const LabelTextInput: Story = {
           variant: args.variant,
           isTopLabel: args.isTopLabel,
           bold: args.bold,
-          size:args.size }} size={args.size} hasRadius={true} color={args.color} />
+          size:args.size }} size={args.size} borderRounded={true} color={args.color} />
     );
   }
 };
@@ -94,7 +94,7 @@ export const VerticalStackLabel: Story = {
   {
     return (
       
-      <Panel hasRadius color={args.color} header='Личные данные' headerTypographyProps={{bold:true, variant:'large', effect:'shadow' }} >
+      <Panel borderRounded color={args.color} header='Личные данные' headerTypographyProps={{bold:true, variant:'large', effect:'shadow' }} >
         <VerticalStack style={{width: '400px', padding: '1rem'}} gap='0.5rem'>
           <InputField labelProps={
             { label: 'Фамилия', 
@@ -106,7 +106,7 @@ export const VerticalStackLabel: Story = {
               labelWidth:args.labelWidth,
               labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
-              size:args.size }} size={args.size} hasRadius={true} color={args.color} width='100%' />
+              size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
           <InputField labelProps={
             { label: 'Имя', 
               color: args.color, 
@@ -117,7 +117,7 @@ export const VerticalStackLabel: Story = {
               labelWidth:args.labelWidth,
               labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
-              size:args.size }} size={args.size} hasRadius={true} color={args.color} width='100%' />
+              size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
           <InputField labelProps={
             { label: 'Отчество', 
               color: args.color, 
@@ -128,7 +128,7 @@ export const VerticalStackLabel: Story = {
               labelWidth:args.labelWidth,
               labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
-              size:args.size }} size={args.size} hasRadius={true} color={args.color} width='100%' />
+              size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
           <InputField labelProps={
             { label: 'Сфера деятельности', 
               color: args.color, 
@@ -139,7 +139,7 @@ export const VerticalStackLabel: Story = {
               labelWidth:args.labelWidth,
               labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
-              size:args.size }} size={args.size} hasRadius={true} color={args.color} width='100%' />
+              size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
           <Select labelProps={
             { label: 'Раса', 
               color: args.color, 
@@ -150,7 +150,7 @@ export const VerticalStackLabel: Story = {
               labelWidth:args.labelWidth,
               labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
-              size:args.size }} hasIcons options={SelectOptionsIconsSvg} size={args.size} hasRadius={true} color={args.color} width='100%' />
+              size:args.size }} hasIcons options={SelectOptionsIconsSvg} size={args.size} borderRounded={true} color={args.color} width='100%' />
         </VerticalStack>
       </Panel>
     );

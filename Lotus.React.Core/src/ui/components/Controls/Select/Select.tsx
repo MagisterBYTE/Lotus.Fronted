@@ -4,13 +4,14 @@ import { ReactNode, useState } from 'react';
 import ReactSelect, { ActionMeta, components, OptionProps, Props, SingleValue, SingleValueProps, StylesConfig } from 'react-select';
 import { ILabelProps, Label } from 'ui/components/Display/Label';
 import { TCssWidth } from 'ui/types';
-import { ThemeHelper } from 'app/theme';
+import { ThemeHelper } from 'ui/theme';
 import { IconContext } from 'react-icons';
 import { TypographyHelper } from 'ui/components/Display/Typography';
-import { IGeneralPropertiesElements } from 'ui/components/GeneralPropertiesElements';
+import { IGeneralPropertiesElement, IGeneralPropertiesText } from 'ui/components';
 import { SelectHelper } from './SelectHelper';
+import { InteractivityLogic } from 'ui/interactivity';
 
-export interface ISelectProps<TValueOption extends TKey = TKey> extends Props<ISelectOption, false>, IGeneralPropertiesElements
+export interface ISelectProps<TValueOption extends TKey = TKey> extends Props<ISelectOption, false>, IGeneralPropertiesElement, IGeneralPropertiesText
 {
   /**
    * Фон поля
@@ -57,7 +58,8 @@ export interface ISelectProps<TValueOption extends TKey = TKey> extends Props<IS
 
 export const Select = <TValueOption extends TKey = TKey>(props:ISelectProps<TValueOption>) => 
 {
-  const  { hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal',
+  const  { borderRounded, borderStyle, color = 'primary', size = 'medium', paddingControl = 'normal', extraClass,
+    fontBold, textAlign, textEffect,
     isBackground = false,
     width,
     labelProps,
@@ -103,9 +105,10 @@ export const Select = <TValueOption extends TKey = TKey>(props:ISelectProps<TVal
         paddingTop: 0,
         paddingBottom: 0,
         borderRadius: 0,
-        ...ThemeHelper.getFontPropsAsCSS(size),
-        ...ThemeHelper.getTransitionColorsPropsAsCSS(),
-        ...ThemeHelper.getBorderPropsAsCSS(undefined, undefined, hasRadius, size),
+        ...ThemeHelper.getFontProps(size, fontBold),
+        ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
+        ...ThemeHelper.getBorderProps(size, borderRounded, borderStyle),
+        ...ThemeHelper.getTransitionColorsProps(),
         ...SelectHelper.getBorderColorProps(color, state.isDisabled, state.isFocused),
         ...SelectHelper.getBoxShadowProps(color, state.isDisabled, state.isFocused),
         ':hover':
@@ -114,7 +117,7 @@ export const Select = <TValueOption extends TKey = TKey>(props:ISelectProps<TVal
       },
         ':disabled':
       {
-        ...ThemeHelper.getOpacityPropsForDisabledAsCSS()
+        ...ThemeHelper.getOpacityForDisabledProps()
       }
       }),
     dropdownIndicator: (base) => ({
@@ -126,7 +129,7 @@ export const Select = <TValueOption extends TKey = TKey>(props:ISelectProps<TVal
       ...base,
       zIndex: 0,
       padding: 0,
-      ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
+      ...ThemeHelper.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
       paddingTop: 0,
       paddingBottom: 0
     }),
@@ -142,39 +145,25 @@ export const Select = <TValueOption extends TKey = TKey>(props:ISelectProps<TVal
         marginRight: 0,
         marginTop: 0,
         marginBottom: 0,
-        ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half')
+        ...ThemeHelper.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half')
       }
     ),
 
     option: (styles, { data, isDisabled, isFocused, isSelected }) => 
     {
-      const bgSelected = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'selected').backgroundColor;
-      const bgHover = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'hover').backgroundColor;
-      const bgPressed = ThemeHelper.getBackgroundColorAsCSS(color, undefined, 'pressed').backgroundColor
-      const colorSelected = ThemeHelper.getForegroundColorForBackAsCSS(color).color;
-      const colorHover = ThemeHelper.getForegroundColorForBackAsCSS(color, 'light').color;
+      const bgSelected = ThemeHelper.getBackgroundColorProps(color, 'darker').backgroundColor;
+      const bgHover = ThemeHelper.getBackgroundColorProps(color, 'darker').backgroundColor;
+      const bgPressed = ThemeHelper.getBackgroundColorProps(color, 'darker').backgroundColor
+      // const colorSelected = ThemeHelper.getForegroundColorForBackAsCSS(color).color;
+      // const colorHover = ThemeHelper.getForegroundColorForBackAsCSS(color, 'light').color;
       return {
         ...styles,
-        ...ThemeHelper.getPaddingPropsAsCSS(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
-        ...ThemeHelper.getFontPropsAsCSS(size),
-        ...ThemeHelper.getTransitionColorsPropsAsCSS(),
-        ... (hasIcons ? SelectHelper.getFlexContainer(size, paddingControl) : {}),
-        backgroundColor: isDisabled
-          ? undefined
-          : isSelected
-            ? bgSelected
-            : isFocused
-              ? bgHover
-              : undefined,
-        color: isDisabled
-          ? 'gray'
-          : isSelected
-            ? colorSelected
-            : isFocused
-              ? colorHover
-              : 'black',
         cursor: isDisabled ? 'not-allowed' : 'default',
-
+        ...ThemeHelper.getFontProps(size, fontBold),
+        ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
+        ...ThemeHelper.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
+        ...ThemeHelper.getTransitionColorsProps(),
+        ... (hasIcons ? SelectHelper.getFlexContainer(size, paddingControl) : {}),
         ':active': {
           ...styles[':active'],
           backgroundColor: !isDisabled
@@ -191,8 +180,8 @@ export const Select = <TValueOption extends TKey = TKey>(props:ISelectProps<TVal
       return {
         ...styles,
         marginLeft: hasIcons ? `${SelectHelper.getMarginOffsetSingleValue(size, data)}px` : '2px',
-        ...ThemeHelper.getFontPropsAsCSS(size),
-        ...ThemeHelper.getTransitionColorsPropsAsCSS(),
+        ...ThemeHelper.getFontProps(size),
+        ...ThemeHelper.getTransitionColorsProps(),
         ... (hasIcons ? SelectHelper.getFlexContainer(size, paddingControl) : {})
       };
     }

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { TPlacementDensity } from 'ui/types/PlacementDensity';
 import { MdDensityLarge, MdDensityMedium, MdDensitySmall } from 'react-icons/md';
-import { Button, IButtonProps, TButtonVariant } from 'ui/components/Controls';
-import { TControlSize } from 'ui/types';
+import { Button, IButtonProps } from 'ui/components/Controls';
 
 export interface IDensityButtonProps extends IButtonProps
 {
@@ -27,24 +26,24 @@ export const DensityButton: React.FC<IDensityButtonProps> = (props: IDensityButt
 
   const handleSetDensity = () =>
   {
-    if (density === TPlacementDensity.Density)
+    if (density === 'density')
     {
-      setDensity(TPlacementDensity.Normal);
-      onSetPlacementDensity(TPlacementDensity.Normal);
+      setDensity('normal');
+      onSetPlacementDensity('normal');
       return;
     }
 
-    if (density === TPlacementDensity.Normal)
+    if (density === 'normal')
     {
-      setDensity(TPlacementDensity.Spacious);
-      onSetPlacementDensity(TPlacementDensity.Spacious);
+      setDensity('spacious');
+      onSetPlacementDensity('spacious');
       return;
     }
 
-    if (density === TPlacementDensity.Spacious)
+    if (density === 'spacious')
     {
-      setDensity(TPlacementDensity.Density);
-      onSetPlacementDensity(TPlacementDensity.Density);
+      setDensity('density');
+      onSetPlacementDensity('density');
     }
   }
 
@@ -52,16 +51,16 @@ export const DensityButton: React.FC<IDensityButtonProps> = (props: IDensityButt
   {
     switch (density)
     {
-      case TPlacementDensity.Density: return <MdDensitySmall />
-      case TPlacementDensity.Normal: return <MdDensityMedium />
-      case TPlacementDensity.Spacious: return <MdDensityLarge />
+      case 'density': return <MdDensitySmall />
+      case 'normal': return <MdDensityMedium />
+      case 'spacious': return <MdDensityLarge />
     }
 
     return <></>
   }
 
   return (
-    <Button {...buttonProps} variant={'filled'} size={'large'} onClick={handleSetDensity}>
+    <Button {...buttonProps} variant='filled' size='large' onClick={handleSetDensity}>
       {getIcon()}
     </Button>
   )

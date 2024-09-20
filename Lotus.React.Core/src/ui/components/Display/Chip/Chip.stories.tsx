@@ -18,7 +18,7 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
-    hasRadius: {
+    borderRounded: {
       control: 'boolean'
     },
     color: {

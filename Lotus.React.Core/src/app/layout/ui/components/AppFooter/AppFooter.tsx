@@ -1,9 +1,9 @@
-import React, { ComponentPropsWithRef } from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 import { useLayoutState } from 'app/layout/store';
 import './AppFooter.css';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface IAppFooterProps extends ComponentPropsWithRef<'footer'> 
+export interface IAppFooterProps extends ComponentPropsWithoutRef<'footer'> 
 {
 }
 
