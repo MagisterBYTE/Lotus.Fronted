@@ -851,20 +851,20 @@ export class Color
   /**
    * Преобразование в CSS rgb/rgba значения 
    * @param modifyAlpha Модификация значения альфы от 0 до 1
-   * @param removeSemicolon Удалить точку с запятой в конце
+   * @param addSemicolon Добавить точку с запятой в конце
    * @returns {String} CSS rgb/rgba значение
    */
-  toCSSRgbValue(modifyAlpha?: number, removeSemicolon?: boolean): string 
+  toCSSRgbValue(modifyAlpha?: number, addSemicolon?: boolean): string 
   {
     let textColor = '';
     if(modifyAlpha)
     {
       const rgb = this._getRGB();
-      textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + modifyAlpha + ');';
+      textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + modifyAlpha + ')';
       
-      if(removeSemicolon)
+      if(addSemicolon)
       {
-        textColor = textColor.replace(';', '');
+        textColor = textColor + ';';
       }
 
       return textColor;
@@ -877,23 +877,27 @@ export class Color
     if (this.a < 1) 
     {
       const rgb = this._getRGB();
-      textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ');';
+      textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ')';
     }
     else 
     {
       const rgb = this._getRGB();
-      textColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ');';
+      textColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
     }
 
-    if(removeSemicolon)
+    if(addSemicolon)
     {
-      textColor = textColor.replace(';', '');
+      textColor = textColor + ';';
     }
 
     return textColor;
   }
 
-  public createMatchingColor(): { text: Color, shadow: Color }
+  /**
+   * Получить цвет и цвет тени гармоничный к текущему
+   * @returns Цвет и цвет тени гармоничный к текущему
+   */
+  public createHarmoniousColorAndShadow(): { text: Color, shadow: Color }
   {
     const hsl = this._getHSL();
     let h = hsl.h * 360;
@@ -966,5 +970,61 @@ export class Color
     const shadowColor: IColorModelHSL = { h: s_h / 360, s: s_s / 100, l: s_l / 100 };
 
     return { text: new Color(textColor, 1), shadow: new Color(shadowColor, 0.5) };
+  }
+
+  /**
+   * Получить цвет гармоничный к текущему
+   * @returns Цвет гармоничный к текущему
+   */
+  public createHarmoniousColor(): Color
+  {
+    const hsl = this._getHSL();
+    let h = hsl.h * 360;
+    let s = hsl.s * 100;
+    let l = hsl.l * 100;
+
+    /* originals*/
+    const o_h = h, o_s = s, o_l = l;
+    s = 100;
+    if (o_s <= 25)
+    {
+      if (o_l > 60)
+      {
+        l = 10;
+      }
+      else 
+      {
+        l = 95;
+      }
+    }
+    else 
+    {
+      if ((o_h >= 25 && o_h <= 195) || o_h >= 295)
+      {
+        l = 10;
+      }
+      else if ((o_h >= 285 && o_h < 295) || (o_h > 195 && o_h <= 205))
+      {
+        h = 60;
+        l = 50;
+      }
+      else 
+      {
+        l = 95;
+      }
+    }
+    if ((o_h >= 295 || (o_h > 20 && o_h < 200)) && o_l <= 35)
+    {
+      l = 95;
+    }
+    else if (((o_h < 25 || o_h > 275) && o_l >= 60) || (o_h > 195 && o_l >= 70)
+    )
+    {
+      l = 10;
+    }
+
+    const textColor: IColorModelHSL = { h: h / 360, s: s / 100, l: l / 100 };
+
+    return new Color(textColor, 1);
   }
 }

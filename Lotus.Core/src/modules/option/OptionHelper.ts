@@ -1,19 +1,19 @@
 import { ArrayHelper } from 'helpers/ArrayHelper';
 import { TKey } from 'types/Key';
-import { ISelectOption } from './SelectOption';
+import { IOption } from './Option';
 
-export class SelectOptionHelper
+export class OptionHelper
 {
   /**
    * Преобразование в типизированный массив
    * @param options Список опций
    * @returns 
    */
-  public static convertToNumber(options: ISelectOption[]): ISelectOption[]
+  public static convertToNumber(options: IOption[]): IOption[]
   {
     const result = options.map((x) =>
     {
-      const value: ISelectOption = { text: x.text, value: Number(x.value) };
+      const value: IOption = { text: x.text, value: Number(x.value) };
       return value;
     });
 
@@ -25,11 +25,11 @@ export class SelectOptionHelper
    * @param options Список опций
    * @returns 
    */
-  public static convertToString(options: ISelectOption[]): ISelectOption[]
+  public static convertToString(options: IOption[]): IOption[]
   {
     const result = options.map((x) =>
     {
-      const value: ISelectOption = { text: x.text, value: String(x.value) };
+      const value: IOption = { text: x.text, value: String(x.value) };
       return value;
     });
 
@@ -42,7 +42,7 @@ export class SelectOptionHelper
    * @param initialSelectedValue Начальное значение
    * @returns 
    */
-  public static getDefaultValue<TValueOption extends TKey = TKey>(options: ISelectOption[], initialSelectedValue?: TValueOption): TValueOption
+  public static getDefaultValue<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): TValueOption
   {
     if (initialSelectedValue)
     {
@@ -58,7 +58,7 @@ export class SelectOptionHelper
    * @param initialSelectedValue Начальное значение
    * @returns 
    */
-  public static getDefaultText<TValueOption extends TKey = TKey>(options: ISelectOption[], initialSelectedValue?: TValueOption): string
+  public static getDefaultText<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): string
   {
     if (initialSelectedValue)
     {
@@ -84,7 +84,7 @@ export class SelectOptionHelper
    * @returns 
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getDefaultIcon<TValueOption extends TKey = TKey>(options: ISelectOption[], initialSelectedValue?: TValueOption): any
+  public static getDefaultIcon<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): any
   {
     if (initialSelectedValue)
     {
@@ -110,7 +110,7 @@ export class SelectOptionHelper
    * @param initialSelectedValues Начальное значение
    * @returns Массив текста выбранных значений
    */
-  public static getDefaultTexts<TValueOption extends TKey = TKey>(options: ISelectOption[], initialSelectedValues?: TValueOption[]): string[]
+  public static getDefaultTexts<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValues?: TValueOption[]): string[]
   {
     if (initialSelectedValues && initialSelectedValues.length > 0)
     {
@@ -138,7 +138,7 @@ export class SelectOptionHelper
    * @param selectedValue Выбранное значение
    * @returns Опция
    */
-  public static getSelectOptionByValue(options: ISelectOption[], selectedValue?: TKey): ISelectOption
+  public static getSelectOptionByValue(options: IOption[], selectedValue?: TKey): IOption
   {
     if (selectedValue)
     {
@@ -160,7 +160,7 @@ export class SelectOptionHelper
    * @param selectedValue Выбранное значение
    * @returns Текст выбранного значения
    */
-  public static getTextByValue(options: ISelectOption[], selectedValue?: TKey): string
+  public static getTextByValue(options: IOption[], selectedValue?: TKey): string
   {
     let text = '';
     if (selectedValue)
@@ -184,7 +184,7 @@ export class SelectOptionHelper
    * @returns Иконка выбранного значения
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getIconByValue(options: ISelectOption[], selectedValue?: TKey): any
+  public static getIconByValue(options: IOption[], selectedValue?: TKey): any
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let icon: any = undefined;
@@ -208,11 +208,11 @@ export class SelectOptionHelper
    * @param selectedValues Выбранные значения
    * @returns Массив опций
    */
-  public static getSelectOptionsByValues(options: ISelectOption[], selectedValues?: TKey[]): ISelectOption[]
+  public static getOptionsByValues(options: IOption[], selectedValues?: TKey[]): IOption[]
   {
     if (selectedValues && selectedValues.length > 0)
     {
-      const optionsSelected: ISelectOption[] = [];
+      const optionsSelected: IOption[] = [];
 
       options.forEach(element => 
       {
@@ -236,7 +236,7 @@ export class SelectOptionHelper
    * @param selectedValues Выбранные значения
    * @returns Массив текста выбранных значений
    */
-  public static getTextsByValues(options: ISelectOption[], selectedValues?: TKey[]): string[]
+  public static getTextsByValues(options: IOption[], selectedValues?: TKey[]): string[]
   {
     if (selectedValues && selectedValues.length > 0)
     {
@@ -265,7 +265,7 @@ export class SelectOptionHelper
    * @returns Массив текста выбранных значений
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getTextsByUnknownValues(options: ISelectOption[], item: any): string[]
+  public static getTextsByUnknownValues(options: IOption[], item: any): string[]
   {
     if (Array.isArray(item))
     {
@@ -279,7 +279,7 @@ export class SelectOptionHelper
           return value;
         });
 
-        const result = SelectOptionHelper.getTextsByValues(options, numbers);
+        const result = OptionHelper.getTextsByValues(options, numbers);
         return result;
       }
       else
@@ -290,7 +290,7 @@ export class SelectOptionHelper
           return value;
         });
 
-        const result = SelectOptionHelper.getTextsByValues(options, texts);
+        const result = OptionHelper.getTextsByValues(options, texts);
         return result;
       }
     }

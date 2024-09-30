@@ -439,12 +439,21 @@ export declare class Color {
     /**
      * Преобразование в CSS rgb/rgba значения
      * @param modifyAlpha Модификация значения альфы от 0 до 1
-     * @param removeSemicolon Удалить точку с запятой в конце
+     * @param addSemicolon Добавить точку с запятой в конце
      * @returns {String} CSS rgb/rgba значение
      */
-    toCSSRgbValue(modifyAlpha?: number, removeSemicolon?: boolean): string;
-    createMatchingColor(): {
+    toCSSRgbValue(modifyAlpha?: number, addSemicolon?: boolean): string;
+    /**
+     * Получить цвет и цвет тени гармоничный к текущему
+     * @returns Цвет и цвет тени гармоничный к текущему
+     */
+    createHarmoniousColorAndShadow(): {
         text: Color;
         shadow: Color;
     };
+    /**
+     * Получить цвет гармоничный к текущему
+     * @returns Цвет гармоничный к текущему
+     */
+    createHarmoniousColor(): Color;
 }

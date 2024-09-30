@@ -1,3 +1,4 @@
+import { Color } from './Color';
 import { TColorVariantIndex, TColorVariantName } from './ColorVariantTypes';
 export declare class ColorVariantHelper {
     /**
@@ -19,4 +20,10 @@ export declare class ColorVariantHelper {
      * @returns Числовой индекс в палитре цветов
      */
     static getNextIndex(index?: TColorVariantIndex, delta?: number): TColorVariantIndex;
+    /**
+     * Вычислить цвет на основании варианта
+     * @param baseColor Базовый цвет
+     * @param name Именованный тип в вариативности цветов
+     */
+    static calcColor(baseColor: Color, name?: TColorVariantName): Color;
 }

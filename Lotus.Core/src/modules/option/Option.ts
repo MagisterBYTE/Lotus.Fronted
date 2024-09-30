@@ -1,9 +1,9 @@
 import { TKey } from 'types/Key';
 
 /**
- * Интерфейс для выбора данных(опция) в выпадающем списке
+ * Интерфейс представляющий некую опцию
  */
-export interface ISelectOption
+export interface IOption
 {
   /**
    * Значение

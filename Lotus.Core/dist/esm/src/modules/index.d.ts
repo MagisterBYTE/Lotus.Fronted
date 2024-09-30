@@ -6,5 +6,5 @@ export * from './geometry';
 export * from './humanizer';
 export * from './objectInfo';
 export * from './requestAndResponse';
-export * from './selectOption';
+export * from './option';
 export * from './validation';

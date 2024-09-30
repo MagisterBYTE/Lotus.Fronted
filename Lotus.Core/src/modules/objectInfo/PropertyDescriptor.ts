@@ -1,4 +1,4 @@
-import { ISelectOption } from 'modules/selectOption/SelectOption';
+import { IOption } from 'modules/option';
 import { IPropertyEditable } from './PropertyEditable';
 import { IPropertyFiltering } from './PropertyFiltering';
 import { IPropertyGrouping } from './PropertyGrouping';
@@ -38,7 +38,7 @@ export interface IPropertyDescriptor
   /**
    * Опции возможных значений свойства
    */
-  options?: ISelectOption[];
+  options?: IOption[];
 
   /**
    * Статус поддержки сортировки по свойству

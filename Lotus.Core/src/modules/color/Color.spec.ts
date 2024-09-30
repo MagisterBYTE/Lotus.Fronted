@@ -387,15 +387,25 @@ describe('Color.getNames', function ()
   });
 });
 
-describe('Color.createMatchingColor', function () 
+describe('Color.createHarmoniousColorAndShadow', function () 
 {
   it('returns matchingColor', function (done) 
   {
     // background-color: rgb(221, 238, 224); color: rgb(0, 51, 10); text-shadow: rgb(187, 221, 194) 1px 2px 5px;
-    expect(new Color(221, 238, 224).createMatchingColor().text.toString()).toBe('rgb(0,51,9)');
+    expect(new Color(221, 238, 224).createHarmoniousColorAndShadow().text.toString()).toBe('rgb(0,51,9)');
 
     // background-color: rgb(110, 97, 152); color: rgb(235, 230, 255); text-shadow: rgb(23, 20, 31) 1px 2px 5px;
-    expect(new Color(110, 97, 152).createMatchingColor().text.toString()).toBe('rgb(236,229,255)');
+    expect(new Color(110, 97, 152).createHarmoniousColorAndShadow().text.toString()).toBe('rgb(236,229,255)');
+    done();
+  });
+});
+
+describe('Color.toModifyAlpha', function () 
+{
+  it('toModifyAlpha', function (done) 
+  {
+    expect(new Color(221, 238, 224).toModifyAlpha(0.5).toString()).toBe('rgba(221,238,224,0.5)');
+    expect(new Color(0, 238, 224).toModifyAlpha(0.1).toString()).toBe('rgba(0,238,224,0.1)');
     done();
   });
 });
