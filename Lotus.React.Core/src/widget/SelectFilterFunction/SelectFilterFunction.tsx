@@ -6,7 +6,7 @@ export interface ISelectFilterFunctionProps
 {
   initialFunctionFn?: IFilterFunctionDesc;
   onSelectFilterFunction: (filterFunction: IFilterFunctionDesc) => void;
-  groupFilterFunctions: IFilterFunctionDesc[];
+  groupFilterFunctions: readonly IFilterFunctionDesc[];
 }
 
 export const SelectFilterFunction: React.FC<ISelectFilterFunctionProps> = (props: ISelectFilterFunctionProps) => 

@@ -1,32 +1,22 @@
-import { cx } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import React, { ComponentPropsWithoutRef } from 'react';
-import { TColorType } from 'ui/types';
-import { TTypographyEffect } from './TypographyEffect';
+import { IGeneralTextProperties } from 'ui/components/GeneralTextProperties';
+import { Theme, TThemeColorVariant } from 'ui/theme';
+import { TypographyHelper } from './TypographyHelper';
 import { TTypographyVariant } from './TypographyVariant';
 import './Typography.css';
 
-export interface ITypographyProps extends ComponentPropsWithoutRef<'p'>
+export interface ITypographyProps extends Omit<ComponentPropsWithoutRef<'p'>, 'color'>, Omit<IGeneralTextProperties, 'textColorHarmonious'>
 {
   /**
-   * Цвет
+   * Вариант цвета
    */
-  color?: TColorType;
+  textColorVariant?: TThemeColorVariant;
 
   /**
    * Вариант отображения
    */
   variant?: TTypographyVariant;
-
-  /**
-   * Толстый шрифт
-   */
-  // eslint-disable-next-line react/boolean-prop-naming
-  bold?: boolean;
-
-  /**
-   * Эффект отображения
-   */
-  effect?: TTypographyEffect;
 
   /**
    * Дополнительный класс для отображения
@@ -36,12 +26,26 @@ export interface ITypographyProps extends ComponentPropsWithoutRef<'p'>
 
 export const Typography: React.FC<ITypographyProps> = (props: ITypographyProps) => 
 {
-  const { color, variant = 'body1', bold, effect, extraClass, ...propsElem } = props;
+  const 
+    { 
+      fontBold, fontAccent, textEffect, textAlign, textColor,
+      textColorVariant, variant = 'body1', extraClass, ...propsElem 
+    } = props;
   
-  const typographyClass = cx(`lotus-typography-${variant}`, 
-    color && `lotus-foreground-${color}`, 
-    (bold === undefined || bold == false) ? 'lotus-typography-font-normal' : 'lotus-typography-font-bold',
-    effect && `lotus-typography-effect-${effect}`, extraClass);
+  const size = TypographyHelper.convertTypographyVariantToControlSize(variant);
+
+  const typographyMain = css(
+    {
+      ...Theme.getForegroundColorProps(textColor, textColorVariant),
+      ...Theme.getTextEffectProps(size, textEffect, textAlign)
+    }
+  )
+  
+  const typographyClass = cx(typographyMain, 
+    `lotus-typography-${variant}`,
+    (fontBold) ? 'lotus-typography-font-weight-bold' : 'lotus-typography-font-weight-normal',
+    (fontAccent) ? 'lotus-typography-font-family-accent' : 'lotus-typography-font-family-default',
+    extraClass);
 
   switch (variant)
   {

@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TControlPaddings, TControlSizes } from 'ui/types';
-import { TThemeColors, TThemeColorVariants } from 'ui/theme';
-import { HorizontalStack, VerticalStack } from 'ui/components/Layout';
 import { Button } from 'ui/components/Controls';
+import { HorizontalStack, VerticalStack } from 'ui/components/Layout';
+import { TThemeColors, TThemeColorVariants } from 'ui/theme';
+import { TControlPaddings, TControlSizes, TCssBorderStyles, TShadowElevations, TTextEffects } from 'ui/types';
 import { Panel } from './Panel';
-import { TPanelVariants } from './PanelVariant';
 import { SmallText } from '.storydata/SmallText';
 
 const meta = {
@@ -23,6 +22,11 @@ const meta = {
     borderRounded: {
       control: 'boolean'
     },
+    borderStyle:
+    {
+      control: 'inline-radio',
+      options: [...TCssBorderStyles, undefined]
+    },
     color: {
       control: 'inline-radio',
       options: [...TThemeColors, undefined]
@@ -39,22 +43,25 @@ const meta = {
       control: 'inline-radio',
       options: [...TThemeColorVariants, undefined]
     },
-    variant:
+    shadowElevation:
     {
-      control:
-      {
-        type: 'inline-radio'
-      },
-      options: [...TPanelVariants, undefined]
+      control: 'inline-radio',
+      options: [...TShadowElevations, undefined]
     },
-    elevation:
+    textEffect: {
+      control: 'inline-radio',
+      options: [...TTextEffects, undefined]
+    },
+    textAlign:
     {
-      control:
-      {
-        type: 'number',
-        max: 5,
-        min: 1
-      }
+      control: 'inline-radio',
+      options: ['left', 'right', 'center', undefined]
+    },
+    textColorHarmonious: {
+      control: 'boolean'
+    },
+    fontAccent: {
+      control: 'boolean'
     },
     onClick:
     {
@@ -62,8 +69,7 @@ const meta = {
       {
         disable: true
       }
-    }
-    ,
+    },
     children:
     {
       table:
@@ -91,11 +97,14 @@ export const Dialog: Story = {
   render: (args) =>
   {
     return (
-      <Panel borderRounded={args.borderRounded} size={args.size}
-        color={args.color} paddingControl={args.paddingControl} colorVariant={args.colorVariant} variant={args.variant}  >
+      <Panel borderRounded={args.borderRounded} size={args.size} borderStyle={args.borderStyle}
+        color={args.color} paddingControl={args.paddingControl} colorVariant={args.colorVariant}
+        textAlign={args.textAlign}
+        textEffect={args.textEffect}
+        shadowElevation={args.shadowElevation} >
         <VerticalStack gap={2}>
           {SmallText()}
-          <HorizontalStack fullWidth gap={2} justifyContent='end'>
+          <HorizontalStack fullWidth gap={4} justifyContent='end'>
             <Button borderRounded={args.borderRounded} size={args.size} color={args.color} paddingControl={args.paddingControl} children='Отмена' />
             <Button borderRounded={args.borderRounded} size={args.size} color={args.color} paddingControl={args.paddingControl} children='Подтверждаю' />
           </HorizontalStack>

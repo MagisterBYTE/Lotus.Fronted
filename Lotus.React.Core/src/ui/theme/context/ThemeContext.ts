@@ -1,10 +1,10 @@
 import { createContext } from 'react';
-import { TThemeMode } from '../types';
+import { TThemeData } from '../types';
 
 export interface IThemeContextType
 {
-  theme: TThemeMode;
-  setTheme: (theme: TThemeMode) => void;
+  theme: TThemeData;
+  setTheme: (themeData: TThemeData) => void;
 }
 
 export const ThemeContext = createContext<IThemeContextType | undefined>(undefined);

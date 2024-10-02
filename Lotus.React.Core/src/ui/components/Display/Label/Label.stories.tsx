@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { TColorTypes, TControlSizes } from 'ui/types';
 import { InputField, Select } from 'ui/components/Controls';
 import { VerticalStack } from 'ui/components/Layout';
 import { Panel } from 'ui/components/Surfaces';
-import { TTypographyEffects, TTypographyVariants } from '../Typography';
+import { TThemeColors, TThemeColorVariants } from 'ui/theme';
+import { TControlSizes, TTextEffects } from 'ui/types';
+import { TTypographyVariants } from '../Typography';
 import { Label } from './Label';
 import { SelectOptionsIconsSvg } from '.storydata/SelectOptionsData';
-
 
 const meta = {
   title: 'Display/Label',
@@ -21,7 +21,11 @@ const meta = {
   argTypes: {
     color: {
       control: 'inline-radio',
-      options: [...TColorTypes, undefined]
+      options: [...TThemeColors, undefined]
+    },
+    colorVariant: {
+      control: 'inline-radio',
+      options: [...TThemeColorVariants, undefined]
     },
     size: {
       control: 'inline-radio',
@@ -31,13 +35,20 @@ const meta = {
       control: 'inline-radio',
       options: [...TTypographyVariants, undefined]
     },
-    effect: {
+    textEffect: {
       control: 'inline-radio',
-      options: [...TTypographyEffects, undefined]
+      options: [...TTextEffects, undefined]
     },
-    labelHorizontalAlign: {
+    textAlign:
+    {
       control: 'inline-radio',
-      options: ['flex-start', 'center', 'flex-end']
+      options: ['left', 'right', 'center', undefined]
+    },
+    textColorHarmonious: {
+      control: 'boolean'
+    },
+    fontAccent: {
+      control: 'boolean'
     },
     onClick:
     {
@@ -65,7 +76,7 @@ type Story = StoryObj<typeof meta>;
 export const LabelTextInput: Story = {
 
   args: {
-    color: 'primary',
+    color: 'blue',
     label: 'Фамилия'
   },
   render: (args) =>
@@ -74,10 +85,13 @@ export const LabelTextInput: Story = {
       <InputField labelProps={
         { label: args.label, 
           color: args.color, 
-          effect: args.effect, 
+          textEffect: args.textEffect, 
           variant: args.variant,
           isTopLabel: args.isTopLabel,
-          bold: args.bold,
+          fontBold: args.fontBold,
+          fontAccent: args.fontAccent,
+          textAlign: args.textAlign,
+          textColorHarmonious: args.textColorHarmonious,
           size:args.size }} size={args.size} borderRounded={true} color={args.color} />
     );
   }
@@ -88,67 +102,85 @@ export const VerticalStackLabel: Story = {
   args: {
     label: 'Фамилия',
     labelWidth: '60%',
-    bold: false
+    containerWidth: '100%',
+    fontBold: false
   },
   render: (args) =>
   {
     return (
       
-      <Panel borderRounded color={args.color} header='Личные данные' headerTypographyProps={{bold:true, variant:'large', effect:'shadow' }} >
+      <Panel borderRounded color={args.color} header='Личные данные'
+        borderStyle={undefined} shadowElevation={4}
+        headerTypographyProps={{fontBold:true, variant:'large', textEffect:'shadow' }} >
         <VerticalStack style={{width: '400px', padding: '1rem'}} gap='0.5rem'>
           <InputField labelProps={
             { label: 'Фамилия', 
               color: args.color, 
-              effect: args.effect, 
+              colorVariant:args.colorVariant,
+              textEffect: args.textEffect, 
               variant: args.variant,
               isTopLabel: args.isTopLabel,
-              bold: args.bold,
+              fontBold: args.fontBold,
+              fontAccent: args.fontAccent,
+              textAlign: args.textAlign,
+              textColorHarmonious: args.textColorHarmonious,
               labelWidth:args.labelWidth,
-              labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
               size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
           <InputField labelProps={
             { label: 'Имя', 
               color: args.color, 
-              effect: args.effect, 
+              colorVariant:args.colorVariant,
+              textEffect: args.textEffect, 
               variant: args.variant,
               isTopLabel: args.isTopLabel,
-              bold: args.bold,
+              fontBold: args.fontBold,
+              fontAccent: args.fontAccent,
+              textAlign: args.textAlign,
+              textColorHarmonious: args.textColorHarmonious,
               labelWidth:args.labelWidth,
-              labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
               size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
           <InputField labelProps={
             { label: 'Отчество', 
               color: args.color, 
-              effect: args.effect, 
+              colorVariant:args.colorVariant,
+              textEffect: args.textEffect, 
               variant: args.variant,
               isTopLabel: args.isTopLabel,
-              bold: args.bold,
+              fontBold: args.fontBold,
+              fontAccent: args.fontAccent,
+              textAlign: args.textAlign,
+              textColorHarmonious: args.textColorHarmonious,
               labelWidth:args.labelWidth,
-              labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
               size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
           <InputField labelProps={
             { label: 'Сфера деятельности', 
               color: args.color, 
-              effect: args.effect, 
+              textEffect: args.textEffect, 
+              colorVariant:args.colorVariant,
               variant: args.variant,
               isTopLabel: args.isTopLabel,
-              bold: args.bold,
+              fontBold: args.fontBold,
+              fontAccent: args.fontAccent,
+              textAlign: args.textAlign,
+              textColorHarmonious: args.textColorHarmonious,
               labelWidth:args.labelWidth,
-              labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
               size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
           <Select labelProps={
             { label: 'Раса', 
               color: args.color, 
-              effect: args.effect, 
+              colorVariant:args.colorVariant,
+              textEffect: args.textEffect, 
               variant: args.variant,
               isTopLabel: args.isTopLabel,
-              bold: args.bold,
+              fontBold: args.fontBold,
+              fontAccent: args.fontAccent,
+              textAlign: args.textAlign,
+              textColorHarmonious: args.textColorHarmonious,
               labelWidth:args.labelWidth,
-              labelHorizontalAlign: args.labelHorizontalAlign,
               containerWidth: args.containerWidth,
               size:args.size }} hasIcons options={SelectOptionsIconsSvg} size={args.size} borderRounded={true} color={args.color} width='100%' />
         </VerticalStack>

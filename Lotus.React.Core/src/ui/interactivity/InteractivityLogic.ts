@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { TColorVariantName } from 'lotus-core';
 import { CSSProperties } from 'react';
-import { IThemePalette, ThemeData, TThemeColor } from 'ui/theme';
-import { TControlSize } from 'ui/types';
-import { TInteractivityEffect } from './InteractivityEffect';
+import { Theme } from 'ui/theme';
+import { Color } from 'lotus-core';
+import { hasBorderProps } from 'ui/components';
 import { TInteractivityModel } from './InteractivityModel';
-import { InteractivityParams } from './InteractivityParams';
 import { TInteractivityState } from './InteractivityState';
+import { IInteractivityElement } from './InteractivityElement';
 
 /**
  * Логика применения визуальных эффектов к элементу UI в зависимости от модель применения и состояния интерактивности элемента
@@ -14,22 +13,27 @@ import { TInteractivityState } from './InteractivityState';
 export class InteractivityLogic
 {
   /**
-   * Получить визуальный эффекты для элемента UI
-   * @param size Размер элемента
-   * @param effect Флаги визуальных эффектов
+   * Получить визуальный эффекты для фона элемента UI
    * @param model Модель применения визуальных эффектов к элементу UI
    * @param state Состояние интерактивности элемента UI
-   * @param color Цвет
+   * @param elem Интерактивный элемент
    * @param isSelected Статус выбора элемента UI
    * @param isDisabled Статус недоступности элемента UI
    * @param isFocused Статус нахождения элемента UI в фокусе
    * @returns Свойства CSSProperties
    */
-  public static getEffectProps(size: TControlSize, model: TInteractivityModel, state: TInteractivityState, 
-    color: TThemeColor, isSelected?: boolean, isDisabled?: boolean, isFocused?: boolean): CSSProperties
+  public static getEffectProps(model: TInteractivityModel, state: TInteractivityState, elem: IInteractivityElement,
+    isSelected?: boolean, isDisabled?: boolean, isFocused?: boolean): CSSProperties
   {
-    const palette: IThemePalette = ThemeData[color];
+    const {
+      backColor, hoverBackColor, pressedBackColor,
+      textColor, hoverTextColor, pressedTextColor, textColorHarmonious,
+      borderRadius, borderStyle, borderWidth,
+      borderColor, hoverBorderColor, pressedBorderColor
+    } = elem
+
     const effectProps: CSSProperties = {};
+
     switch (model)
     {
       case 'filled':
@@ -37,47 +41,76 @@ export class InteractivityLogic
           switch (state)
           {
             case 'normal':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor).toCSSRgbValue();
 
-                // background
-                new InteractivityParams(TInteractivityEffect.Color),
-
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, true),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color, 'darker')
-              )
-            }
+                effectProps.color = Theme.getColor(textColor ?? backColor, undefined, 
+                  (textColor ? false : true),
+                  (textColor ? false : textColorHarmonious)).toCSSRgbValue();
+                
+                // Граница произвольна
+                if(hasBorderProps(elem))
+                {
+                  effectProps.borderWidth = borderWidth ?? '1px';
+                  effectProps.borderStyle = borderStyle ?? 'solid';
+                  effectProps.borderColor = Theme.getColor(borderColor ?? backColor, undefined, undefined, undefined,
+                    ((borderColor) ? undefined : 2)).toCSSRgbValue();
+                }
+                else
+                {
+                  // Убираем по умолчанию
+                  effectProps.border = 'none';
+                }
+              }
+              break;
             case 'hover':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'light',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, hoverBackColor ?? 'palest').toCSSRgbValue();
 
-                // background
-                new InteractivityParams(TInteractivityEffect.Color),
+                effectProps.color = Theme.getColor(hoverTextColor ?? (textColor ?? (hoverBackColor ?? backColor)),
+                  ((hoverTextColor ?? textColor) ? undefined : ((!hoverBackColor && backColor instanceof Color) ? 'palest' : undefined)),
+                  ((hoverTextColor ?? textColor) ? false : true), 
+                  ((hoverTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, true),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color, 'darkest')
-              )
-            }
+                // Граница произвольна
+                if(hasBorderProps(elem))
+                {
+                  effectProps.borderWidth = borderWidth ?? '1px';
+                  effectProps.borderStyle = borderStyle ?? 'solid';
+                  effectProps.borderColor = Theme.getColor(hoverBorderColor ?? (borderColor ?? (hoverBackColor ?? backColor)), 
+                    undefined,
+                    undefined, undefined, ((hoverBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+                }
+                else
+                {
+                  // Убираем по умолчанию
+                  effectProps.border = 'none';
+                }
+              } break;
             case 'pressed':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'dark',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, pressedBackColor ?? 'dark').toCSSRgbValue();
 
-                // background
-                new InteractivityParams(TInteractivityEffect.Color),
+                effectProps.color = Theme.getColor(pressedTextColor ?? (textColor ?? (pressedBackColor ?? backColor)),
+                  ((hoverTextColor ?? textColor) ? undefined : ((!hoverBackColor && backColor instanceof Color) ? 'dark' : undefined)), 
+                  ((pressedTextColor ?? textColor) ? false : true), 
+                  ((pressedTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, true),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color, 'darkest')
-              )
-            }
+                // Граница произвольна
+                if(hasBorderProps(elem))
+                {
+                  effectProps.borderWidth = borderWidth ?? '1px';
+                  effectProps.borderStyle = borderStyle ?? 'solid';
+                  effectProps.borderColor = Theme.getColor(pressedBorderColor ?? (borderColor ?? (pressedBackColor ?? backColor)), 
+                    undefined,
+                    undefined, undefined, ((pressedBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+                }
+                else
+                {
+                  // Убираем по умолчанию
+                  effectProps.border = 'none';
+                }
+              } break;
           }
         } break;
       case 'outline':
@@ -85,47 +118,46 @@ export class InteractivityLogic
           switch (state)
           {
             case 'normal':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = 'transparent';
 
-                // background
-                new InteractivityParams(undefined, false, true),
+                effectProps.color = Theme.getColor(textColor ?? backColor).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, 'main'),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color, 'main')
-              )
-            }
+                // Граница обязательна
+                effectProps.borderWidth = borderWidth ?? '1px';
+                effectProps.borderStyle = borderStyle ?? 'solid';
+                effectProps.borderColor = Theme.getColor(borderColor ?? backColor).toCSSRgbValue();
+              } break;
             case 'hover':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'palest',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, hoverBackColor ?? 'palest').toCSSRgbValue();
 
-                // background
-                new InteractivityParams(undefined, false, true),
+                effectProps.color = Theme.getColor(hoverTextColor ?? textColor ?? backColor,
+                  ((hoverTextColor ?? textColor) ? undefined : (hoverBackColor ?? 'palest')),
+                  ((hoverTextColor ?? textColor) ? false : true), ((hoverTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, 'darker'),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color, 'main')
-              )
-            }
+                // Граница обязательна
+                effectProps.borderWidth = borderWidth ?? '1px';
+                effectProps.borderStyle = borderStyle ?? 'solid';
+                effectProps.borderColor = Theme.getColor(hoverBorderColor ?? borderColor ?? backColor,
+                  ((hoverBorderColor ?? borderColor) ? undefined : (hoverBackColor ?? 'palest')),
+                  undefined, undefined, ((hoverBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+              } break;
             case 'pressed':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, pressedBackColor ?? 'dark').toCSSRgbValue();
 
-                // background
-                new InteractivityParams(TInteractivityEffect.Color),
+                effectProps.color = Theme.getColor(pressedTextColor ?? textColor ?? backColor,
+                  ((pressedTextColor ?? textColor) ? undefined : (pressedBackColor ?? 'dark')),
+                  ((pressedTextColor ?? textColor) ? false : true), ((pressedTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, 'palest'),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color, 'darker')
-              )
-            }
+                // Граница обязательна
+                effectProps.borderWidth = borderWidth ?? '1px';
+                effectProps.borderStyle = borderStyle ?? 'solid';
+                effectProps.borderColor = Theme.getColor(pressedBorderColor ?? borderColor ?? backColor,
+                  ((pressedBorderColor ?? borderColor) ? undefined : (pressedBackColor ?? 'dark')),
+                  undefined, undefined, ((pressedBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+              } break;
           }
         } break;
       case 'text':
@@ -133,47 +165,39 @@ export class InteractivityLogic
           switch (state)
           {
             case 'normal':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = 'transparent';
 
-                // background
-                new InteractivityParams(undefined, false, true),
+                effectProps.color = Theme.getColor(textColor ?? backColor).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, 'main'),
-
-                // border
-                new InteractivityParams(undefined, false, true)
-              )
-            }
+                // Граница нет
+                effectProps.border = 'none';
+                effectProps.borderColor = 'transparent';
+              } break;
             case 'hover':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'palest',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, hoverBackColor ?? 'palest').toCSSRgbValue();
 
-                // background
-                new InteractivityParams(TInteractivityEffect.Color),
+                effectProps.color = Theme.getColor(hoverTextColor ?? textColor ?? backColor,
+                  ((hoverTextColor ?? textColor) ? undefined : (hoverBackColor ?? 'palest')),
+                  ((hoverTextColor ?? textColor) ? false : true), ((hoverTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, 'darker'),
-
-                // border
-                new InteractivityParams(undefined, false, true)
-              )
-            }
+                // Граница нет
+                effectProps.border = 'none';
+                effectProps.borderColor = 'transparent';
+              } break;
             case 'pressed':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, pressedBackColor ?? 'dark').toCSSRgbValue();
 
-                // background
-                new InteractivityParams(TInteractivityEffect.Color),
+                effectProps.color = Theme.getColor(pressedTextColor ?? textColor ?? backColor,
+                  ((pressedTextColor ?? textColor) ? undefined : (pressedBackColor ?? 'dark')),
+                  ((pressedTextColor ?? textColor) ? false : true), ((pressedTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, 'palest'),
-
-                // border
-                new InteractivityParams(undefined, false, true)
-              )
-            }
+                // Граница нет
+                effectProps.border = 'none';
+                effectProps.borderColor = 'transparent';
+              } break;
           }
         } break;
       case 'icon':
@@ -181,47 +205,45 @@ export class InteractivityLogic
           switch (state)
           {
             case 'normal':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = 'transparent';
 
-                // background
-                new InteractivityParams(undefined, false, true),
+                effectProps.color = Theme.getColor(textColor ?? backColor, undefined, false).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(TInteractivityEffect.Color, 'main'),
-
-                // border
-                new InteractivityParams(undefined, false, true)
-              )
-            }
+                // Граница нет
+                effectProps.border = 'none';
+                effectProps.borderColor = 'transparent';
+              } break;
             case 'hover':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'palest',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, hoverBackColor ?? 'palest').toCSSRgbValue();
 
-                // background
-                new InteractivityParams(TInteractivityEffect.Color),
+                effectProps.color = Theme.getColor(hoverTextColor ?? textColor ?? backColor,
+                  ((hoverTextColor ?? textColor) ? undefined : (hoverBackColor ?? 'palest')),
+                  ((hoverTextColor ?? textColor) ? false : true), ((hoverTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(undefined, false, true),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color, 'main')
-              )
-            }
+                // Граница обязательна
+                effectProps.borderWidth = borderWidth ?? '1px';
+                effectProps.borderStyle = borderStyle ?? 'solid';
+                effectProps.borderColor = Theme.getColor(hoverBorderColor ?? borderColor ?? backColor,
+                  ((hoverBorderColor ?? borderColor) ? undefined : (hoverBackColor ?? 'palest')),
+                  undefined, undefined, ((hoverBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+              } break;
             case 'pressed':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, pressedBackColor ?? 'dark').toCSSRgbValue();
 
-                // background
-                new InteractivityParams(TInteractivityEffect.Color),
+                effectProps.color = Theme.getColor(pressedTextColor ?? textColor ?? backColor,
+                  ((pressedTextColor ?? textColor) ? undefined : (pressedBackColor ?? 'dark')),
+                  ((pressedTextColor ?? textColor) ? false : true), ((pressedTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
 
-                // text
-                new InteractivityParams(undefined, false, true),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color, 'darker')
-              )
-            }
+                // Граница обязательна
+                effectProps.borderWidth = borderWidth ?? '1px';
+                effectProps.borderStyle = borderStyle ?? 'solid';
+                effectProps.borderColor = Theme.getColor(pressedBorderColor ?? borderColor ?? backColor,
+                  ((pressedBorderColor ?? borderColor) ? undefined : (pressedBackColor ?? 'dark')),
+                  undefined, undefined, ((pressedBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+              } break;
           }
         } break;
       case 'menu':
@@ -230,89 +252,62 @@ export class InteractivityLogic
           switch (state)
           {
             case 'normal':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = 'initial';
 
-                // background
-                new InteractivityParams(undefined),
+                effectProps.color = textColor ? Theme.getColor(textColor ?? backColor).toCSSRgbValue() : Theme.currentPalette.text.primary;
 
-                // text
-                new InteractivityParams(undefined),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color)
-              )
-            }
+                // Граница обязательна
+                effectProps.borderWidth = borderWidth ?? '1px';
+                effectProps.borderStyle = borderStyle ?? 'solid';
+                effectProps.borderColor = Theme.getColor(borderColor ?? backColor).toCSSRgbValue();
+              } break;
             case 'hover':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = 'initial';
 
-                // background
-                new InteractivityParams(undefined),
+                effectProps.color = textColor ? Theme.getColor(textColor ?? backColor).toCSSRgbValue() : Theme.currentPalette.text.primary;
 
-                // text
-                new InteractivityParams(undefined),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color)
-              )
-            }
+                // Граница обязательна
+                effectProps.borderWidth = borderWidth ?? '1px';
+                effectProps.borderStyle = borderStyle ?? 'solid';
+                effectProps.borderColor = Theme.getColor(hoverBorderColor ?? borderColor ?? backColor,
+                  ((hoverBorderColor ?? borderColor) ? undefined : (hoverBackColor ?? 'palest')),
+                  undefined, undefined, ((hoverBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+              } break;
             case 'pressed':
-            {
-              return InteractivityLogic.getProperties(size, palette, 'main',
+              {
+                effectProps.backgroundColor = 'initial';
 
-                // background
-                new InteractivityParams(undefined),
+                effectProps.color = textColor ? Theme.getColor(textColor ?? backColor).toCSSRgbValue() : Theme.currentPalette.text.primary;
 
-                // text
-                new InteractivityParams(undefined),
-
-                // border
-                new InteractivityParams(TInteractivityEffect.Color)
-              )
-            }
+                // Граница обязательна
+                effectProps.borderWidth = borderWidth ?? '1px';
+                effectProps.borderStyle = borderStyle ?? 'solid';
+                effectProps.borderColor = Theme.getColor(pressedBorderColor ?? borderColor ?? backColor,
+                  ((pressedBorderColor ?? borderColor) ? undefined : (pressedBackColor ?? 'dark')),
+                  undefined, undefined, ((pressedBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+              } break;
           }
         } break;
-    }
-
-    return effectProps;
-  }
-
-  /**
-   * Получить цвет эффекта Ripple для указанного цвета
-   * @param color Цвет
-   * @returns Цвет эффекта Ripple в виде строки rgba
-   */
-  public static getRippleColor(color: TThemeColor): string
-  {
-    const palette: IThemePalette = ThemeData[color];
-    return palette.variants.white.toCSSRgbValue(0.4, true);
-  }
-
-  /**
-   * Получить свойства в соответствии с заданными параметрами интерактивности
-   * @param size Размер элемента UI
-   * @param colorVariant Вариант цвета
-   * @param background Параметры применения фонового цвета/общего к элементу
-   * @param text Параметры применения цвета текста
-   * @param border Параметры применения цвета к границе
-   * @returns Свойства CSSProperties
-   */
-  public static getProperties(size:TControlSize, palette: IThemePalette, colorVariant: TColorVariantName, background?: InteractivityParams,
-    text?: InteractivityParams, border?: InteractivityParams): CSSProperties
-  {
-    const effectProps: CSSProperties = {};
-    if (background) 
-    {
-      effectProps.backgroundColor = background.getColorCSSRgbValue(palette, colorVariant);
-    }
-    if (text) 
-    {
-      effectProps.color = text.getColorCSSRgbValue(palette, colorVariant);
-    }
-    if (border) 
-    {
-      effectProps.borderColor = border.getColorCSSRgbValue(palette, colorVariant);
+      case 'list':
+        {
+          switch (state)
+          {
+            case 'normal':
+              {
+                effectProps.backgroundColor = 'initial';
+              } break;
+            case 'hover':
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, hoverBackColor).toCSSRgbValue();
+              } break;
+            case 'pressed':
+              {
+                effectProps.backgroundColor = Theme.getColor(backColor, pressedBackColor).toCSSRgbValue();
+              } break;
+          }
+        } break;
     }
 
     return effectProps;

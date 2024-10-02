@@ -7,6 +7,7 @@ import { useScreenTypeChanged } from '../hooks';
 import { AppHeader, IAppHeaderProps } from './components/AppHeader';
 import { AppLeftPanel, IAppLeftPanelProps } from './components/AppLeftPanel';
 import { AppFooter, IAppFooterProps } from './components/AppFooter';
+import { Theme } from 'ui/theme';
 
 export interface IAppMainLayoutProps
 {
@@ -49,8 +50,8 @@ export const AppMainLayout: React.FC<IAppMainLayoutProps> = (props: IAppMainLayo
     case TScreenType.Desktop:
     {
       return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-          <div style={{flexGrow: '0', backgroundColor: 'lightcoral'}} >
+        <div style={{display: 'flex', flexDirection: 'column', ...Theme.getBackgroundColorProps(undefined, 'white')}}>
+          <div style={{flexGrow: '0'}} >
             <AppHeader {...appHeaderProps} />
           </div>
           <div style={{flexGrow: '1'}}>

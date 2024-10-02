@@ -8,7 +8,7 @@ import { MaterialReactTableHelper } from 'helpers/MaterialReactTableHelper';
 import
 {
   IEditable, IObjectInfo, IPageInfoRequest, IPageInfoResponse, IRequest, IResponse,
-  IResponsePage, ISortObject, ISortProperty, localizationCore, SelectOptionHelper, StringHelper, TKey
+  IResponsePage, ISortObject, ISortProperty, localizationCore, OptionHelper, StringHelper, TKey
 } from 'lotus-core';
 import
 {
@@ -19,11 +19,9 @@ import
 } from 'material-react-table';
 import { MRT_Localization_RU } from 'material-react-table/locales/ru';
 import { ReactElement, useEffect, useState } from 'react';
-import { Select } from 'ui/components/Controls/Select';
-import { TControlSize } from 'ui/types';
-import { MultiSelect } from 'ui/components/Controls/MultiSelect';
 import { toastError, toastPromise, ToastWrapper } from 'ui/components/Feedback/Toast';
 import { EditTableFilterArray, EditTableFilterEnum, EditTableFilterString } from './TableViewFilterTypes';
+import { SelectOption } from 'ui/components/Controls';
 
 export interface IFormCreatedItem<TItem extends Record<string, any> | null>
 {
@@ -156,7 +154,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
       {
         const id = cell.getValue() as TKey;
         const options = property.options!;
-        const text = SelectOptionHelper.getTextByValue(options, id);
+        const text = OptionHelper.getTextByValue(options, id);
         return (<>{text}</>)
       }
 
@@ -165,7 +163,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
         const id = cell.getValue() as TKey;
         const options = property.options!;
 
-        return <Select size='medium'
+        return <SelectOption size='medium'
           width='100%'
           menuPortalTarget={document.body}
           initialSelectedValue={id}
@@ -192,7 +190,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
         const massive = cell.getValue() as any[];
         const options = property.options!;
 
-        const texts = SelectOptionHelper.getTextsByValues(options, massive);
+        const texts = OptionHelper.getTextsByValues(options, massive);
         const text = texts.join(', ');
         return (<>{text}</>)
       }
@@ -201,7 +199,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable,>(props:
       {
         const massive = cell.getValue() as any[];
         const options = property.options!;
-        return <MultiSelect size='medium'
+        return <SelectOption size='medium'
           width='100%'
           initialSelectedValues={massive}
           onSetSelectedValues={(selectedValues) => { setSelectedValues(property.fieldName, selectedValues) }}

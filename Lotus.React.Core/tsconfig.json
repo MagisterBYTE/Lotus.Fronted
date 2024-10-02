@@ -13,7 +13,7 @@
     /* Language and Environment */
     "target": "ES2023",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
      "lib": [
-      "ES2020",                                          // Дополнительные API, доступные в ESNext. Они меняются по мере развития спецификации JavaScript
+      "ES2022",                                          // Дополнительные API, доступные в ESNext. Они меняются по мере развития спецификации JavaScript
       "DOM",                                             // Определения DOM: window, document, и т.д.
       "DOM.Iterable"      
      ],                                                  /* Specify a set of bundled library declaration files that describe the target runtime environment. */

@@ -1,80 +1,70 @@
 .lotus-typography-h3 {
-  font-family: var(--lotus-font-main);
   margin: 0px 0px 0.5rem;
   font-size: 3rem;
   line-height: 1.2;
 }
 
 .lotus-typography-h4 {
-  font-family: var(--lotus-font-main);
   margin: 0px 0px 0.4rem;
   font-size: 2.125rem;
   line-height: 1.2;
 }
 
 .lotus-typography-h5 {
-  font-family: var(--lotus-font-main);
   margin: 0px 0px 0.3em;
   font-size: 1.5rem;
   line-height: 1.2;
 }
 
 .lotus-typography-h6 {
-  font-family: var(--lotus-font-main);
   margin: 0px 0px 0.2rem;
   font-size: 1.25rem;
   line-height: 1.1;
 }
 
 .lotus-typography-large {
-  font-family: var(--lotus-font-main);
   margin: 0px 0px 0.05rem;
   font-size: large;
   line-height: 1.05;
 }
 
 .lotus-typography-medium {
-  font-family: var(--lotus-font-main);
   font-size: medium;
   line-height: 1.05;
 }
 
 .lotus-typography-small {
-  font-family: var(--lotus-font-main);
   font-size: small;
   line-height: 1;
 }
 
 .lotus-typography-smaller {
-  font-family: var(--lotus-font-main);
   font-size: x-small;
   line-height: 0.8;
 }
 
 .lotus-typography-body1 {
-  font-family: var(--lotus-font-main);
   font-size: 1rem;
   line-height: 1.1;
 }
 
 .lotus-typography-body2 {
-  font-family: var(--lotus-font-main);
   font-size: 0.875rem;
   line-height: 1.05;
 }
 
-.lotus-typography-font-normal {
+.lotus-typography-font-weight-normal {
   font-weight: 400;
 }
 
-.lotus-typography-font-bold {
+.lotus-typography-font-weight-bold {
   font-weight: bold;
 }
 
-.lotus-typography-effect-shadow {
-  text-shadow: .07em .07em 0 rgba(0, 0, 0, 0.15);
+.lotus-typography-font-family-default {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.lotus-typography-effect-stroke {
-  -webkit-text-stroke: 0.5px var(--lotus-color-mainColor);
+.lotus-typography-font-family-accent {
+  font-family: Arial, Helvetica, sans-serif;
 }

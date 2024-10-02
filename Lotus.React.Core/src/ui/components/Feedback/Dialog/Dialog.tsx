@@ -1,9 +1,10 @@
 import { css, cx } from '@emotion/css';
-import { ThemeHelper } from 'ui/theme/helpers';
-import { ComponentPropsWithoutRef, forwardRef, ReactNode, useImperativeHandle, useRef } from 'react';
-import { Button } from 'ui/components/Controls';
-import { IGeneralPropertiesElement } from 'ui/components/GeneralPropertiesElements';
-import { TThemeColorVariant } from 'ui/types';
+import { ComponentPropsWithoutRef, forwardRef, ReactNode, useEffect, useImperativeHandle, useRef } from 'react';
+import { Button, CloseButton, IButtonProps } from 'ui/components/Controls';
+import { IGeneralElementProperties, ITypographyProps, Typography, TypographyHelper } from 'ui/components';
+import { Theme, TThemeColorVariant } from 'ui/theme';
+import { TShadowElevation } from 'ui/types';
+import { DraggingComponentHelper } from 'ui/helpers/DraggingComponentHelper';
 import './Dialog.css';
 
 export interface IDialogComponent
@@ -15,25 +16,97 @@ export interface IDialogComponent
   close(returnValue?: string): void;
 }
 
-export interface IDialogProps extends Omit<ComponentPropsWithoutRef<'dialog'>, 'color'>, IGeneralPropertiesElement
+export interface IDialogProps extends Omit<ComponentPropsWithoutRef<'dialog'>, 'color'>, Omit<IGeneralElementProperties, 'extraClass'>
 {
+  /**
+   * Окно можно перемещать
+   */
+  isMoveable?: boolean;
+
+  /**
+   * Функция обратного вызова для реагирования на нажатия кнопки Ок
+   * @returns 
+   */
+  onOk?: () => void;
+
+  /**
+   * Функция обратного вызова для реагирования на нажатия кнопки закрыть или Cancel
+   * @returns 
+   */
+  onClose?: () => void;
+
+  /**
+   * Вариант отображения
+   */
+  colorVariant?: TThemeColorVariant;
+
+  /**
+   * Размер тени
+   */
+  shadowElevation?: TShadowElevation;
+
+  /**
+   * Отделить заголовок границей
+   */
+  hasHeaderDivider?: boolean;
+
   /**
    * Заголовок диалога
    */
-  header?: string;
+  header?: ReactNode;
 
   /**
-   * Подвал диалог
+   * Параметры отображения заголовка диалога
    */
-  footer?: ReactNode;
+  headerTypographyProps?: ITypographyProps;
+
+  /**
+   * Отделить подвал границей
+   */
+  hasFooterDivider?: boolean;
+
+  /**
+   * Показать кнопку Ок
+   */
+  hasButtonOk?: boolean;
+
+  /**
+   * Параметры отображения кнопки Ок
+   */
+  buttonOkProps?: IButtonProps;
+
+  /**
+   * Показать кнопку Cancel
+   */
+  hasButtonCancel?: boolean;
+
+  /**
+   * Параметры отображения кнопки Cancel
+   */
+  buttonCancelProps?: IButtonProps;
 };
 
 export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>  
 {
-  const { borderRounded: hasRadius, color = 'primary', size = 'medium', paddingControl = 'normal', children,
-    header, footer, ...propsDialog } = props;
+  const { borderRounded, borderStyle, color, size = 'medium', paddingControl = 'normal', children,
+    isMoveable, onOk, onClose, colorVariant = 'palest', shadowElevation, hasHeaderDivider, header, headerTypographyProps,
+    hasFooterDivider, hasButtonOk = true, buttonOkProps, hasButtonCancel = true, buttonCancelProps, ...propsDialog } = props;
 
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const handlePointerDown = (event: PointerEvent) => 
+  {
+    if (isMoveable) DraggingComponentHelper.startDragFromPointerDown(event);
+  }
+
+  useEffect(() =>
+  {
+    if (isMoveable) window.addEventListener('pointerdown', handlePointerDown);
+    return () =>
+    {
+      if (isMoveable) window.removeEventListener('pointerdown', handlePointerDown);
+    }
+  }, [])
 
   useImperativeHandle(
     ref,
@@ -65,70 +138,97 @@ export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>
     []
   );
 
-  const colorVariant: TThemeColorVariant | undefined = (color == 'main' || color == 'secondary') ? undefined : 'palest';
-
   const dialogMain = css(
     {
-      ...ThemeHelper.getFontProps(size),
-      ...ThemeHelper.getForegroundColorForBackAsCSS(color, colorVariant),
-      ...ThemeHelper.getBackgroundColorProps(color, colorVariant),
-      ...ThemeHelper.getBorderProps(color, undefined, hasRadius, size),
-      ...ThemeHelper.getPaddingProps(size, paddingControl, 'normal', 'normal')
+      ...Theme.getFontProps(size),
+      ...Theme.getPaddingProps(size, paddingControl, 'normal', 'normal'),
+      ...Theme.getForegroundColorProps(color, colorVariant, true),
+      ...Theme.getBackgroundColorProps(color, colorVariant),
+      ...(borderStyle ? Theme.getBorderStyleProps(size, borderRounded, borderStyle) : { border: 'none' }),
+      ...(borderStyle ? Theme.getBorderColorProps(color, colorVariant, 3) : {}),
+      ...(shadowElevation ? Theme.getBoxShadowProps(shadowElevation, color) : {})
     });
 
   const dialogClass = cx(dialogMain, 'lotus-dialog');
 
   const dialogHeaderMain = css(
     {
-      marginLeft: `-${ThemeHelper.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingLeft}`,
-      marginRight: `-${ThemeHelper.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingRight}`,
-      borderBottomColor: ThemeHelper.getBorderProps(color, 'alpha04').borderColor
+      marginLeft: `-${Theme.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingLeft}`,
+      marginRight: `-${Theme.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingRight}`,
+      ...(hasHeaderDivider ? Theme.getBorderStyleIndividualProps(size, 'solid', false, false, false, true) : {}),
+      ...(hasHeaderDivider ? { borderBottomColor: Theme.getBorderColorProps(color, colorVariant, 3, 0.4).borderColor } : {})
     });
 
-  const dialogHeaderClass = cx(dialogHeaderMain, 'lotus-dialog-header');
+  const dialogHeaderClass = cx(dialogHeaderMain, 'lotus-dialog-header', isMoveable ? 'lotus-dialog-header-move' : '');
 
   const dialogFooterMain = css(
     {
-      marginLeft: `-${ThemeHelper.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingLeft}`,
-      marginRight: `-${ThemeHelper.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingRight}`,
-      borderTopColor: ThemeHelper.getBorderProps(color, 'alpha04').borderColor
+      marginLeft: `-${Theme.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingLeft}`,
+      marginRight: `-${Theme.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingRight}`,
+      ...(hasFooterDivider ? Theme.getBorderStyleIndividualProps(size, 'solid', false, true) : {}),
+      ...(hasFooterDivider ? { borderTopColor: Theme.getBorderColorProps(color, colorVariant, 3, 0.4).borderColor } : {})
     });
 
   const dialogFooterClass = cx(dialogFooterMain, 'lotus-dialog-footer');
 
+  const handleButtonOkClick = () => 
+  {
+    dialogRef?.current?.close();
+    if (onOk)
+    {
+      onOk();
+    }
+  };
+
   const handleButtonCloseClick = () => 
   {
     dialogRef?.current?.close();
+    if (onClose)
+    {
+      onClose();
+    }
   };
 
   return (
-    <dialog
-      ref={dialogRef}
-      className={dialogClass}
-      {...propsDialog}
-    >
+    <dialog ref={dialogRef} className={dialogClass} {...propsDialog}>
       <div className='lotus-dialog-main'>
-        <div className={dialogHeaderClass}>
+        <div className={dialogHeaderClass} data-dialog-draggable>
           {header && (
-            <div className='lotus-dialog-header-text'>{header}</div>
+            <Typography color={headerTypographyProps?.color ?? color}
+              variant={headerTypographyProps?.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
+              {...headerTypographyProps}>{header}</Typography>
           )}
-
-          <button onClick={handleButtonCloseClick} className='lotus-dialog-header-button'> ✕ </button>
+          <CloseButton onClick={handleButtonCloseClick} style={{marginTop: '-0.5rem', marginRight: '0.5rem'}}/>
         </div>
-
         <div className='lotus-dialog-body'>
           {children}
         </div>
 
         <div className={dialogFooterClass}>
-          {footer}
-          <Button style={{ minWidth: '100px' }} color={color} size={size} borderRounded={hasRadius} paddingControl={paddingControl} value='Ок' variant='filled' >
-            Ок
-          </Button>
-          <Button style={{ minWidth: '100px' }} color={color} size={size} borderRounded={hasRadius} paddingControl={paddingControl}
-            onClick={handleButtonCloseClick} value='Cancel' variant='outline' >
-            Cancel
-          </Button>
+          {hasButtonOk && (<Button style={{ minWidth: '100px' }}
+            color={buttonOkProps?.color ?? color}
+            size={buttonOkProps?.size ?? size}
+            borderRounded={buttonOkProps?.borderRounded ?? true}
+            borderStyle={buttonOkProps?.borderStyle ?? 'solid'}
+            paddingControl={buttonOkProps?.paddingControl ?? paddingControl}
+            onClick={buttonOkProps?.onClick ?? handleButtonOkClick}
+            value='Ок'
+            hasRippleEffect={buttonCancelProps?.hasRippleEffect ?? true}
+            variant={buttonOkProps?.variant ?? 'filled'} >
+            {buttonOkProps?.children ?? 'Ok'}
+          </Button>)}
+          {hasButtonCancel && (<Button style={{ minWidth: '100px' }}
+            color={buttonCancelProps?.color ?? color}
+            size={buttonCancelProps?.size ?? size}
+            borderRounded={buttonCancelProps?.borderRounded ?? true}
+            borderStyle={buttonCancelProps?.borderStyle ?? 'solid'}
+            paddingControl={buttonCancelProps?.paddingControl ?? paddingControl}
+            onClick={handleButtonCloseClick}
+            value='Cancel'
+            hasRippleEffect={buttonCancelProps?.hasRippleEffect ?? true}
+            variant={buttonCancelProps?.variant ?? 'outline'} >
+            {buttonCancelProps?.children ?? 'Cancel'}
+          </Button>)}
         </div>
       </div>
     </dialog>

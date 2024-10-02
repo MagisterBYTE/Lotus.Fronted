@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { FcCloth } from 'react-icons/fc';
-import { TColorTypes, TControlPaddings, TControlSizes } from 'ui/types';
+import { TThemeColors, TThemeColorVariants } from 'ui/theme';
+import { TControlPaddings, TControlSizes, TTextEffects } from 'ui/types';
 import { Chip } from './Chip';
-import { TChipVariants } from './ChipVariant';
 import { collapseAnalysisIcon } from '.storydata/IconsBase64';
 
 const meta = {
@@ -21,9 +21,13 @@ const meta = {
     borderRounded: {
       control: 'boolean'
     },
+    borderStyle:
+    {
+      control: 'inline-radio'
+    },
     color: {
       control: 'inline-radio',
-      options: [...TColorTypes, undefined]
+      options: [...TThemeColors, undefined]
     },
     size: {
       control: 'inline-radio',
@@ -33,9 +37,24 @@ const meta = {
       control: 'inline-radio',
       options: [...TControlPaddings, undefined]
     },
-    variant: {
+    colorVariant: {
       control: 'inline-radio',
-      options: [...TChipVariants, undefined]
+      options: [...TThemeColorVariants, undefined]
+    },
+    textEffect: {
+      control: 'inline-radio',
+      options: [...TTextEffects, undefined]
+    },
+    textAlign:
+    {
+      control: 'inline-radio',
+      options: ['left', 'right', 'center', undefined]
+    },
+    textColorHarmonious: {
+      control: 'boolean'
+    },
+    fontAccent: {
+      control: 'boolean'
     },
     onClick:
     {
@@ -67,6 +86,7 @@ export const Dark: Story = {
 export const IconSvg: Story = {
   args: {
     color: 'info',
+    hasIcon:true,
     label: <FcCloth />
   }
 };
@@ -74,6 +94,7 @@ export const IconSvg: Story = {
 export const IconBase: Story = {
   args: {
     color: 'info',
+    hasIcon:true,
     label: collapseAnalysisIcon
   }
 };

@@ -1,11 +1,11 @@
-import { css } from '@emotion/css';
-import { ThemeHelper, TThemeColorVariant } from 'ui/theme';
+import { css, cx } from '@emotion/css';
+import { Theme, TThemeColorVariant } from 'ui/theme';
 import { ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react';
 import { ITypographyProps, Typography, TypographyHelper } from 'ui/components/Display';
-import { IGeneralPropertiesElement } from 'ui/components/GeneralPropertiesElements';
-import { TPanelVariant } from './PanelVariant';
+import { IGeneralPropertiesElement, IGeneralPropertiesText } from 'ui/components';
+import { TShadowElevation } from 'ui/types';
 
-export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'color'>, IGeneralPropertiesElement
+export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'color'>, IGeneralPropertiesElement, IGeneralPropertiesText
 {
   /**
    * Вариант отображения
@@ -13,14 +13,9 @@ export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'colo
   colorVariant?: TThemeColorVariant;
 
   /**
-   * Вариант отображения
-   */
-  variant?: TPanelVariant;
-
-  /**
    * Размер тени
    */
-  elevation?: number;
+  shadowElevation?: TShadowElevation;
 
   /**
    * Заголовок
@@ -35,48 +30,52 @@ export interface IPanelProps extends Omit<ComponentPropsWithoutRef<'div'>, 'colo
 
 export const Panel = forwardRef<HTMLDivElement, IPanelProps>((props, ref) => 
 {
-  const { borderRounded: hasRadius, size = 'medium', color, paddingControl = 'normal', colorVariant, 
-    variant = 'outlined', elevation = 2, header, headerTypographyProps, ...divProps } = props;
+  const { borderRounded, borderStyle, color, size = 'medium', paddingControl = 'normal', extraClass,
+    fontBold, fontAccent, textAlign, textEffect, textColorHarmonious, colorVariant = 'palest', shadowElevation, header, headerTypographyProps, ...divProps } = props;
 
   const panelClass = css(
     {
-      ...ThemeHelper.getFontProps(size),
-      ...ThemeHelper.getForegroundColorForBackAsCSS(color, colorVariant),
-      ...ThemeHelper.getBackgroundColorProps(color, colorVariant),
-      ...ThemeHelper.getBorderProps(color, undefined, hasRadius, size),
-      ...(variant === 'elevation' ? ThemeHelper.getBoxShadowProps(elevation) : {}),
-      ...ThemeHelper.getPaddingProps(size, paddingControl, 'normal', 'normal')
+      ...Theme.getFontProps(size, fontBold, fontAccent),
+      ...Theme.getTextEffectProps(size, textEffect, textAlign),
+      ...Theme.getPaddingProps(size, paddingControl, 'normal', 'normal'),
+      ...Theme.getBackgroundColorProps(color, colorVariant),
+      ...Theme.getForegroundColorProps(color, colorVariant, true, textColorHarmonious),
+      ...(borderStyle ? Theme.getBorderStyleProps(size, borderRounded, borderStyle) : {}),
+      ...(borderStyle ? Theme.getBorderColorProps(color, colorVariant, 3) : {}),
+      ...(shadowElevation ? Theme.getBoxShadowProps(shadowElevation, color) : {})
     })
 
-  if(header)
+  if (header)
   {
-    if(typeof header === 'string')
+    if (typeof header === 'string')
     {
-      const hFont = TypographyHelper.getTypographyVariantToHeightPixel(headerTypographyProps?.variant);
+      const hFont = TypographyHelper.convertTypographyVariantToHeightPixel(headerTypographyProps?.variant);
       const headerClass = css(
         {
           position: 'relative',
           height: `${hFont}px`,
           top: `${-hFont}px`,
           left: '20px',
-          paddingLeft: '2px',
-          paddingRight: '2px',
+          paddingLeft: '6px',
+          paddingRight: '6px',
           marginBottom: `${-hFont}px`,
           width: 'fit-content',
-          ...ThemeHelper.getBackgroundColorProps(color, 'palest')
+          ...(borderStyle ? Theme.getBorderStyleProps(size, borderRounded, borderStyle) : {}),
+          ...(borderStyle ? Theme.getBorderColorProps(color, colorVariant, 3) : {}),
+          ...Theme.getBackgroundColorProps(color, 'palest')
         })
 
-      return <div ref={ref} {...divProps} className={panelClass}>
+      return <div ref={ref} {...divProps} className={cx(panelClass, extraClass)}>
         <div className={headerClass}><Typography {...headerTypographyProps}>{header}</Typography></div>
         {divProps.children}</div>;
     }
     else
     {
-      return <div ref={ref} {...divProps} className={panelClass}>{header}{divProps.children}</div>;
+      return <div ref={ref} {...divProps} className={cx(panelClass, extraClass)}>{header}{divProps.children}</div>;
     }
   }
   else
   {
-    return <div ref={ref} {...divProps} className={panelClass}>{divProps.children}</div>;
+    return <div ref={ref} {...divProps} className={cx(panelClass, extraClass)}>{divProps.children}</div>;
   }
 })

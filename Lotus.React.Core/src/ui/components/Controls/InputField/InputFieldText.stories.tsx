@@ -16,49 +16,34 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
-    borderRounded: {
-      control: 'boolean'
-    },    
-    borderStyle:
-    {
-      control: 'inline-radio'
-    },
-    color: {
-      control: 'inline-radio',
-      options: [...TThemeColors, undefined]
-    },
-    size: {
-      control: 'inline-radio',
-      options: [...TControlSizes, undefined]
-    },
-    paddingControl: {
-      control: 'inline-radio',
-      options: [...TControlPaddings, undefined]
-    },
-    textEffect: {
-      control: 'inline-radio',
-      options: [...TTextEffects, undefined]
-    },
-    textAlign:
-    {
-      control: 'inline-radio',
-      options: ['left', 'right', 'center', undefined]
-    },
-    onClick:
-    {
-      table:
-      {
-        disable: true
-      }
-    }
-    ,
-    children:
-    {
-      table:
-      {
-        disable: true
-      }
-    }
+    // IGeneralBorderProperties
+    borderRadius: { control: 'boolean' },
+    borderStyle: { control: 'inline-radio' },
+    borderWidth: { control: 'number' },
+    borderColor: { control: 'inline-radio', options: [...TThemeColors, undefined] },
+
+    // IGeneralBackgroundProperties
+    backColor: { control: 'inline-radio', options: [...TThemeColors, undefined] },
+
+    // IGeneralTextProperties
+    fontBold: { control: 'boolean' },
+    fontAccent: { control: 'boolean' },
+    textEffect: { control: 'inline-radio', options: [...TTextEffects, undefined] },
+    textAlign: { control: 'inline-radio', options: ['left', 'right', 'center', undefined] },
+    textColorHarmonious: { control: 'boolean' },
+    textColor: { control: 'inline-radio', options: [...TThemeColors, undefined] },
+
+    // IGeneralBaseElementProperties
+    size: { control: 'inline-radio', options: [...TControlSizes, undefined] },
+    paddingControl: { control: 'inline-radio', options: [...TControlPaddings, undefined] },
+    extraClass: { table: { disable: true } },
+
+    // IInputFieldProps
+    rightElement: { table: { disable: true } },
+    onClick: { table: { disable: true } },
+    children: { table: { disable: true } },
+    style: { table: { disable: true } },
+    backImage: { table: { disable: true } }
   }
 
 } satisfies Meta<typeof InputField>;
@@ -68,7 +53,7 @@ type Story = StoryObj<typeof meta>;
 
 export const LabelTop: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     placeholder: 'Введите текст',
     labelProps: { label: 'Имя', variant: 'medium', isTopLabel: true }
   }
@@ -77,8 +62,8 @@ export const LabelTop: Story = {
 
 export const LabelLeft: Story = {
   args: {
-    color: 'primary',
-    isBackground: true,
+    textColor: 'blue',
+    backColor: 'blue',
     placeholder: 'Введите текст',
     labelProps: { label: 'Фамилия', variant: 'medium', isTopLabel: false }
   }
@@ -86,7 +71,7 @@ export const LabelLeft: Story = {
 
 export const Password: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     placeholder: 'Введите текст',
     type: 'password'
   }
@@ -94,7 +79,7 @@ export const Password: Story = {
 
 export const Color: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     placeholder: 'Введите текст',
     type: 'color'
   }
@@ -102,7 +87,7 @@ export const Color: Story = {
 
 export const DatetimeLocal: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     placeholder: 'Введите текст',
     type: 'datetime-local'
   }
@@ -110,7 +95,7 @@ export const DatetimeLocal: Story = {
 
 export const NumberLocal: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     placeholder: 'Введите текст',
     type: 'number'
   }
@@ -118,7 +103,7 @@ export const NumberLocal: Story = {
 
 export const Search: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     placeholder: 'Введите текст',
     type: 'search'
   }
@@ -126,7 +111,7 @@ export const Search: Story = {
 
 export const Telephone: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     placeholder: 'Введите текст',
     type: 'tel'
   }
@@ -134,33 +119,40 @@ export const Telephone: Story = {
 
 export const Disabled: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     disabled: true
   }
 };
 
 export const InputFieldWithButton: Story = {
   args: {
-    color: 'primary',
+    textColor: 'blue',
     disabled: true
   },
   render: (args) =>
   {
     return (
       <HorizontalStack gap='0.5rem' >
-        <InputField labelProps={{ label: 'Введите фамилию' }} 
-          size={args.size} 
+        <InputField labelProps={{ label: 'Введите фамилию' }}
+          size={args.size}
           textEffect={args.textEffect}
           fontBold={args.fontBold}
-          borderRounded={args.borderRounded} 
-          color={args.color} paddingControl={args.paddingControl} />
-        <Button children='Отправить' 
-          borderRounded={args.borderRounded} 
-          size={args.size} 
-          color={args.color} 
+          borderRadius={args.borderRadius}
+          textColor={args.textColor}
+          backColor={args.backColor}
+          borderColor={args.borderColor}
+          paddingControl={args.paddingControl}
+          disabled={args.disabled} />
+        <Button children='Отправить'
+          borderRadius={args.borderRadius}
+          size={args.size}
+          textColor={args.textColor}
+          backColor={args.backColor}
           textEffect={args.textEffect}
+          borderColor={args.borderColor}
           fontBold={args.fontBold}
           hasShadowEffect={true}
+          disabled={args.disabled}
           paddingControl={args.paddingControl} />
       </HorizontalStack>
     );

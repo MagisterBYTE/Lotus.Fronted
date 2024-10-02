@@ -1,19 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { css, cx } from '@emotion/css';
-import { ObjectHelper } from 'lotus-core';
 import React, { ComponentPropsWithoutRef, ReactNode } from 'react';
-import { IGeneralPropertiesElement, IGeneralPropertiesText } from 'ui/components';
+import { IGeneralElementProperties } from 'ui/components';
 import { ILabelProps, Label, TypographyHelper } from 'ui/components/Display';
 import { InteractivityLogic } from 'ui/interactivity';
-import { ThemeConstants, ThemeHelper } from 'ui/theme';
-import { InputFieldHelper } from './InputFieldHelper';
+import { Theme } from 'ui/theme';
 
-export interface IInputFieldProps extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'color'>, IGeneralPropertiesElement, IGeneralPropertiesText
+export interface IInputFieldProps extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'color'>, IGeneralElementProperties
 {
-  /**
-   * Фон поля
-   */
-  isBackground?: boolean;
-
   /**
    * Параметры надписи
    */
@@ -27,44 +21,44 @@ export interface IInputFieldProps extends Omit<ComponentPropsWithoutRef<'input'>
 
 export const InputField: React.FC<IInputFieldProps> = (props: IInputFieldProps) =>
 {
-  const { borderRounded, borderStyle, color = 'primary', size = 'medium', paddingControl = 'normal', extraClass,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    fontBold, textAlign, textEffect, isBackground, labelProps, width, rightElement, ...propsInput } = props
+  const { 
+    fontBold, fontAccent, textEffect, textAlign, textColorHarmonious, textColor,
+    backColor, backImage,
+    borderRadius, borderStyle, borderWidth, borderColor,
+    size = 'medium', paddingControl = 'normal', extraClass,
+    labelProps, width, rightElement, ...propsInput } = props
 
   const inputFieldClass = css(
     {
       boxSizing: 'border-box',
-      width: ObjectHelper.getIf(width, width, ''),
-      ...ThemeHelper.getFontProps(size, fontBold),
-      ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
-      ...ThemeHelper.getBorderProps(size, borderRounded, borderStyle),
-      ...ThemeHelper.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
-      ...ThemeHelper.getTransitionColorsProps(),
-      ...InteractivityLogic.getEffectProps(size, 'input', 'normal', color),
-      ...InputFieldHelper.getBackgroundProps(color, isBackground),
+      width: width ? width : '',
+      ...Theme.getFontProps(size, fontBold, fontAccent),
+      ...Theme.getTextEffectProps(size, textEffect, textAlign),
+      ...Theme.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
+      ...Theme.getBorderRadiusProps(size, borderRadius),
+      ...Theme.getTransitionColorsProps(),
+      ...InteractivityLogic.getEffectProps('input', 'normal', props, false, false, false),
       '&:hover': 
       {
-        ...InteractivityLogic.getEffectProps(size, 'input', 'hover', color),
-        ...((!propsInput.disabled) ? ThemeHelper.getBorderShadowProps(4, color, undefined, ThemeConstants.OpacityForBorderShadowHover) : {}),
-        ...InputFieldHelper.getBackgroundProps(color, isBackground)
+        ...InteractivityLogic.getEffectProps('input', 'hover', props, false, false, false),
+        ...((!propsInput.disabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowHover) : {})
       },
       '&:focus':
       {
-        ...InteractivityLogic.getEffectProps(size, 'input', 'normal', color, undefined, undefined, true),
-        ...((!propsInput.disabled) ? ThemeHelper.getBorderShadowProps(4, color, undefined, ThemeConstants.OpacityForBorderShadowActive) : {}),
-        ...InputFieldHelper.getBackgroundProps(color, isBackground),
+        ...InteractivityLogic.getEffectProps('input', 'hover', props, false, false, true),
+        ...((!propsInput.disabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
         outline: 0
       },
       '&:disabled': 
       {
-        ...InteractivityLogic.getEffectProps(size, 'input', 'normal', color, undefined, true, undefined),
-        ...InputFieldHelper.getBackgroundProps(color, isBackground),
-        ...ThemeHelper.getOpacityForDisabledProps()
+        ...InteractivityLogic.getEffectProps('input', 'normal', props, false, true, false),
+        ...Theme.getOpacityForDisabledProps()
       }
     });
   if (labelProps)
   {
-    return <Label {...labelProps} size={size} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}>
+    return <Label {...labelProps} size={size} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
+      textColor={labelProps.textColor ?? textColor}>
       <input type='text' {...propsInput} className={cx(inputFieldClass, extraClass)} />
     </Label>
   }

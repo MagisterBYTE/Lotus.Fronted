@@ -1,9 +1,8 @@
-import { ThemeHelper } from 'ui/theme';
-import { ISelectOption } from 'lotus-core';
+import { IOption } from 'lotus-core';
 import { CSSProperties } from 'react';
-import { TColorType, TControlPadding, TControlSize } from 'ui/types';
+import { TControlPadding, TControlSize } from 'ui/types';
 
-export class SelectHelper
+export class SelectOptionHelper
 {
   public static getGapFromSize(size: TControlSize, controlPadding: TControlPadding): number
   {
@@ -50,44 +49,6 @@ export class SelectHelper
     return 0.3;
   }
 
-  public static getBorderColorProps(color: TColorType, isDisabled: boolean, isFocused: boolean): CSSProperties
-  {
-    if (isDisabled)
-    {
-      return { borderColor: `${ThemeHelper.getBorderProps(color).borderColor}`, ...ThemeHelper.getOpacityForDisabledProps() };
-    }
-    else
-    {
-      if (isFocused)
-      {
-        return { borderColor: `${ThemeHelper.getBorderProps(color).borderColor}` };
-      }
-      else
-      {
-        return { borderColor: `${ThemeHelper.getBorderProps(color).borderColor}` };
-      }
-    }
-  }
-
-  public static getBoxShadowProps(color: TColorType, isDisabled: boolean, isFocused: boolean): CSSProperties
-  {
-    if (isDisabled)
-    {
-      return {};
-    }
-    else
-    {
-      if (isFocused)
-      {
-        return ThemeHelper.getBorderShadowProps(color);
-      }
-      else
-      {
-        return {};
-      }
-    }
-  }
-
   public static getFlexContainer(size: TControlSize, controlPadding: TControlPadding): CSSProperties
   {
     return {
@@ -95,48 +56,73 @@ export class SelectHelper
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      columnGap: `${SelectHelper.getGapFromSize(size, controlPadding)}rem`
+      columnGap: `${SelectOptionHelper.getGapFromSize(size, controlPadding)}rem`
     }
   }
 
-  public static getMarginOffsetInput(size: TControlSize, data: ISelectOption|undefined): number
+  public static getMarginOffsetInput(size: TControlSize, isMulti?:boolean, hasIcon?:boolean, data?: IOption[]|IOption): number
   {
+    if(isMulti)
+    {
+      switch (size) 
+      {
+        case 'smaller': return -2;
+        case 'small': return -4;
+        case 'medium': return -6;
+        case 'large': return -6;
+      }
+    }
+
     if(!data) 
     {
       switch (size) 
       {
-        case 'smaller': return -4;
+        case 'smaller': return -2;
         case 'small': return -4;
         case 'medium': return -6;
-        case 'large': return -8;
+        case 'large': return -6;
       }
     }
 
-    if(typeof data.icon == 'string')
+    if(hasIcon)
     {
-      switch (size) 
+      // @ts-expect-error typeof data.icon
+      if(typeof data.icon == 'string')
       {
-        case 'smaller': return 10;
-        case 'small': return 10;
-        case 'medium': return 12;
-        case 'large': return 18;
+        switch (size) 
+        {
+          case 'smaller': return 10;
+          case 'small': return 12;
+          case 'medium': return 14;
+          case 'large': return 18;
+        }
+      }
+      else
+      {
+        switch (size) 
+        {
+          case 'smaller': return 11;
+          case 'small': return 14;
+          case 'medium': return 16;
+          case 'large': return 22;
+        }
       }
     }
     else
     {
       switch (size) 
       {
-        case 'smaller': return 14;
-        case 'small': return 16;
-        case 'medium': return 18;
-        case 'large': return 24;
+        case 'smaller': return -1;
+        case 'small': return -3;
+        case 'medium': return -5;
+        case 'large': return -6;
       }
     }
 
     return 2;
   }
 
-  public static getMarginOffsetSingleValue(size: TControlSize, data: ISelectOption): number
+  public static getMarginOffsetSingleValue(size: TControlSize, data: IOption): number
   {
     if(typeof data.icon == 'string')
     {

@@ -1,18 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { css, cx } from '@emotion/css';
 import React, { ComponentPropsWithoutRef } from 'react';
-import { ThemeHelper } from 'ui/theme/helpers';
-import { ThemeConstants } from 'ui/theme/constants';
 import { useRippleEffect } from 'hooks/useRippleEffect';
-import { InteractivityLogic } from 'ui/interactivity';
-import { IGeneralPropertiesElement, IGeneralPropertiesText } from 'ui/components';
-import { TButtonVariant } from './ButtonVariant';
+import { RenderComponentHelper } from 'ui/helpers';
+import { Theme } from 'ui/theme';
+import { hasBorderProps, TButtonVariant } from 'ui/components';
+import { IInteractivityElement, InteractivityLogic } from 'ui/interactivity';
 
-export interface IButtonProps extends Omit<ComponentPropsWithoutRef<'button'>, 'color'>, IGeneralPropertiesElement, IGeneralPropertiesText
+export interface IButtonProps extends ComponentPropsWithoutRef<'button'>, IInteractivityElement
 {
   /**
    * Вариант отображения
    */
   variant?: TButtonVariant;
+  
+  /**
+   * Используется иконка
+   */
+  hasIcon?: boolean;
 
   /**
    * Использовать эффект Ripple
@@ -32,44 +37,60 @@ export interface IButtonProps extends Omit<ComponentPropsWithoutRef<'button'>, '
 
 export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
 {
-  const { borderRounded, borderStyle, color = 'primary', size = 'medium', paddingControl = 'normal', extraClass,
-
-    fontBold, textAlign, textEffect, variant = 'filled', hasRippleEffect = true, hasScaleEffect, hasShadowEffect, ...propsButton } = props
+  const
+    {
+      fontBold, fontAccent, textEffect, textAlign, textColorHarmonious, textColor,
+      backColor, backImage,
+      borderRadius, borderStyle, borderWidth, borderColor,
+      size = 'medium', paddingControl = 'normal', extraClass,
+      variant = 'filled', hasIcon, hoverBackColor, pressedBackColor, hasRippleEffect = true, hasScaleEffect, hasShadowEffect,
+      ...propsButton
+    } = props
 
   const buttonClass = css(
     {
       cursor: 'pointer',
       display: 'inline-block',
-      ...ThemeHelper.getFontProps(size, fontBold),
-      ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
-      ...ThemeHelper.getBorderProps(size, borderRounded, borderStyle),
-      ...ThemeHelper.getPaddingProps(size, paddingControl, 'normal', 'half'),
-      ...ThemeHelper.getTransitionColorsProps(),
-      ...InteractivityLogic.getEffectProps(size, variant, 'normal', color),
+      lineHeight: hasIcon ? 0 : 'normal',
+      ...Theme.getFontProps(size, fontBold, fontAccent),
+      ...Theme.getTextEffectProps(size, textEffect, textAlign),
+      ...Theme.getPaddingProps(size, paddingControl, 'normal', 'half'),
+      ...Theme.getTransitionColorsProps(),
+      ...Theme.getBorderRadiusProps(size, borderRadius),
+      ...InteractivityLogic.getEffectProps(variant, 'normal', props, false, props.disabled, false),
       '&:hover':
       {
-        ...InteractivityLogic.getEffectProps(size, variant, 'hover', color),
-        ...((!propsButton.disabled && hasShadowEffect) ? ThemeHelper.getBorderShadowProps(4, color, undefined, ThemeConstants.OpacityForBorderShadowHover) : {}),
-        ...((!propsButton.disabled && hasScaleEffect) ? ThemeHelper.getTransformScaleProps(1.05) : {})
+        ...InteractivityLogic.getEffectProps(variant, 'hover', props, false, props.disabled, false),
+        ...((!propsButton.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowHover) : {}),
+        ...((!propsButton.disabled && hasScaleEffect) ? Theme.getTransformScaleProps(1.05) : {})
       },
       '&:active':
       {
-        ...InteractivityLogic.getEffectProps(size, variant, 'pressed', color),
-        ...((!propsButton.disabled && hasShadowEffect) ? ThemeHelper.getBorderShadowProps(6, color, undefined, ThemeConstants.OpacityForBorderShadowActive) : {}),
-        ...((!propsButton.disabled && hasScaleEffect) ? ThemeHelper.getTransformScaleProps(0.95) : {})
+        ...InteractivityLogic.getEffectProps(variant, 'pressed', props, false, props.disabled, false),
+        ...((!propsButton.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(6, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
+        ...((!propsButton.disabled && hasScaleEffect) ? Theme.getTransformScaleProps(0.95) : {})
       },
       '&:disabled':
       {
-        ...InteractivityLogic.getEffectProps(size, variant, 'normal', color, undefined, true, undefined),
-        ...ThemeHelper.getOpacityForDisabledProps()
+        ...InteractivityLogic.getEffectProps(variant, 'normal', props, false, true, false),
+        ...Theme.getOpacityForDisabledProps()
       }
     })
 
-  const rippleColor = InteractivityLogic.getRippleColor(color);
-  const [ripple, event] = useRippleEffect({ duration: ThemeConstants.TransitionSpeed, color: rippleColor, disabled: propsButton.disabled });
+  const rippleColor = Theme.getRippleColor(backColor);
+  const [ripple, event] = useRippleEffect({ duration: Theme.TransitionSpeed, color: rippleColor, disabled: propsButton.disabled });
 
-  return (
-    <button {...propsButton} ref={hasRippleEffect ? ripple : undefined} className={cx(buttonClass, extraClass)} onPointerDown={event}>
-      {propsButton.children}
+  if (hasIcon)
+  {
+    return (<button {...propsButton} ref={hasRippleEffect ? ripple : undefined} className={cx(buttonClass, extraClass)} onPointerDown={event}>
+      {RenderComponentHelper.renderIcon(size, propsButton.children)}
     </button>);
+  }
+  else
+  {
+    return (
+      <button {...propsButton} ref={hasRippleEffect ? ripple : undefined} className={cx(buttonClass, extraClass)} onPointerDown={event}>
+        {propsButton.children}
+      </button>);
+  }
 };

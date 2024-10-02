@@ -1,1 +1,2 @@
-export { ThemeConstants } from './ThemeConstants';
+export { ThemeColorPalettes } from './ThemeColorPalettes';
+export { ThemeColorVariants } from './ThemeColorVariants';

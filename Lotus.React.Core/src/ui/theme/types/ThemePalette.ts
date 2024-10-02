@@ -1,76 +1,46 @@
-import { Color, ColorVariant, TColorVariantName } from 'lotus-core';
+import { ColorVariant } from 'lotus-core';
+import { TThemeColor } from './ThemeColor';
+import { TThemeMode } from './ThemeMode';
+import { IThemePaletteAction, IThemePaletteBackground, IThemePaletteColor, IThemePaletteCommon, IThemePaletteText } from './ThemePaletteTypes';
 
 /**
  * Палитра цвета
- * Палитра цвета определяет варианты цветов и их применение к элемента интерфейса
+ * Палитра цвета определяет варианты цветов и их применение к элементам интерфейса
  */
 export interface IThemePalette
 {
   /**
-   * Варианты цветов
+   * Тема
    */
-  variants: ColorVariant;
+  mode:TThemeMode;
 
   /**
-   * Функция обратного вызова для получения цвета текса для указанного цвета фона
-   * @param colorVariant Цвет фона
-   * @returns Оптимальный цвет текса для данного фона
+   * Базовые цвета для палитры
    */
-  onText: (colorVariant: TColorVariantName) => Color
+  common: IThemePaletteCommon;
 
   /**
-   * Функция обратного вызова для получения цвета границы для указанного цвета фона
-   * @param colorVariant Цвет фона
-   * @returns Оптимальный цвет границы для данного фона
+   * Вариант серых цветов для палитры
    */
-  onBorder: (colorVariant: TColorVariantName) => Color
-}
-
-/**
- * Палитра цвета
- */
-export class ThemePalette implements IThemePalette
-{
-  // #region Fields
-  /**
-   * Варианты цветов
-   */
-  public variants: ColorVariant;
+  grey: ColorVariant;
 
   /**
-   * Функция обратного вызова для получения цвета текса для указанного цвета фона
-   * @param colorVariant Цвет фона
-   * @returns Оптимальный цвет текса для данного фона
+   * Цвета текста для палитры
    */
-  public onText: (colorVariant: TColorVariantName) => Color
+  text: IThemePaletteText;
 
   /**
-   * Функция обратного вызова для получения цвета границы для указанного цвета фона
-   * @param colorVariant Цвет фона
-   * @returns Оптимальный цвет границы для данного фона
+   * Цвета фона для палитры
    */
-  public onBorder: (colorVariant: TColorVariantName) => Color
-  // #endregion
+  background: IThemePaletteBackground;
 
-  constructor(variants: ColorVariant, onText?: (colorVariant: TColorVariantName) => Color, onBorder?: (colorVariant: TColorVariantName) => Color)
-  {
-    this.variants = variants;
-    this.getTextColor = this.getTextColor.bind(this);
-    this.getBorderColor = this.getBorderColor.bind(this);
-    this.onText = onText ?? this.getTextColor;
-    this.onBorder = onBorder ?? this.getBorderColor;
-  }
+  /**
+   * Цвета действий для палитры
+   */
+  action: IThemePaletteAction;
 
-
-  public getTextColor(colorVariant: TColorVariantName):Color
-  {
-    const color = this.variants.getByName(colorVariant);
-    return color.createMatchingColor().text;
-  }
-
-  public getBorderColor(colorVariant: TColorVariantName)
-  {
-    const color = this.variants.getNextByName(colorVariant, 2);
-    return color;
-  }
+  /**
+   * Массив дополнительных цвет для палитры
+   */
+  colors: Record<TThemeColor, IThemePaletteColor>; 
 }

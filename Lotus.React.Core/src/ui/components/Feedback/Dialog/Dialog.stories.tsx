@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { TColorTypes, TControlSizes, TControlPaddings } from 'ui/types';
+import { TControlSizes, TControlPaddings, TShadowElevations, TCssBorderStyles } from 'ui/types';
+import { TThemeColors, TThemeColorVariants } from 'ui/theme';
 import { Dialog, IDialogComponent } from './Dialog';
 
 const meta = {
@@ -16,9 +17,23 @@ const meta = {
     borderRounded: {
       control: 'boolean'
     },
+    borderStyle:
+    {
+      control: 'inline-radio',
+      options: [...TCssBorderStyles, undefined]
+    },
     color: {
       control: 'inline-radio',
-      options: [...TColorTypes, undefined]
+      options: [...TThemeColors, undefined]
+    },
+    colorVariant: {
+      control: 'inline-radio',
+      options: [...TThemeColorVariants, undefined]
+    },
+    shadowElevation:
+    {
+      control: 'inline-radio',
+      options: [...TShadowElevations, undefined]
     },
     size: {
       control: 'inline-radio',
@@ -69,7 +84,10 @@ export const Default: Story = {
           style={{width: '60%', height: '50%'}}
           size={args.size}
           color={args.color}
+          colorVariant={args.colorVariant}
           borderRounded={args.borderRounded}
+          shadowElevation={args.shadowElevation}
+          borderStyle={args.borderStyle}
           paddingControl={args.paddingControl}
           header={args.header} ref={ref}>
           Мне нужна от Вас справка что я не получал единовременное пособие по рождению ребенка

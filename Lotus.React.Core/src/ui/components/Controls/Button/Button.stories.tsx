@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { GiAnt } from 'react-icons/gi';
-import { HorizontalStack } from 'ui/components/Layout';
 import { TControlPaddings, TControlSizes, TTextEffects } from 'ui/types';
-import { TThemeColors } from 'ui/theme';
+import { TThemeColors, TThemeColorVariants } from 'ui/theme';
+import { Colors } from 'lotus-core';
 import { Button } from './Button';
 import { hydraulicAnalysisIcon } from '.storydata/IconsBase64';
 
@@ -19,96 +19,134 @@ const meta = {
   args: { onClick: fn() },
 
   argTypes: {
-    borderRounded: {
-      control: 'boolean'
-    },
-    borderStyle:
-    {
-      control: 'inline-radio'
-    },
-    color: {
-      control: 'inline-radio',
-      options: [...TThemeColors, undefined]
-    },
-    size: {
-      control: 'inline-radio',
-      options: [...TControlSizes, undefined]
-    },
-    paddingControl: {
-      control: 'inline-radio',
-      options: [...TControlPaddings, undefined]
-    },
-    textEffect: {
-      control: 'inline-radio',
-      options: [...TTextEffects, undefined]
-    },
-    textAlign:
-    {
-      control: 'inline-radio',
-      options: ['left', 'right', 'center', undefined]
-    },
-    variant:
-    {
-      control: 'inline-radio'
-    },
+    // IGeneralBorderProperties
+    borderRadius: { control: 'boolean' },
+    borderStyle: { control: 'inline-radio' },
+    borderWidth: { control: 'number' },
+    borderColor: { control: 'inline-radio', options: [...TThemeColors, undefined] },
+    hoverBorderColor: { control: 'inline-radio', options: [...TThemeColorVariants, undefined] },
+    pressedBorderColor: { control: 'inline-radio', options: [...TThemeColorVariants, undefined] },
 
-    onClick:
-    {
-      table:
-      {
-        disable: true
-      }
-    }
-    ,
-    children:
-    {
-      table:
-      {
-        disable: true
-      }
-    }
+    // IGeneralBackgroundProperties
+    backColor: { control: 'inline-radio', options: [...TThemeColors, undefined] },
+    hoverBackColor: { control: 'inline-radio', options: [...TThemeColorVariants, undefined] },
+    pressedBackColor: { control: 'inline-radio', options: [...TThemeColorVariants, undefined] },
+
+    // IGeneralTextProperties
+    fontBold: { control: 'boolean' },
+    fontAccent: { control: 'boolean' },
+    textEffect: { control: 'inline-radio', options: [...TTextEffects, undefined] },
+    textAlign: { control: 'inline-radio', options: ['left', 'right', 'center', undefined] },
+    textColorHarmonious: { control: 'boolean' },
+    textColor: { control: 'inline-radio', options: [...TThemeColors, undefined] },
+    hoverTextColor: { control: 'inline-radio', options: [...TThemeColorVariants, undefined] },
+    pressedTextColor: { control: 'inline-radio', options: [...TThemeColorVariants, undefined] },
+
+    // IGeneralBaseElementProperties
+    size: { control: 'inline-radio', options: [...TControlSizes, undefined] },
+    paddingControl: { control: 'inline-radio', options: [...TControlPaddings, undefined] },
+    extraClass: { table: { disable: true } },
+
+    // IButtonBaseProps
+    variant: { control: 'inline-radio' },
+    hasIcon: { control: 'boolean' },
+    hasRippleEffect: { control: 'boolean' },
+    hasScaleEffect: { control: 'boolean' },
+    hasShadowEffect: { control: 'boolean' },
+    onClick: { table: { disable: true } },
+    children: { table: { disable: true }},
+    style: { table: { disable: true }},
+    backImage: { table: { disable: true }}
   }
-
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Filled: Story = {
+  name: 'Filled',
   args: {
     disabled: false,
-    children: 'Button',
-    style: {width: '200px'}
+    variant:'filled',
+    children: 'Filled'
   }
 };
 
-export const ButtonIconReact: Story = {
+export const Outline: Story = {
+  name: 'Outline',
   args: {
-    style: { margin: '0px' },
+    disabled: false,
+    variant:'outline',
+    children: 'Outline',
+    borderStyle: 'solid'
+  }
+};
+
+export const Text: Story = {
+  name: 'Text',
+  args: {
+    disabled: false,
+    variant:'text',
+    children: 'Text'
+  }
+};
+
+export const IconReact: Story = {
+  name: 'IconReact',
+  args: {
+    disabled: false,
+    hasIcon: true,
+    variant:'icon',
     children: <GiAnt />
   }
 };
 
-export const ButtonIconSvg: Story = {
+export const IconImage: Story = {
+  name: 'IconImage',
   args: {
     disabled: true,
-    style: { margin: '0px' },
-    children: <img src={hydraulicAnalysisIcon} width='24px' height='24px' />
+    hasIcon: true,
+    variant:'icon',
+    children: hydraulicAnalysisIcon
   }
 };
 
-export const ButtonIconText: Story = {
+export const MyBackColor: Story = {
+  name: 'MyBackColor',
   args: {
-    style: { margin: '0px' },
-    children: <HorizontalStack gap='0.5rem' alignItems='center' ><GiAnt /><span>ButtonIconText</span></HorizontalStack>
+    disabled: false,
+    children: 'MyBackColor',
+    variant:'filled',
+    backColor: Colors.coral,
+    style: { width: '200px' }
   }
 };
 
-
-export const Disabled: Story = {
+export const MyTextColor: Story = {
+  name: 'MyTextColor',
   args: {
-    children: 'Button',
-    color: 'primary',
-    disabled: true
+    disabled: false,
+    children: 'MyTextColor',
+    variant:'filled',
+    textColor: Colors.red,
+    hoverTextColor: Colors.chocolate_1,
+    pressedTextColor: Colors.chocolate_3,
+    style: { width: '200px' }
+  }
+};
+
+export const MyBackTextColor: Story = {
+  name: 'MyBackTextColor',
+  args: {
+    disabled: false,
+    children: 'MyBackTextColor',
+    variant:'filled',
+    backColor: 'blueGrey',
+    hoverBackColor: 'dark',
+    pressedBackColor: 'darkest',
+    textColor: Colors.red,
+    hoverTextColor: Colors.chocolate_1,
+    pressedTextColor: Colors.chocolate_3,
+    style: { width: '200px' }
   }
 };

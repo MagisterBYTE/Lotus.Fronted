@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import { ObjectHelper } from 'lotus-core';
-import React, { CSSProperties, ReactNode } from 'react';
-import { TControlSize } from 'ui/types';
+import React, { ReactNode } from 'react';
+import { TControlSize, TCssWidth } from 'ui/types';
 import { ITypographyProps, Typography } from '../Typography';
 import './Label.css';
 
@@ -25,28 +25,23 @@ export interface ILabelProps extends ITypographyProps
   /**
    * Ширина надписи
    */
-  labelWidth?: CSSProperties['width'];
-
-  /**
-   * Горизонтальное выравнивание надписи
-   */
-  labelHorizontalAlign?: CSSProperties['justifyContent'];
+  labelWidth?: TCssWidth;
 
   /**
    * Ширина контейнера
    */
-  containerWidth?: CSSProperties['width'];
+  containerWidth?: TCssWidth;
 }
 
 export const Label: React.FC<ILabelProps> = (props: ILabelProps) => 
 {
-  const { size, label, isTopLabel, labelWidth, labelHorizontalAlign, containerWidth, ...propsTypography } = props;
+  const { size, label, isTopLabel, labelWidth, containerWidth = '100%', ...propsTypography } = props;
 
   if (label)
   {
     const containerClass = css(
       {
-        width: containerWidth
+        width: containerWidth,
       }
     );
   
@@ -54,7 +49,7 @@ export const Label: React.FC<ILabelProps> = (props: ILabelProps) =>
       {
         display: 'flex',
         flexDirection:'row', 
-        justifyContent: labelHorizontalAlign,
+        justifyContent: propsTypography.textAlign,
         flexGrow: 1,
         width: labelWidth
       }

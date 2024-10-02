@@ -132,6 +132,11 @@ const AppMainLayoutWrapper = (args:any) =>
       setOpenDialogViewSettings(true);
     }
   }
+
+  const handleDialogViewSettings = () =>
+  {
+    setOpenDialogViewSettings(false)
+  }
   
   useEffect(() => 
   {
@@ -147,7 +152,7 @@ const AppMainLayoutWrapper = (args:any) =>
   return (
     <>
       <AppMainLayout {...args}/>
-      <DialogViewSettings isOpen={openDialogViewSettings} />
+      <DialogViewSettings isOpen={openDialogViewSettings} onOk={handleDialogViewSettings} onClose={handleDialogViewSettings} />
     </>
   )
 }

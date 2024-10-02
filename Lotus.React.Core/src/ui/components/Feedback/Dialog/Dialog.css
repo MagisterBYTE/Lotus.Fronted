@@ -1,8 +1,10 @@
+
 .lotus-dialog {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+}
+
+.lotus-dialog::backdrop {
+  background-color: rgba(20, 20, 20, 0.5)
 }
 
 .lotus-dialog-main {
@@ -10,22 +12,19 @@
   flex-direction: column;
   justify-content: start;
   height: 100%;
+  width: 100%;
 }
 
 .lotus-dialog-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom-width: var(--lotus-border-width);
-  border-bottom-style: var(--lotus-border-style);
   padding: 0.5rem;
   flex-grow: 0;
 }
 
-.lotus-dialog-header-text {
-  margin-top: -0.5rem;
-  margin-left: 0.5rem;
-  text-shadow: .07em .07em 0 rgba(0, 0, 0, 0.15);
+.lotus-dialog-header-move {
+  cursor: move;
 }
 
 .lotus-dialog-header-button {
@@ -45,8 +44,6 @@
   display: flex;
   flex-direction: row;
   justify-content: end;
-  border-top-width: var(--lotus-border-width);
-  border-top-style: var(--lotus-border-style);
   padding: 0.5rem;
   column-gap: 1rem;
   flex-grow: 0;
