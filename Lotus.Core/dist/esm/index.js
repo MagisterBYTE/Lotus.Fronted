@@ -3074,514 +3074,514 @@ class Color {
     }
 }
 
-const Colors = {
-    alice_blue: new Color(240, 248, 255),
-    antique_white: new Color(250, 235, 215),
-    antique_white_1: new Color(255, 239, 219),
-    antique_white_2: new Color(238, 223, 204),
-    antique_white_3: new Color(205, 192, 176),
-    antique_white_4: new Color(139, 131, 120),
-    aquamarine: new Color(127, 255, 212),
-    aquamarine_2: new Color(118, 238, 198),
-    aquamarine_4: new Color(69, 139, 116),
-    azure: new Color(240, 255, 255),
-    azure_2: new Color(224, 238, 238),
-    azure_3: new Color(193, 205, 205),
-    azure_4: new Color(131, 139, 139),
-    beige: new Color(245, 245, 220),
-    bisque: new Color(255, 228, 196),
-    bisque_2: new Color(238, 213, 183),
-    bisque_3: new Color(205, 183, 158),
-    bisque_4: new Color(139, 125, 107),
-    black: new Color(0, 0, 0),
-    blanched_almond: new Color(255, 235, 205),
-    blue: new Color(0, 0, 255),
-    blue_2: new Color(0, 0, 238),
-    blue_4: new Color(0, 0, 139),
-    blue_violet: new Color(138, 43, 226),
-    brown: new Color(165, 42, 42),
-    brown_1: new Color(255, 64, 64),
-    brown_2: new Color(238, 59, 59),
-    brown_3: new Color(205, 51, 51),
-    brown_4: new Color(139, 35, 35),
-    burlywood: new Color(222, 184, 135),
-    burlywood_1: new Color(255, 211, 155),
-    burlywood_2: new Color(238, 197, 145),
-    burlywood_3: new Color(205, 170, 125),
-    burlywood_4: new Color(139, 115, 85),
-    cadet_blue: new Color(95, 158, 160),
-    cadet_blue_1: new Color(152, 245, 255),
-    cadet_blue_2: new Color(142, 229, 238),
-    cadet_blue_3: new Color(122, 197, 205),
-    cadet_blue_4: new Color(83, 134, 139),
-    chartreuse: new Color(127, 255, 0),
-    chartreuse_2: new Color(118, 238, 0),
-    chartreuse_3: new Color(102, 205, 0),
-    chartreuse_4: new Color(69, 139, 0),
-    chocolate: new Color(210, 105, 30),
-    chocolate_1: new Color(255, 127, 36),
-    chocolate_2: new Color(238, 118, 33),
-    chocolate_3: new Color(205, 102, 29),
-    coral: new Color(255, 127, 80),
-    coral_1: new Color(255, 114, 86),
-    coral_2: new Color(238, 106, 80),
-    coral_3: new Color(205, 91, 69),
-    coral_4: new Color(139, 62, 47),
-    cornflower_blue: new Color(100, 149, 237),
-    corn_silk: new Color(255, 248, 220),
-    corn_silk_2: new Color(238, 232, 205),
-    corn_silk_3: new Color(205, 200, 177),
-    corn_silk_4: new Color(139, 136, 120),
-    cyan: new Color(0, 255, 255),
-    cyan_2: new Color(0, 238, 238),
-    cyan_3: new Color(0, 205, 205),
-    cyan_4: new Color(0, 139, 139),
-    dark_golden_rod: new Color(184, 134, 11),
-    dark_golden_rod_1: new Color(255, 185, 15),
-    dark_golden_rod_2: new Color(238, 173, 14),
-    dark_golden_rod_3: new Color(205, 149, 12),
-    dark_golden_rod_4: new Color(139, 101, 8),
-    dark_green: new Color(0, 100, 0),
-    dark_khaki: new Color(189, 183, 107),
-    dark_olive_green: new Color(85, 107, 47),
-    dark_olive_green_1: new Color(202, 255, 112),
-    dark_olive_green_2: new Color(188, 238, 104),
-    dark_olive_green_3: new Color(162, 205, 90),
-    dark_olive_green_4: new Color(110, 139, 61),
-    dark_orange: new Color(255, 140, 0),
-    dark_orange_1: new Color(255, 127, 0),
-    dark_orange_2: new Color(238, 118, 0),
-    dark_orange_3: new Color(205, 102, 0),
-    dark_orange_4: new Color(139, 69, 0),
-    dark_orchid: new Color(153, 50, 204),
-    dark_orchid_1: new Color(191, 62, 255),
-    dark_orchid_2: new Color(178, 58, 238),
-    dark_orchid_3: new Color(154, 50, 205),
-    dark_orchid_4: new Color(104, 34, 139),
-    dark_salmon: new Color(233, 150, 122),
-    dark_sea_green: new Color(143, 188, 143),
-    dark_sea_green_1: new Color(193, 255, 193),
-    dark_sea_green_2: new Color(180, 238, 180),
-    dark_sea_green_3: new Color(155, 205, 155),
-    dark_sea_green_4: new Color(105, 139, 105),
-    dark_slate_blue: new Color(72, 61, 139),
-    dark_slate_gray: new Color(47, 79, 79),
-    dark_slate_gray_1: new Color(151, 255, 255),
-    dark_slate_gray_2: new Color(141, 238, 238),
-    dark_slate_gray_3: new Color(121, 205, 205),
-    dark_slate_gray_4: new Color(82, 139, 139),
-    dark_turquoise: new Color(0, 206, 209),
-    dark_violet: new Color(148, 0, 211),
-    deep_pink: new Color(255, 20, 147),
-    deep_pink_2: new Color(238, 18, 137),
-    deep_pink_3: new Color(205, 16, 118),
-    deep_pink_4: new Color(139, 10, 80),
-    deep_sky_blue: new Color(0, 191, 255),
-    deep_sky_blue_2: new Color(0, 178, 238),
-    deep_sky_blue_3: new Color(0, 154, 205),
-    deep_sky_blue_4: new Color(0, 104, 139),
-    dim_gray: new Color(105, 105, 105),
-    dodger_blue: new Color(30, 144, 255),
-    dodger_blue_2: new Color(28, 134, 238),
-    dodger_blue_3: new Color(24, 116, 205),
-    dodger_blue_4: new Color(16, 78, 139),
-    fire_brick: new Color(178, 34, 34),
-    fire_brick_1: new Color(255, 48, 48),
-    fire_brick_2: new Color(238, 44, 44),
-    fire_brick_3: new Color(205, 38, 38),
-    fire_brick_4: new Color(139, 26, 26),
-    floral_white: new Color(255, 250, 240),
-    forest_green: new Color(34, 139, 34),
-    gainsboro: new Color(220, 220, 220),
-    ghost_white: new Color(248, 248, 255),
-    gold: new Color(255, 215, 0),
-    gold_2: new Color(238, 201, 0),
-    gold_3: new Color(205, 173, 0),
-    gold_4: new Color(139, 117, 0),
-    golden_rod: new Color(218, 165, 32),
-    golden_rod_1: new Color(255, 193, 37),
-    golden_rod_2: new Color(238, 180, 34),
-    golden_rod_3: new Color(205, 155, 29),
-    golden_rod_4: new Color(139, 105, 20),
-    gray: new Color(190, 190, 190),
-    gray_1: new Color(3, 3, 3),
-    gray_2: new Color(5, 5, 5),
-    gray_3: new Color(8, 8, 8),
-    gray_4: new Color(10, 10, 10),
-    gray_5: new Color(13, 13, 13),
-    gray_6: new Color(15, 15, 15),
-    gray_7: new Color(18, 18, 18),
-    gray_8: new Color(20, 20, 20),
-    gray_9: new Color(23, 23, 23),
-    gray_10: new Color(26, 26, 26),
-    gray_11: new Color(28, 28, 28),
-    gray_12: new Color(31, 31, 31),
-    gray_13: new Color(33, 33, 33),
-    gray_14: new Color(36, 36, 36),
-    gray_15: new Color(38, 38, 38),
-    gray_16: new Color(41, 41, 41),
-    gray_17: new Color(43, 43, 43),
-    gray_18: new Color(46, 46, 46),
-    gray_19: new Color(48, 48, 48),
-    gray_20: new Color(51, 51, 51),
-    gray_21: new Color(54, 54, 54),
-    gray_22: new Color(56, 56, 56),
-    gray_23: new Color(59, 59, 59),
-    gray_24: new Color(61, 61, 61),
-    gray_25: new Color(64, 64, 64),
-    gray_26: new Color(66, 66, 66),
-    gray_27: new Color(69, 69, 69),
-    gray_28: new Color(71, 71, 71),
-    gray_29: new Color(74, 74, 74),
-    gray_30: new Color(77, 77, 77),
-    gray_31: new Color(79, 79, 79),
-    gray_32: new Color(82, 82, 82),
-    gray_33: new Color(84, 84, 84),
-    gray_34: new Color(87, 87, 87),
-    gray_35: new Color(89, 89, 89),
-    gray_36: new Color(92, 92, 92),
-    gray_37: new Color(94, 94, 94),
-    gray_38: new Color(97, 97, 97),
-    gray_39: new Color(99, 99, 99),
-    gray_40: new Color(102, 102, 102),
-    gray_41: new Color(105, 105, 105),
-    gray_42: new Color(107, 107, 107),
-    gray_43: new Color(110, 110, 110),
-    gray_44: new Color(112, 112, 112),
-    gray_45: new Color(115, 115, 115),
-    gray_46: new Color(117, 117, 117),
-    gray_47: new Color(120, 120, 120),
-    gray_48: new Color(122, 122, 122),
-    gray_49: new Color(125, 125, 125),
-    gray_50: new Color(127, 127, 127),
-    gray_51: new Color(130, 130, 130),
-    gray_52: new Color(133, 133, 133),
-    gray_53: new Color(135, 135, 135),
-    gray_54: new Color(138, 138, 138),
-    gray_55: new Color(140, 140, 140),
-    gray_56: new Color(143, 143, 143),
-    gray_57: new Color(145, 145, 145),
-    gray_58: new Color(148, 148, 148),
-    gray_59: new Color(150, 150, 150),
-    gray_60: new Color(153, 153, 153),
-    gray_61: new Color(156, 156, 156),
-    gray_62: new Color(158, 158, 158),
-    gray_63: new Color(161, 161, 161),
-    gray_64: new Color(163, 163, 163),
-    gray_65: new Color(166, 166, 166),
-    gray_66: new Color(168, 168, 168),
-    gray_67: new Color(171, 171, 171),
-    gray_68: new Color(173, 173, 173),
-    gray_69: new Color(176, 176, 176),
-    gray_70: new Color(179, 179, 179),
-    gray_71: new Color(181, 181, 181),
-    gray_72: new Color(184, 184, 184),
-    gray_73: new Color(186, 186, 186),
-    gray_74: new Color(189, 189, 189),
-    gray_75: new Color(191, 191, 191),
-    gray_76: new Color(194, 194, 194),
-    gray_77: new Color(196, 196, 196),
-    gray_78: new Color(199, 199, 199),
-    gray_79: new Color(201, 201, 201),
-    gray_80: new Color(204, 204, 204),
-    gray_81: new Color(207, 207, 207),
-    gray_82: new Color(209, 209, 209),
-    gray_83: new Color(212, 212, 212),
-    gray_84: new Color(214, 214, 214),
-    gray_85: new Color(217, 217, 217),
-    gray_86: new Color(219, 219, 219),
-    gray_87: new Color(222, 222, 222),
-    gray_88: new Color(224, 224, 224),
-    gray_89: new Color(227, 227, 227),
-    gray_90: new Color(229, 229, 229),
-    gray_91: new Color(232, 232, 232),
-    gray_92: new Color(235, 235, 235),
-    gray_93: new Color(237, 237, 237),
-    gray_94: new Color(240, 240, 240),
-    gray_95: new Color(242, 242, 242),
-    gray_97: new Color(247, 247, 247),
-    gray_98: new Color(250, 250, 250),
-    gray_99: new Color(252, 252, 252),
-    green: new Color(0, 255, 0),
-    green_2: new Color(0, 238, 0),
-    green_3: new Color(0, 205, 0),
-    green_4: new Color(0, 139, 0),
-    green_yellow: new Color(173, 255, 47),
-    honeydew: new Color(240, 255, 240),
-    honeydew_2: new Color(224, 238, 224),
-    honeydew_3: new Color(193, 205, 193),
-    honeydew_4: new Color(131, 139, 131),
-    hot_pink: new Color(255, 105, 180),
-    hot_pink_1: new Color(255, 110, 180),
-    hot_pink_2: new Color(238, 106, 167),
-    hot_pink_3: new Color(205, 96, 144),
-    hot_pink_4: new Color(139, 58, 98),
-    indian_red: new Color(205, 92, 92),
-    indian_red_1: new Color(255, 106, 106),
-    indian_red_2: new Color(238, 99, 99),
-    indian_red_3: new Color(205, 85, 85),
-    indian_red_4: new Color(139, 58, 58),
-    ivory: new Color(255, 255, 240),
-    ivory_2: new Color(238, 238, 224),
-    ivory_3: new Color(205, 205, 193),
-    ivory_4: new Color(139, 139, 131),
-    khaki: new Color(240, 230, 140),
-    khaki_1: new Color(255, 246, 143),
-    khaki_2: new Color(238, 230, 133),
-    khaki_3: new Color(205, 198, 115),
-    khaki_4: new Color(139, 134, 78),
-    lavender: new Color(230, 230, 250),
-    lavender_blush: new Color(255, 240, 245),
-    lavender_blush_2: new Color(238, 224, 229),
-    lavender_blush_3: new Color(205, 193, 197),
-    lavender_blush_4: new Color(139, 131, 134),
-    lawn_green: new Color(124, 252, 0),
-    lemon_chiffon: new Color(255, 250, 205),
-    lemon_chiffon_2: new Color(238, 233, 191),
-    lemon_chiffon_3: new Color(205, 201, 165),
-    lemon_chiffon_4: new Color(139, 137, 112),
-    light: new Color(238, 221, 130),
-    light_blue: new Color(173, 216, 230),
-    light_blue_1: new Color(191, 239, 255),
-    light_blue_2: new Color(178, 223, 238),
-    light_blue_3: new Color(154, 192, 205),
-    light_blue_4: new Color(104, 131, 139),
-    light_coral: new Color(240, 128, 128),
-    light_cyan: new Color(224, 255, 255),
-    light_cyan_2: new Color(209, 238, 238),
-    light_cyan_3: new Color(180, 205, 205),
-    light_cyan_4: new Color(122, 139, 139),
-    light_golden_rod: new Color(255, 236, 139),
-    light_golden_rod_2: new Color(238, 220, 130),
-    light_golden_rod_3: new Color(205, 190, 112),
-    light_golden_rod_4: new Color(139, 129, 76),
-    light_golden_rod_yellow: new Color(250, 250, 210),
-    light_gray: new Color(211, 211, 211),
-    light_pink: new Color(255, 182, 193),
-    light_pink_1: new Color(255, 174, 185),
-    light_pink_2: new Color(238, 162, 173),
-    light_pink_3: new Color(205, 140, 149),
-    light_pink_4: new Color(139, 95, 101),
-    light_salmon: new Color(255, 160, 122),
-    light_salmon_2: new Color(238, 149, 114),
-    light_salmon_3: new Color(205, 129, 98),
-    light_salmon_4: new Color(139, 87, 66),
-    light_sea_green: new Color(32, 178, 170),
-    light_sky_blue: new Color(135, 206, 250),
-    light_sky_blue_1: new Color(176, 226, 255),
-    light_sky_blue_2: new Color(164, 211, 238),
-    light_sky_blue_3: new Color(141, 182, 205),
-    light_sky_blue_4: new Color(96, 123, 139),
-    light_slate_blue: new Color(132, 112, 255),
-    light_slate_gray: new Color(119, 136, 153),
-    light_steel_blue: new Color(176, 196, 222),
-    light_steel_blue_1: new Color(202, 225, 255),
-    light_steel_blue_2: new Color(188, 210, 238),
-    light_steel_blue_3: new Color(162, 181, 205),
-    light_steel_blue_4: new Color(110, 123, 139),
-    light_yellow: new Color(255, 255, 224),
-    light_yellow_2: new Color(238, 238, 209),
-    light_yellow_3: new Color(205, 205, 180),
-    light_yellow_4: new Color(139, 139, 122),
-    lime_green: new Color(50, 205, 50),
-    linen: new Color(250, 240, 230),
-    magenta: new Color(255, 0, 255),
-    magenta_2: new Color(238, 0, 238),
-    magenta_3: new Color(205, 0, 205),
-    magenta_4: new Color(139, 0, 139),
-    maroon: new Color(176, 48, 96),
-    maroon_1: new Color(255, 52, 179),
-    maroon_2: new Color(238, 48, 167),
-    maroon_3: new Color(205, 41, 144),
-    maroon_4: new Color(139, 28, 98),
-    medium: new Color(102, 205, 170),
-    medium_aquamarine: new Color(102, 205, 170),
-    medium_blue: new Color(0, 0, 205),
-    medium_orchid: new Color(186, 85, 211),
-    medium_orchid_1: new Color(224, 102, 255),
-    medium_orchid_2: new Color(209, 95, 238),
-    medium_orchid_3: new Color(180, 82, 205),
-    medium_orchid_4: new Color(122, 55, 139),
-    medium_purple: new Color(147, 112, 219),
-    medium_purple_1: new Color(171, 130, 255),
-    medium_purple_2: new Color(159, 121, 238),
-    medium_purple_3: new Color(137, 104, 205),
-    medium_purple_4: new Color(93, 71, 139),
-    medium_sea_green: new Color(60, 179, 113),
-    medium_slate_blue: new Color(123, 104, 238),
-    medium_spring_green: new Color(0, 250, 154),
-    medium_turquoise: new Color(72, 209, 204),
-    medium_violet_red: new Color(199, 21, 133),
-    midnight_blue: new Color(25, 25, 112),
-    mint_cream: new Color(245, 255, 250),
-    misty_rose: new Color(255, 228, 225),
-    misty_rose_2: new Color(238, 213, 210),
-    misty_rose_3: new Color(205, 183, 181),
-    misty_rose_4: new Color(139, 125, 123),
-    moccasin: new Color(255, 228, 181),
-    navajo_white: new Color(255, 222, 173),
-    navajo_white_2: new Color(238, 207, 161),
-    navajo_white_3: new Color(205, 179, 139),
-    navajo_white_4: new Color(139, 121, 94),
-    navy_blue: new Color(0, 0, 128),
-    old_lace: new Color(253, 245, 230),
-    olive_drab: new Color(107, 142, 35),
-    olive_drab_1: new Color(192, 255, 62),
-    olive_drab_2: new Color(179, 238, 58),
-    olive_drab_4: new Color(105, 139, 34),
-    orange: new Color(255, 165, 0),
-    orange_2: new Color(238, 154, 0),
-    orange_3: new Color(205, 133, 0),
-    orange_4: new Color(139, 90, 0),
-    orange_red: new Color(255, 69, 0),
-    orange_red_2: new Color(238, 64, 0),
-    orange_red_3: new Color(205, 55, 0),
-    orange_red_4: new Color(139, 37, 0),
-    orchid: new Color(218, 112, 214),
-    orchid_1: new Color(255, 131, 250),
-    orchid_2: new Color(238, 122, 233),
-    orchid_3: new Color(205, 105, 201),
-    orchid_4: new Color(139, 71, 137),
-    pale: new Color(219, 112, 147),
-    pale_golden_rod: new Color(238, 232, 170),
-    pale_green: new Color(152, 251, 152),
-    pale_green_1: new Color(154, 255, 154),
-    pale_green_2: new Color(144, 238, 144),
-    pale_green_3: new Color(124, 205, 124),
-    pale_green_4: new Color(84, 139, 84),
-    pale_turquoise: new Color(175, 238, 238),
-    pale_turquoise_1: new Color(187, 255, 255),
-    pale_turquoise_2: new Color(174, 238, 238),
-    pale_turquoise_3: new Color(150, 205, 205),
-    pale_turquoise_4: new Color(102, 139, 139),
-    pale_violet_red: new Color(219, 112, 147),
-    pale_violet_red_1: new Color(255, 130, 171),
-    pale_violet_red_2: new Color(238, 121, 159),
-    pale_violet_red_3: new Color(205, 104, 137),
-    pale_violet_red_4: new Color(139, 71, 93),
-    papaya_whip: new Color(255, 239, 213),
-    peach_puff: new Color(255, 218, 185),
-    peach_puff_2: new Color(238, 203, 173),
-    peach_puff_3: new Color(205, 175, 149),
-    peach_puff_4: new Color(139, 119, 101),
-    pink: new Color(255, 192, 203),
-    pink_1: new Color(255, 181, 197),
-    pink_2: new Color(238, 169, 184),
-    pink_3: new Color(205, 145, 158),
-    pink_4: new Color(139, 99, 108),
-    plum: new Color(221, 160, 221),
-    plum_1: new Color(255, 187, 255),
-    plum_2: new Color(238, 174, 238),
-    plum_3: new Color(205, 150, 205),
-    plum_4: new Color(139, 102, 139),
-    powder_blue: new Color(176, 224, 230),
-    purple: new Color(160, 32, 240),
-    purple_1: new Color(155, 48, 255),
-    purple_2: new Color(145, 44, 238),
-    purple_3: new Color(125, 38, 205),
-    purple_4: new Color(85, 26, 139),
-    rebecca_purple: new Color(102, 51, 153),
-    red: new Color(255, 0, 0),
-    red_2: new Color(238, 0, 0),
-    red_3: new Color(205, 0, 0),
-    red_4: new Color(139, 0, 0),
-    rosy_brown: new Color(188, 143, 143),
-    rosy_brown_1: new Color(255, 193, 193),
-    rosy_brown_2: new Color(238, 180, 180),
-    rosy_brown_3: new Color(205, 155, 155),
-    rosy_brown_4: new Color(139, 105, 105),
-    royal_blue: new Color(65, 105, 225),
-    royal_blue_1: new Color(72, 118, 255),
-    royal_blue_2: new Color(67, 110, 238),
-    royal_blue_3: new Color(58, 95, 205),
-    royal_blue_4: new Color(39, 64, 139),
-    saddle_brown: new Color(139, 69, 19),
-    salmon: new Color(250, 128, 114),
-    salmon_1: new Color(255, 140, 105),
-    salmon_2: new Color(238, 130, 98),
-    salmon_3: new Color(205, 112, 84),
-    salmon_4: new Color(139, 76, 57),
-    sandy_brown: new Color(244, 164, 96),
-    sea_green: new Color(84, 255, 159),
-    sea_green_2: new Color(78, 238, 148),
-    sea_green_3: new Color(67, 205, 128),
-    sea_green_4: new Color(46, 139, 87),
-    seashell: new Color(255, 245, 238),
-    seashell_2: new Color(238, 229, 222),
-    seashell_3: new Color(205, 197, 191),
-    seashell_4: new Color(139, 134, 130),
-    sienna: new Color(160, 82, 45),
-    sienna_1: new Color(255, 130, 71),
-    sienna_2: new Color(238, 121, 66),
-    sienna_3: new Color(205, 104, 57),
-    sienna_4: new Color(139, 71, 38),
-    sky_blue: new Color(135, 206, 235),
-    sky_blue_1: new Color(135, 206, 255),
-    sky_blue_2: new Color(126, 192, 238),
-    sky_blue_3: new Color(108, 166, 205),
-    sky_blue_4: new Color(74, 112, 139),
-    slate_blue: new Color(106, 90, 205),
-    slate_blue_1: new Color(131, 111, 255),
-    slate_blue_2: new Color(122, 103, 238),
-    slate_blue_3: new Color(105, 89, 205),
-    slate_blue_4: new Color(71, 60, 139),
-    slate_gray: new Color(112, 128, 144),
-    slate_gray_1: new Color(198, 226, 255),
-    slate_gray_2: new Color(185, 211, 238),
-    slate_gray_3: new Color(159, 182, 205),
-    slate_gray_4: new Color(108, 123, 139),
-    snow: new Color(255, 250, 250),
-    snow_2: new Color(238, 233, 233),
-    snow_3: new Color(205, 201, 201),
-    snow_4: new Color(139, 137, 137),
-    spring_green: new Color(0, 255, 127),
-    spring_green_2: new Color(0, 238, 118),
-    spring_green_3: new Color(0, 205, 102),
-    spring_green_4: new Color(0, 139, 69),
-    steel_blue: new Color(70, 130, 180),
-    steel_blue_1: new Color(99, 184, 255),
-    steel_blue_2: new Color(92, 172, 238),
-    steel_blue_3: new Color(79, 148, 205),
-    steel_blue_4: new Color(54, 100, 139),
-    tan: new Color(210, 180, 140),
-    tan_1: new Color(255, 165, 79),
-    tan_2: new Color(238, 154, 73),
-    tan_3: new Color(205, 133, 63),
-    tan_4: new Color(139, 90, 43),
-    thistle: new Color(216, 191, 216),
-    thistle_1: new Color(255, 225, 255),
-    thistle_2: new Color(238, 210, 238),
-    thistle_3: new Color(205, 181, 205),
-    thistle_4: new Color(139, 123, 139),
-    tomato: new Color(255, 99, 71),
-    tomato_2: new Color(238, 92, 66),
-    tomato_3: new Color(205, 79, 57),
-    tomato_4: new Color(139, 54, 38),
-    transparent: new Color(0, 0, 0, 0),
-    turquoise: new Color(64, 224, 208),
-    turquoise_1: new Color(0, 245, 255),
-    turquoise_2: new Color(0, 229, 238),
-    turquoise_3: new Color(0, 197, 205),
-    turquoise_4: new Color(0, 134, 139),
-    violet: new Color(238, 130, 238),
-    violet_red: new Color(208, 32, 144),
-    violet_red_1: new Color(255, 62, 150),
-    violet_red_2: new Color(238, 58, 140),
-    violet_red_3: new Color(205, 50, 120),
-    violet_red_4: new Color(139, 34, 82),
-    wheat: new Color(245, 222, 179),
-    wheat_1: new Color(255, 231, 186),
-    wheat_2: new Color(238, 216, 174),
-    wheat_3: new Color(205, 186, 150),
-    wheat_4: new Color(139, 126, 102),
-    white: new Color(255, 255, 255),
-    white_smoke: new Color(245, 245, 245),
-    yellow: new Color(255, 255, 0),
-    yellow_2: new Color(238, 238, 0),
-    yellow_3: new Color(205, 205, 0),
-    yellow_4: new Color(139, 139, 0),
-    yellow_green: new Color(154, 205, 50)
-};
+class Colors {
+    static alice_blue = new Color(240, 248, 255);
+    static antique_white = new Color(250, 235, 215);
+    static antique_white_1 = new Color(255, 239, 219);
+    static antique_white_2 = new Color(238, 223, 204);
+    static antique_white_3 = new Color(205, 192, 176);
+    static antique_white_4 = new Color(139, 131, 120);
+    static aquamarine = new Color(127, 255, 212);
+    static aquamarine_2 = new Color(118, 238, 198);
+    static aquamarine_4 = new Color(69, 139, 116);
+    static azure = new Color(240, 255, 255);
+    static azure_2 = new Color(224, 238, 238);
+    static azure_3 = new Color(193, 205, 205);
+    static azure_4 = new Color(131, 139, 139);
+    static beige = new Color(245, 245, 220);
+    static bisque = new Color(255, 228, 196);
+    static bisque_2 = new Color(238, 213, 183);
+    static bisque_3 = new Color(205, 183, 158);
+    static bisque_4 = new Color(139, 125, 107);
+    static black = new Color(0, 0, 0);
+    static blanched_almond = new Color(255, 235, 205);
+    static blue = new Color(0, 0, 255);
+    static blue_2 = new Color(0, 0, 238);
+    static blue_4 = new Color(0, 0, 139);
+    static blue_violet = new Color(138, 43, 226);
+    static brown = new Color(165, 42, 42);
+    static brown_1 = new Color(255, 64, 64);
+    static brown_2 = new Color(238, 59, 59);
+    static brown_3 = new Color(205, 51, 51);
+    static brown_4 = new Color(139, 35, 35);
+    static burlywood = new Color(222, 184, 135);
+    static burlywood_1 = new Color(255, 211, 155);
+    static burlywood_2 = new Color(238, 197, 145);
+    static burlywood_3 = new Color(205, 170, 125);
+    static burlywood_4 = new Color(139, 115, 85);
+    static cadet_blue = new Color(95, 158, 160);
+    static cadet_blue_1 = new Color(152, 245, 255);
+    static cadet_blue_2 = new Color(142, 229, 238);
+    static cadet_blue_3 = new Color(122, 197, 205);
+    static cadet_blue_4 = new Color(83, 134, 139);
+    static chartreuse = new Color(127, 255, 0);
+    static chartreuse_2 = new Color(118, 238, 0);
+    static chartreuse_3 = new Color(102, 205, 0);
+    static chartreuse_4 = new Color(69, 139, 0);
+    static chocolate = new Color(210, 105, 30);
+    static chocolate_1 = new Color(255, 127, 36);
+    static chocolate_2 = new Color(238, 118, 33);
+    static chocolate_3 = new Color(205, 102, 29);
+    static coral = new Color(255, 127, 80);
+    static coral_1 = new Color(255, 114, 86);
+    static coral_2 = new Color(238, 106, 80);
+    static coral_3 = new Color(205, 91, 69);
+    static coral_4 = new Color(139, 62, 47);
+    static cornflower_blue = new Color(100, 149, 237);
+    static corn_silk = new Color(255, 248, 220);
+    static corn_silk_2 = new Color(238, 232, 205);
+    static corn_silk_3 = new Color(205, 200, 177);
+    static corn_silk_4 = new Color(139, 136, 120);
+    static cyan = new Color(0, 255, 255);
+    static cyan_2 = new Color(0, 238, 238);
+    static cyan_3 = new Color(0, 205, 205);
+    static cyan_4 = new Color(0, 139, 139);
+    static dark_golden_rod = new Color(184, 134, 11);
+    static dark_golden_rod_1 = new Color(255, 185, 15);
+    static dark_golden_rod_2 = new Color(238, 173, 14);
+    static dark_golden_rod_3 = new Color(205, 149, 12);
+    static dark_golden_rod_4 = new Color(139, 101, 8);
+    static dark_green = new Color(0, 100, 0);
+    static dark_khaki = new Color(189, 183, 107);
+    static dark_olive_green = new Color(85, 107, 47);
+    static dark_olive_green_1 = new Color(202, 255, 112);
+    static dark_olive_green_2 = new Color(188, 238, 104);
+    static dark_olive_green_3 = new Color(162, 205, 90);
+    static dark_olive_green_4 = new Color(110, 139, 61);
+    static dark_orange = new Color(255, 140, 0);
+    static dark_orange_1 = new Color(255, 127, 0);
+    static dark_orange_2 = new Color(238, 118, 0);
+    static dark_orange_3 = new Color(205, 102, 0);
+    static dark_orange_4 = new Color(139, 69, 0);
+    static dark_orchid = new Color(153, 50, 204);
+    static dark_orchid_1 = new Color(191, 62, 255);
+    static dark_orchid_2 = new Color(178, 58, 238);
+    static dark_orchid_3 = new Color(154, 50, 205);
+    static dark_orchid_4 = new Color(104, 34, 139);
+    static dark_salmon = new Color(233, 150, 122);
+    static dark_sea_green = new Color(143, 188, 143);
+    static dark_sea_green_1 = new Color(193, 255, 193);
+    static dark_sea_green_2 = new Color(180, 238, 180);
+    static dark_sea_green_3 = new Color(155, 205, 155);
+    static dark_sea_green_4 = new Color(105, 139, 105);
+    static dark_slate_blue = new Color(72, 61, 139);
+    static dark_slate_gray = new Color(47, 79, 79);
+    static dark_slate_gray_1 = new Color(151, 255, 255);
+    static dark_slate_gray_2 = new Color(141, 238, 238);
+    static dark_slate_gray_3 = new Color(121, 205, 205);
+    static dark_slate_gray_4 = new Color(82, 139, 139);
+    static dark_turquoise = new Color(0, 206, 209);
+    static dark_violet = new Color(148, 0, 211);
+    static deep_pink = new Color(255, 20, 147);
+    static deep_pink_2 = new Color(238, 18, 137);
+    static deep_pink_3 = new Color(205, 16, 118);
+    static deep_pink_4 = new Color(139, 10, 80);
+    static deep_sky_blue = new Color(0, 191, 255);
+    static deep_sky_blue_2 = new Color(0, 178, 238);
+    static deep_sky_blue_3 = new Color(0, 154, 205);
+    static deep_sky_blue_4 = new Color(0, 104, 139);
+    static dim_gray = new Color(105, 105, 105);
+    static dodger_blue = new Color(30, 144, 255);
+    static dodger_blue_2 = new Color(28, 134, 238);
+    static dodger_blue_3 = new Color(24, 116, 205);
+    static dodger_blue_4 = new Color(16, 78, 139);
+    static fire_brick = new Color(178, 34, 34);
+    static fire_brick_1 = new Color(255, 48, 48);
+    static fire_brick_2 = new Color(238, 44, 44);
+    static fire_brick_3 = new Color(205, 38, 38);
+    static fire_brick_4 = new Color(139, 26, 26);
+    static floral_white = new Color(255, 250, 240);
+    static forest_green = new Color(34, 139, 34);
+    static gainsboro = new Color(220, 220, 220);
+    static ghost_white = new Color(248, 248, 255);
+    static gold = new Color(255, 215, 0);
+    static gold_2 = new Color(238, 201, 0);
+    static gold_3 = new Color(205, 173, 0);
+    static gold_4 = new Color(139, 117, 0);
+    static golden_rod = new Color(218, 165, 32);
+    static golden_rod_1 = new Color(255, 193, 37);
+    static golden_rod_2 = new Color(238, 180, 34);
+    static golden_rod_3 = new Color(205, 155, 29);
+    static golden_rod_4 = new Color(139, 105, 20);
+    static gray = new Color(190, 190, 190);
+    static gray_1 = new Color(3, 3, 3);
+    static gray_2 = new Color(5, 5, 5);
+    static gray_3 = new Color(8, 8, 8);
+    static gray_4 = new Color(10, 10, 10);
+    static gray_5 = new Color(13, 13, 13);
+    static gray_6 = new Color(15, 15, 15);
+    static gray_7 = new Color(18, 18, 18);
+    static gray_8 = new Color(20, 20, 20);
+    static gray_9 = new Color(23, 23, 23);
+    static gray_10 = new Color(26, 26, 26);
+    static gray_11 = new Color(28, 28, 28);
+    static gray_12 = new Color(31, 31, 31);
+    static gray_13 = new Color(33, 33, 33);
+    static gray_14 = new Color(36, 36, 36);
+    static gray_15 = new Color(38, 38, 38);
+    static gray_16 = new Color(41, 41, 41);
+    static gray_17 = new Color(43, 43, 43);
+    static gray_18 = new Color(46, 46, 46);
+    static gray_19 = new Color(48, 48, 48);
+    static gray_20 = new Color(51, 51, 51);
+    static gray_21 = new Color(54, 54, 54);
+    static gray_22 = new Color(56, 56, 56);
+    static gray_23 = new Color(59, 59, 59);
+    static gray_24 = new Color(61, 61, 61);
+    static gray_25 = new Color(64, 64, 64);
+    static gray_26 = new Color(66, 66, 66);
+    static gray_27 = new Color(69, 69, 69);
+    static gray_28 = new Color(71, 71, 71);
+    static gray_29 = new Color(74, 74, 74);
+    static gray_30 = new Color(77, 77, 77);
+    static gray_31 = new Color(79, 79, 79);
+    static gray_32 = new Color(82, 82, 82);
+    static gray_33 = new Color(84, 84, 84);
+    static gray_34 = new Color(87, 87, 87);
+    static gray_35 = new Color(89, 89, 89);
+    static gray_36 = new Color(92, 92, 92);
+    static gray_37 = new Color(94, 94, 94);
+    static gray_38 = new Color(97, 97, 97);
+    static gray_39 = new Color(99, 99, 99);
+    static gray_40 = new Color(102, 102, 102);
+    static gray_41 = new Color(105, 105, 105);
+    static gray_42 = new Color(107, 107, 107);
+    static gray_43 = new Color(110, 110, 110);
+    static gray_44 = new Color(112, 112, 112);
+    static gray_45 = new Color(115, 115, 115);
+    static gray_46 = new Color(117, 117, 117);
+    static gray_47 = new Color(120, 120, 120);
+    static gray_48 = new Color(122, 122, 122);
+    static gray_49 = new Color(125, 125, 125);
+    static gray_50 = new Color(127, 127, 127);
+    static gray_51 = new Color(130, 130, 130);
+    static gray_52 = new Color(133, 133, 133);
+    static gray_53 = new Color(135, 135, 135);
+    static gray_54 = new Color(138, 138, 138);
+    static gray_55 = new Color(140, 140, 140);
+    static gray_56 = new Color(143, 143, 143);
+    static gray_57 = new Color(145, 145, 145);
+    static gray_58 = new Color(148, 148, 148);
+    static gray_59 = new Color(150, 150, 150);
+    static gray_60 = new Color(153, 153, 153);
+    static gray_61 = new Color(156, 156, 156);
+    static gray_62 = new Color(158, 158, 158);
+    static gray_63 = new Color(161, 161, 161);
+    static gray_64 = new Color(163, 163, 163);
+    static gray_65 = new Color(166, 166, 166);
+    static gray_66 = new Color(168, 168, 168);
+    static gray_67 = new Color(171, 171, 171);
+    static gray_68 = new Color(173, 173, 173);
+    static gray_69 = new Color(176, 176, 176);
+    static gray_70 = new Color(179, 179, 179);
+    static gray_71 = new Color(181, 181, 181);
+    static gray_72 = new Color(184, 184, 184);
+    static gray_73 = new Color(186, 186, 186);
+    static gray_74 = new Color(189, 189, 189);
+    static gray_75 = new Color(191, 191, 191);
+    static gray_76 = new Color(194, 194, 194);
+    static gray_77 = new Color(196, 196, 196);
+    static gray_78 = new Color(199, 199, 199);
+    static gray_79 = new Color(201, 201, 201);
+    static gray_80 = new Color(204, 204, 204);
+    static gray_81 = new Color(207, 207, 207);
+    static gray_82 = new Color(209, 209, 209);
+    static gray_83 = new Color(212, 212, 212);
+    static gray_84 = new Color(214, 214, 214);
+    static gray_85 = new Color(217, 217, 217);
+    static gray_86 = new Color(219, 219, 219);
+    static gray_87 = new Color(222, 222, 222);
+    static gray_88 = new Color(224, 224, 224);
+    static gray_89 = new Color(227, 227, 227);
+    static gray_90 = new Color(229, 229, 229);
+    static gray_91 = new Color(232, 232, 232);
+    static gray_92 = new Color(235, 235, 235);
+    static gray_93 = new Color(237, 237, 237);
+    static gray_94 = new Color(240, 240, 240);
+    static gray_95 = new Color(242, 242, 242);
+    static gray_97 = new Color(247, 247, 247);
+    static gray_98 = new Color(250, 250, 250);
+    static gray_99 = new Color(252, 252, 252);
+    static green = new Color(0, 255, 0);
+    static green_2 = new Color(0, 238, 0);
+    static green_3 = new Color(0, 205, 0);
+    static green_4 = new Color(0, 139, 0);
+    static green_yellow = new Color(173, 255, 47);
+    static honeydew = new Color(240, 255, 240);
+    static honeydew_2 = new Color(224, 238, 224);
+    static honeydew_3 = new Color(193, 205, 193);
+    static honeydew_4 = new Color(131, 139, 131);
+    static hot_pink = new Color(255, 105, 180);
+    static hot_pink_1 = new Color(255, 110, 180);
+    static hot_pink_2 = new Color(238, 106, 167);
+    static hot_pink_3 = new Color(205, 96, 144);
+    static hot_pink_4 = new Color(139, 58, 98);
+    static indian_red = new Color(205, 92, 92);
+    static indian_red_1 = new Color(255, 106, 106);
+    static indian_red_2 = new Color(238, 99, 99);
+    static indian_red_3 = new Color(205, 85, 85);
+    static indian_red_4 = new Color(139, 58, 58);
+    static ivory = new Color(255, 255, 240);
+    static ivory_2 = new Color(238, 238, 224);
+    static ivory_3 = new Color(205, 205, 193);
+    static ivory_4 = new Color(139, 139, 131);
+    static khaki = new Color(240, 230, 140);
+    static khaki_1 = new Color(255, 246, 143);
+    static khaki_2 = new Color(238, 230, 133);
+    static khaki_3 = new Color(205, 198, 115);
+    static khaki_4 = new Color(139, 134, 78);
+    static lavender = new Color(230, 230, 250);
+    static lavender_blush = new Color(255, 240, 245);
+    static lavender_blush_2 = new Color(238, 224, 229);
+    static lavender_blush_3 = new Color(205, 193, 197);
+    static lavender_blush_4 = new Color(139, 131, 134);
+    static lawn_green = new Color(124, 252, 0);
+    static lemon_chiffon = new Color(255, 250, 205);
+    static lemon_chiffon_2 = new Color(238, 233, 191);
+    static lemon_chiffon_3 = new Color(205, 201, 165);
+    static lemon_chiffon_4 = new Color(139, 137, 112);
+    static light = new Color(238, 221, 130);
+    static light_blue = new Color(173, 216, 230);
+    static light_blue_1 = new Color(191, 239, 255);
+    static light_blue_2 = new Color(178, 223, 238);
+    static light_blue_3 = new Color(154, 192, 205);
+    static light_blue_4 = new Color(104, 131, 139);
+    static light_coral = new Color(240, 128, 128);
+    static light_cyan = new Color(224, 255, 255);
+    static light_cyan_2 = new Color(209, 238, 238);
+    static light_cyan_3 = new Color(180, 205, 205);
+    static light_cyan_4 = new Color(122, 139, 139);
+    static light_golden_rod = new Color(255, 236, 139);
+    static light_golden_rod_2 = new Color(238, 220, 130);
+    static light_golden_rod_3 = new Color(205, 190, 112);
+    static light_golden_rod_4 = new Color(139, 129, 76);
+    static light_golden_rod_yellow = new Color(250, 250, 210);
+    static light_gray = new Color(211, 211, 211);
+    static light_pink = new Color(255, 182, 193);
+    static light_pink_1 = new Color(255, 174, 185);
+    static light_pink_2 = new Color(238, 162, 173);
+    static light_pink_3 = new Color(205, 140, 149);
+    static light_pink_4 = new Color(139, 95, 101);
+    static light_salmon = new Color(255, 160, 122);
+    static light_salmon_2 = new Color(238, 149, 114);
+    static light_salmon_3 = new Color(205, 129, 98);
+    static light_salmon_4 = new Color(139, 87, 66);
+    static light_sea_green = new Color(32, 178, 170);
+    static light_sky_blue = new Color(135, 206, 250);
+    static light_sky_blue_1 = new Color(176, 226, 255);
+    static light_sky_blue_2 = new Color(164, 211, 238);
+    static light_sky_blue_3 = new Color(141, 182, 205);
+    static light_sky_blue_4 = new Color(96, 123, 139);
+    static light_slate_blue = new Color(132, 112, 255);
+    static light_slate_gray = new Color(119, 136, 153);
+    static light_steel_blue = new Color(176, 196, 222);
+    static light_steel_blue_1 = new Color(202, 225, 255);
+    static light_steel_blue_2 = new Color(188, 210, 238);
+    static light_steel_blue_3 = new Color(162, 181, 205);
+    static light_steel_blue_4 = new Color(110, 123, 139);
+    static light_yellow = new Color(255, 255, 224);
+    static light_yellow_2 = new Color(238, 238, 209);
+    static light_yellow_3 = new Color(205, 205, 180);
+    static light_yellow_4 = new Color(139, 139, 122);
+    static lime_green = new Color(50, 205, 50);
+    static linen = new Color(250, 240, 230);
+    static magenta = new Color(255, 0, 255);
+    static magenta_2 = new Color(238, 0, 238);
+    static magenta_3 = new Color(205, 0, 205);
+    static magenta_4 = new Color(139, 0, 139);
+    static maroon = new Color(176, 48, 96);
+    static maroon_1 = new Color(255, 52, 179);
+    static maroon_2 = new Color(238, 48, 167);
+    static maroon_3 = new Color(205, 41, 144);
+    static maroon_4 = new Color(139, 28, 98);
+    static medium = new Color(102, 205, 170);
+    static medium_aquamarine = new Color(102, 205, 170);
+    static medium_blue = new Color(0, 0, 205);
+    static medium_orchid = new Color(186, 85, 211);
+    static medium_orchid_1 = new Color(224, 102, 255);
+    static medium_orchid_2 = new Color(209, 95, 238);
+    static medium_orchid_3 = new Color(180, 82, 205);
+    static medium_orchid_4 = new Color(122, 55, 139);
+    static medium_purple = new Color(147, 112, 219);
+    static medium_purple_1 = new Color(171, 130, 255);
+    static medium_purple_2 = new Color(159, 121, 238);
+    static medium_purple_3 = new Color(137, 104, 205);
+    static medium_purple_4 = new Color(93, 71, 139);
+    static medium_sea_green = new Color(60, 179, 113);
+    static medium_slate_blue = new Color(123, 104, 238);
+    static medium_spring_green = new Color(0, 250, 154);
+    static medium_turquoise = new Color(72, 209, 204);
+    static medium_violet_red = new Color(199, 21, 133);
+    static midnight_blue = new Color(25, 25, 112);
+    static mint_cream = new Color(245, 255, 250);
+    static misty_rose = new Color(255, 228, 225);
+    static misty_rose_2 = new Color(238, 213, 210);
+    static misty_rose_3 = new Color(205, 183, 181);
+    static misty_rose_4 = new Color(139, 125, 123);
+    static moccasin = new Color(255, 228, 181);
+    static navajo_white = new Color(255, 222, 173);
+    static navajo_white_2 = new Color(238, 207, 161);
+    static navajo_white_3 = new Color(205, 179, 139);
+    static navajo_white_4 = new Color(139, 121, 94);
+    static navy_blue = new Color(0, 0, 128);
+    static old_lace = new Color(253, 245, 230);
+    static olive_drab = new Color(107, 142, 35);
+    static olive_drab_1 = new Color(192, 255, 62);
+    static olive_drab_2 = new Color(179, 238, 58);
+    static olive_drab_4 = new Color(105, 139, 34);
+    static orange = new Color(255, 165, 0);
+    static orange_2 = new Color(238, 154, 0);
+    static orange_3 = new Color(205, 133, 0);
+    static orange_4 = new Color(139, 90, 0);
+    static orange_red = new Color(255, 69, 0);
+    static orange_red_2 = new Color(238, 64, 0);
+    static orange_red_3 = new Color(205, 55, 0);
+    static orange_red_4 = new Color(139, 37, 0);
+    static orchid = new Color(218, 112, 214);
+    static orchid_1 = new Color(255, 131, 250);
+    static orchid_2 = new Color(238, 122, 233);
+    static orchid_3 = new Color(205, 105, 201);
+    static orchid_4 = new Color(139, 71, 137);
+    static pale = new Color(219, 112, 147);
+    static pale_golden_rod = new Color(238, 232, 170);
+    static pale_green = new Color(152, 251, 152);
+    static pale_green_1 = new Color(154, 255, 154);
+    static pale_green_2 = new Color(144, 238, 144);
+    static pale_green_3 = new Color(124, 205, 124);
+    static pale_green_4 = new Color(84, 139, 84);
+    static pale_turquoise = new Color(175, 238, 238);
+    static pale_turquoise_1 = new Color(187, 255, 255);
+    static pale_turquoise_2 = new Color(174, 238, 238);
+    static pale_turquoise_3 = new Color(150, 205, 205);
+    static pale_turquoise_4 = new Color(102, 139, 139);
+    static pale_violet_red = new Color(219, 112, 147);
+    static pale_violet_red_1 = new Color(255, 130, 171);
+    static pale_violet_red_2 = new Color(238, 121, 159);
+    static pale_violet_red_3 = new Color(205, 104, 137);
+    static pale_violet_red_4 = new Color(139, 71, 93);
+    static papaya_whip = new Color(255, 239, 213);
+    static peach_puff = new Color(255, 218, 185);
+    static peach_puff_2 = new Color(238, 203, 173);
+    static peach_puff_3 = new Color(205, 175, 149);
+    static peach_puff_4 = new Color(139, 119, 101);
+    static pink = new Color(255, 192, 203);
+    static pink_1 = new Color(255, 181, 197);
+    static pink_2 = new Color(238, 169, 184);
+    static pink_3 = new Color(205, 145, 158);
+    static pink_4 = new Color(139, 99, 108);
+    static plum = new Color(221, 160, 221);
+    static plum_1 = new Color(255, 187, 255);
+    static plum_2 = new Color(238, 174, 238);
+    static plum_3 = new Color(205, 150, 205);
+    static plum_4 = new Color(139, 102, 139);
+    static powder_blue = new Color(176, 224, 230);
+    static purple = new Color(160, 32, 240);
+    static purple_1 = new Color(155, 48, 255);
+    static purple_2 = new Color(145, 44, 238);
+    static purple_3 = new Color(125, 38, 205);
+    static purple_4 = new Color(85, 26, 139);
+    static rebecca_purple = new Color(102, 51, 153);
+    static red = new Color(255, 0, 0);
+    static red_2 = new Color(238, 0, 0);
+    static red_3 = new Color(205, 0, 0);
+    static red_4 = new Color(139, 0, 0);
+    static rosy_brown = new Color(188, 143, 143);
+    static rosy_brown_1 = new Color(255, 193, 193);
+    static rosy_brown_2 = new Color(238, 180, 180);
+    static rosy_brown_3 = new Color(205, 155, 155);
+    static rosy_brown_4 = new Color(139, 105, 105);
+    static royal_blue = new Color(65, 105, 225);
+    static royal_blue_1 = new Color(72, 118, 255);
+    static royal_blue_2 = new Color(67, 110, 238);
+    static royal_blue_3 = new Color(58, 95, 205);
+    static royal_blue_4 = new Color(39, 64, 139);
+    static saddle_brown = new Color(139, 69, 19);
+    static salmon = new Color(250, 128, 114);
+    static salmon_1 = new Color(255, 140, 105);
+    static salmon_2 = new Color(238, 130, 98);
+    static salmon_3 = new Color(205, 112, 84);
+    static salmon_4 = new Color(139, 76, 57);
+    static sandy_brown = new Color(244, 164, 96);
+    static sea_green = new Color(84, 255, 159);
+    static sea_green_2 = new Color(78, 238, 148);
+    static sea_green_3 = new Color(67, 205, 128);
+    static sea_green_4 = new Color(46, 139, 87);
+    static seashell = new Color(255, 245, 238);
+    static seashell_2 = new Color(238, 229, 222);
+    static seashell_3 = new Color(205, 197, 191);
+    static seashell_4 = new Color(139, 134, 130);
+    static sienna = new Color(160, 82, 45);
+    static sienna_1 = new Color(255, 130, 71);
+    static sienna_2 = new Color(238, 121, 66);
+    static sienna_3 = new Color(205, 104, 57);
+    static sienna_4 = new Color(139, 71, 38);
+    static sky_blue = new Color(135, 206, 235);
+    static sky_blue_1 = new Color(135, 206, 255);
+    static sky_blue_2 = new Color(126, 192, 238);
+    static sky_blue_3 = new Color(108, 166, 205);
+    static sky_blue_4 = new Color(74, 112, 139);
+    static slate_blue = new Color(106, 90, 205);
+    static slate_blue_1 = new Color(131, 111, 255);
+    static slate_blue_2 = new Color(122, 103, 238);
+    static slate_blue_3 = new Color(105, 89, 205);
+    static slate_blue_4 = new Color(71, 60, 139);
+    static slate_gray = new Color(112, 128, 144);
+    static slate_gray_1 = new Color(198, 226, 255);
+    static slate_gray_2 = new Color(185, 211, 238);
+    static slate_gray_3 = new Color(159, 182, 205);
+    static slate_gray_4 = new Color(108, 123, 139);
+    static snow = new Color(255, 250, 250);
+    static snow_2 = new Color(238, 233, 233);
+    static snow_3 = new Color(205, 201, 201);
+    static snow_4 = new Color(139, 137, 137);
+    static spring_green = new Color(0, 255, 127);
+    static spring_green_2 = new Color(0, 238, 118);
+    static spring_green_3 = new Color(0, 205, 102);
+    static spring_green_4 = new Color(0, 139, 69);
+    static steel_blue = new Color(70, 130, 180);
+    static steel_blue_1 = new Color(99, 184, 255);
+    static steel_blue_2 = new Color(92, 172, 238);
+    static steel_blue_3 = new Color(79, 148, 205);
+    static steel_blue_4 = new Color(54, 100, 139);
+    static tan = new Color(210, 180, 140);
+    static tan_1 = new Color(255, 165, 79);
+    static tan_2 = new Color(238, 154, 73);
+    static tan_3 = new Color(205, 133, 63);
+    static tan_4 = new Color(139, 90, 43);
+    static thistle = new Color(216, 191, 216);
+    static thistle_1 = new Color(255, 225, 255);
+    static thistle_2 = new Color(238, 210, 238);
+    static thistle_3 = new Color(205, 181, 205);
+    static thistle_4 = new Color(139, 123, 139);
+    static tomato = new Color(255, 99, 71);
+    static tomato_2 = new Color(238, 92, 66);
+    static tomato_3 = new Color(205, 79, 57);
+    static tomato_4 = new Color(139, 54, 38);
+    static transparent = new Color(0, 0, 0, 0);
+    static turquoise = new Color(64, 224, 208);
+    static turquoise_1 = new Color(0, 245, 255);
+    static turquoise_2 = new Color(0, 229, 238);
+    static turquoise_3 = new Color(0, 197, 205);
+    static turquoise_4 = new Color(0, 134, 139);
+    static violet = new Color(238, 130, 238);
+    static violet_red = new Color(208, 32, 144);
+    static violet_red_1 = new Color(255, 62, 150);
+    static violet_red_2 = new Color(238, 58, 140);
+    static violet_red_3 = new Color(205, 50, 120);
+    static violet_red_4 = new Color(139, 34, 82);
+    static wheat = new Color(245, 222, 179);
+    static wheat_1 = new Color(255, 231, 186);
+    static wheat_2 = new Color(238, 216, 174);
+    static wheat_3 = new Color(205, 186, 150);
+    static wheat_4 = new Color(139, 126, 102);
+    static white = new Color(255, 255, 255);
+    static white_smoke = new Color(245, 245, 245);
+    static yellow = new Color(255, 255, 0);
+    static yellow_2 = new Color(238, 238, 0);
+    static yellow_3 = new Color(205, 205, 0);
+    static yellow_4 = new Color(139, 139, 0);
+    static yellow_green = new Color(154, 205, 50);
+}
 
 const TColorVariantIndexWhite = 1;
 const TColorVariantIndexPale = 3;

@@ -1,512 +1,512 @@
 
 import { Color } from './Color';
 
-export const Colors: Record<string, Color> =
+export class Colors
 {
-  alice_blue: new Color(240, 248, 255),
-  antique_white: new Color(250, 235, 215),
-  antique_white_1: new Color(255, 239, 219),
-  antique_white_2: new Color(238, 223, 204),
-  antique_white_3: new Color(205, 192, 176),
-  antique_white_4: new Color(139, 131, 120),
-  aquamarine: new Color(127, 255, 212),
-  aquamarine_2: new Color(118, 238, 198),
-  aquamarine_4: new Color(69, 139, 116),
-  azure: new Color(240, 255, 255),
-  azure_2: new Color(224, 238, 238),
-  azure_3: new Color(193, 205, 205),
-  azure_4: new Color(131, 139, 139),
-  beige: new Color(245, 245, 220),
-  bisque: new Color(255, 228, 196),
-  bisque_2: new Color(238, 213, 183),
-  bisque_3: new Color(205, 183, 158),
-  bisque_4: new Color(139, 125, 107),
-  black: new Color(0, 0, 0),
-  blanched_almond: new Color(255, 235, 205),
-  blue: new Color(0, 0, 255),
-  blue_2: new Color(0, 0, 238),
-  blue_4: new Color(0, 0, 139),
-  blue_violet: new Color(138, 43, 226),
-  brown: new Color(165, 42, 42),
-  brown_1: new Color(255, 64, 64),
-  brown_2: new Color(238, 59, 59),
-  brown_3: new Color(205, 51, 51),
-  brown_4: new Color(139, 35, 35),
-  burlywood: new Color(222, 184, 135),
-  burlywood_1: new Color(255, 211, 155),
-  burlywood_2: new Color(238, 197, 145),
-  burlywood_3: new Color(205, 170, 125),
-  burlywood_4: new Color(139, 115, 85),
-  cadet_blue: new Color(95, 158, 160),
-  cadet_blue_1: new Color(152, 245, 255),
-  cadet_blue_2: new Color(142, 229, 238),
-  cadet_blue_3: new Color(122, 197, 205),
-  cadet_blue_4: new Color(83, 134, 139),
-  chartreuse: new Color(127, 255, 0),
-  chartreuse_2: new Color(118, 238, 0),
-  chartreuse_3: new Color(102, 205, 0),
-  chartreuse_4: new Color(69, 139, 0),
-  chocolate: new Color(210, 105, 30),
-  chocolate_1: new Color(255, 127, 36),
-  chocolate_2: new Color(238, 118, 33),
-  chocolate_3: new Color(205, 102, 29),
-  coral: new Color(255, 127, 80),
-  coral_1: new Color(255, 114, 86),
-  coral_2: new Color(238, 106, 80),
-  coral_3: new Color(205, 91, 69),
-  coral_4: new Color(139, 62, 47),
-  cornflower_blue: new Color(100, 149, 237),
-  corn_silk: new Color(255, 248, 220),
-  corn_silk_2: new Color(238, 232, 205),
-  corn_silk_3: new Color(205, 200, 177),
-  corn_silk_4: new Color(139, 136, 120),
-  cyan: new Color(0, 255, 255),
-  cyan_2: new Color(0, 238, 238),
-  cyan_3: new Color(0, 205, 205),
-  cyan_4: new Color(0, 139, 139),
-  dark_golden_rod: new Color(184, 134, 11),
-  dark_golden_rod_1: new Color(255, 185, 15),
-  dark_golden_rod_2: new Color(238, 173, 14),
-  dark_golden_rod_3: new Color(205, 149, 12),
-  dark_golden_rod_4: new Color(139, 101, 8),
-  dark_green: new Color(0, 100, 0),
-  dark_khaki: new Color(189, 183, 107),
-  dark_olive_green: new Color(85, 107, 47),
-  dark_olive_green_1: new Color(202, 255, 112),
-  dark_olive_green_2: new Color(188, 238, 104),
-  dark_olive_green_3: new Color(162, 205, 90),
-  dark_olive_green_4: new Color(110, 139, 61),
-  dark_orange: new Color(255, 140, 0),
-  dark_orange_1: new Color(255, 127, 0),
-  dark_orange_2: new Color(238, 118, 0),
-  dark_orange_3: new Color(205, 102, 0),
-  dark_orange_4: new Color(139, 69, 0),
-  dark_orchid: new Color(153, 50, 204),
-  dark_orchid_1: new Color(191, 62, 255),
-  dark_orchid_2: new Color(178, 58, 238),
-  dark_orchid_3: new Color(154, 50, 205),
-  dark_orchid_4: new Color(104, 34, 139),
-  dark_salmon: new Color(233, 150, 122),
-  dark_sea_green: new Color(143, 188, 143),
-  dark_sea_green_1: new Color(193, 255, 193),
-  dark_sea_green_2: new Color(180, 238, 180),
-  dark_sea_green_3: new Color(155, 205, 155),
-  dark_sea_green_4: new Color(105, 139, 105),
-  dark_slate_blue: new Color(72, 61, 139),
-  dark_slate_gray: new Color(47, 79, 79),
-  dark_slate_gray_1: new Color(151, 255, 255),
-  dark_slate_gray_2: new Color(141, 238, 238),
-  dark_slate_gray_3: new Color(121, 205, 205),
-  dark_slate_gray_4: new Color(82, 139, 139),
-  dark_turquoise: new Color(0, 206, 209),
-  dark_violet: new Color(148, 0, 211),
-  deep_pink: new Color(255, 20, 147),
-  deep_pink_2: new Color(238, 18, 137),
-  deep_pink_3: new Color(205, 16, 118),
-  deep_pink_4: new Color(139, 10, 80),
-  deep_sky_blue: new Color(0, 191, 255),
-  deep_sky_blue_2: new Color(0, 178, 238),
-  deep_sky_blue_3: new Color(0, 154, 205),
-  deep_sky_blue_4: new Color(0, 104, 139),
-  dim_gray: new Color(105, 105, 105),
-  dodger_blue: new Color(30, 144, 255),
-  dodger_blue_2: new Color(28, 134, 238),
-  dodger_blue_3: new Color(24, 116, 205),
-  dodger_blue_4: new Color(16, 78, 139),
-  fire_brick: new Color(178, 34, 34),
-  fire_brick_1: new Color(255, 48, 48),
-  fire_brick_2: new Color(238, 44, 44),
-  fire_brick_3: new Color(205, 38, 38),
-  fire_brick_4: new Color(139, 26, 26),
-  floral_white: new Color(255, 250, 240),
-  forest_green: new Color(34, 139, 34),
-  gainsboro: new Color(220, 220, 220),
-  ghost_white: new Color(248, 248, 255),
-  gold: new Color(255, 215, 0),
-  gold_2: new Color(238, 201, 0),
-  gold_3: new Color(205, 173, 0),
-  gold_4: new Color(139, 117, 0),
-  golden_rod: new Color(218, 165, 32),
-  golden_rod_1: new Color(255, 193, 37),
-  golden_rod_2: new Color(238, 180, 34),
-  golden_rod_3: new Color(205, 155, 29),
-  golden_rod_4: new Color(139, 105, 20),
-  gray: new Color(190, 190, 190),
-  gray_1: new Color(3, 3, 3),
-  gray_2: new Color(5, 5, 5),
-  gray_3: new Color(8, 8, 8),
-  gray_4: new Color(10, 10, 10),
-  gray_5: new Color(13, 13, 13),
-  gray_6: new Color(15, 15, 15),
-  gray_7: new Color(18, 18, 18),
-  gray_8: new Color(20, 20, 20),
-  gray_9: new Color(23, 23, 23),
-  gray_10: new Color(26, 26, 26),
-  gray_11: new Color(28, 28, 28),
-  gray_12: new Color(31, 31, 31),
-  gray_13: new Color(33, 33, 33),
-  gray_14: new Color(36, 36, 36),
-  gray_15: new Color(38, 38, 38),
-  gray_16: new Color(41, 41, 41),
-  gray_17: new Color(43, 43, 43),
-  gray_18: new Color(46, 46, 46),
-  gray_19: new Color(48, 48, 48),
-  gray_20: new Color(51, 51, 51),
-  gray_21: new Color(54, 54, 54),
-  gray_22: new Color(56, 56, 56),
-  gray_23: new Color(59, 59, 59),
-  gray_24: new Color(61, 61, 61),
-  gray_25: new Color(64, 64, 64),
-  gray_26: new Color(66, 66, 66),
-  gray_27: new Color(69, 69, 69),
-  gray_28: new Color(71, 71, 71),
-  gray_29: new Color(74, 74, 74),
-  gray_30: new Color(77, 77, 77),
-  gray_31: new Color(79, 79, 79),
-  gray_32: new Color(82, 82, 82),
-  gray_33: new Color(84, 84, 84),
-  gray_34: new Color(87, 87, 87),
-  gray_35: new Color(89, 89, 89),
-  gray_36: new Color(92, 92, 92),
-  gray_37: new Color(94, 94, 94),
-  gray_38: new Color(97, 97, 97),
-  gray_39: new Color(99, 99, 99),
-  gray_40: new Color(102, 102, 102),
-  gray_41: new Color(105, 105, 105),
-  gray_42: new Color(107, 107, 107),
-  gray_43: new Color(110, 110, 110),
-  gray_44: new Color(112, 112, 112),
-  gray_45: new Color(115, 115, 115),
-  gray_46: new Color(117, 117, 117),
-  gray_47: new Color(120, 120, 120),
-  gray_48: new Color(122, 122, 122),
-  gray_49: new Color(125, 125, 125),
-  gray_50: new Color(127, 127, 127),
-  gray_51: new Color(130, 130, 130),
-  gray_52: new Color(133, 133, 133),
-  gray_53: new Color(135, 135, 135),
-  gray_54: new Color(138, 138, 138),
-  gray_55: new Color(140, 140, 140),
-  gray_56: new Color(143, 143, 143),
-  gray_57: new Color(145, 145, 145),
-  gray_58: new Color(148, 148, 148),
-  gray_59: new Color(150, 150, 150),
-  gray_60: new Color(153, 153, 153),
-  gray_61: new Color(156, 156, 156),
-  gray_62: new Color(158, 158, 158),
-  gray_63: new Color(161, 161, 161),
-  gray_64: new Color(163, 163, 163),
-  gray_65: new Color(166, 166, 166),
-  gray_66: new Color(168, 168, 168),
-  gray_67: new Color(171, 171, 171),
-  gray_68: new Color(173, 173, 173),
-  gray_69: new Color(176, 176, 176),
-  gray_70: new Color(179, 179, 179),
-  gray_71: new Color(181, 181, 181),
-  gray_72: new Color(184, 184, 184),
-  gray_73: new Color(186, 186, 186),
-  gray_74: new Color(189, 189, 189),
-  gray_75: new Color(191, 191, 191),
-  gray_76: new Color(194, 194, 194),
-  gray_77: new Color(196, 196, 196),
-  gray_78: new Color(199, 199, 199),
-  gray_79: new Color(201, 201, 201),
-  gray_80: new Color(204, 204, 204),
-  gray_81: new Color(207, 207, 207),
-  gray_82: new Color(209, 209, 209),
-  gray_83: new Color(212, 212, 212),
-  gray_84: new Color(214, 214, 214),
-  gray_85: new Color(217, 217, 217),
-  gray_86: new Color(219, 219, 219),
-  gray_87: new Color(222, 222, 222),
-  gray_88: new Color(224, 224, 224),
-  gray_89: new Color(227, 227, 227),
-  gray_90: new Color(229, 229, 229),
-  gray_91: new Color(232, 232, 232),
-  gray_92: new Color(235, 235, 235),
-  gray_93: new Color(237, 237, 237),
-  gray_94: new Color(240, 240, 240),
-  gray_95: new Color(242, 242, 242),
-  gray_97: new Color(247, 247, 247),
-  gray_98: new Color(250, 250, 250),
-  gray_99: new Color(252, 252, 252),
-  green: new Color(0, 255, 0),
-  green_2: new Color(0, 238, 0),
-  green_3: new Color(0, 205, 0),
-  green_4: new Color(0, 139, 0),
-  green_yellow: new Color(173, 255, 47),
-  honeydew: new Color(240, 255, 240),
-  honeydew_2: new Color(224, 238, 224),
-  honeydew_3: new Color(193, 205, 193),
-  honeydew_4: new Color(131, 139, 131),
-  hot_pink: new Color(255, 105, 180),
-  hot_pink_1: new Color(255, 110, 180),
-  hot_pink_2: new Color(238, 106, 167),
-  hot_pink_3: new Color(205, 96, 144),
-  hot_pink_4: new Color(139, 58, 98),
-  indian_red: new Color(205, 92, 92),
-  indian_red_1: new Color(255, 106, 106),
-  indian_red_2: new Color(238, 99, 99),
-  indian_red_3: new Color(205, 85, 85),
-  indian_red_4: new Color(139, 58, 58),
-  ivory: new Color(255, 255, 240),
-  ivory_2: new Color(238, 238, 224),
-  ivory_3: new Color(205, 205, 193),
-  ivory_4: new Color(139, 139, 131),
-  khaki: new Color(240, 230, 140),
-  khaki_1: new Color(255, 246, 143),
-  khaki_2: new Color(238, 230, 133),
-  khaki_3: new Color(205, 198, 115),
-  khaki_4: new Color(139, 134, 78),
-  lavender: new Color(230, 230, 250),
-  lavender_blush: new Color(255, 240, 245),
-  lavender_blush_2: new Color(238, 224, 229),
-  lavender_blush_3: new Color(205, 193, 197),
-  lavender_blush_4: new Color(139, 131, 134),
-  lawn_green: new Color(124, 252, 0),
-  lemon_chiffon: new Color(255, 250, 205),
-  lemon_chiffon_2: new Color(238, 233, 191),
-  lemon_chiffon_3: new Color(205, 201, 165),
-  lemon_chiffon_4: new Color(139, 137, 112),
-  light: new Color(238, 221, 130),
-  light_blue: new Color(173, 216, 230),
-  light_blue_1: new Color(191, 239, 255),
-  light_blue_2: new Color(178, 223, 238),
-  light_blue_3: new Color(154, 192, 205),
-  light_blue_4: new Color(104, 131, 139),
-  light_coral: new Color(240, 128, 128),
-  light_cyan: new Color(224, 255, 255),
-  light_cyan_2: new Color(209, 238, 238),
-  light_cyan_3: new Color(180, 205, 205),
-  light_cyan_4: new Color(122, 139, 139),
-  light_golden_rod: new Color(255, 236, 139),
-  light_golden_rod_2: new Color(238, 220, 130),
-  light_golden_rod_3: new Color(205, 190, 112),
-  light_golden_rod_4: new Color(139, 129, 76),
-  light_golden_rod_yellow: new Color(250, 250, 210),
-  light_gray: new Color(211, 211, 211),
-  light_pink: new Color(255, 182, 193),
-  light_pink_1: new Color(255, 174, 185),
-  light_pink_2: new Color(238, 162, 173),
-  light_pink_3: new Color(205, 140, 149),
-  light_pink_4: new Color(139, 95, 101),
-  light_salmon: new Color(255, 160, 122),
-  light_salmon_2: new Color(238, 149, 114),
-  light_salmon_3: new Color(205, 129, 98),
-  light_salmon_4: new Color(139, 87, 66),
-  light_sea_green: new Color(32, 178, 170),
-  light_sky_blue: new Color(135, 206, 250),
-  light_sky_blue_1: new Color(176, 226, 255),
-  light_sky_blue_2: new Color(164, 211, 238),
-  light_sky_blue_3: new Color(141, 182, 205),
-  light_sky_blue_4: new Color(96, 123, 139),
-  light_slate_blue: new Color(132, 112, 255),
-  light_slate_gray: new Color(119, 136, 153),
-  light_steel_blue: new Color(176, 196, 222),
-  light_steel_blue_1: new Color(202, 225, 255),
-  light_steel_blue_2: new Color(188, 210, 238),
-  light_steel_blue_3: new Color(162, 181, 205),
-  light_steel_blue_4: new Color(110, 123, 139),
-  light_yellow: new Color(255, 255, 224),
-  light_yellow_2: new Color(238, 238, 209),
-  light_yellow_3: new Color(205, 205, 180),
-  light_yellow_4: new Color(139, 139, 122),
-  lime_green: new Color(50, 205, 50),
-  linen: new Color(250, 240, 230),
-  magenta: new Color(255, 0, 255),
-  magenta_2: new Color(238, 0, 238),
-  magenta_3: new Color(205, 0, 205),
-  magenta_4: new Color(139, 0, 139),
-  maroon: new Color(176, 48, 96),
-  maroon_1: new Color(255, 52, 179),
-  maroon_2: new Color(238, 48, 167),
-  maroon_3: new Color(205, 41, 144),
-  maroon_4: new Color(139, 28, 98),
-  medium: new Color(102, 205, 170),
-  medium_aquamarine: new Color(102, 205, 170),
-  medium_blue: new Color(0, 0, 205),
-  medium_orchid: new Color(186, 85, 211),
-  medium_orchid_1: new Color(224, 102, 255),
-  medium_orchid_2: new Color(209, 95, 238),
-  medium_orchid_3: new Color(180, 82, 205),
-  medium_orchid_4: new Color(122, 55, 139),
-  medium_purple: new Color(147, 112, 219),
-  medium_purple_1: new Color(171, 130, 255),
-  medium_purple_2: new Color(159, 121, 238),
-  medium_purple_3: new Color(137, 104, 205),
-  medium_purple_4: new Color(93, 71, 139),
-  medium_sea_green: new Color(60, 179, 113),
-  medium_slate_blue: new Color(123, 104, 238),
-  medium_spring_green: new Color(0, 250, 154),
-  medium_turquoise: new Color(72, 209, 204),
-  medium_violet_red: new Color(199, 21, 133),
-  midnight_blue: new Color(25, 25, 112),
-  mint_cream: new Color(245, 255, 250),
-  misty_rose: new Color(255, 228, 225),
-  misty_rose_2: new Color(238, 213, 210),
-  misty_rose_3: new Color(205, 183, 181),
-  misty_rose_4: new Color(139, 125, 123),
-  moccasin: new Color(255, 228, 181),
-  navajo_white: new Color(255, 222, 173),
-  navajo_white_2: new Color(238, 207, 161),
-  navajo_white_3: new Color(205, 179, 139),
-  navajo_white_4: new Color(139, 121, 94),
-  navy_blue: new Color(0, 0, 128),
-  old_lace: new Color(253, 245, 230),
-  olive_drab: new Color(107, 142, 35),
-  olive_drab_1: new Color(192, 255, 62),
-  olive_drab_2: new Color(179, 238, 58),
-  olive_drab_4: new Color(105, 139, 34),
-  orange: new Color(255, 165, 0),
-  orange_2: new Color(238, 154, 0),
-  orange_3: new Color(205, 133, 0),
-  orange_4: new Color(139, 90, 0),
-  orange_red: new Color(255, 69, 0),
-  orange_red_2: new Color(238, 64, 0),
-  orange_red_3: new Color(205, 55, 0),
-  orange_red_4: new Color(139, 37, 0),
-  orchid: new Color(218, 112, 214),
-  orchid_1: new Color(255, 131, 250),
-  orchid_2: new Color(238, 122, 233),
-  orchid_3: new Color(205, 105, 201),
-  orchid_4: new Color(139, 71, 137),
-  pale: new Color(219, 112, 147),
-  pale_golden_rod: new Color(238, 232, 170),
-  pale_green: new Color(152, 251, 152),
-  pale_green_1: new Color(154, 255, 154),
-  pale_green_2: new Color(144, 238, 144),
-  pale_green_3: new Color(124, 205, 124),
-  pale_green_4: new Color(84, 139, 84),
-  pale_turquoise: new Color(175, 238, 238),
-  pale_turquoise_1: new Color(187, 255, 255),
-  pale_turquoise_2: new Color(174, 238, 238),
-  pale_turquoise_3: new Color(150, 205, 205),
-  pale_turquoise_4: new Color(102, 139, 139),
-  pale_violet_red: new Color(219, 112, 147),
-  pale_violet_red_1: new Color(255, 130, 171),
-  pale_violet_red_2: new Color(238, 121, 159),
-  pale_violet_red_3: new Color(205, 104, 137),
-  pale_violet_red_4: new Color(139, 71, 93),
-  papaya_whip: new Color(255, 239, 213),
-  peach_puff: new Color(255, 218, 185),
-  peach_puff_2: new Color(238, 203, 173),
-  peach_puff_3: new Color(205, 175, 149),
-  peach_puff_4: new Color(139, 119, 101),
-  pink: new Color(255, 192, 203),
-  pink_1: new Color(255, 181, 197),
-  pink_2: new Color(238, 169, 184),
-  pink_3: new Color(205, 145, 158),
-  pink_4: new Color(139, 99, 108),
-  plum: new Color(221, 160, 221),
-  plum_1: new Color(255, 187, 255),
-  plum_2: new Color(238, 174, 238),
-  plum_3: new Color(205, 150, 205),
-  plum_4: new Color(139, 102, 139),
-  powder_blue: new Color(176, 224, 230),
-  purple: new Color(160, 32, 240),
-  purple_1: new Color(155, 48, 255),
-  purple_2: new Color(145, 44, 238),
-  purple_3: new Color(125, 38, 205),
-  purple_4: new Color(85, 26, 139),
-  rebecca_purple: new Color(102, 51, 153),
-  red: new Color(255, 0, 0),
-  red_2: new Color(238, 0, 0),
-  red_3: new Color(205, 0, 0),
-  red_4: new Color(139, 0, 0),
-  rosy_brown: new Color(188, 143, 143),
-  rosy_brown_1: new Color(255, 193, 193),
-  rosy_brown_2: new Color(238, 180, 180),
-  rosy_brown_3: new Color(205, 155, 155),
-  rosy_brown_4: new Color(139, 105, 105),
-  royal_blue: new Color(65, 105, 225),
-  royal_blue_1: new Color(72, 118, 255),
-  royal_blue_2: new Color(67, 110, 238),
-  royal_blue_3: new Color(58, 95, 205),
-  royal_blue_4: new Color(39, 64, 139),
-  saddle_brown: new Color(139, 69, 19),
-  salmon: new Color(250, 128, 114),
-  salmon_1: new Color(255, 140, 105),
-  salmon_2: new Color(238, 130, 98),
-  salmon_3: new Color(205, 112, 84),
-  salmon_4: new Color(139, 76, 57),
-  sandy_brown: new Color(244, 164, 96),
-  sea_green: new Color(84, 255, 159),
-  sea_green_2: new Color(78, 238, 148),
-  sea_green_3: new Color(67, 205, 128),
-  sea_green_4: new Color(46, 139, 87),
-  seashell: new Color(255, 245, 238),
-  seashell_2: new Color(238, 229, 222),
-  seashell_3: new Color(205, 197, 191),
-  seashell_4: new Color(139, 134, 130),
-  sienna: new Color(160, 82, 45),
-  sienna_1: new Color(255, 130, 71),
-  sienna_2: new Color(238, 121, 66),
-  sienna_3: new Color(205, 104, 57),
-  sienna_4: new Color(139, 71, 38),
-  sky_blue: new Color(135, 206, 235),
-  sky_blue_1: new Color(135, 206, 255),
-  sky_blue_2: new Color(126, 192, 238),
-  sky_blue_3: new Color(108, 166, 205),
-  sky_blue_4: new Color(74, 112, 139),
-  slate_blue: new Color(106, 90, 205),
-  slate_blue_1: new Color(131, 111, 255),
-  slate_blue_2: new Color(122, 103, 238),
-  slate_blue_3: new Color(105, 89, 205),
-  slate_blue_4: new Color(71, 60, 139),
-  slate_gray: new Color(112, 128, 144),
-  slate_gray_1: new Color(198, 226, 255),
-  slate_gray_2: new Color(185, 211, 238),
-  slate_gray_3: new Color(159, 182, 205),
-  slate_gray_4: new Color(108, 123, 139),
-  snow: new Color(255, 250, 250),
-  snow_2: new Color(238, 233, 233),
-  snow_3: new Color(205, 201, 201),
-  snow_4: new Color(139, 137, 137),
-  spring_green: new Color(0, 255, 127),
-  spring_green_2: new Color(0, 238, 118),
-  spring_green_3: new Color(0, 205, 102),
-  spring_green_4: new Color(0, 139, 69),
-  steel_blue: new Color(70, 130, 180),
-  steel_blue_1: new Color(99, 184, 255),
-  steel_blue_2: new Color(92, 172, 238),
-  steel_blue_3: new Color(79, 148, 205),
-  steel_blue_4: new Color(54, 100, 139),
-  tan: new Color(210, 180, 140),
-  tan_1: new Color(255, 165, 79),
-  tan_2: new Color(238, 154, 73),
-  tan_3: new Color(205, 133, 63),
-  tan_4: new Color(139, 90, 43),
-  thistle: new Color(216, 191, 216),
-  thistle_1: new Color(255, 225, 255),
-  thistle_2: new Color(238, 210, 238),
-  thistle_3: new Color(205, 181, 205),
-  thistle_4: new Color(139, 123, 139),
-  tomato: new Color(255, 99, 71),
-  tomato_2: new Color(238, 92, 66),
-  tomato_3: new Color(205, 79, 57),
-  tomato_4: new Color(139, 54, 38),
-  transparent: new Color(0, 0, 0, 0),
-  turquoise: new Color(64, 224, 208),
-  turquoise_1: new Color(0, 245, 255),
-  turquoise_2: new Color(0, 229, 238),
-  turquoise_3: new Color(0, 197, 205),
-  turquoise_4: new Color(0, 134, 139),
-  violet: new Color(238, 130, 238),
-  violet_red: new Color(208, 32, 144),
-  violet_red_1: new Color(255, 62, 150),
-  violet_red_2: new Color(238, 58, 140),
-  violet_red_3: new Color(205, 50, 120),
-  violet_red_4: new Color(139, 34, 82),
-  wheat: new Color(245, 222, 179),
-  wheat_1: new Color(255, 231, 186),
-  wheat_2: new Color(238, 216, 174),
-  wheat_3: new Color(205, 186, 150),
-  wheat_4: new Color(139, 126, 102),
-  white: new Color(255, 255, 255),
-  white_smoke: new Color(245, 245, 245),
-  yellow: new Color(255, 255, 0),
-  yellow_2: new Color(238, 238, 0),
-  yellow_3: new Color(205, 205, 0),
-  yellow_4: new Color(139, 139, 0),
-  yellow_green: new Color(154, 205, 50)
+  public static readonly alice_blue = new Color(240, 248, 255);
+  public static readonly antique_white = new Color(250, 235, 215);
+  public static readonly antique_white_1 = new Color(255, 239, 219);
+  public static readonly antique_white_2 = new Color(238, 223, 204);
+  public static readonly antique_white_3 = new Color(205, 192, 176);
+  public static readonly antique_white_4 = new Color(139, 131, 120);
+  public static readonly aquamarine = new Color(127, 255, 212);
+  public static readonly aquamarine_2 = new Color(118, 238, 198);
+  public static readonly aquamarine_4 = new Color(69, 139, 116);
+  public static readonly azure = new Color(240, 255, 255);
+  public static readonly azure_2 = new Color(224, 238, 238);
+  public static readonly azure_3 = new Color(193, 205, 205);
+  public static readonly azure_4 = new Color(131, 139, 139);
+  public static readonly beige = new Color(245, 245, 220);
+  public static readonly bisque = new Color(255, 228, 196);
+  public static readonly bisque_2 = new Color(238, 213, 183);
+  public static readonly bisque_3 = new Color(205, 183, 158);
+  public static readonly bisque_4 = new Color(139, 125, 107);
+  public static readonly black = new Color(0, 0, 0);
+  public static readonly blanched_almond = new Color(255, 235, 205);
+  public static readonly blue = new Color(0, 0, 255);
+  public static readonly blue_2 = new Color(0, 0, 238);
+  public static readonly blue_4 = new Color(0, 0, 139);
+  public static readonly blue_violet = new Color(138, 43, 226);
+  public static readonly brown = new Color(165, 42, 42);
+  public static readonly brown_1 = new Color(255, 64, 64);
+  public static readonly brown_2 = new Color(238, 59, 59);
+  public static readonly brown_3 = new Color(205, 51, 51);
+  public static readonly brown_4 = new Color(139, 35, 35);
+  public static readonly burlywood = new Color(222, 184, 135);
+  public static readonly burlywood_1 = new Color(255, 211, 155);
+  public static readonly burlywood_2 = new Color(238, 197, 145);
+  public static readonly burlywood_3 = new Color(205, 170, 125);
+  public static readonly burlywood_4 = new Color(139, 115, 85);
+  public static readonly cadet_blue = new Color(95, 158, 160);
+  public static readonly cadet_blue_1 = new Color(152, 245, 255);
+  public static readonly cadet_blue_2 = new Color(142, 229, 238);
+  public static readonly cadet_blue_3 = new Color(122, 197, 205);
+  public static readonly cadet_blue_4 = new Color(83, 134, 139);
+  public static readonly chartreuse = new Color(127, 255, 0);
+  public static readonly chartreuse_2 = new Color(118, 238, 0);
+  public static readonly chartreuse_3 = new Color(102, 205, 0);
+  public static readonly chartreuse_4 = new Color(69, 139, 0);
+  public static readonly chocolate = new Color(210, 105, 30);
+  public static readonly chocolate_1 = new Color(255, 127, 36);
+  public static readonly chocolate_2 = new Color(238, 118, 33);
+  public static readonly chocolate_3 = new Color(205, 102, 29);
+  public static readonly coral = new Color(255, 127, 80);
+  public static readonly coral_1 = new Color(255, 114, 86);
+  public static readonly coral_2 = new Color(238, 106, 80);
+  public static readonly coral_3 = new Color(205, 91, 69);
+  public static readonly coral_4 = new Color(139, 62, 47);
+  public static readonly cornflower_blue = new Color(100, 149, 237);
+  public static readonly corn_silk = new Color(255, 248, 220);
+  public static readonly corn_silk_2 = new Color(238, 232, 205);
+  public static readonly corn_silk_3 = new Color(205, 200, 177);
+  public static readonly corn_silk_4 = new Color(139, 136, 120);
+  public static readonly cyan = new Color(0, 255, 255);
+  public static readonly cyan_2 = new Color(0, 238, 238);
+  public static readonly cyan_3 = new Color(0, 205, 205);
+  public static readonly cyan_4 = new Color(0, 139, 139);
+  public static readonly dark_golden_rod = new Color(184, 134, 11);
+  public static readonly dark_golden_rod_1 = new Color(255, 185, 15);
+  public static readonly dark_golden_rod_2 = new Color(238, 173, 14);
+  public static readonly dark_golden_rod_3 = new Color(205, 149, 12);
+  public static readonly dark_golden_rod_4 = new Color(139, 101, 8);
+  public static readonly dark_green = new Color(0, 100, 0);
+  public static readonly dark_khaki = new Color(189, 183, 107);
+  public static readonly dark_olive_green = new Color(85, 107, 47);
+  public static readonly dark_olive_green_1 = new Color(202, 255, 112);
+  public static readonly dark_olive_green_2 = new Color(188, 238, 104);
+  public static readonly dark_olive_green_3 = new Color(162, 205, 90);
+  public static readonly dark_olive_green_4 = new Color(110, 139, 61);
+  public static readonly dark_orange = new Color(255, 140, 0);
+  public static readonly dark_orange_1 = new Color(255, 127, 0);
+  public static readonly dark_orange_2 = new Color(238, 118, 0);
+  public static readonly dark_orange_3 = new Color(205, 102, 0);
+  public static readonly dark_orange_4 = new Color(139, 69, 0);
+  public static readonly dark_orchid = new Color(153, 50, 204);
+  public static readonly dark_orchid_1 = new Color(191, 62, 255);
+  public static readonly dark_orchid_2 = new Color(178, 58, 238);
+  public static readonly dark_orchid_3 = new Color(154, 50, 205);
+  public static readonly dark_orchid_4 = new Color(104, 34, 139);
+  public static readonly dark_salmon = new Color(233, 150, 122);
+  public static readonly dark_sea_green = new Color(143, 188, 143);
+  public static readonly dark_sea_green_1 = new Color(193, 255, 193);
+  public static readonly dark_sea_green_2 = new Color(180, 238, 180);
+  public static readonly dark_sea_green_3 = new Color(155, 205, 155);
+  public static readonly dark_sea_green_4 = new Color(105, 139, 105);
+  public static readonly dark_slate_blue = new Color(72, 61, 139);
+  public static readonly dark_slate_gray = new Color(47, 79, 79);
+  public static readonly dark_slate_gray_1 = new Color(151, 255, 255);
+  public static readonly dark_slate_gray_2 = new Color(141, 238, 238);
+  public static readonly dark_slate_gray_3 = new Color(121, 205, 205);
+  public static readonly dark_slate_gray_4 = new Color(82, 139, 139);
+  public static readonly dark_turquoise = new Color(0, 206, 209);
+  public static readonly dark_violet = new Color(148, 0, 211);
+  public static readonly deep_pink = new Color(255, 20, 147);
+  public static readonly deep_pink_2 = new Color(238, 18, 137);
+  public static readonly deep_pink_3 = new Color(205, 16, 118);
+  public static readonly deep_pink_4 = new Color(139, 10, 80);
+  public static readonly deep_sky_blue = new Color(0, 191, 255);
+  public static readonly deep_sky_blue_2 = new Color(0, 178, 238);
+  public static readonly deep_sky_blue_3 = new Color(0, 154, 205);
+  public static readonly deep_sky_blue_4 = new Color(0, 104, 139);
+  public static readonly dim_gray = new Color(105, 105, 105);
+  public static readonly dodger_blue = new Color(30, 144, 255);
+  public static readonly dodger_blue_2 = new Color(28, 134, 238);
+  public static readonly dodger_blue_3 = new Color(24, 116, 205);
+  public static readonly dodger_blue_4 = new Color(16, 78, 139);
+  public static readonly fire_brick = new Color(178, 34, 34);
+  public static readonly fire_brick_1 = new Color(255, 48, 48);
+  public static readonly fire_brick_2 = new Color(238, 44, 44);
+  public static readonly fire_brick_3 = new Color(205, 38, 38);
+  public static readonly fire_brick_4 = new Color(139, 26, 26);
+  public static readonly floral_white = new Color(255, 250, 240);
+  public static readonly forest_green = new Color(34, 139, 34);
+  public static readonly gainsboro = new Color(220, 220, 220);
+  public static readonly ghost_white = new Color(248, 248, 255);
+  public static readonly gold = new Color(255, 215, 0);
+  public static readonly gold_2 = new Color(238, 201, 0);
+  public static readonly gold_3 = new Color(205, 173, 0);
+  public static readonly gold_4 = new Color(139, 117, 0);
+  public static readonly golden_rod = new Color(218, 165, 32);
+  public static readonly golden_rod_1 = new Color(255, 193, 37);
+  public static readonly golden_rod_2 = new Color(238, 180, 34);
+  public static readonly golden_rod_3 = new Color(205, 155, 29);
+  public static readonly golden_rod_4 = new Color(139, 105, 20);
+  public static readonly gray = new Color(190, 190, 190);
+  public static readonly gray_1 = new Color(3, 3, 3);
+  public static readonly gray_2 = new Color(5, 5, 5);
+  public static readonly gray_3 = new Color(8, 8, 8);
+  public static readonly gray_4 = new Color(10, 10, 10);
+  public static readonly gray_5 = new Color(13, 13, 13);
+  public static readonly gray_6 = new Color(15, 15, 15);
+  public static readonly gray_7 = new Color(18, 18, 18);
+  public static readonly gray_8 = new Color(20, 20, 20);
+  public static readonly gray_9 = new Color(23, 23, 23);
+  public static readonly gray_10 = new Color(26, 26, 26);
+  public static readonly gray_11 = new Color(28, 28, 28);
+  public static readonly gray_12 = new Color(31, 31, 31);
+  public static readonly gray_13 = new Color(33, 33, 33);
+  public static readonly gray_14 = new Color(36, 36, 36);
+  public static readonly gray_15 = new Color(38, 38, 38);
+  public static readonly gray_16 = new Color(41, 41, 41);
+  public static readonly gray_17 = new Color(43, 43, 43);
+  public static readonly gray_18 = new Color(46, 46, 46);
+  public static readonly gray_19 = new Color(48, 48, 48);
+  public static readonly gray_20 = new Color(51, 51, 51);
+  public static readonly gray_21 = new Color(54, 54, 54);
+  public static readonly gray_22 = new Color(56, 56, 56);
+  public static readonly gray_23 = new Color(59, 59, 59);
+  public static readonly gray_24 = new Color(61, 61, 61);
+  public static readonly gray_25 = new Color(64, 64, 64);
+  public static readonly gray_26 = new Color(66, 66, 66);
+  public static readonly gray_27 = new Color(69, 69, 69);
+  public static readonly gray_28 = new Color(71, 71, 71);
+  public static readonly gray_29 = new Color(74, 74, 74);
+  public static readonly gray_30 = new Color(77, 77, 77);
+  public static readonly gray_31 = new Color(79, 79, 79);
+  public static readonly gray_32 = new Color(82, 82, 82);
+  public static readonly gray_33 = new Color(84, 84, 84);
+  public static readonly gray_34 = new Color(87, 87, 87);
+  public static readonly gray_35 = new Color(89, 89, 89);
+  public static readonly gray_36 = new Color(92, 92, 92);
+  public static readonly gray_37 = new Color(94, 94, 94);
+  public static readonly gray_38 = new Color(97, 97, 97);
+  public static readonly gray_39 = new Color(99, 99, 99);
+  public static readonly gray_40 = new Color(102, 102, 102);
+  public static readonly gray_41 = new Color(105, 105, 105);
+  public static readonly gray_42 = new Color(107, 107, 107);
+  public static readonly gray_43 = new Color(110, 110, 110);
+  public static readonly gray_44 = new Color(112, 112, 112);
+  public static readonly gray_45 = new Color(115, 115, 115);
+  public static readonly gray_46 = new Color(117, 117, 117);
+  public static readonly gray_47 = new Color(120, 120, 120);
+  public static readonly gray_48 = new Color(122, 122, 122);
+  public static readonly gray_49 = new Color(125, 125, 125);
+  public static readonly gray_50 = new Color(127, 127, 127);
+  public static readonly gray_51 = new Color(130, 130, 130);
+  public static readonly gray_52 = new Color(133, 133, 133);
+  public static readonly gray_53 = new Color(135, 135, 135);
+  public static readonly gray_54 = new Color(138, 138, 138);
+  public static readonly gray_55 = new Color(140, 140, 140);
+  public static readonly gray_56 = new Color(143, 143, 143);
+  public static readonly gray_57 = new Color(145, 145, 145);
+  public static readonly gray_58 = new Color(148, 148, 148);
+  public static readonly gray_59 = new Color(150, 150, 150);
+  public static readonly gray_60 = new Color(153, 153, 153);
+  public static readonly gray_61 = new Color(156, 156, 156);
+  public static readonly gray_62 = new Color(158, 158, 158);
+  public static readonly gray_63 = new Color(161, 161, 161);
+  public static readonly gray_64 = new Color(163, 163, 163);
+  public static readonly gray_65 = new Color(166, 166, 166);
+  public static readonly gray_66 = new Color(168, 168, 168);
+  public static readonly gray_67 = new Color(171, 171, 171);
+  public static readonly gray_68 = new Color(173, 173, 173);
+  public static readonly gray_69 = new Color(176, 176, 176);
+  public static readonly gray_70 = new Color(179, 179, 179);
+  public static readonly gray_71 = new Color(181, 181, 181);
+  public static readonly gray_72 = new Color(184, 184, 184);
+  public static readonly gray_73 = new Color(186, 186, 186);
+  public static readonly gray_74 = new Color(189, 189, 189);
+  public static readonly gray_75 = new Color(191, 191, 191);
+  public static readonly gray_76 = new Color(194, 194, 194);
+  public static readonly gray_77 = new Color(196, 196, 196);
+  public static readonly gray_78 = new Color(199, 199, 199);
+  public static readonly gray_79 = new Color(201, 201, 201);
+  public static readonly gray_80 = new Color(204, 204, 204);
+  public static readonly gray_81 = new Color(207, 207, 207);
+  public static readonly gray_82 = new Color(209, 209, 209);
+  public static readonly gray_83 = new Color(212, 212, 212);
+  public static readonly gray_84 = new Color(214, 214, 214);
+  public static readonly gray_85 = new Color(217, 217, 217);
+  public static readonly gray_86 = new Color(219, 219, 219);
+  public static readonly gray_87 = new Color(222, 222, 222);
+  public static readonly gray_88 = new Color(224, 224, 224);
+  public static readonly gray_89 = new Color(227, 227, 227);
+  public static readonly gray_90 = new Color(229, 229, 229);
+  public static readonly gray_91 = new Color(232, 232, 232);
+  public static readonly gray_92 = new Color(235, 235, 235);
+  public static readonly gray_93 = new Color(237, 237, 237);
+  public static readonly gray_94 = new Color(240, 240, 240);
+  public static readonly gray_95 = new Color(242, 242, 242);
+  public static readonly gray_97 = new Color(247, 247, 247);
+  public static readonly gray_98 = new Color(250, 250, 250);
+  public static readonly gray_99 = new Color(252, 252, 252);
+  public static readonly green = new Color(0, 255, 0);
+  public static readonly green_2 = new Color(0, 238, 0);
+  public static readonly green_3 = new Color(0, 205, 0);
+  public static readonly green_4 = new Color(0, 139, 0);
+  public static readonly green_yellow = new Color(173, 255, 47);
+  public static readonly honeydew = new Color(240, 255, 240);
+  public static readonly honeydew_2 = new Color(224, 238, 224);
+  public static readonly honeydew_3 = new Color(193, 205, 193);
+  public static readonly honeydew_4 = new Color(131, 139, 131);
+  public static readonly hot_pink = new Color(255, 105, 180);
+  public static readonly hot_pink_1 = new Color(255, 110, 180);
+  public static readonly hot_pink_2 = new Color(238, 106, 167);
+  public static readonly hot_pink_3 = new Color(205, 96, 144);
+  public static readonly hot_pink_4 = new Color(139, 58, 98);
+  public static readonly indian_red = new Color(205, 92, 92);
+  public static readonly indian_red_1 = new Color(255, 106, 106);
+  public static readonly indian_red_2 = new Color(238, 99, 99);
+  public static readonly indian_red_3 = new Color(205, 85, 85);
+  public static readonly indian_red_4 = new Color(139, 58, 58);
+  public static readonly ivory = new Color(255, 255, 240);
+  public static readonly ivory_2 = new Color(238, 238, 224);
+  public static readonly ivory_3 = new Color(205, 205, 193);
+  public static readonly ivory_4 = new Color(139, 139, 131);
+  public static readonly khaki = new Color(240, 230, 140);
+  public static readonly khaki_1 = new Color(255, 246, 143);
+  public static readonly khaki_2 = new Color(238, 230, 133);
+  public static readonly khaki_3 = new Color(205, 198, 115);
+  public static readonly khaki_4 = new Color(139, 134, 78);
+  public static readonly lavender = new Color(230, 230, 250);
+  public static readonly lavender_blush = new Color(255, 240, 245);
+  public static readonly lavender_blush_2 = new Color(238, 224, 229);
+  public static readonly lavender_blush_3 = new Color(205, 193, 197);
+  public static readonly lavender_blush_4 = new Color(139, 131, 134);
+  public static readonly lawn_green = new Color(124, 252, 0);
+  public static readonly lemon_chiffon = new Color(255, 250, 205);
+  public static readonly lemon_chiffon_2 = new Color(238, 233, 191);
+  public static readonly lemon_chiffon_3 = new Color(205, 201, 165);
+  public static readonly lemon_chiffon_4 = new Color(139, 137, 112);
+  public static readonly light = new Color(238, 221, 130);
+  public static readonly light_blue = new Color(173, 216, 230);
+  public static readonly light_blue_1 = new Color(191, 239, 255);
+  public static readonly light_blue_2 = new Color(178, 223, 238);
+  public static readonly light_blue_3 = new Color(154, 192, 205);
+  public static readonly light_blue_4 = new Color(104, 131, 139);
+  public static readonly light_coral = new Color(240, 128, 128);
+  public static readonly light_cyan = new Color(224, 255, 255);
+  public static readonly light_cyan_2 = new Color(209, 238, 238);
+  public static readonly light_cyan_3 = new Color(180, 205, 205);
+  public static readonly light_cyan_4 = new Color(122, 139, 139);
+  public static readonly light_golden_rod = new Color(255, 236, 139);
+  public static readonly light_golden_rod_2 = new Color(238, 220, 130);
+  public static readonly light_golden_rod_3 = new Color(205, 190, 112);
+  public static readonly light_golden_rod_4 = new Color(139, 129, 76);
+  public static readonly light_golden_rod_yellow = new Color(250, 250, 210);
+  public static readonly light_gray = new Color(211, 211, 211);
+  public static readonly light_pink = new Color(255, 182, 193);
+  public static readonly light_pink_1 = new Color(255, 174, 185);
+  public static readonly light_pink_2 = new Color(238, 162, 173);
+  public static readonly light_pink_3 = new Color(205, 140, 149);
+  public static readonly light_pink_4 = new Color(139, 95, 101);
+  public static readonly light_salmon = new Color(255, 160, 122);
+  public static readonly light_salmon_2 = new Color(238, 149, 114);
+  public static readonly light_salmon_3 = new Color(205, 129, 98);
+  public static readonly light_salmon_4 = new Color(139, 87, 66);
+  public static readonly light_sea_green = new Color(32, 178, 170);
+  public static readonly light_sky_blue = new Color(135, 206, 250);
+  public static readonly light_sky_blue_1 = new Color(176, 226, 255);
+  public static readonly light_sky_blue_2 = new Color(164, 211, 238);
+  public static readonly light_sky_blue_3 = new Color(141, 182, 205);
+  public static readonly light_sky_blue_4 = new Color(96, 123, 139);
+  public static readonly light_slate_blue = new Color(132, 112, 255);
+  public static readonly light_slate_gray = new Color(119, 136, 153);
+  public static readonly light_steel_blue = new Color(176, 196, 222);
+  public static readonly light_steel_blue_1 = new Color(202, 225, 255);
+  public static readonly light_steel_blue_2 = new Color(188, 210, 238);
+  public static readonly light_steel_blue_3 = new Color(162, 181, 205);
+  public static readonly light_steel_blue_4 = new Color(110, 123, 139);
+  public static readonly light_yellow = new Color(255, 255, 224);
+  public static readonly light_yellow_2 = new Color(238, 238, 209);
+  public static readonly light_yellow_3 = new Color(205, 205, 180);
+  public static readonly light_yellow_4 = new Color(139, 139, 122);
+  public static readonly lime_green = new Color(50, 205, 50);
+  public static readonly linen = new Color(250, 240, 230);
+  public static readonly magenta = new Color(255, 0, 255);
+  public static readonly magenta_2 = new Color(238, 0, 238);
+  public static readonly magenta_3 = new Color(205, 0, 205);
+  public static readonly magenta_4 = new Color(139, 0, 139);
+  public static readonly maroon = new Color(176, 48, 96);
+  public static readonly maroon_1 = new Color(255, 52, 179);
+  public static readonly maroon_2 = new Color(238, 48, 167);
+  public static readonly maroon_3 = new Color(205, 41, 144);
+  public static readonly maroon_4 = new Color(139, 28, 98);
+  public static readonly medium = new Color(102, 205, 170);
+  public static readonly medium_aquamarine = new Color(102, 205, 170);
+  public static readonly medium_blue = new Color(0, 0, 205);
+  public static readonly medium_orchid = new Color(186, 85, 211);
+  public static readonly medium_orchid_1 = new Color(224, 102, 255);
+  public static readonly medium_orchid_2 = new Color(209, 95, 238);
+  public static readonly medium_orchid_3 = new Color(180, 82, 205);
+  public static readonly medium_orchid_4 = new Color(122, 55, 139);
+  public static readonly medium_purple = new Color(147, 112, 219);
+  public static readonly medium_purple_1 = new Color(171, 130, 255);
+  public static readonly medium_purple_2 = new Color(159, 121, 238);
+  public static readonly medium_purple_3 = new Color(137, 104, 205);
+  public static readonly medium_purple_4 = new Color(93, 71, 139);
+  public static readonly medium_sea_green = new Color(60, 179, 113);
+  public static readonly medium_slate_blue = new Color(123, 104, 238);
+  public static readonly medium_spring_green = new Color(0, 250, 154);
+  public static readonly medium_turquoise = new Color(72, 209, 204);
+  public static readonly medium_violet_red = new Color(199, 21, 133);
+  public static readonly midnight_blue = new Color(25, 25, 112);
+  public static readonly mint_cream = new Color(245, 255, 250);
+  public static readonly misty_rose = new Color(255, 228, 225);
+  public static readonly misty_rose_2 = new Color(238, 213, 210);
+  public static readonly misty_rose_3 = new Color(205, 183, 181);
+  public static readonly misty_rose_4 = new Color(139, 125, 123);
+  public static readonly moccasin = new Color(255, 228, 181);
+  public static readonly navajo_white = new Color(255, 222, 173);
+  public static readonly navajo_white_2 = new Color(238, 207, 161);
+  public static readonly navajo_white_3 = new Color(205, 179, 139);
+  public static readonly navajo_white_4 = new Color(139, 121, 94);
+  public static readonly navy_blue = new Color(0, 0, 128);
+  public static readonly old_lace = new Color(253, 245, 230);
+  public static readonly olive_drab = new Color(107, 142, 35);
+  public static readonly olive_drab_1 = new Color(192, 255, 62);
+  public static readonly olive_drab_2 = new Color(179, 238, 58);
+  public static readonly olive_drab_4 = new Color(105, 139, 34);
+  public static readonly orange = new Color(255, 165, 0);
+  public static readonly orange_2 = new Color(238, 154, 0);
+  public static readonly orange_3 = new Color(205, 133, 0);
+  public static readonly orange_4 = new Color(139, 90, 0);
+  public static readonly orange_red = new Color(255, 69, 0);
+  public static readonly orange_red_2 = new Color(238, 64, 0);
+  public static readonly orange_red_3 = new Color(205, 55, 0);
+  public static readonly orange_red_4 = new Color(139, 37, 0);
+  public static readonly orchid = new Color(218, 112, 214);
+  public static readonly orchid_1 = new Color(255, 131, 250);
+  public static readonly orchid_2 = new Color(238, 122, 233);
+  public static readonly orchid_3 = new Color(205, 105, 201);
+  public static readonly orchid_4 = new Color(139, 71, 137);
+  public static readonly pale = new Color(219, 112, 147);
+  public static readonly pale_golden_rod = new Color(238, 232, 170);
+  public static readonly pale_green = new Color(152, 251, 152);
+  public static readonly pale_green_1 = new Color(154, 255, 154);
+  public static readonly pale_green_2 = new Color(144, 238, 144);
+  public static readonly pale_green_3 = new Color(124, 205, 124);
+  public static readonly pale_green_4 = new Color(84, 139, 84);
+  public static readonly pale_turquoise = new Color(175, 238, 238);
+  public static readonly pale_turquoise_1 = new Color(187, 255, 255);
+  public static readonly pale_turquoise_2 = new Color(174, 238, 238);
+  public static readonly pale_turquoise_3 = new Color(150, 205, 205);
+  public static readonly pale_turquoise_4 = new Color(102, 139, 139);
+  public static readonly pale_violet_red = new Color(219, 112, 147);
+  public static readonly pale_violet_red_1 = new Color(255, 130, 171);
+  public static readonly pale_violet_red_2 = new Color(238, 121, 159);
+  public static readonly pale_violet_red_3 = new Color(205, 104, 137);
+  public static readonly pale_violet_red_4 = new Color(139, 71, 93);
+  public static readonly papaya_whip = new Color(255, 239, 213);
+  public static readonly peach_puff = new Color(255, 218, 185);
+  public static readonly peach_puff_2 = new Color(238, 203, 173);
+  public static readonly peach_puff_3 = new Color(205, 175, 149);
+  public static readonly peach_puff_4 = new Color(139, 119, 101);
+  public static readonly pink = new Color(255, 192, 203);
+  public static readonly pink_1 = new Color(255, 181, 197);
+  public static readonly pink_2 = new Color(238, 169, 184);
+  public static readonly pink_3 = new Color(205, 145, 158);
+  public static readonly pink_4 = new Color(139, 99, 108);
+  public static readonly plum = new Color(221, 160, 221);
+  public static readonly plum_1 = new Color(255, 187, 255);
+  public static readonly plum_2 = new Color(238, 174, 238);
+  public static readonly plum_3 = new Color(205, 150, 205);
+  public static readonly plum_4 = new Color(139, 102, 139);
+  public static readonly powder_blue = new Color(176, 224, 230);
+  public static readonly purple = new Color(160, 32, 240);
+  public static readonly purple_1 = new Color(155, 48, 255);
+  public static readonly purple_2 = new Color(145, 44, 238);
+  public static readonly purple_3 = new Color(125, 38, 205);
+  public static readonly purple_4 = new Color(85, 26, 139);
+  public static readonly rebecca_purple = new Color(102, 51, 153);
+  public static readonly red = new Color(255, 0, 0);
+  public static readonly red_2 = new Color(238, 0, 0);
+  public static readonly red_3 = new Color(205, 0, 0);
+  public static readonly red_4 = new Color(139, 0, 0);
+  public static readonly rosy_brown = new Color(188, 143, 143);
+  public static readonly rosy_brown_1 = new Color(255, 193, 193);
+  public static readonly rosy_brown_2 = new Color(238, 180, 180);
+  public static readonly rosy_brown_3 = new Color(205, 155, 155);
+  public static readonly rosy_brown_4 = new Color(139, 105, 105);
+  public static readonly royal_blue = new Color(65, 105, 225);
+  public static readonly royal_blue_1 = new Color(72, 118, 255);
+  public static readonly royal_blue_2 = new Color(67, 110, 238);
+  public static readonly royal_blue_3 = new Color(58, 95, 205);
+  public static readonly royal_blue_4 = new Color(39, 64, 139);
+  public static readonly saddle_brown = new Color(139, 69, 19);
+  public static readonly salmon = new Color(250, 128, 114);
+  public static readonly salmon_1 = new Color(255, 140, 105);
+  public static readonly salmon_2 = new Color(238, 130, 98);
+  public static readonly salmon_3 = new Color(205, 112, 84);
+  public static readonly salmon_4 = new Color(139, 76, 57);
+  public static readonly sandy_brown = new Color(244, 164, 96);
+  public static readonly sea_green = new Color(84, 255, 159);
+  public static readonly sea_green_2 = new Color(78, 238, 148);
+  public static readonly sea_green_3 = new Color(67, 205, 128);
+  public static readonly sea_green_4 = new Color(46, 139, 87);
+  public static readonly seashell = new Color(255, 245, 238);
+  public static readonly seashell_2 = new Color(238, 229, 222);
+  public static readonly seashell_3 = new Color(205, 197, 191);
+  public static readonly seashell_4 = new Color(139, 134, 130);
+  public static readonly sienna = new Color(160, 82, 45);
+  public static readonly sienna_1 = new Color(255, 130, 71);
+  public static readonly sienna_2 = new Color(238, 121, 66);
+  public static readonly sienna_3 = new Color(205, 104, 57);
+  public static readonly sienna_4 = new Color(139, 71, 38);
+  public static readonly sky_blue = new Color(135, 206, 235);
+  public static readonly sky_blue_1 = new Color(135, 206, 255);
+  public static readonly sky_blue_2 = new Color(126, 192, 238);
+  public static readonly sky_blue_3 = new Color(108, 166, 205);
+  public static readonly sky_blue_4 = new Color(74, 112, 139);
+  public static readonly slate_blue = new Color(106, 90, 205);
+  public static readonly slate_blue_1 = new Color(131, 111, 255);
+  public static readonly slate_blue_2 = new Color(122, 103, 238);
+  public static readonly slate_blue_3 = new Color(105, 89, 205);
+  public static readonly slate_blue_4 = new Color(71, 60, 139);
+  public static readonly slate_gray = new Color(112, 128, 144);
+  public static readonly slate_gray_1 = new Color(198, 226, 255);
+  public static readonly slate_gray_2 = new Color(185, 211, 238);
+  public static readonly slate_gray_3 = new Color(159, 182, 205);
+  public static readonly slate_gray_4 = new Color(108, 123, 139);
+  public static readonly snow = new Color(255, 250, 250);
+  public static readonly snow_2 = new Color(238, 233, 233);
+  public static readonly snow_3 = new Color(205, 201, 201);
+  public static readonly snow_4 = new Color(139, 137, 137);
+  public static readonly spring_green = new Color(0, 255, 127);
+  public static readonly spring_green_2 = new Color(0, 238, 118);
+  public static readonly spring_green_3 = new Color(0, 205, 102);
+  public static readonly spring_green_4 = new Color(0, 139, 69);
+  public static readonly steel_blue = new Color(70, 130, 180);
+  public static readonly steel_blue_1 = new Color(99, 184, 255);
+  public static readonly steel_blue_2 = new Color(92, 172, 238);
+  public static readonly steel_blue_3 = new Color(79, 148, 205);
+  public static readonly steel_blue_4 = new Color(54, 100, 139);
+  public static readonly tan = new Color(210, 180, 140);
+  public static readonly tan_1 = new Color(255, 165, 79);
+  public static readonly tan_2 = new Color(238, 154, 73);
+  public static readonly tan_3 = new Color(205, 133, 63);
+  public static readonly tan_4 = new Color(139, 90, 43);
+  public static readonly thistle = new Color(216, 191, 216);
+  public static readonly thistle_1 = new Color(255, 225, 255);
+  public static readonly thistle_2 = new Color(238, 210, 238);
+  public static readonly thistle_3 = new Color(205, 181, 205);
+  public static readonly thistle_4 = new Color(139, 123, 139);
+  public static readonly tomato = new Color(255, 99, 71);
+  public static readonly tomato_2 = new Color(238, 92, 66);
+  public static readonly tomato_3 = new Color(205, 79, 57);
+  public static readonly tomato_4 = new Color(139, 54, 38);
+  public static readonly transparent = new Color(0, 0, 0, 0);
+  public static readonly turquoise = new Color(64, 224, 208);
+  public static readonly turquoise_1 = new Color(0, 245, 255);
+  public static readonly turquoise_2 = new Color(0, 229, 238);
+  public static readonly turquoise_3 = new Color(0, 197, 205);
+  public static readonly turquoise_4 = new Color(0, 134, 139);
+  public static readonly violet = new Color(238, 130, 238);
+  public static readonly violet_red = new Color(208, 32, 144);
+  public static readonly violet_red_1 = new Color(255, 62, 150);
+  public static readonly violet_red_2 = new Color(238, 58, 140);
+  public static readonly violet_red_3 = new Color(205, 50, 120);
+  public static readonly violet_red_4 = new Color(139, 34, 82);
+  public static readonly wheat = new Color(245, 222, 179);
+  public static readonly wheat_1 = new Color(255, 231, 186);
+  public static readonly wheat_2 = new Color(238, 216, 174);
+  public static readonly wheat_3 = new Color(205, 186, 150);
+  public static readonly wheat_4 = new Color(139, 126, 102);
+  public static readonly white = new Color(255, 255, 255);
+  public static readonly white_smoke = new Color(245, 245, 245);
+  public static readonly yellow = new Color(255, 255, 0);
+  public static readonly yellow_2 = new Color(238, 238, 0);
+  public static readonly yellow_3 = new Color(205, 205, 0);
+  public static readonly yellow_4 = new Color(139, 139, 0);
+  public static readonly yellow_green = new Color(154, 205, 50)
 };
