@@ -14,5 +14,5 @@ export interface IPropertyFiltering {
     /**
      * Вариант фильтра
      */
-    variant?: 'text' | 'select' | 'multi-select' | 'range' | 'checkbox';
+    variant?: 'text' | 'select' | 'multi-select' | 'range' | 'checkbox' | 'date' | 'date-range' | 'autocomplete';
 }

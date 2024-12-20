@@ -12,9 +12,16 @@ export interface IFilterFunctionDesc
 }
 
 /**
+ * Тип функция для фильтрации данных
+ */
+export type TFilterFunction = 'Equals' | 'NotEqual' | 'LessThan' | 'LessThanOrEqual' | 'GreaterThan'
+  | 'GreaterThanOrEqual' | 'Between' | 'Contains' | 'StartsWith' | 'EndsWith' | 'Like' | 'NotEmpty'
+  | 'Empty' | 'IncludeAny' | 'IncludeAll' | 'IncludeEquals' | 'IncludeNone';
+
+/**
  * Перечисление для типа функции для фильтрации данных
  */
-export const FilterFunctionEnum:Record<string, IFilterFunctionDesc> =
+export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionDesc> =
   {
     /**
      * Равно аргументу
@@ -127,14 +134,38 @@ export const FilterFunctionEnum:Record<string, IFilterFunctionDesc> =
     },
 
     /**
-     * Не равно пустой строке. Аргумент пустая строка
+     * Аргумент(строка) должна сравнивается с учетом оператора Like
+     */
+    Like:
+    {
+      id: 10,
+      type: 'Like',
+      abbr: localizationCore.filters.like,
+      desc: localizationCore.filters.like
+    },
+
+    /**
+     * Не равно пустой или NULL строке. Аргумент НЕ требуется.
+     * Не равно значению NULL для иных объектов.
      */
     NotEmpty:
     {
-      id: 10,
+      id: 11,
       type: 'NotEmpty',
       abbr: localizationCore.filters.notEmpty,
       desc: localizationCore.filters.notEmpty
+    },
+
+    /**
+     * Равно пустой или NULL строке. Аргумент НЕ требуется.
+     * Равно значению NULL для иных объектов.
+     */
+    Empty:
+    {
+      id: 12,
+      type: 'Empty',
+      abbr: localizationCore.filters.empty,
+      desc: localizationCore.filters.empty
     },
 
     /**
@@ -142,7 +173,7 @@ export const FilterFunctionEnum:Record<string, IFilterFunctionDesc> =
      */
     IncludeAny:
     {
-      id: 11,
+      id: 13,
       type: 'IncludeAny',
       abbr: localizationCore.filters.includeAny,
       desc: localizationCore.filters.includeAny
@@ -153,7 +184,7 @@ export const FilterFunctionEnum:Record<string, IFilterFunctionDesc> =
      */
     IncludeAll:
     {
-      id: 12,
+      id: 14,
       type: 'IncludeAll',
       abbr: localizationCore.filters.includeAll,
       desc: localizationCore.filters.includeAll
@@ -164,7 +195,7 @@ export const FilterFunctionEnum:Record<string, IFilterFunctionDesc> =
      */
     IncludeEquals:
     {
-      id: 13,
+      id: 15,
       type: 'IncludeEquals',
       abbr: localizationCore.filters.includeEquals,
       desc: localizationCore.filters.includeEquals
@@ -175,14 +206,9 @@ export const FilterFunctionEnum:Record<string, IFilterFunctionDesc> =
      */
     IncludeNone:
     {
-      id: 14,
+      id: 16,
       type: 'IncludeNone',
       abbr: localizationCore.filters.includeNone,
       desc: localizationCore.filters.includeNone
     }
   } as const;
-
-/**
- * Тип функция для фильтрации данных
- */
-export type TFilterFunction = keyof typeof FilterFunctionEnum;

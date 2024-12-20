@@ -19,7 +19,7 @@ export class RequestHelper
         let index = 0;
         request.sorting.forEach((value) =>
         {
-          search.append(`sorting[${index}].propertyName`, value.propertyName);
+          search.append(`sorting[${index}].propertyPath`, value.propertyPath);
           if (value.isDesc && value.isDesc === true)
           {
             search.append(`sorting[${index}].isDesc`, 'true');
@@ -35,7 +35,7 @@ export class RequestHelper
           if (filter.value)
           {
             const value = filter.value;
-            search.append(`filtering[${index}].propertyName`, filter.propertyName);
+            search.append(`filtering[${index}].propertyPath`, filter.propertyPath);
             search.append(`filtering[${index}].function`, filter.function.id.toString());
             search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
             search.append(`filtering[${index}].value`, value);
@@ -51,7 +51,7 @@ export class RequestHelper
             if (filter.values)
             {
               const values = filter.values;
-              search.append(`filtering[${index}].propertyName`, filter.propertyName);
+              search.append(`filtering[${index}].propertyPath`, filter.propertyPath);
               search.append(`filtering[${index}].function`, filter.function.id.toString());
               search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
               for (let iv = 0; iv < values.length; iv++) 

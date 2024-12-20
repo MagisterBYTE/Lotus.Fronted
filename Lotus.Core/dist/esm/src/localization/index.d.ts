@@ -45,7 +45,9 @@ export declare const localizationCore: {
         contains: string;
         startsWith: string;
         endsWith: string;
+        like: string;
         notEmpty: string;
+        empty: string;
         includeAny: string;
         includeAll: string;
         includeEquals: string;

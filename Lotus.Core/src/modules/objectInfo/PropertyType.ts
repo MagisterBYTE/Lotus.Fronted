@@ -8,9 +8,14 @@ export interface IPropertyTypeDesc
 }
 
 /**
- * Перечисление для типа свойства
+ * Тип свойства
  */
-export const PropertyTypeEnum:Record<string, IPropertyTypeDesc> =
+export type TPropertyType = 'Boolean' | 'Integer' | 'Double' | 'String' | 'DateTime' | 'Guid';
+
+/**
+ * Дескрипторы (перечисление) для типа свойства
+ */
+export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
   {
     /**
      * Логический тип
@@ -22,7 +27,7 @@ export const PropertyTypeEnum:Record<string, IPropertyTypeDesc> =
     },
 
     /**
-     * Целый тип
+     * Целый тип (byte, short, int, long, enum)
      */
     Integer:
     {
@@ -31,12 +36,12 @@ export const PropertyTypeEnum:Record<string, IPropertyTypeDesc> =
     },
 
     /**
-     * Вещественный тип
+     * Вещественный тип (float, double, decimal)
      */
-    Float:
+    Double:
     {
       id: 2,
-      type: 'Float'
+      type: 'Double'
     },
 
     /**
@@ -49,20 +54,11 @@ export const PropertyTypeEnum:Record<string, IPropertyTypeDesc> =
     },
 
     /**
-     * Перечисление
-     */
-    Enum:
-    {
-      id: 4,
-      type: 'Enum'
-    },
-
-    /**
      * Тип даты-времени
      */
     DateTime:
     {
-      id: 5,
+      id: 4,
       type: 'DateTime'
     },
 
@@ -71,21 +67,7 @@ export const PropertyTypeEnum:Record<string, IPropertyTypeDesc> =
      */
     Guid:
     {
-      id: 6,
+      id: 5,
       type: 'Guid'
-    },
-
-    /**
-     * Объект
-     */
-    Object:
-    {
-      id: 7,
-      type: 'Object'
     }
   } as const;
-
-/**
- * Тип свойства
- */
-export type TPropertyType = keyof typeof PropertyTypeEnum;

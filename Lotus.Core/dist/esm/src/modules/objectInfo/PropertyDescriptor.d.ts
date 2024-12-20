@@ -13,6 +13,10 @@ export interface IPropertyDescriptor {
      */
     fieldName: string;
     /**
+     * Имя свойства на бэке (если оно есть использует оно, а не fieldName)
+     */
+    fieldNameBackend?: string;
+    /**
      * Наименования свойства
      */
     name: string;
@@ -28,6 +32,14 @@ export interface IPropertyDescriptor {
      * Типа свойства - массив
      */
     isArray?: boolean;
+    /**
+     * Статус типа свойства Nullable.
+     */
+    isNullable?: boolean;
+    /**
+     * Только для даты - рассматривать выбор даты как выбор дня
+     */
+    isDateAsDay?: boolean;
     /**
      * Опции возможных значений свойства
      */

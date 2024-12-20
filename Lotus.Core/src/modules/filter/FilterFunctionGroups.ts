@@ -1,17 +1,17 @@
-import { FilterFunctionEnum, IFilterFunctionDesc } from './FilterFunction';
+import { FilterFunctionDescriptors, IFilterFunctionDesc } from './FilterFunction';
 
 /**
  * Группа функций фильтрации для числовых типов
  */
 export const GroupFilterFunctionsNumber: readonly IFilterFunctionDesc[] =
   [
-    FilterFunctionEnum.Equals,
-    FilterFunctionEnum.NotEqual,
-    FilterFunctionEnum.LessThan,
-    FilterFunctionEnum.LessThanOrEqual,
-    FilterFunctionEnum.GreaterThan,
-    FilterFunctionEnum.GreaterThanOrEqual,
-    FilterFunctionEnum.Between
+    FilterFunctionDescriptors.Equals,
+    FilterFunctionDescriptors.NotEqual,
+    FilterFunctionDescriptors.LessThan,
+    FilterFunctionDescriptors.LessThanOrEqual,
+    FilterFunctionDescriptors.GreaterThan,
+    FilterFunctionDescriptors.GreaterThanOrEqual,
+    FilterFunctionDescriptors.Between
   ];
 
 /**
@@ -19,12 +19,12 @@ export const GroupFilterFunctionsNumber: readonly IFilterFunctionDesc[] =
  */
 export const GroupFilterFunctionsString: readonly IFilterFunctionDesc[] =
   [
-    FilterFunctionEnum.Equals,
-    FilterFunctionEnum.Contains,
-    FilterFunctionEnum.StartsWith,
-    FilterFunctionEnum.EndsWith,
-    FilterFunctionEnum.NotEqual,
-    FilterFunctionEnum.NotEmpty
+    FilterFunctionDescriptors.Equals,
+    FilterFunctionDescriptors.Contains,
+    FilterFunctionDescriptors.StartsWith,
+    FilterFunctionDescriptors.EndsWith,
+    FilterFunctionDescriptors.NotEqual,
+    FilterFunctionDescriptors.NotEmpty
   ];
 
 /**
@@ -32,8 +32,8 @@ export const GroupFilterFunctionsString: readonly IFilterFunctionDesc[] =
  */
 export const GroupFilterFunctionsEnum: readonly IFilterFunctionDesc[] =
   [
-    FilterFunctionEnum.Equals,
-    FilterFunctionEnum.NotEqual
+    FilterFunctionDescriptors.Equals,
+    FilterFunctionDescriptors.NotEqual
   ];
 
 /**
@@ -41,8 +41,8 @@ export const GroupFilterFunctionsEnum: readonly IFilterFunctionDesc[] =
  */
 export const GroupFilterFunctionsArray: readonly IFilterFunctionDesc[] =
   [
-    FilterFunctionEnum.IncludeAll,
-    FilterFunctionEnum.IncludeAny,
-    FilterFunctionEnum.IncludeEquals,
-    FilterFunctionEnum.IncludeNone
+    FilterFunctionDescriptors.IncludeAll,
+    FilterFunctionDescriptors.IncludeAny,
+    FilterFunctionDescriptors.IncludeEquals,
+    FilterFunctionDescriptors.IncludeNone
   ];

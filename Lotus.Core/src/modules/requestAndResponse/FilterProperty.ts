@@ -7,9 +7,10 @@ import { IFilterFunctionDesc } from 'modules/filter';
 export interface IFilterProperty
 {
   /**
-   * Имя свойства по которому осуществляется фильтрация
+   * Имя/путь свойства/поля по которому осуществляется фильтрация.
+   * Для доступа к вложенным свойствам в качестве разделителя используется точка
    */
-  propertyName: string;
+  propertyPath: string;
 
   /**
    * Функция для фильтрации
@@ -32,6 +33,11 @@ export interface IFilterProperty
   isSensitiveCase?: boolean;
 
   /**
+   * Статус типа свойства Nullable.
+   */
+  isNullable?: boolean;
+
+  /**
    * Значение
    */
   value?: string;
@@ -40,7 +46,6 @@ export interface IFilterProperty
    * Массив значений
    */
   values?: string[];
-
 }
 
 /**

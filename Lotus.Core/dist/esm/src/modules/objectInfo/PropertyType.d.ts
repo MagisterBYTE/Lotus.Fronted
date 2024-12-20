@@ -6,10 +6,10 @@ export interface IPropertyTypeDesc {
     type: TPropertyType;
 }
 /**
- * Перечисление для типа свойства
- */
-export declare const PropertyTypeEnum: Record<string, IPropertyTypeDesc>;
-/**
  * Тип свойства
  */
-export type TPropertyType = keyof typeof PropertyTypeEnum;
+export type TPropertyType = 'Boolean' | 'Integer' | 'Double' | 'String' | 'DateTime' | 'Guid';
+/**
+ * Дескрипторы (перечисление) для типа свойства
+ */
+export declare const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc>;

@@ -89,25 +89,25 @@ export abstract class ApiService
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any    
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected get<TResponse = any>(path: string, config?: any) 
   {
     return this.api.get<TResponse>(path, config);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected post<TResponse = any, TRequest = any>(path: string, payload: TRequest, config?: any)
   {
     return this.api.post<TResponse>(path, payload, config);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected put<TResponse = any, TRequest = any>(path: string, payload: TRequest, config?: any) 
   {
     return this.api.put<TResponse>(path, payload, config);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected delete<TResponse = any>(path: string, config?: any) 
   {
     return this.api.delete<TResponse>(path, config);

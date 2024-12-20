@@ -1,4 +1,13 @@
 export declare class ObjectHelper {
+    private static readonly ALL_DIGITS_REGEX;
+    private static readonly PATH_SPLIT_REGEX;
+    /**
+     * Получить значения свойства у объекта source по пути propertyPath
+     * @param source Объект
+     * @param propertyPath Имя/путь свойства
+     * @param shouldThrow Генерировать исключение если свойство не найдено
+     */
+    static getValueByPropertyPath<TValue = any>(source: any, propertyPath: string, shouldThrow?: boolean): TValue | undefined;
     /**
      * Проверка значения на undefined или null
      * @param value Проверяемое значение
@@ -39,4 +48,6 @@ export declare class ObjectHelper {
      * @returns {*}
      */
     static getPropertyDefinitionObject(scope: object, prop: string): any;
+    private static isNum;
+    private static splitPath;
 }

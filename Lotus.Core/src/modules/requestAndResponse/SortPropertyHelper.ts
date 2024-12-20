@@ -18,7 +18,7 @@ export class SortPropertyHelper
   {
     const propertyType: TPropertyType = sortProperty.propertyTypeDesc!.type;
     const result: TItem[] = [...massive];
-    const key = StringHelper.lowercaseFirstLetter(sortProperty.propertyName);
+    const key = StringHelper.lowercaseFirstLetter(sortProperty.propertyPath);
 
     switch (propertyType)
     {
@@ -32,7 +32,7 @@ export class SortPropertyHelper
           });
         } break;
       case 'Integer':
-      case 'Float':
+      case 'Double':
         {
           return result.sort((a, b) =>
           {
@@ -57,7 +57,6 @@ export class SortPropertyHelper
             return status
           });
         } break;
-      case 'Enum': return result;
       case 'DateTime':
         {
           return result.sort((a, b) =>
@@ -67,7 +66,6 @@ export class SortPropertyHelper
             return DateHelper.compare(l, r, sortProperty.isDesc);
           });
         } break;
-      case 'Object':
     }
 
     return massive;

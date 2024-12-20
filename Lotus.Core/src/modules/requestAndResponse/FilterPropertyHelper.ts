@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TPropertyType } from 'modules/objectInfo/PropertyType';
 import { TFilterFunction } from 'modules/filter';
 import { BooleanHelper } from 'helpers/BooleanHelper';
 import { DateHelper } from 'helpers/DateHelper';
 import { StringHelper } from 'helpers/StringHelper';
+import { ObjectHelper } from 'helpers';
 import { IFilterObject, IFilterProperty } from './FilterProperty';
 
 export class FilterPropertyHelper
@@ -67,7 +67,7 @@ export class FilterPropertyHelper
     {
       const propertyType: TPropertyType = filterProperty.propertyTypeDesc.type;
       const filterFunction: TFilterFunction = filterProperty.function.type;
-      const key = StringHelper.lowercaseFirstLetter(filterProperty.propertyName);
+      const key = StringHelper.lowercaseFirstLetter(filterProperty.propertyPath);
 
       switch (propertyType)
       {
@@ -75,24 +75,26 @@ export class FilterPropertyHelper
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => BooleanHelper.parse(((x as any)[key])) === BooleanHelper.parse(filterProperty.value));
-              case 'NotEqual': return massive.filter(x => BooleanHelper.parse(((x as any)[key])) !== BooleanHelper.parse(filterProperty.value));
+              case 'Equals': return massive.filter(x => BooleanHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) === BooleanHelper.parse(filterProperty.value));
+              
+              // eslint-disable-next-line max-len
+              case 'NotEqual': return massive.filter(x => BooleanHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) !== BooleanHelper.parse(filterProperty.value));
             }
           } break;
         case 'Integer':
-        case 'Float':
+        case 'Double':
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => Number(((x as any)[key])) === Number(filterProperty.value));
-              case 'NotEqual': return massive.filter(x => Number(((x as any)[key])) !== Number(filterProperty.value));
-              case 'LessThan': return massive.filter(x => Number(((x as any)[key])) < Number(filterProperty.value));
-              case 'LessThanOrEqual': return massive.filter(x => Number(((x as any)[key])) <= Number(filterProperty.value));
-              case 'GreaterThan': return massive.filter(x => Number(((x as any)[key])) > Number(filterProperty.value));
-              case 'GreaterThanOrEqual': return massive.filter(x => Number(((x as any)[key])) >= Number(filterProperty.value));
+              case 'Equals': return massive.filter(x => Number((ObjectHelper.getValueByPropertyPath(x, key))) === Number(filterProperty.value));
+              case 'NotEqual': return massive.filter(x => Number((ObjectHelper.getValueByPropertyPath(x, key))) !== Number(filterProperty.value));
+              case 'LessThan': return massive.filter(x => Number((ObjectHelper.getValueByPropertyPath(x, key))) < Number(filterProperty.value));
+              case 'LessThanOrEqual': return massive.filter(x => Number((ObjectHelper.getValueByPropertyPath(x, key))) <= Number(filterProperty.value));
+              case 'GreaterThan': return massive.filter(x => Number((ObjectHelper.getValueByPropertyPath(x, key))) > Number(filterProperty.value));
+              case 'GreaterThanOrEqual': return massive.filter(x => Number((ObjectHelper.getValueByPropertyPath(x, key))) >= Number(filterProperty.value));
               case 'Between': return massive.filter(x => 
               {
-                const check = Number(((x as any)[key]))
+                const check = Number((ObjectHelper.getValueByPropertyPath(x, key)))
                 const left = Number(filterProperty.values![0])
                 const right = Number(filterProperty.values![1])
                 return (check > left) && (check < right);
@@ -104,33 +106,32 @@ export class FilterPropertyHelper
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => String(((x as any)[key])) === filterProperty.value);
-              case 'NotEqual': return massive.filter(x => String(((x as any)[key])) !== filterProperty.value);
-              case 'Contains': return massive.filter(x => (String(((x as any)[key]))).includes(filterProperty.value!));
-              case 'StartsWith': return massive.filter(x => (String(((x as any)[key]))).startsWith(filterProperty.value!));
-              case 'EndsWith': return massive.filter(x => (String(((x as any)[key]))).endsWith(filterProperty.value!));
-              case 'NotEmpty': return massive.filter(x => StringHelper.isNullOrEmpty(String(((x as any)[key]))) === false);
-              case 'LessThan': return massive.filter(x => String(((x as any)[key])).localeCompare(filterProperty.value!) < 0);
-              case 'LessThanOrEqual': return massive.filter(x => String(((x as any)[key])).localeCompare(filterProperty.value!) <= 0);
-              case 'GreaterThan': return massive.filter(x => String(((x as any)[key])).localeCompare(filterProperty.value!) > 0);
-              case 'GreaterThanOrEqual': return massive.filter(x => String(((x as any)[key])).localeCompare(filterProperty.value!) >= 0);
+              case 'Equals': return massive.filter(x => String((ObjectHelper.getValueByPropertyPath(x, key))) === filterProperty.value);
+              case 'NotEqual': return massive.filter(x => String((ObjectHelper.getValueByPropertyPath(x, key))) !== filterProperty.value);
+              case 'Contains': return massive.filter(x => (String((ObjectHelper.getValueByPropertyPath(x, key)))).includes(filterProperty.value!));
+              case 'StartsWith': return massive.filter(x => (String((ObjectHelper.getValueByPropertyPath(x, key)))).startsWith(filterProperty.value!));
+              case 'EndsWith': return massive.filter(x => (String((ObjectHelper.getValueByPropertyPath(x, key)))).endsWith(filterProperty.value!));
+              case 'NotEmpty': return massive.filter(x => StringHelper.isNullOrEmpty(String((ObjectHelper.getValueByPropertyPath(x, key)))) === false);
+              case 'LessThan': return massive.filter(x => String((ObjectHelper.getValueByPropertyPath(x, key))).localeCompare(filterProperty.value!) < 0);
+              case 'LessThanOrEqual': return massive.filter(x => String((ObjectHelper.getValueByPropertyPath(x, key))).localeCompare(filterProperty.value!) <= 0);
+              case 'GreaterThan': return massive.filter(x => String((ObjectHelper.getValueByPropertyPath(x, key))).localeCompare(filterProperty.value!) > 0);
+              case 'GreaterThanOrEqual': return massive.filter(x => String((ObjectHelper.getValueByPropertyPath(x, key))).localeCompare(filterProperty.value!) >= 0);
             }
           } break;
-        case 'Enum': return massive;
         case 'DateTime':
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => DateHelper.parse(((x as any)[key])) === DateHelper.parse(filterProperty.value!));
-              case 'NotEqual': return massive.filter(x => DateHelper.parse(((x as any)[key])) !== DateHelper.parse(filterProperty.value!));
-              case 'LessThan': return massive.filter(x => DateHelper.parse(((x as any)[key])) < DateHelper.parse(filterProperty.value!));
-              case 'LessThanOrEqual': return massive.filter(x => DateHelper.parse(((x as any)[key])) <= DateHelper.parse(filterProperty.value!));
-              case 'GreaterThan': return massive.filter(x => DateHelper.parse(((x as any)[key])) > DateHelper.parse(filterProperty.value!));
+              case 'Equals': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) === DateHelper.parse(filterProperty.value!));
+              case 'NotEqual': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) !== DateHelper.parse(filterProperty.value!));
+              case 'LessThan': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) < DateHelper.parse(filterProperty.value!));
+              // eslint-disable-next-line max-len
+              case 'LessThanOrEqual': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) <= DateHelper.parse(filterProperty.value!));
+              case 'GreaterThan': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) > DateHelper.parse(filterProperty.value!));
               case 'GreaterThanOrEqual':
-                return massive.filter(x => DateHelper.parse(((x as any)[key])) >= DateHelper.parse(filterProperty.value!));
+                return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) >= DateHelper.parse(filterProperty.value!));
             }
           } break;
-        case 'Object':
       }
     }
 

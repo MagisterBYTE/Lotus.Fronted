@@ -1,5 +1,6 @@
 import { ArrayHelper } from 'helpers/ArrayHelper';
 import { TKey } from 'types/Key';
+import { ObjectHelper } from 'helpers';
 import { IOption } from './Option';
 
 export class OptionHelper
@@ -7,7 +8,7 @@ export class OptionHelper
   /**
    * Преобразование в типизированный массив
    * @param options Список опций
-   * @returns 
+   * @returns
    */
   public static convertToNumber(options: IOption[]): IOption[]
   {
@@ -23,7 +24,7 @@ export class OptionHelper
   /**
    * Преобразование в типизированный массив
    * @param options Список опций
-   * @returns 
+   * @returns
    */
   public static convertToString(options: IOption[]): IOption[]
   {
@@ -40,13 +41,13 @@ export class OptionHelper
    * Получение корректного значения по умолчанию или начального значения
    * @param options Список опций
    * @param initialSelectedValue Начальное значение
-   * @returns 
+   * @returns
    */
   public static getDefaultValue<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): TValueOption
   {
-    if (initialSelectedValue)
+    if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false)
     {
-      return initialSelectedValue;
+      return initialSelectedValue!;
     }
 
     return options[0]!.value as TValueOption;
@@ -56,14 +57,14 @@ export class OptionHelper
    * Получение корректного текста по умолчанию или начального значения текста
    * @param options Список опций
    * @param initialSelectedValue Начальное значение
-   * @returns 
+   * @returns
    */
   public static getDefaultText<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): string
   {
-    if (initialSelectedValue)
+    if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false)
     {
       let text = '';
-      options.forEach(element => 
+      options.forEach((element) =>
       {
         if (element.value === initialSelectedValue)
         {
@@ -81,16 +82,17 @@ export class OptionHelper
    * Получение корректной иконки по умолчанию или начальной иконки
    * @param options Список опций
    * @param initialSelectedValue Начальное значение
-   * @returns 
+   * @returns
    */
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static getDefaultIcon<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): any
   {
-    if (initialSelectedValue)
+    if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false)
     {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let icon: any = undefined;
-      options.forEach(element => 
+      options.forEach((element) =>
       {
         if (element.value === initialSelectedValue)
         {
@@ -116,11 +118,11 @@ export class OptionHelper
     {
       const texts: string[] = [];
 
-      options.forEach(element => 
+      options.forEach((element) =>
       {
         if (initialSelectedValues.find((x) => x === element.value))
         {
-          texts.push(element.text)
+          texts.push(element.text);
         }
       });
 
@@ -140,9 +142,9 @@ export class OptionHelper
    */
   public static getSelectOptionByValue(options: IOption[], selectedValue?: TKey): IOption
   {
-    if (selectedValue)
+    if (ObjectHelper.isNullOrUndefined(selectedValue) == false)
     {
-      for(const element of options)
+      for (const element of options)
       {
         if (element.value === selectedValue)
         {
@@ -163,9 +165,9 @@ export class OptionHelper
   public static getTextByValue(options: IOption[], selectedValue?: TKey): string
   {
     let text = '';
-    if (selectedValue)
+    if (ObjectHelper.isNullOrUndefined(selectedValue) == false)
     {
-      options.forEach(element => 
+      options.forEach((element) =>
       {
         if (element.value === selectedValue)
         {
@@ -188,9 +190,9 @@ export class OptionHelper
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let icon: any = undefined;
-    if (selectedValue)
+    if (ObjectHelper.isNullOrUndefined(selectedValue) == false)
     {
-      options.forEach(element => 
+      options.forEach((element) =>
       {
         if (element.value === selectedValue)
         {
@@ -214,11 +216,11 @@ export class OptionHelper
     {
       const optionsSelected: IOption[] = [];
 
-      options.forEach(element => 
+      options.forEach((element) =>
       {
         if (selectedValues.find((x) => x === element.value))
         {
-          optionsSelected.push(element)
+          optionsSelected.push(element);
         }
       });
 
@@ -242,11 +244,11 @@ export class OptionHelper
     {
       const texts: string[] = [];
 
-      options.forEach(element => 
+      options.forEach((element) =>
       {
         if (selectedValues.find((x) => x === element.value))
         {
-          texts.push(element.text)
+          texts.push(element.text);
         }
       });
 
@@ -264,6 +266,7 @@ export class OptionHelper
    * @param item Неопределённое значение
    * @returns Массив текста выбранных значений
    */
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static getTextsByUnknownValues(options: IOption[], item: any): string[]
   {
@@ -273,7 +276,7 @@ export class OptionHelper
       const massive: any[] = item;
       if (ArrayHelper.checkIsNumbers(massive))
       {
-        const numbers = massive.map((x) => 
+        const numbers = massive.map((x) =>
         {
           const value: number = Number(x);
           return value;
@@ -284,9 +287,9 @@ export class OptionHelper
       }
       else
       {
-        const texts = massive.map((x) => 
+        const texts = massive.map((x) =>
         {
-          const value: string = String(x)
+          const value: string = String(x);
           return value;
         });
 

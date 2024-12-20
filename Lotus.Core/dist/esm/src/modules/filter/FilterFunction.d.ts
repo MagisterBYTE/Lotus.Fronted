@@ -8,10 +8,10 @@ export interface IFilterFunctionDesc {
     desc: string;
 }
 /**
- * Перечисление для типа функции для фильтрации данных
- */
-export declare const FilterFunctionEnum: Record<string, IFilterFunctionDesc>;
-/**
  * Тип функция для фильтрации данных
  */
-export type TFilterFunction = keyof typeof FilterFunctionEnum;
+export type TFilterFunction = 'Equals' | 'NotEqual' | 'LessThan' | 'LessThanOrEqual' | 'GreaterThan' | 'GreaterThanOrEqual' | 'Between' | 'Contains' | 'StartsWith' | 'EndsWith' | 'Like' | 'NotEmpty' | 'Empty' | 'IncludeAny' | 'IncludeAll' | 'IncludeEquals' | 'IncludeNone';
+/**
+ * Перечисление для типа функции для фильтрации данных
+ */
+export declare const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionDesc>;
