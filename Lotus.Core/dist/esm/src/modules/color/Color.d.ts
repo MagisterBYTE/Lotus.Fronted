@@ -444,6 +444,11 @@ export declare class Color {
      */
     toCSSRgbValue(modifyAlpha?: number, addSemicolon?: boolean): string;
     /**
+     * Получить яркость цвета
+     * @returns Яркость цвета
+     */
+    luma(): number;
+    /**
      * Получить цвет и цвет тени гармоничный к текущему
      * @returns Цвет и цвет тени гармоничный к текущему
      */
@@ -456,4 +461,15 @@ export declare class Color {
      * @returns Цвет гармоничный к текущему
      */
     createHarmoniousColor(): Color;
+    /**
+     * Получить цвет контрастный к текущему
+     * @returns Цвет контрастный к текущему
+     */
+    createContrastColor(): Color;
+    /**
+     * Получить цвет контрастный или гармоничный к текущему
+     * @param isHarmonious Гармоничный цвет текста
+     * @returns Цвет контрастный или гармоничный к текущему
+     */
+    createContrastOrHarmoniousColor(isHarmonious?: boolean): Color;
 }

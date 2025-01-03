@@ -823,7 +823,7 @@ export class Color
    * new Color('rgb(0,0,255)').toString(); // returns "#00f"
    *
    */
-  toString(isHex?:boolean): string 
+  toString(isHex?: boolean): string 
   {
     if (this.a === 0) 
     {
@@ -836,7 +836,7 @@ export class Color
     }
     else 
     {
-      if(isHex)
+      if (isHex)
       {
         return this.getHex();
       }
@@ -857,12 +857,12 @@ export class Color
   toCSSRgbValue(modifyAlpha?: number, addSemicolon?: boolean): string 
   {
     let textColor = '';
-    if(modifyAlpha)
+    if (modifyAlpha)
     {
       const rgb = this._getRGB();
       textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + modifyAlpha + ')';
-      
-      if(addSemicolon)
+
+      if (addSemicolon)
       {
         textColor = textColor + ';';
       }
@@ -885,12 +885,22 @@ export class Color
       textColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
     }
 
-    if(addSemicolon)
+    if (addSemicolon)
     {
       textColor = textColor + ';';
     }
 
     return textColor;
+  }
+
+  /**
+   * Получить яркость цвета
+   * @returns Яркость цвета
+   */
+  public luma(): number
+  {
+    const rgb = this._getRGB();
+    return (0.2126 * rgb[0]) + (0.7152 * rgb[1]) + (0.0722 * rgb[2]);
   }
 
   /**
@@ -1026,5 +1036,31 @@ export class Color
     const textColor: IColorModelHSL = { h: h / 360, s: s / 100, l: l / 100 };
 
     return new Color(textColor, 1);
+  }
+
+  /**
+   * Получить цвет контрастный к текущему
+   * @returns Цвет контрастный к текущему
+   */
+  public createContrastColor(): Color
+  {
+    return (this.luma() >= 165) ? new Color(255, 255, 255) : new Color(0, 0, 0);
+  }
+
+  /**
+   * Получить цвет контрастный или гармоничный к текущему
+   * @param isHarmonious Гармоничный цвет текста 
+   * @returns Цвет контрастный или гармоничный к текущему
+   */
+  public createContrastOrHarmoniousColor(isHarmonious?: boolean): Color
+  {
+    if (isHarmonious)
+    {
+      return this.createHarmoniousColor();
+    }
+    else
+    {
+      return this.createContrastColor();
+    }
   }
 }

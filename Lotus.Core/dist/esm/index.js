@@ -3037,6 +3037,14 @@ class Color {
         return textColor;
     }
     /**
+     * Получить яркость цвета
+     * @returns Яркость цвета
+     */
+    luma() {
+        const rgb = this._getRGB();
+        return (0.2126 * rgb[0]) + (0.7152 * rgb[1]) + (0.0722 * rgb[2]);
+    }
+    /**
      * Получить цвет и цвет тени гармоничный к текущему
      * @returns Цвет и цвет тени гармоничный к текущему
      */
@@ -3134,6 +3142,26 @@ class Color {
         }
         const textColor = { h: h / 360, s: s / 100, l: l / 100 };
         return new Color(textColor, 1);
+    }
+    /**
+     * Получить цвет контрастный к текущему
+     * @returns Цвет контрастный к текущему
+     */
+    createContrastColor() {
+        return (this.luma() >= 165) ? new Color(255, 255, 255) : new Color(0, 0, 0);
+    }
+    /**
+     * Получить цвет контрастный или гармоничный к текущему
+     * @param isHarmonious Гармоничный цвет текста
+     * @returns Цвет контрастный или гармоничный к текущему
+     */
+    createContrastOrHarmoniousColor(isHarmonious) {
+        if (isHarmonious) {
+            return this.createHarmoniousColor();
+        }
+        else {
+            return this.createContrastColor();
+        }
     }
 }
 
