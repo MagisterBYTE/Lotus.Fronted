@@ -63,7 +63,7 @@ export class TypographyHelper
         case 'large': return 18 * 1.05;
         case 'medium': return 16 * 1.05;
         case 'small': return 13 * 1;
-        case 'smaller': return 10 * 0.8;
+        case 'smaller': return 10 * 1;
         case 'body1': return 1 * 16 * 1.1;
         case 'body2': return 0.875 * 16 * 1.05;
       }

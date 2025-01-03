@@ -1,5 +1,5 @@
 import React, { Ref, useImperativeHandle, useState } from 'react';
-import { FilterPropertyHelper, IFilterProperty, IObjectInfo, PropertyTypeEnum, StringHelper } from 'lotus-core';
+import { FilterPropertyHelper, IFilterProperty, IObjectInfo, PropertyTypeDescriptors, StringHelper } from 'lotus-core';
 import { VerticalStack } from 'ui/components/Layout';
 import { FilterInputNumber } from './components/FilterInputNumber';
 import { FilterInputText } from './components/FilterInputText';
@@ -106,14 +106,14 @@ export const FormFilter = React.forwardRef((props: IFormFilterProps, ref: Ref<IF
 
           switch (property.propertyTypeDesc.id)
           {
-            case PropertyTypeEnum.String.id:
+            case PropertyTypeDescriptors.String.id:
               return <FilterInputText
                 labelProps={{ isTopLabel: true, children: property.name }}
                 key={property.name}
                 propertyDescriptor={property}
                 initialFilterProperty={filterProperties.find(x => x.propertyName === StringHelper.capitalizeFirstLetter(property.fieldName))}
                 onSetFilterProperty={handleSetFilterProperty} />
-            case PropertyTypeEnum.Integer.id:
+            case PropertyTypeDescriptors.Integer.id:
             {
               return <FilterInputNumber
                 labelProps={{ isTopLabel: true, children: property.name }}

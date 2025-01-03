@@ -1,7 +1,8 @@
 import { ColorVariant } from 'lotus-core';
 import { TThemeColor } from './ThemeColor';
 import { TThemeMode } from './ThemeMode';
-import { IThemePaletteAction, IThemePaletteBackground, IThemePaletteColor, IThemePaletteCommon, IThemePaletteText } from './ThemePaletteTypes';
+import { IThemePaletteAction, IThemePaletteAdditionalColor, IThemePaletteBackground, IThemePaletteCommon, 
+  IThemePaletteModeColor, IThemePaletteText } from './ThemePaletteTypes';
 
 /**
  * Палитра цвета
@@ -20,6 +21,36 @@ export interface IThemePalette
   common: IThemePaletteCommon;
 
   /**
+   * Основной цвет для палитры
+   */
+  primary: IThemePaletteModeColor;
+
+  /**
+   * Вторичный цвет для палитры
+   */
+  secondary: IThemePaletteModeColor;
+
+  /**
+   * Цвет ошибок для палитры
+   */
+  error: IThemePaletteModeColor;
+
+  /**
+   * Цвет предупреждений для палитры
+   */
+  warning: IThemePaletteModeColor;
+
+  /**
+   * Цвет информирования для палитры
+   */
+  info: IThemePaletteModeColor;
+
+  /**
+   * Цвет успешности для палитры
+   */
+  success: IThemePaletteModeColor;
+
+  /**
    * Вариант серых цветов для палитры
    */
   grey: ColorVariant;
@@ -28,6 +59,11 @@ export interface IThemePalette
    * Цвета текста для палитры
    */
   text: IThemePaletteText;
+
+  /**
+   * Цвет границы и разделителя для палитры
+   */
+  divider: string;
 
   /**
    * Цвета фона для палитры
@@ -42,5 +78,5 @@ export interface IThemePalette
   /**
    * Массив дополнительных цвет для палитры
    */
-  colors: Record<TThemeColor, IThemePaletteColor>; 
+  colors: Record<TThemeColor, IThemePaletteAdditionalColor>; 
 }

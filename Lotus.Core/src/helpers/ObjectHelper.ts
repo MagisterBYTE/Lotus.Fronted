@@ -26,7 +26,7 @@ export class ObjectHelper
 
     // split path: "param[3].test" => ["param", 3, "test"]
     const parts = ObjectHelper.splitPath(propertyPath);
-    
+
     // eslint-disable-next-line consistent-return
     return parts.reduce((acc, el) =>
     {

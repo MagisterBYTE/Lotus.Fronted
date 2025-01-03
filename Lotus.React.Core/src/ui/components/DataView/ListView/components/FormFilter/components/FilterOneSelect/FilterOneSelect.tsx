@@ -1,4 +1,4 @@
-import { IPropertyDescriptor, IFilterProperty, FilterFunctionEnum, IFilterFunctionDesc, StringHelper, GroupFilterFunctionsEnum } from 'lotus-core';
+import { IPropertyDescriptor, IFilterProperty, FilterFunctionDescriptors, IFilterFunctionDesc, StringHelper, GroupFilterFunctionsEnum } from 'lotus-core';
 import React, { useState } from 'react';
 import { ISelectProps, Select } from 'ui/components/Controls';
 import { SelectFilterFunction } from 'widget';
@@ -29,7 +29,7 @@ export const FilterOneSelect: React.FC<IFilterOneSelectProps> = (props: IFilterO
   const { propertyDescriptor, initialFilterProperty, onSetFilterProperty, ...oneSelectProps } = props;
 
   const initFilterValue = initialFilterProperty === undefined ? undefined : initialFilterProperty.value;
-  const initFilterFn = initialFilterProperty === undefined ? FilterFunctionEnum.Equals : initialFilterProperty.function
+  const initFilterFn = initialFilterProperty === undefined ? FilterFunctionDescriptors.Equals : initialFilterProperty.function
 
   const [filterValue, setFilterValue] = useState<string | undefined>(initFilterValue);
   const [filterFunction, setFilterFunction] = useState<IFilterFunctionDesc>(initFilterFn);

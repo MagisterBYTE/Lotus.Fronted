@@ -17,6 +17,37 @@ export interface IThemePaletteCommon
 }
 
 /**
+ * Тип тематического цвета для палитры
+ */
+export type TThemePaletteModeColorType = 'main' | 'light' | 'dark' | 'contrastText';
+
+/**
+ * Тематические цвета для палитры
+ */
+export interface IThemePaletteModeColor
+{
+  /**
+   * Основной цвет
+   */
+  readonly main: string;
+
+  /**
+   * Светлый цвет
+   */
+  readonly light: string;
+
+  /**
+   * Темный цвет
+   */
+  readonly dark: string;
+
+  /**
+   * Цвет текста
+   */
+  readonly contrastText: string;
+}
+
+/**
  * Цвета текста для палитры
  */
 export interface IThemePaletteText
@@ -59,10 +90,16 @@ export interface IThemePaletteBackground
 }
 
 /**
+ * Тип цвета действий для палитры
+ */
+export type TThemePaletteActionType = 'active' | 'hover' | 'selected' | 'disabled' | 'focus';
+
+/**
  * Цвета действий для палитры
  */
 export interface IThemePaletteAction
 {
+  readonly ripple: string;
   readonly active: string;
   readonly activatedOpacity: number;
   readonly hover: string
@@ -77,9 +114,9 @@ export interface IThemePaletteAction
 }
 
 /**
- * Дополнительный цвет для палитры
+ * Дополнительные цвета для палитры
  */
-export interface IThemePaletteColor
+export interface IThemePaletteAdditionalColor
 {
   /**
    * Варианты цветов

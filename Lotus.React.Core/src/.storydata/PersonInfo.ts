@@ -1,4 +1,4 @@
-import { FilterFunctionEnum, IPropertyDescriptor, ObjectInfoBase, PropertyTypeEnum, ValidationResultSuccess } from 'lotus-core';
+import { FilterFunctionDescriptors, IPropertyDescriptor, ObjectInfoBase, PropertyTypeDescriptors, ValidationResultSuccess } from 'lotus-core';
 import { SelectOptionsRoles } from './SelectOptionsData'
 
 export interface IPerson
@@ -32,7 +32,7 @@ export class PersonInfoBase extends ObjectInfoBase<IPerson>
       fieldName: 'id',
       name: 'Id',
       desc: 'Идентификатор пользователя',
-      propertyTypeDesc: PropertyTypeEnum.Guid,
+      propertyTypeDesc: PropertyTypeDescriptors.Guid,
       sorting:
       {
         enabled: true
@@ -46,7 +46,7 @@ export class PersonInfoBase extends ObjectInfoBase<IPerson>
       fieldName: 'name',
       name: 'Имя',
       desc: 'Имя пользователя',
-      propertyTypeDesc: PropertyTypeEnum.String,
+      propertyTypeDesc: PropertyTypeDescriptors.String,
       editing:
       {
         enabled: true,
@@ -67,7 +67,7 @@ export class PersonInfoBase extends ObjectInfoBase<IPerson>
       },
       filtering:
       {
-        functionDefaultDesc: FilterFunctionEnum.Contains,
+        functionDefaultDesc: FilterFunctionDescriptors.Contains,
         enabled: true
       },
       sorting:
@@ -83,7 +83,7 @@ export class PersonInfoBase extends ObjectInfoBase<IPerson>
       fieldName: 'surname',
       name: 'Фамилия',
       desc: 'Фамилия пользователя',
-      propertyTypeDesc: PropertyTypeEnum.String,
+      propertyTypeDesc: PropertyTypeDescriptors.String,
       editing:
       {
         enabled: true,
@@ -104,7 +104,7 @@ export class PersonInfoBase extends ObjectInfoBase<IPerson>
       },
       filtering:
       {
-        functionDefaultDesc: FilterFunctionEnum.Contains,
+        functionDefaultDesc: FilterFunctionDescriptors.Contains,
         enabled: true
       },
       sorting:
@@ -120,7 +120,7 @@ export class PersonInfoBase extends ObjectInfoBase<IPerson>
       fieldName: 'roleId',
       name: 'Роль',
       desc: 'Роль пользователя',
-      propertyTypeDesc: PropertyTypeEnum.Integer,
+      propertyTypeDesc: PropertyTypeDescriptors.Integer,
       isArray: true,
       options: SelectOptionsRoles,
       editing:
@@ -133,7 +133,7 @@ export class PersonInfoBase extends ObjectInfoBase<IPerson>
       },
       filtering:
       {
-        functionDefaultDesc: FilterFunctionEnum.IncludeAny,
+        functionDefaultDesc: FilterFunctionDescriptors.IncludeAny,
         enabled: true
       },
       sorting:

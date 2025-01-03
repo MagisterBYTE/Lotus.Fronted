@@ -1,18 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { css, cx } from '@emotion/css';
-import React, { ComponentPropsWithoutRef } from 'react';
-import { ILabelProps, Label, TypographyHelper } from 'ui/components';
-import { IGeneralBaseElementProperties } from 'ui/components/GeneralElementProperties';
+import React, { ComponentPropsWithoutRef, CSSProperties } from 'react';
+import { ILabelProps, Label, Typography, TypographyHelper } from 'ui/components';
+import { IGeneralElementProperties } from 'ui/components';
 import { InteractivityLogic } from 'ui/interactivity';
 import { Theme } from 'ui/theme';
-import { TColorPresentation } from 'ui/types';
+import { ThemePaletteHelper } from 'ui/theme/helpers/ThemePaletteHelper';
+import { checkOfThemeModeColor } from 'ui/theme/types/ThemeModeColor';
 
-export interface ICheckBoxProps extends Omit<ComponentPropsWithoutRef<'input'>, keyof IGeneralBaseElementProperties>, IGeneralBaseElementProperties
+export interface ICheckBoxProps extends Omit<ComponentPropsWithoutRef<'input'>, keyof IGeneralElementProperties>, IGeneralElementProperties
 {
   /**
-   * Основной цвет
+   * Использовать НЕ стандартный checkbox или radio
    */
-  accentColor?: TColorPresentation;
+  // eslint-disable-next-line react/boolean-prop-naming
+  useCustom?: boolean;
+
+  /**
+   * Настройки символа для НЕ стандартного элемента
+   */
+  checkedSymbolStyle?: CSSProperties;
 
   /**
    * Параметры надписи
@@ -34,27 +41,51 @@ export const CheckBox: React.FC<ICheckBoxProps> = (props: ICheckBoxProps) =>
 {
   const
     {
-      accentColor, labelProps, size = 'medium', paddingControl = 'normal', extraClass,
-      hasScaleEffect, hasShadowEffect, children,
+      fontBold, fontAccent, textEffect, textAlign, textColorHarmonious, textColor,
+      backColor, backImage,
+      borderRadius, borderStyle, borderWidth, borderColor,
+      size = 'medium', paddingControl = 'normal', extraClass, 
+      useCustom, checkedSymbolStyle, labelProps, hasScaleEffect, hasShadowEffect, 
+      children, checked,
       ...propsCheckBox
     } = props
 
   const checkBoxClass = css(
     {
+      appearance: useCustom ? 'none' :'auto', 
       cursor: 'pointer',
-      ...Theme.getSizeProps(size, paddingControl, 'half'),
-      accentColor: Theme.getBackgroundColorProps(accentColor).backgroundColor,
+      margin: '0px',
+      accentColor: useCustom ? 'initial' : ((checkOfThemeModeColor(backColor) 
+        ? ThemePaletteHelper.getColor(backColor, 'main').toCSSRgbValue() 
+        : Theme.getBackgroundColorProps(backColor).backgroundColor)),
+      ...Theme.getFontProps(size, fontBold, fontAccent),
+      ...Theme.getSizeProps(size, paddingControl),
+      ...Theme.getTextEffectProps(size, textEffect, textAlign),
+      ...Theme.getPaddingProps(size, paddingControl, 'normal', 'half'),
+      ...Theme.getTransitionColorsProps(),
+      ...Theme.getBorderRadiusProps(size, borderRadius),
+      ...InteractivityLogic.getEffectProps('outline', 'normal', props, checked),
       '&:hover':
       {
-        ...InteractivityLogic.getEffectProps('outline', 'hover', props, false, props.disabled, false),
-        ...((!propsCheckBox.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(4, accentColor, undefined, Theme.OpacityForBorderShadowHover) : {}),
+        ...InteractivityLogic.getEffectProps('outline', 'hover', props, checked, props.disabled),
+        ...((!propsCheckBox.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowHover) : {}),
         ...((!propsCheckBox.disabled && hasScaleEffect) ? Theme.getTransformScaleProps(1.2) : {})
       },
       '&:active':
       {
-        ...InteractivityLogic.getEffectProps('outline', 'pressed', props, false, props.disabled, false),
-        ...((!propsCheckBox.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(6, accentColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
+        ...InteractivityLogic.getEffectProps('outline', 'pressed', props, checked, props.disabled),
+        ...((!propsCheckBox.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(6, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
         ...((!propsCheckBox.disabled && hasScaleEffect) ? Theme.getTransformScaleProps(1.2) : {})
+      },
+      '&:checked':
+      {
+        ...InteractivityLogic.getEffectProps('outline', 'normal', props, true, props.disabled),
+        ...((!propsCheckBox.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(6, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
+        ...((!propsCheckBox.disabled && hasScaleEffect) ? Theme.getTransformScaleProps(1.2) : {})
+      },
+      '&:checked::after':
+      {
+        ...checkedSymbolStyle
       },
       '&:disabled':
       {
@@ -62,16 +93,44 @@ export const CheckBox: React.FC<ICheckBoxProps> = (props: ICheckBoxProps) =>
       }
     })
 
+  const getStyleValue = ():CSSProperties =>
+  {
+    const style:CSSProperties = { lineHeight: 0 }
+    switch (size) 
+    {
+      case 'smaller': style.marginTop = '4px'; break;
+      case 'small': break;
+      case 'medium': break;
+      case 'large': style.marginTop = '-2px'; break;
+    }
+
+    return style;
+  }
+
   if (labelProps)
   {
-    return <Label {...labelProps} size={size} 
+    return <Label {...labelProps} size={labelProps.size ?? size} valueStyle={getStyleValue()}
       variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
-      textColor={labelProps.textColor ?? accentColor}>
-      <input type='checkbox' {...propsCheckBox} className={cx(checkBoxClass, extraClass)} />
+      textColor={labelProps.textColor ?? textColor}>
+      <input {...propsCheckBox} type={propsCheckBox.type == 'radio' ? 'radio' : 'checkbox'} className={cx(checkBoxClass, extraClass)} />
     </Label>
   }
   else
   {
-    return <input type='checkbox' {...propsCheckBox} className={cx(checkBoxClass, extraClass)} />
+    if(props.children)
+    {
+      return <span style={Theme.getFlexRowContainer(size, paddingControl)}>
+        <input {...propsCheckBox} type={propsCheckBox.type == 'radio' ? 'radio' : 'checkbox'} className={cx(checkBoxClass, extraClass)}/>
+        <Typography 
+          textColor={textColor ?? backColor}
+          variant={TypographyHelper.getTypographyVariantByControlSize(size)} >
+          {props.children}
+        </Typography>
+      </span>
+    }
+    else
+    {
+      return <input {...propsCheckBox} type={propsCheckBox.type == 'radio' ? 'radio' : 'checkbox'} className={cx(checkBoxClass, extraClass)} />
+    }
   }
 };

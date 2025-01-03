@@ -24,7 +24,7 @@ export const TCssBorderStyles: readonly TCssBorderStyle[] = ['solid', 'inset', '
 /**
  * Тип свойства ширины границы Css
  */
-export type TCssBorderWidth = Property.BorderWidth;
+export type TCssBorderWidth = Property.BorderWidth|number;
 
 /**
  * Тип свойства радиуса скругления границы Css

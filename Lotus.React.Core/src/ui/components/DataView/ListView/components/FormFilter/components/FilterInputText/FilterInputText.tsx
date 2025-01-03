@@ -1,4 +1,4 @@
-import { IPropertyDescriptor, IFilterProperty, IFilterFunctionDesc, FilterFunctionEnum, StringHelper, GroupFilterFunctionsString } from 'lotus-core';
+import { IPropertyDescriptor, IFilterProperty, IFilterFunctionDesc, FilterFunctionDescriptors, StringHelper, GroupFilterFunctionsString } from 'lotus-core';
 import React, { ChangeEvent, useState } from 'react';
 import { IInputFieldProps, InputField } from 'ui/components/Controls';
 import { SelectFilterFunction } from 'widget';
@@ -32,7 +32,7 @@ export const FilterInputText: React.FC<IFilterInputTextProps> = (props: IFilterI
 
   const [filterValue, setFilterValue] = useState<string | undefined>(initFilterValue);
   const [filterFunction, setFilterFunction] = useState<IFilterFunctionDesc>(initialFilterProperty === undefined ?
-    FilterFunctionEnum.Contains : initialFilterProperty.function);
+    FilterFunctionDescriptors.Contains : initialFilterProperty.function);
 
   const handleFilterValue = (event: ChangeEvent<HTMLInputElement>) => 
   {

@@ -1,4 +1,4 @@
-import { IPropertyDescriptor, IFilterProperty, FilterFunctionEnum, IFilterFunctionDesc, StringHelper, GroupFilterFunctionsArray } from 'lotus-core';
+import { IPropertyDescriptor, IFilterProperty, FilterFunctionDescriptors, IFilterFunctionDesc, StringHelper, GroupFilterFunctionsArray } from 'lotus-core';
 import React, { useState } from 'react';
 import { IMultiSelectProps, MultiSelect } from 'ui/components/Controls';
 import { SelectFilterFunction } from 'widget';
@@ -30,7 +30,7 @@ export const FilterMultiSelect: React.FC<IFilterMultiSelectProps> = (props: IFil
   const { propertyDescriptor, initialFilterProperty, onSetFilterProperty, ...multiSelectProps } = props;
 
   const initFilterValue = initialFilterProperty === undefined ? undefined : initialFilterProperty.values;
-  const initFilterFn = initialFilterProperty === undefined ? FilterFunctionEnum.IncludeAny : initialFilterProperty.function;
+  const initFilterFn = initialFilterProperty === undefined ? FilterFunctionDescriptors.IncludeAny : initialFilterProperty.function;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [filterValues, setFilterValues] = useState<string[]>(initFilterValue ?? []);

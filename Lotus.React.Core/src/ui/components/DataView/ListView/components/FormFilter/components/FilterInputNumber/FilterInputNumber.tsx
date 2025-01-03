@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { TextField } from '@mui/material';
-import { IPropertyDescriptor, IFilterProperty, IFilterFunctionDesc, FilterFunctionEnum, StringHelper, GroupFilterFunctionsNumber } from 'lotus-core';
+import { IPropertyDescriptor, IFilterProperty, IFilterFunctionDesc, FilterFunctionDescriptors, StringHelper, GroupFilterFunctionsNumber } from 'lotus-core';
 import { Label } from 'ui/components/Display';
 import { HorizontalStack } from 'ui/components/Layout';
 import { SelectFilterFunction } from 'widget';
@@ -33,7 +33,7 @@ export const FilterInputNumber: React.FC<IFilterInputNumberProps> = (props: IFil
   const { propertyDescriptor, initialFilterProperty, onSetFilterProperty, ...labelProps } = props;
 
   const [filterValue, setFilterValue] = useState<number | null>();
-  const [filterFunction, setFilterFunction] = useState<IFilterFunctionDesc>(FilterFunctionEnum.Equals);
+  const [filterFunction, setFilterFunction] = useState<IFilterFunctionDesc>(FilterFunctionDescriptors.Equals);
 
   const handleFilterValue = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => 
   {

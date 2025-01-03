@@ -1,7 +1,7 @@
 import
 {
-  FilterFunctionEnum, IFilterFunctionDesc, IFilterObject, IFilterProperty, IObjectInfo,
-  IPropertyDescriptor, PropertyTypeEnum, StringHelper
+  FilterFunctionDescriptors, IFilterFunctionDesc, IFilterObject, IFilterProperty, IObjectInfo,
+  IPropertyDescriptor, PropertyTypeDescriptors, StringHelper
 } from 'lotus-core';
 import { MRT_ColumnDef, MRT_ColumnFiltersState, MRT_FilterOption } from 'material-react-table';
 
@@ -11,8 +11,8 @@ export class MaterialReactTableHelper
   {
     switch (property.propertyTypeDesc)
     {
-      case PropertyTypeEnum.String: return 'contains';
-      case PropertyTypeEnum.Enum: return 'arrIncludesSome';
+      case PropertyTypeDescriptors.String: return 'contains';
+      case PropertyTypeDescriptors.Enum: return 'arrIncludesSome';
     }
 
     return 'equals';
@@ -66,8 +66,8 @@ export class MaterialReactTableHelper
       const filter: IFilterProperty =
       {
         propertyName: '',
-        propertyTypeDesc: PropertyTypeEnum.Boolean,
-        function: FilterFunctionEnum.Equals,
+        propertyTypeDesc: PropertyTypeDescriptors.Boolean,
+        function: FilterFunctionDescriptors.Equals,
         value: ''
       };
 
@@ -81,10 +81,10 @@ export class MaterialReactTableHelper
         filter.propertyTypeDesc = property.propertyTypeDesc!;
         filter.function = MaterialReactTableHelper.convertToFilterFunctionDesc(filterFn);
 
-        if (filter.function === FilterFunctionEnum.IncludeAll ||
-          filter.function === FilterFunctionEnum.IncludeAny ||
-          filter.function === FilterFunctionEnum.IncludeEquals ||
-          filter.function === FilterFunctionEnum.IncludeNone)
+        if (filter.function === FilterFunctionDescriptors.IncludeAll ||
+          filter.function === FilterFunctionDescriptors.IncludeAny ||
+          filter.function === FilterFunctionDescriptors.IncludeEquals ||
+          filter.function === FilterFunctionDescriptors.IncludeNone)
         {
           filter.values = (column.value as string[]);
         }
@@ -108,23 +108,23 @@ export class MaterialReactTableHelper
   {
     switch (filterFn)
     {
-      case 'equals': return FilterFunctionEnum.Equals;
-      case 'equalsString': return FilterFunctionEnum.Equals;
-      case 'notEquals': return FilterFunctionEnum.NotEqual;
-      case 'lessThan': return FilterFunctionEnum.LessThan;
-      case 'greaterThan': return FilterFunctionEnum.GreaterThan;
-      case 'greaterThanOrEqualTo': return FilterFunctionEnum.LessThanOrEqual;
-      case 'between': return FilterFunctionEnum.Between;
-      case 'betweenInclusive': return FilterFunctionEnum.Between;
-      case 'contains': return FilterFunctionEnum.Contains;
-      case 'startsWith': return FilterFunctionEnum.StartsWith;
-      case 'endsWith': return FilterFunctionEnum.EndsWith;
-      case 'notEmpty': return FilterFunctionEnum.NotEmpty;
-      case 'includeAny': return FilterFunctionEnum.IncludeAny;
-      case 'includeAll': return FilterFunctionEnum.IncludeAll;
-      case 'includeEquals': return FilterFunctionEnum.IncludeEquals;
-      case 'includeNone': return FilterFunctionEnum.IncludeNone;
-      default: return FilterFunctionEnum.Equals;
+      case 'equals': return FilterFunctionDescriptors.Equals;
+      case 'equalsString': return FilterFunctionDescriptors.Equals;
+      case 'notEquals': return FilterFunctionDescriptors.NotEqual;
+      case 'lessThan': return FilterFunctionDescriptors.LessThan;
+      case 'greaterThan': return FilterFunctionDescriptors.GreaterThan;
+      case 'greaterThanOrEqualTo': return FilterFunctionDescriptors.LessThanOrEqual;
+      case 'between': return FilterFunctionDescriptors.Between;
+      case 'betweenInclusive': return FilterFunctionDescriptors.Between;
+      case 'contains': return FilterFunctionDescriptors.Contains;
+      case 'startsWith': return FilterFunctionDescriptors.StartsWith;
+      case 'endsWith': return FilterFunctionDescriptors.EndsWith;
+      case 'notEmpty': return FilterFunctionDescriptors.NotEmpty;
+      case 'includeAny': return FilterFunctionDescriptors.IncludeAny;
+      case 'includeAll': return FilterFunctionDescriptors.IncludeAll;
+      case 'includeEquals': return FilterFunctionDescriptors.IncludeEquals;
+      case 'includeNone': return FilterFunctionDescriptors.IncludeNone;
+      default: return FilterFunctionDescriptors.Equals;
     }
   }
 
@@ -132,21 +132,21 @@ export class MaterialReactTableHelper
   {
     switch (filterFn)
     {
-      case FilterFunctionEnum.Equals: return 'equals';
-      case FilterFunctionEnum.NotEqual: return 'notEquals';
-      case FilterFunctionEnum.LessThan: return 'lessThan';
-      case FilterFunctionEnum.LessThanOrEqual: return 'lessThanOrEqualTo';
-      case FilterFunctionEnum.GreaterThan: return 'greaterThan';
-      case FilterFunctionEnum.GreaterThanOrEqual: return 'greaterThanOrEqualTo';
-      case FilterFunctionEnum.Between: return 'between';
-      case FilterFunctionEnum.Contains: return 'contains';
-      case FilterFunctionEnum.StartsWith: return 'startsWith';
-      case FilterFunctionEnum.EndsWith: return 'endsWith';
-      case FilterFunctionEnum.NotEmpty: return 'notEmpty';
-      case FilterFunctionEnum.IncludeAny: return 'includeAny';
-      case FilterFunctionEnum.IncludeAll: return 'includeAll';
-      case FilterFunctionEnum.IncludeEquals: return 'includeEquals';
-      case FilterFunctionEnum.IncludeNone: return 'includeNone';
+      case FilterFunctionDescriptors.Equals: return 'equals';
+      case FilterFunctionDescriptors.NotEqual: return 'notEquals';
+      case FilterFunctionDescriptors.LessThan: return 'lessThan';
+      case FilterFunctionDescriptors.LessThanOrEqual: return 'lessThanOrEqualTo';
+      case FilterFunctionDescriptors.GreaterThan: return 'greaterThan';
+      case FilterFunctionDescriptors.GreaterThanOrEqual: return 'greaterThanOrEqualTo';
+      case FilterFunctionDescriptors.Between: return 'between';
+      case FilterFunctionDescriptors.Contains: return 'contains';
+      case FilterFunctionDescriptors.StartsWith: return 'startsWith';
+      case FilterFunctionDescriptors.EndsWith: return 'endsWith';
+      case FilterFunctionDescriptors.NotEmpty: return 'notEmpty';
+      case FilterFunctionDescriptors.IncludeAny: return 'includeAny';
+      case FilterFunctionDescriptors.IncludeAll: return 'includeAll';
+      case FilterFunctionDescriptors.IncludeEquals: return 'includeEquals';
+      case FilterFunctionDescriptors.IncludeNone: return 'includeNone';
       default: return 'equals';
     }
   }

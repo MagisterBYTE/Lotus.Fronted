@@ -1,12 +1,12 @@
 import { Color } from 'lotus-core';
-import { TThemeColor, TThemeColorVariant } from 'ui/theme';
+import { TThemeColor, TThemeColorVariant, TThemeModeColor } from 'ui/theme';
 
 /**
  * Представление цвета
  */
-export type TColorPresentation = Color|TThemeColor|TThemeColorVariant;
+export type TColorPresentation = Color | TThemeColorVariant | TThemeColor | TThemeModeColor;
 
 /**
  * Вариант цвета
  */
-export type TColorAndVariant = Color|TThemeColorVariant;
+export type TColorAndVariant = Color | TThemeColorVariant;

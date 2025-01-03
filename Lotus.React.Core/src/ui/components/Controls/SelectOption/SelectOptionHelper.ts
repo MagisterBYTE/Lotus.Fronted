@@ -1,65 +1,8 @@
 import { IOption } from 'lotus-core';
-import { CSSProperties } from 'react';
-import { TControlPadding, TControlSize } from 'ui/types';
+import { TControlSize } from 'ui/types';
 
 export class SelectOptionHelper
 {
-  public static getGapFromSize(size: TControlSize, controlPadding: TControlPadding): number
-  {
-    switch (size) 
-    {
-      case 'smaller':
-        {
-          switch(controlPadding)
-          {
-            case 'minimum': return 0.12;
-            case 'normal': return 0.15;
-            case 'enlarged': return 0.2;
-          }
-        }break;
-      case 'small':
-        {
-          switch(controlPadding)
-          {
-            case 'minimum': return 0.15;
-            case 'normal': return 0.2;
-            case 'enlarged': return 0.25;
-          }
-        }break;
-      case 'medium':
-        {
-          switch(controlPadding)
-          {
-            case 'minimum': return 0.25;
-            case 'normal': return 0.3;
-            case 'enlarged': return 0.375;
-          }
-        }break;
-      case 'large':
-        {
-          switch(controlPadding)
-          {
-            case 'minimum': return 0.2;
-            case 'normal': return 0.35;
-            case 'enlarged': return 0.45;
-          }
-        }break;
-    }
-
-    return 0.3;
-  }
-
-  public static getFlexContainer(size: TControlSize, controlPadding: TControlPadding): CSSProperties
-  {
-    return {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      columnGap: `${SelectOptionHelper.getGapFromSize(size, controlPadding)}rem`
-    }
-  }
-
   public static getMarginOffsetInput(size: TControlSize, isMulti?:boolean, hasIcon?:boolean, data?: IOption[]|IOption): number
   {
     if(isMulti)

@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { InputField, Select } from 'ui/components/Controls';
+import { CheckBox, InputField, SelectOption } from 'ui/components/Controls';
 import { VerticalStack } from 'ui/components/Layout';
 import { Panel } from 'ui/components/Surfaces';
-import { TThemeColors, TThemeColorVariants } from 'ui/theme';
+import { Theme, TThemeColors, TThemeColorVariants } from 'ui/theme';
 import { TControlSizes, TTextEffects } from 'ui/types';
+import { GiBarbute, GiSteeltoeBoots } from 'react-icons/gi';
+import { Colors } from 'lotus-core';
 import { TTypographyVariants } from '../Typography';
 import { Label } from './Label';
 import { SelectOptionsIconsSvg } from '.storydata/SelectOptionsData';
@@ -19,52 +21,28 @@ const meta = {
   tags: ['autodocs'],
 
   argTypes: {
-    color: {
-      control: 'inline-radio',
-      options: [...TThemeColors, undefined]
-    },
-    colorVariant: {
-      control: 'inline-radio',
-      options: [...TThemeColorVariants, undefined]
-    },
-    size: {
-      control: 'inline-radio',
-      options: [...TControlSizes, undefined]
-    },
-    variant: {
-      control: 'inline-radio',
-      options: [...TTypographyVariants, undefined]
-    },
-    textEffect: {
-      control: 'inline-radio',
-      options: [...TTextEffects, undefined]
-    },
-    textAlign:
-    {
-      control: 'inline-radio',
-      options: ['left', 'right', 'center', undefined]
-    },
-    textColorHarmonious: {
-      control: 'boolean'
-    },
-    fontAccent: {
-      control: 'boolean'
-    },
-    onClick:
-    {
-      table:
-      {
-        disable: true
-      }
-    }
-    ,
-    children:
-    {
-      table:
-      {
-        disable: true
-      }
-    }
+
+    // IGeneralTextProperties
+    fontBold: { control: 'boolean' },
+    fontAccent: { control: 'boolean' },
+    textEffect: { control: 'inline-radio', options: [...TTextEffects, undefined] },
+    textAlign: { control: 'inline-radio', options: ['left', 'right', 'center', undefined] },
+    textColor: { control: 'inline-radio', options: [...TThemeColors, undefined] },
+
+    // IGeneralIconProperties
+    icon: { table: { disable: true } },
+    iconColor: { table: { disable: true } },
+    iconStyle: { table: { disable: true } },
+
+    // ILabelProps
+    textColorVariant: { control: 'inline-radio', options: [...TThemeColorVariants, undefined] },
+    variant: { control: 'inline-radio', options: [...TTypographyVariants, undefined] },
+    size: { control: 'inline-radio', options: [...TControlSizes, undefined] },
+
+    extraClass: { table: { disable: true } },
+    onClick: { table: { disable: true } },
+    style: { table: { disable: true } },
+    children: { table: { disable: true } }
   },
 
   args: { onClick: fn() }
@@ -76,28 +54,58 @@ type Story = StoryObj<typeof meta>;
 export const LabelTextInput: Story = {
 
   args: {
-    color: 'blue',
+    textColor: 'blue',
     label: 'Фамилия'
   },
   render: (args) =>
   {
     return (
-      <InputField labelProps={
-        { label: args.label, 
-          color: args.color, 
-          textEffect: args.textEffect, 
-          variant: args.variant,
-          isTopLabel: args.isTopLabel,
-          fontBold: args.fontBold,
-          fontAccent: args.fontAccent,
-          textAlign: args.textAlign,
-          textColorHarmonious: args.textColorHarmonious,
-          size:args.size }} size={args.size} borderRounded={true} color={args.color} />
+      <InputField labelProps={{ label: args.label, ...args }}
+        size={args.size}
+        textColor={args.textColor}
+        textEffect={args.textEffect} />
     );
   }
 };
 
-export const VerticalStackLabel: Story = {
+export const LabelIcon: Story = {
+
+  args: {
+    textColor: 'blue',
+    label: 'Фамилия',
+    icon: <GiBarbute />
+  },
+  render: (args) =>
+  {
+    return (
+      <InputField labelProps={{ label: args.label, ...args }}
+        size={args.size}
+        textColor={args.textColor}
+        textEffect={args.textEffect} />
+    );
+  }
+};
+
+export const LabelIconRed: Story = {
+
+  args: {
+    textColor: 'blue',
+    label: 'Фамилия',
+    icon: <GiSteeltoeBoots />,
+    iconColor: Colors.red
+  },
+  render: (args) =>
+  {
+    return (
+      <InputField labelProps={{ label: args.label, ...args }}
+        size={args.size}
+        textColor={args.textColor}
+        textEffect={args.textEffect} />
+    );
+  }
+};
+
+export const DefaultPanel: Story = {
 
   args: {
     label: 'Фамилия',
@@ -108,81 +116,62 @@ export const VerticalStackLabel: Story = {
   render: (args) =>
   {
     return (
-      
-      <Panel borderRounded color={args.color} header='Личные данные'
-        borderStyle={undefined} shadowElevation={4}
-        headerTypographyProps={{fontBold:true, variant:'large', textEffect:'shadow' }} >
-        <VerticalStack style={{width: '400px', padding: '1rem'}} gap='0.5rem'>
+
+      <Panel borderRadius borderStyle='solid' backColor={args.textColor} backColorVariant='white' header='Личные данные'
+        size={args.size}
+        shadowElevation={4}
+        headerTypographyProps={{ fontBold: true, textEffect: 'shadow' }} >
+        <VerticalStack style={{ width: '400px', padding: '1rem' }} gap='0.5rem'>
           <InputField labelProps={
-            { label: 'Фамилия', 
-              color: args.color, 
-              colorVariant:args.colorVariant,
-              textEffect: args.textEffect, 
-              variant: args.variant,
-              isTopLabel: args.isTopLabel,
-              fontBold: args.fontBold,
-              fontAccent: args.fontAccent,
-              textAlign: args.textAlign,
-              textColorHarmonious: args.textColorHarmonious,
-              labelWidth:args.labelWidth,
-              containerWidth: args.containerWidth,
-              size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
+            { ...args, label: 'Фамилия' }} size={args.size} backColor={args.textColor} borderRadius width='100%' />
           <InputField labelProps={
-            { label: 'Имя', 
-              color: args.color, 
-              colorVariant:args.colorVariant,
-              textEffect: args.textEffect, 
-              variant: args.variant,
-              isTopLabel: args.isTopLabel,
-              fontBold: args.fontBold,
-              fontAccent: args.fontAccent,
-              textAlign: args.textAlign,
-              textColorHarmonious: args.textColorHarmonious,
-              labelWidth:args.labelWidth,
-              containerWidth: args.containerWidth,
-              size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
+            { ...args, label: 'Имя' }} size={args.size} backColor={args.textColor} borderRadius width='100%' />
           <InputField labelProps={
-            { label: 'Отчество', 
-              color: args.color, 
-              colorVariant:args.colorVariant,
-              textEffect: args.textEffect, 
-              variant: args.variant,
-              isTopLabel: args.isTopLabel,
-              fontBold: args.fontBold,
-              fontAccent: args.fontAccent,
-              textAlign: args.textAlign,
-              textColorHarmonious: args.textColorHarmonious,
-              labelWidth:args.labelWidth,
-              containerWidth: args.containerWidth,
-              size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
+            { ...args, label: 'Отчество' }} size={args.size} backColor={args.textColor} borderRadius width='100%' />
           <InputField labelProps={
-            { label: 'Сфера деятельности', 
-              color: args.color, 
-              textEffect: args.textEffect, 
-              colorVariant:args.colorVariant,
-              variant: args.variant,
-              isTopLabel: args.isTopLabel,
-              fontBold: args.fontBold,
-              fontAccent: args.fontAccent,
-              textAlign: args.textAlign,
-              textColorHarmonious: args.textColorHarmonious,
-              labelWidth:args.labelWidth,
-              containerWidth: args.containerWidth,
-              size:args.size }} size={args.size} borderRounded={true} color={args.color} width='100%' />
-          <Select labelProps={
-            { label: 'Раса', 
-              color: args.color, 
-              colorVariant:args.colorVariant,
-              textEffect: args.textEffect, 
-              variant: args.variant,
-              isTopLabel: args.isTopLabel,
-              fontBold: args.fontBold,
-              fontAccent: args.fontAccent,
-              textAlign: args.textAlign,
-              textColorHarmonious: args.textColorHarmonious,
-              labelWidth:args.labelWidth,
-              containerWidth: args.containerWidth,
-              size:args.size }} hasIcons options={SelectOptionsIconsSvg} size={args.size} borderRounded={true} color={args.color} width='100%' />
+            { ...args, label: 'Сфера деятельности' }} size={args.size} backColor={args.textColor} borderRadius width='100%' />
+          <SelectOption labelProps={
+            { ...args, label: 'Раса' }} hasIcons options={SelectOptionsIconsSvg} size={args.size} backColor={args.textColor} borderRadius width='100%' />
+          <CheckBox labelProps={
+            { ...args, label: 'Раса' }} size={args.size} accentColor={args.textColor} borderRadius width='100%' />
+        </VerticalStack>
+      </Panel>
+    );
+  }
+};
+
+
+export const DefaultPanelIcon: Story = {
+
+  args: {
+    label: 'Фамилия',
+    labelWidth: '60%',
+    containerWidth: '100%',
+    fontBold: false
+  },
+  render: (args) =>
+  {
+    return (
+
+      <Panel borderRadius borderStyle='solid' backColor={args.textColor} backColorVariant='white' header='Личные данные'
+        size={args.size}
+        shadowElevation={4}
+        headerTypographyProps={{ fontBold: true, textEffect: 'shadow' }}
+        icon={<GiBarbute />}
+        iconColor={Theme.getColor(args.textColor, 'darkest')}>
+        <VerticalStack style={{ width: '400px', padding: '1rem' }} gap='0.5rem'>
+          <InputField labelProps={
+            { ...args, label: 'Фамилия' }} size={args.size} backColor={args.textColor} borderRadius width='100%' />
+          <InputField labelProps={
+            { ...args, label: 'Имя' }} size={args.size} backColor={args.textColor} borderRadius width='100%' />
+          <InputField labelProps={
+            { ...args, label: 'Отчество' }} size={args.size} backColor={args.textColor} borderRadius width='100%' />
+          <InputField labelProps={
+            { ...args, label: 'Сфера деятельности' }} size={args.size} backColor={args.textColor} borderRadius width='100%' />
+          <SelectOption labelProps={
+            { ...args, label: 'Раса' }} hasIcons options={SelectOptionsIconsSvg} size={args.size} backColor={args.textColor} borderRadius width='100%' />
+          <CheckBox labelProps={
+            { ...args, label: 'Раса' }} size={args.size} accentColor={args.textColor} borderRadius width='100%' />
         </VerticalStack>
       </Panel>
     );

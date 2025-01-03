@@ -1,10 +1,42 @@
-import type { Preview } from '@storybook/react';
-import React from 'react';
+import type { Preview, ReactRenderer, StoryContext } from '@storybook/react';
+import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
-import type { ThemeConfig } from "storybook-addon-data-theme-switcher";
 import { storeCore } from '../src/app/store';
-import { ThemeProvider } from '../src/ui/theme';
+import { ThemeProvider, useThemeSelector } from '../src/ui/theme';
 import "../src/app/styles/index";
+import { PartialStoryFn } from 'storybook/internal/types';
+
+interface IThemeDecoratorProps
+{
+  Story: PartialStoryFn<ReactRenderer, {[x: string]: any;}>;
+  context: StoryContext<{ [x: string]: any; }>
+}
+
+const ThemeDecorator: React.FC<IThemeDecoratorProps> = ({ Story, context }: IThemeDecoratorProps) =>
+{
+  const { setTheme, theme } = useThemeSelector();
+
+  useEffect(() =>
+  {
+    const globalTheme = context.globals?.backgrounds?.value; 
+
+    if(globalTheme === '#333')
+    {
+      setTheme({ color: theme.color, mode: 'dark' });
+      console.log('setTheme dark');
+    }
+    else
+    {
+      setTheme({ color: theme.color, mode: 'light' });
+      console.log('setTheme light');
+    } 
+
+  }, [context.globals.backgrounds.value]);
+
+  return (
+      <Story globals={context.globals}/>
+  );
+};
 
 const preview: Preview = {
   parameters: {
@@ -17,12 +49,12 @@ const preview: Preview = {
   },
 
   decorators: [
-    (Story, { parameters }) =>
+    (Story, { parameters, context }) =>
     {
       return (
         <ThemeProvider>
           <Provider store={storeCore}>
-            <Story />
+            <ThemeDecorator Story={Story} context={context} />
           </Provider>
         </ThemeProvider>
       );
@@ -31,21 +63,3 @@ const preview: Preview = {
 };
 
 export default preview;
-
-export const globalTypes = {
-  dataThemes: {
-    defaultValue: {
-      list: [
-        { name: "Light", dataTheme: "light", color: "#f0f0f0" },
-        { name: "Dark", dataTheme: "dark", color: "#0a0a0a" },
-        { name: "Coffee", dataTheme: "coffee", color: "#bea68c" },
-      ],
-      dataAttribute: "data-theme",            // optional (default: "data-theme")
-      clearable: true,                        // optional (default: true)
-      toolbar: {
-        title: "Change data-theme attribute", // optional
-        icon: "paintbrush",                   // optional
-      },
-    } satisfies ThemeConfig,
-  },
-};

@@ -11,7 +11,7 @@ import { TCssWidth } from 'ui/types';
 import { RenderComponentHelper } from 'ui/helpers';
 import { SelectOptionHelper } from './SelectOptionHelper';
 
-interface ISelectOptionBaseProps<IsMulti extends boolean = false, TValueOption extends TKey = TKey> extends Props<IOption, IsMulti>, 
+interface ISelectOptionBaseProps<IsMulti extends boolean = false, TValueOption extends TKey = TKey> extends Props<IOption, IsMulti>,
   Omit<IGeneralElementProperties, 'extraClass'>
 {
   /**
@@ -52,7 +52,7 @@ interface ISelectOptionSingleProps<TValueOption extends TKey = TKey> extends ISe
    * @param selectedValue Выбранное значение
    * @returns 
    */
-  onSetSelectedValue?: (selectedValue: TValueOption|undefined) => void;
+  onSetSelectedValue?: (selectedValue: TValueOption | undefined) => void;
 
   /**
    * Изначально выбранное значение
@@ -83,9 +83,9 @@ interface ISelectOptionMultiProps<TValueOption extends TKey = TKey> extends ISel
 
 export type ISelectOptionProps<TValueOption extends TKey = TKey> = ISelectOptionSingleProps<TValueOption> | ISelectOptionMultiProps<TValueOption>
 
-export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOptionProps<TValueOption>) => 
+export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOptionProps<TValueOption>) => 
 {
-  const  { 
+  const {
     fontBold, fontAccent, textEffect, textAlign, textColorHarmonious, textColor,
     backColor, backImage,
     borderRadius, borderStyle, borderWidth, borderColor,
@@ -102,7 +102,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
 
   const handleSelect = (newValue: SingleValue<IOption>, _actionMeta: ActionMeta<IOption>) => 
   {
-    if(newValue)
+    if (newValue)
     {
       setSelectedOption(newValue);
       if (onSetSelectedValue)
@@ -122,7 +122,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
 
   const handleMultiSelect = (newValue: MultiValue<IOption>, _actionMeta: ActionMeta<IOption>) => 
   {
-    if(newValue)
+    if (newValue)
     {
       const values = newValue.map(x => x.value);
       setSelectedOptions(Array.from(newValue));
@@ -163,18 +163,18 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
         ...((!propsReactSelect.isDisabled && state.menuIsOpen) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
         ...((propsReactSelect.isDisabled) ? Theme.getOpacityForDisabledProps() : {}),
         ':hover':
-        {
-          ...InteractivityLogic.getEffectProps('input', 'hover', props, false, state.isDisabled, state.isFocused),
-          ...((!propsReactSelect.isDisabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowHover) : {})
-        },
+      {
+        ...InteractivityLogic.getEffectProps('input', 'hover', props, false, state.isDisabled, state.isFocused),
+        ...((!propsReactSelect.isDisabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowHover) : {})
+      },
         ':focus':
-        {
-          ...((!propsReactSelect.isDisabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowActive) : {})
-        },
+      {
+        ...((!propsReactSelect.isDisabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowActive) : {})
+      },
         ':disabled':
-        {
-          ...Theme.getOpacityForDisabledProps()
-        }
+      {
+        ...Theme.getOpacityForDisabledProps()
+      }
       }),
     dropdownIndicator: (base) => ({
       ...base,
@@ -188,7 +188,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
       ...Theme.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
       paddingTop: 0,
       paddingBottom: 0,
-      columnGap: props.isMulti ? `${SelectOptionHelper.getGapFromSize(size, paddingControl)}rem` : base.columnGap
+      columnGap: props.isMulti ? `${Theme.getColumnGapFromSizeInRem(size, paddingControl)}rem` : base.columnGap
     }),
     clearIndicator: (base) => ({
       ...base,
@@ -197,7 +197,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
     }),
     input: (base) => (
       {
-        ...base,    
+        ...base,
         marginLeft: `${SelectOptionHelper.getMarginOffsetInput(size, props.isMulti, hasIcons, props.isMulti ? selectedOptions : selectedOption)}px`,
         marginRight: 0,
         marginTop: 0,
@@ -215,14 +215,14 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
         ...Theme.getTextEffectProps(size, textEffect, textAlign),
         ...Theme.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
         ...Theme.getTransitionColorsProps(),
-        ... (hasIcons ? SelectOptionHelper.getFlexContainer(size, paddingControl) : {}),
+        ... (hasIcons ? Theme.getFlexRowContainer(size, paddingControl) : {}),
         ...InteractivityLogic.getEffectProps('list', 'normal', props, isSelected, isDisabled, isFocused),
-        ':hover': 
+        ':hover':
         {
           ...styles[':hover'],
           ...InteractivityLogic.getEffectProps('list', 'hover', props, isSelected, isDisabled, isFocused)
         },
-        ':active': 
+        ':active':
         {
           ...styles[':active'],
           ...InteractivityLogic.getEffectProps('list', 'pressed', props, isSelected, isDisabled, isFocused)
@@ -244,7 +244,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
         ...Theme.getFontProps(size, fontBold, fontAccent),
         ...Theme.getTextEffectProps(size, textEffect, textAlign),
         ...Theme.getTransitionColorsProps(),
-        ... (hasIcons ? SelectOptionHelper.getFlexContainer(size, paddingControl) : {})
+        ... (hasIcons ? Theme.getFlexRowContainer(size, paddingControl) : {})
       };
     },
 
@@ -256,23 +256,23 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
         backgroundColor: Theme.getBackgroundColorProps(backColor, 'palest').backgroundColor,
         ...Theme.getFontProps(size, fontBold, fontAccent),
         ...Theme.getTextEffectProps(size, textEffect, textAlign),
-        ...Theme.getBorderRadiusProps(size, borderRadius), 
-        ...Theme.getBorderStyleProps(size, borderStyle, borderWidth, borderColor), 
+        ...Theme.getBorderRadiusProps(size, borderRadius),
+        ...Theme.getBorderStyleProps(size, borderStyle, borderWidth, borderColor),
         ...Theme.getTransitionColorsProps()
       };
     },
-  
+
     multiValueRemove: (styles) =>
     {
       return {
         ...styles,
         ':hover':
-          {
-            backgroundColor: Theme.getBackgroundColorProps(backColor, 'dark').backgroundColor
-          }
+        {
+          backgroundColor: Theme.getBackgroundColorProps(backColor, 'dark').backgroundColor
+        }
       };
     },
-  
+
     multiValueLabel: (styles) =>
     {
       return {
@@ -280,13 +280,13 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
         fontSize: '95%',
         padding: 0,
         paddingLeft: hasIcons ? '2px' : styles.paddingLeft,
-        ... (hasIcons ? SelectOptionHelper.getFlexContainer(size, paddingControl) : {})
+        ... (hasIcons ? Theme.getFlexRowContainer(size, paddingControl) : {})
       };
     }
   };
 
   const { Option, SingleValue, MultiValue } = components;
-  
+
   const RenderOption = (props: OptionProps<IOption>) => 
   {
     if (props.data.icon)
@@ -311,7 +311,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
 
       return <SingleValue {...props}>
         {RenderComponentHelper.renderIcon(size, props.data.icon, props.data.text, styleMarginLeft)}
-      </SingleValue> 
+      </SingleValue>
     }
     else
     {
@@ -350,7 +350,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props:ISelectOpti
       getOptionValue={(selectOption) => selectOption.value}
       // @ts-expect-error onChange
       onChange={props.isMulti ? handleMultiSelect : handleSelect}
-      components={{ Option: RenderOption, SingleValue: RenderSingleValue, MultiValue:RenderMultiValue }} />
+      components={{ Option: RenderOption, SingleValue: RenderSingleValue, MultiValue: RenderMultiValue }} />
   }
 
   if (labelProps)

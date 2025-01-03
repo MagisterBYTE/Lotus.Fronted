@@ -36,7 +36,7 @@ export const Typography: React.FC<ITypographyProps> = (props: ITypographyProps) 
 
   const typographyMain = css(
     {
-      ...Theme.getForegroundColorProps(textColor, textColorVariant),
+      ...Theme.getForegroundColorProps(textColor, textColorVariant, undefined, undefined, undefined),
       ...Theme.getTextEffectProps(size, textEffect, textAlign)
     }
   )

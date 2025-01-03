@@ -17,15 +17,15 @@
 }
 
 .lotus-label-gap-h-small {
-  column-gap: 0.25rem;
+  column-gap: 0.3rem;
 }
 
 .lotus-label-gap-h-medium {
-  column-gap: 0.375rem;
+  column-gap: 0.5rem;
 }
 
 .lotus-label-gap-h-large {
-  column-gap: 0.5rem;
+  column-gap: 0.75rem;
 }
 
 .lotus-label-gap-v-smaller {

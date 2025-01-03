@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import { ComponentPropsWithoutRef, forwardRef, ReactNode, useEffect, useImperativeHandle, useRef } from 'react';
 import { Button, CloseButton, IButtonProps } from 'ui/components/Controls';
-import { IGeneralElementProperties, ITypographyProps, Typography, TypographyHelper } from 'ui/components';
+import { hasBorderProps, IGeneralElementProperties, ITypographyProps, Typography, TypographyHelper } from 'ui/components';
 import { Theme, TThemeColorVariant } from 'ui/theme';
 import { TShadowElevation } from 'ui/types';
 import { DraggingComponentHelper } from 'ui/helpers/DraggingComponentHelper';
@@ -36,9 +36,9 @@ export interface IDialogProps extends Omit<ComponentPropsWithoutRef<'dialog'>, '
   onClose?: () => void;
 
   /**
-   * Вариант отображения
+   * Вариант отображения фона
    */
-  colorVariant?: TThemeColorVariant;
+  backColorVariant?: TThemeColorVariant;
 
   /**
    * Размер тени
@@ -88,8 +88,14 @@ export interface IDialogProps extends Omit<ComponentPropsWithoutRef<'dialog'>, '
 
 export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>  
 {
-  const { borderRounded, borderStyle, color, size = 'medium', paddingControl = 'normal', children,
-    isMoveable, onOk, onClose, colorVariant = 'palest', shadowElevation, hasHeaderDivider, header, headerTypographyProps,
+  const { 
+    fontBold, fontAccent, textEffect, textAlign, textColorHarmonious, textColor,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backColor, backImage,
+    borderRadius, borderStyle, borderWidth, borderColor,
+    size = 'medium', paddingControl = 'normal',
+    children, isMoveable, onOk, onClose, 
+    backColorVariant = 'palest', shadowElevation, hasHeaderDivider, header, headerTypographyProps,
     hasFooterDivider, hasButtonOk = true, buttonOkProps, hasButtonCancel = true, buttonCancelProps, ...propsDialog } = props;
 
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -140,13 +146,15 @@ export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>
 
   const dialogMain = css(
     {
-      ...Theme.getFontProps(size),
+      ...Theme.getFontProps(size, fontBold, fontAccent),
+      ...Theme.getTextEffectProps(size, textEffect, textAlign),
       ...Theme.getPaddingProps(size, paddingControl, 'normal', 'normal'),
-      ...Theme.getForegroundColorProps(color, colorVariant, true),
-      ...Theme.getBackgroundColorProps(color, colorVariant),
-      ...(borderStyle ? Theme.getBorderStyleProps(size, borderRounded, borderStyle) : { border: 'none' }),
-      ...(borderStyle ? Theme.getBorderColorProps(color, colorVariant, 3) : {}),
-      ...(shadowElevation ? Theme.getBoxShadowProps(shadowElevation, color) : {})
+      ...Theme.getBackgroundColorProps(backColor, backColorVariant),
+      ...Theme.getForegroundColorByBackProps(backColor, backColorVariant, textColor, textColorHarmonious),
+      ...Theme.getBorderRadiusProps(size, borderRadius),
+      ...(hasBorderProps(props) ? Theme.getBorderStyleProps(size, borderStyle, borderWidth, borderColor) : { border: 'none'}),
+      ...(hasBorderProps(props) ? Theme.getBorderColorProps(borderColor ?? backColor, backColorVariant, 3) : {}),
+      ...(shadowElevation ? Theme.getBoxShadowProps(shadowElevation, backColor) : {})
     });
 
   const dialogClass = cx(dialogMain, 'lotus-dialog');
@@ -155,8 +163,8 @@ export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>
     {
       marginLeft: `-${Theme.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingLeft}`,
       marginRight: `-${Theme.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingRight}`,
-      ...(hasHeaderDivider ? Theme.getBorderStyleIndividualProps(size, 'solid', false, false, false, true) : {}),
-      ...(hasHeaderDivider ? { borderBottomColor: Theme.getBorderColorProps(color, colorVariant, 3, 0.4).borderColor } : {})
+      ...(hasHeaderDivider ? Theme.getBorderStyleIndividualProps(size, borderStyle ?? 'solid', borderWidth, borderColor, false, false, false, true) : {}),
+      ...(hasHeaderDivider ? { borderBottomColor: Theme.getBorderColorProps(borderColor ?? backColor, backColorVariant, 3, 0.4).borderColor } : {})
     });
 
   const dialogHeaderClass = cx(dialogHeaderMain, 'lotus-dialog-header', isMoveable ? 'lotus-dialog-header-move' : '');
@@ -165,8 +173,8 @@ export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>
     {
       marginLeft: `-${Theme.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingLeft}`,
       marginRight: `-${Theme.getPaddingProps(size, paddingControl, 'normal', 'normal').paddingRight}`,
-      ...(hasFooterDivider ? Theme.getBorderStyleIndividualProps(size, 'solid', false, true) : {}),
-      ...(hasFooterDivider ? { borderTopColor: Theme.getBorderColorProps(color, colorVariant, 3, 0.4).borderColor } : {})
+      ...(hasFooterDivider ? Theme.getBorderStyleIndividualProps(size, borderStyle ?? 'solid', borderWidth, borderColor, false, true) : {}),
+      ...(hasFooterDivider ? { borderTopColor: Theme.getBorderColorProps(borderColor ?? backColor, backColorVariant, 3, 0.4).borderColor } : {})
     });
 
   const dialogFooterClass = cx(dialogFooterMain, 'lotus-dialog-footer');
@@ -194,9 +202,15 @@ export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>
       <div className='lotus-dialog-main'>
         <div className={dialogHeaderClass} data-dialog-draggable>
           {header && (
-            <Typography color={headerTypographyProps?.color ?? color}
+            <Typography 
+              {...headerTypographyProps}
+              textColor={headerTypographyProps?.textColor ?? Theme.getColor(textColor ?? backColor,
+                (textColor ? undefined : backColorVariant),
+                (textColor ? undefined : true),
+                (textColor ? undefined : textColorHarmonious))}
               variant={headerTypographyProps?.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
-              {...headerTypographyProps}>{header}</Typography>
+            >
+              {header}</Typography>
           )}
           <CloseButton onClick={handleButtonCloseClick} style={{marginTop: '-0.5rem', marginRight: '0.5rem'}}/>
         </div>
@@ -206,10 +220,13 @@ export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>
 
         <div className={dialogFooterClass}>
           {hasButtonOk && (<Button style={{ minWidth: '100px' }}
-            color={buttonOkProps?.color ?? color}
+            {...buttonOkProps}
+            borderRadius={buttonOkProps?.borderRadius ?? borderRadius}
+            borderStyle={buttonOkProps?.borderStyle ?? borderStyle ?? 'solid'}
+            borderWidth={buttonOkProps?.borderWidth ?? borderWidth ?? '1px'}
+            borderColor={buttonOkProps?.borderColor ?? borderColor}
+            backColor={buttonOkProps?.backColor ?? backColor}
             size={buttonOkProps?.size ?? size}
-            borderRounded={buttonOkProps?.borderRounded ?? true}
-            borderStyle={buttonOkProps?.borderStyle ?? 'solid'}
             paddingControl={buttonOkProps?.paddingControl ?? paddingControl}
             onClick={buttonOkProps?.onClick ?? handleButtonOkClick}
             value='Ок'
@@ -218,10 +235,13 @@ export const Dialog = forwardRef<IDialogComponent, IDialogProps>((props, ref) =>
             {buttonOkProps?.children ?? 'Ok'}
           </Button>)}
           {hasButtonCancel && (<Button style={{ minWidth: '100px' }}
-            color={buttonCancelProps?.color ?? color}
+            {...buttonCancelProps}
+            borderRadius={buttonCancelProps?.borderRadius ?? borderRadius}
+            borderStyle={buttonCancelProps?.borderStyle ?? borderStyle ?? 'solid'}
+            borderWidth={buttonCancelProps?.borderWidth ?? borderWidth ?? '1px'}
+            borderColor={buttonCancelProps?.borderColor ?? borderColor}
+            backColor={buttonCancelProps?.backColor ?? backColor}
             size={buttonCancelProps?.size ?? size}
-            borderRounded={buttonCancelProps?.borderRounded ?? true}
-            borderStyle={buttonCancelProps?.borderStyle ?? 'solid'}
             paddingControl={buttonCancelProps?.paddingControl ?? paddingControl}
             onClick={handleButtonCloseClick}
             value='Cancel'
