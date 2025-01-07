@@ -6,6 +6,29 @@ import { IOption } from './Option';
 export class OptionHelper
 {
   /**
+   * Преобразование значение в значение корректного типа
+   * @param options Список опций
+   * @param value Значение
+   * @returns Значение корректного типа
+   */
+  public static convertValue(options: IOption[], value: TKey): TKey
+  {
+    if(typeof options[0].value == 'string')
+    {
+      if(typeof value == 'string') return value;
+      if(typeof value == 'number') return value.toString();
+    }
+
+    if(typeof options[0].value == 'number')
+    {
+      if(typeof value == 'string') return Number(value);
+      if(typeof value == 'number') return value;
+    }
+
+    return value;
+  }
+
+  /**
    * Преобразование в типизированный массив
    * @param options Список опций
    * @returns
@@ -140,7 +163,7 @@ export class OptionHelper
    * @param selectedValue Выбранное значение
    * @returns Опция
    */
-  public static getSelectOptionByValue(options: IOption[], selectedValue?: TKey): IOption
+  public static getOptionByValue(options: IOption[], selectedValue?: TKey): IOption
   {
     if (ObjectHelper.isNullOrUndefined(selectedValue) == false)
     {
@@ -210,26 +233,40 @@ export class OptionHelper
    * @param selectedValues Выбранные значения
    * @returns Массив опций
    */
-  public static getOptionsByValues(options: IOption[], selectedValues?: TKey[]): IOption[]
+  public static getOptionsByValues(options: IOption[], selectedValues?: TKey|TKey[]): IOption[]
   {
-    if (selectedValues && selectedValues.length > 0)
+    if(selectedValues)
     {
-      const optionsSelected: IOption[] = [];
-
-      options.forEach((element) =>
+      if(Array.isArray(selectedValues))
       {
-        if (selectedValues.find((x) => x === element.value))
+        if(selectedValues.length > 0)
         {
-          optionsSelected.push(element);
+          const optionsSelected: IOption[] = [];
+      
+          options.forEach((element) =>
+          {
+            if (selectedValues.find((x) => x === element.value))
+            {
+              optionsSelected.push(element);
+            }
+          });
+      
+          return optionsSelected;
         }
-      });
+      }
+      else
+      {
+        for (const element of options)
+        {
+          if (element.value === selectedValues)
+          {
+            return [element];
+          }
+        }
+      }
+    }
 
-      return optionsSelected;
-    }
-    else
-    {
-      return [];
-    }
+    return [];
   }
 
   /**
@@ -299,5 +336,21 @@ export class OptionHelper
     }
 
     return [];
+  }
+
+  /**
+   * Проверка на наличие опции
+   * @param options Массив всех опций
+   * @param value Выбранное значение
+   * @returns статус наличе опции
+   */
+  public static hasOption(options: IOption[], value?: TKey):boolean
+  {
+    if(value)
+    {
+      return options.find((x) => x.value == value) !== undefined;
+    }
+
+    return false;
   }
 }

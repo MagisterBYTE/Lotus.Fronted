@@ -1,2 +1,2 @@
-export { type IButtonProps, Button } from './Button'
-export { type TButtonVariant } from './ButtonVariant'
+export { Button, type IButtonProps } from './Button'
+export { TButtonVariants, type TButtonVariant } from './ButtonVariant'

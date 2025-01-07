@@ -3,7 +3,7 @@ import { TControlSize } from 'ui/types';
 
 export class SelectOptionHelper
 {
-  public static getMarginOffsetInput(size: TControlSize, isMulti?:boolean, hasIcon?:boolean, data?: IOption[]|IOption): number
+  public static getMarginOffsetInput(size: TControlSize, isMulti:boolean, hasIcons:boolean, selectedOptions: IOption[]): number
   {
     if(isMulti)
     {
@@ -16,7 +16,7 @@ export class SelectOptionHelper
       }
     }
 
-    if(!data) 
+    if(selectedOptions.length == 0) 
     {
       switch (size) 
       {
@@ -27,10 +27,9 @@ export class SelectOptionHelper
       }
     }
 
-    if(hasIcon)
+    if(hasIcons)
     {
-      // @ts-expect-error typeof data.icon
-      if(typeof data.icon == 'string')
+      if(typeof selectedOptions[0].icon == 'string')
       {
         switch (size) 
         {

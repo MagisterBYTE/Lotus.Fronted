@@ -1,9 +1,8 @@
-import { IImageDatabase, IOption } from 'lotus-core';
+import { IImageDatabase } from 'lotus-core';
 import { CSSProperties, ReactElement, ReactNode } from 'react';
 import { IconContext } from 'react-icons';
-import { IGeneralIconProperties } from 'ui/components';
 import { ThemeHelper } from 'ui/theme';
-import { TControlSize } from 'ui/types';
+import { TColorPresentation, TControlSize } from 'ui/types';
 
 /**
  * Отрисовка вспомогательных элементов UI
@@ -11,173 +10,50 @@ import { TControlSize } from 'ui/types';
 export class RenderComponentHelper
 {
   /**
-   * Отрисовка опции
-   * @param size Размер элемента UI
-   * @param option Опция
-   * @param style Стиль отрисовки иконки
-   * @param imageDatabase База данных изображений
-   * @returns ReactElement
-   */
-  public static renderOption(size: TControlSize, option:IOption, style?:CSSProperties, imageDatabase?:IImageDatabase):ReactElement
-  {
-    const { icon, text } = option;
-    if (typeof icon === 'string')
-    {
-      const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
-      if(text)
-      {
-        return <>
-          <img src={icon} width={sizeIcon} height={sizeIcon} style={style} />
-          {text}
-        </>
-      }
-      else
-      {
-        return <img src={icon} width={sizeIcon} height={sizeIcon} style={style} />
-      }
-    }
-    if(typeof icon === 'number' && imageDatabase)
-    {
-      const iconData = imageDatabase.getImageByIdOrName(icon);
-      
-      if(iconData)
-      {
-        const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
-
-        if(text)
-        {
-          return <>
-            <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={style} />
-            {text}
-          </>
-        }
-        else
-        {
-          return <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={style} />
-        }
-      }
-
-      return <></>;
-    }
-    else
-    {
-      const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInRem(size)}rem`;
-      if(text)
-      {
-        return <>
-          <IconContext.Provider value={{ size: sizeIcon, style: style}} >
-            {icon}
-          </IconContext.Provider>
-          {text}
-        </>
-      }
-      else
-      {
-        return <IconContext.Provider value={{ size: sizeIcon, style: style}}>
-          {icon}
-        </IconContext.Provider>
-      }
-    }
-  }
-
-  /**
-   * Отрисовка иконки
+   * Отрисовка иконки и контента
    * @param size Размер элемента UI
    * @param icon Данные иконки
    * @param other Другие данные
-   * @param style Стиль
+   * @param iconStyle Стиль иконки
+   * @param iconColor Цвет иконки (влияет только на векторные)
    * @param imageDatabase База данных изображений
+   * @param wrapDiv Следует ли обвернуть в блок div
    * @returns ReactElement
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static renderIcon(size: TControlSize, icon:any, other?:ReactNode, style?:CSSProperties, imageDatabase?:IImageDatabase):ReactElement
+  public static renderIconAndValue(size: TControlSize, icon:any, other?:ReactNode, iconStyle?:CSSProperties, 
+    iconColor?: TColorPresentation, imageDatabase?:IImageDatabase, wrapDiv?: boolean, wrapDivStyle?:CSSProperties):ReactElement
   {
+    const iconColorText = (iconColor !== undefined) ? ThemeHelper.getColor(iconColor).toCSSRgbValue() : undefined;
+
+    // Если строка
     if (typeof icon === 'string')
     {
       const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
       if(other)
       {
-        return <>
-          <img src={icon} width={sizeIcon} height={sizeIcon} style={style} />
-          {other}
-        </>
-      }
-      else
-      {
-        return <img src={icon} width={sizeIcon} height={sizeIcon} style={style} />
-      }
-    }
-    if(typeof icon === 'number' && imageDatabase)
-    {
-      const iconData = imageDatabase.getImageByIdOrName(icon);
-      
-      if(iconData)
-      {
-        const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
-
-        if(other)
+        if(wrapDiv)
         {
-          return <>
-            <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={style} />
+          return <div style={wrapDivStyle}>
+            <img src={icon} width={sizeIcon} height={sizeIcon} style={iconStyle} />
             {other}
-          </>
+          </div>
         }
         else
         {
-          return <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={style} />
+          return <>
+            <img src={icon} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+            {other}
+          </>
         }
-      }
-
-      return <></>;
-    }
-    else
-    {
-      const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInRem(size)}rem`;
-      if(other)
-      {
-        return <>
-          <IconContext.Provider value={{ size: sizeIcon, style: style}} >
-            {icon}
-          </IconContext.Provider>
-          {other}
-        </>
-      }
-      else
-      {
-        return <IconContext.Provider value={{ size: sizeIcon, style: style}}>
-          {icon}
-        </IconContext.Provider>
-      }
-    }
-  }
-
-  /**
-   * Отрисовка иконки
-   * @param size Размер элемента UI
-   * @param props Общие свойства иконки для элемента UI
-   * @param other Другие данные
-   * @param imageDatabase База данных изображений
-   * @returns ReactElement
-   */
-  public static renderIconProps(size: TControlSize, props:IGeneralIconProperties, other?:ReactNode, imageDatabase?:IImageDatabase):ReactElement
-  {
-    const {icon, iconColor, iconStyle } = props
-
-    if (typeof icon === 'string')
-    {
-      const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
-      if(other)
-      {
-        return <>
-          <img src={icon} width={sizeIcon} height={sizeIcon} style={iconStyle} />
-          {other}
-        </>
       }
       else
       {
         return <img src={icon} width={sizeIcon} height={sizeIcon} style={iconStyle} />
       }
     }
+
+    // Если это число есть база данных
     if(typeof icon === 'number' && imageDatabase)
     {
       const iconData = imageDatabase.getImageByIdOrName(icon);
@@ -188,10 +64,20 @@ export class RenderComponentHelper
 
         if(other)
         {
-          return <>
-            <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={iconStyle} />
-            {other}
-          </>
+          if(wrapDiv)
+          {
+            return <div style={wrapDivStyle}>
+              <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+              {other}
+            </div>
+          }
+          else
+          {
+            return <>
+              <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+              {other}
+            </>
+          }
         }
         else
         {
@@ -201,22 +87,35 @@ export class RenderComponentHelper
 
       return <></>;
     }
+
+    // Это иконка React
     else
     {
       const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInRem(size)}rem`;
       if(other)
       {
-        return <>
-          <IconContext.Provider value={{ size: sizeIcon, style: iconStyle}} >
-            {icon}
-          </IconContext.Provider>
-          {other}
-        </>
+        if(wrapDiv)
+        {
+          return <div style={wrapDivStyle}>
+            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}} >
+              {icon}
+            </IconContext.Provider>
+            {other}
+          </div>
+        }
+        else
+        {
+          return <>
+            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}} >
+              {icon}
+            </IconContext.Provider>
+            {other}
+          </>
+        }
       }
       else
       {
-        return <IconContext.Provider value={{ size: sizeIcon, 
-          color:ThemeHelper.getColor(iconColor ?? props.iconColor).toCSSRgbValue(), style: iconStyle}}>
+        return <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}}>
           {icon}
         </IconContext.Provider>
       }

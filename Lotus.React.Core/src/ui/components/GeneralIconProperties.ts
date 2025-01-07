@@ -1,5 +1,6 @@
+import { IImageDatabase } from 'lotus-core';
 import { CSSProperties, ReactNode } from 'react';
-import { TColorPresentation } from 'ui/types';
+import { TColorPresentation, TIconPlacement } from 'ui/types';
 
 /**
  * Общие свойства иконки для элемента UI
@@ -20,4 +21,14 @@ export interface IGeneralIconProperties
    * Стиль для отображения иконки
    */
   iconStyle?:CSSProperties;
+
+  /**
+   * Местоположение иконки
+   */
+  iconPlacement?:TIconPlacement;
+
+  /**
+   * База данных изображений
+   */
+  imageDatabase?:IImageDatabase;
 }

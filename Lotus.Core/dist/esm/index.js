@@ -4706,6 +4706,27 @@ class SortPropertyHelper {
 
 class OptionHelper {
     /**
+     * Преобразование значение в значение корректного типа
+     * @param options Список опций
+     * @param value Значение
+     * @returns Значение корректного типа
+     */
+    static convertValue(options, value) {
+        if (typeof options[0].value == 'string') {
+            if (typeof value == 'string')
+                return value;
+            if (typeof value == 'number')
+                return value.toString();
+        }
+        if (typeof options[0].value == 'number') {
+            if (typeof value == 'string')
+                return Number(value);
+            if (typeof value == 'number')
+                return value;
+        }
+        return value;
+    }
+    /**
      * Преобразование в типизированный массив
      * @param options Список опций
      * @returns
@@ -4805,7 +4826,7 @@ class OptionHelper {
      * @param selectedValue Выбранное значение
      * @returns Опция
      */
-    static getSelectOptionByValue(options, selectedValue) {
+    static getOptionByValue(options, selectedValue) {
         if (ObjectHelper.isNullOrUndefined(selectedValue) == false) {
             for (const element of options) {
                 if (element.value === selectedValue) {
@@ -4858,18 +4879,27 @@ class OptionHelper {
      * @returns Массив опций
      */
     static getOptionsByValues(options, selectedValues) {
-        if (selectedValues && selectedValues.length > 0) {
-            const optionsSelected = [];
-            options.forEach((element) => {
-                if (selectedValues.find((x) => x === element.value)) {
-                    optionsSelected.push(element);
+        if (selectedValues) {
+            if (Array.isArray(selectedValues)) {
+                if (selectedValues.length > 0) {
+                    const optionsSelected = [];
+                    options.forEach((element) => {
+                        if (selectedValues.find((x) => x === element.value)) {
+                            optionsSelected.push(element);
+                        }
+                    });
+                    return optionsSelected;
                 }
-            });
-            return optionsSelected;
+            }
+            else {
+                for (const element of options) {
+                    if (element.value === selectedValues) {
+                        return [element];
+                    }
+                }
+            }
         }
-        else {
-            return [];
-        }
+        return [];
     }
     /**
      * Получение массива текста из выбранных значений опций
@@ -4920,6 +4950,18 @@ class OptionHelper {
             }
         }
         return [];
+    }
+    /**
+     * Проверка на наличие опции
+     * @param options Массив всех опций
+     * @param value Выбранное значение
+     * @returns статус наличе опции
+     */
+    static hasOption(options, value) {
+        if (value) {
+            return options.find((x) => x.value == value) !== undefined;
+        }
+        return false;
     }
 }
 

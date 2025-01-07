@@ -2,7 +2,9 @@
 import { Color, Colors, ColorVariantHelper, NumberHelper } from 'lotus-core';
 import { CSSProperties } from 'react';
 import { TColorPresentation, TColorAndVariant, TControlSize, TTextEffect, 
-  TCssTextAlign, TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TShadowElevation, TControlPadding } from 'ui/types';
+  TCssTextAlign, TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TShadowElevation, TControlPadding, 
+  TCssJustifyContent,
+  TCssAlignItems} from 'ui/types';
 import { hasBorderProperties } from 'ui/components';
 import { TThemeColor, IThemePaletteAdditionalColor, Theme, checkOfThemeColorVariant, TThemeColors, TThemeData } from '../types';
 import { checkOfThemeModeColor } from '../types/ThemeModeColor';
@@ -502,11 +504,16 @@ export class ThemeHelper
     return {};
   }
 
+
   /**
-   * Получить свойства CSS по радиусу индивидуальной границе в виде CSSProperties
+   * Получить свойства CSS по индивидуальному радиусу границе в виде CSSProperties
    * @param size Размер элемента UI для получения оптимального радиуса
    * @param borderRadius Радиус скругления или статус того что его надо вычислить
-   * @returns Свойства CSS по радиусу индивидуальной границе в виде CSSProperties
+   * @param isTopLeft Скругление верхнего левого угла
+   * @param isTopRight Скругление верхнего правого угла
+   * @param isBottomLeft Скругление нижнего левого угла
+   * @param isBottomRight Скругление нижнего правого угла
+   * @returns 
    */
   public static getBorderRadiusIndividualProps(size?: TControlSize, borderRadius?: TCssBorderRadius,
     isTopLeft?: boolean, isTopRight?: boolean, isBottomLeft?: boolean, isBottomRight?: boolean): CSSProperties
@@ -537,7 +544,10 @@ export class ThemeHelper
       return `${rem}rem`;
     }
 
-    const borderProps: CSSProperties = {};
+    const borderProps: CSSProperties = 
+    {
+      borderRadius: 'undefined'
+    };
 
     if (borderRadius)
     {
@@ -1256,9 +1266,9 @@ export class ThemeHelper
   }
 
   /**
-   * Конвертация размера элемента UI в соответствующий размер иконки в пикселя
+   * Конвертация размера элемента UI в соответствующий размер иконки в пикселях
    * @param size Размере элемента UI
-   * @returns Соответствующий размер иконки в пикселя
+   * @returns Соответствующий размер иконки в пикселях
    */
   public static convertControlSizeToIconSizeInPixel(size?: TControlSize): number
   {
@@ -1266,14 +1276,14 @@ export class ThemeHelper
     {
       switch (size)
       {
-        case 'smaller': return 10 * 1.3;
-        case 'small': return 13 * 1.3;
-        case 'medium': return 16 * 1.3;
-        case 'large': return 19 * 1.3;
+        case 'smaller': return 10 * 1.5;
+        case 'small': return 13 * 1.5;
+        case 'medium': return 16 * 1.5;
+        case 'large': return 19 * 1.5;
       }
     }
 
-    return 16 * 1.3;
+    return 16 * 1.5;
   }
   // #endregion
 
@@ -1333,16 +1343,94 @@ export class ThemeHelper
    * Получить оптимальные настройки Flex контейнера по горизонтали в виде CSSProperties
    * @param size Размер элемента
    * @param paddingControl Внутренний отступ
+   * @param isReverse Обратный порядок элементов
+   * @param horizontalAlign Распределение элементов по ширине
+   * @param verticalAlign Выравнивание элементов по вертикали
    * @returns Настройки Flex контейнера в виде CSSProperties
    */
-  public static getFlexRowContainer(size: TControlSize, paddingControl: TControlPadding): CSSProperties
+  public static getFlexRowContainer(size: TControlSize, paddingControl: TControlPadding, isReverse:boolean = false, 
+    horizontalAlign: TCssJustifyContent = 'flex-start', verticalAlign: TCssAlignItems = 'center'): CSSProperties
   {
     return {
       display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
+      flexDirection:  isReverse ? 'row-reverse' : 'row',
+      justifyContent: horizontalAlign,
+      alignItems: verticalAlign,
       columnGap: `${ThemeHelper.getColumnGapFromSizeInRem(size, paddingControl)}rem`
+    }
+  }
+  // #endregion
+
+  // #region FlexColumnContainer
+  /**
+   * Получить оптимальный размер пространства между элементами по вертикали для Flex контейнера
+   * @param size Размер элемента
+   * @param paddingControl Внутренний отступ
+   * @returns Размер пространства в rem
+   */
+  public static getRowGapFromSizeInRem(size: TControlSize, paddingControl: TControlPadding): number
+  {
+    switch (size) 
+    {
+      case 'smaller':
+        {
+          switch (paddingControl)
+          {
+            case 'minimum': return 0.24;
+            case 'normal': return 0.3;
+            case 'enlarged': return 0.4;
+          }
+        } break;
+      case 'small':
+        {
+          switch (paddingControl)
+          {
+            case 'minimum': return 0.3;
+            case 'normal': return 0.4;
+            case 'enlarged': return 0.5;
+          }
+        } break;
+      case 'medium':
+        {
+          switch (paddingControl)
+          {
+            case 'minimum': return 0.5;
+            case 'normal': return 0.6;
+            case 'enlarged': return 0.75;
+          }
+        } break;
+      case 'large':
+        {
+          switch (paddingControl)
+          {
+            case 'minimum': return 0.4;
+            case 'normal': return 0.7;
+            case 'enlarged': return 0.9;
+          }
+        } break;
+    }
+
+    return 0.6;
+  }
+
+  /**
+   * Получить оптимальные настройки Flex контейнера по вертикали в виде CSSProperties
+   * @param size Размер элемента
+   * @param paddingControl Внутренний отступ
+   * @param isReverse Обратный порядок элементов
+   * @param verticalAlign Распределение элементов по высоте
+   * @param horizontalAlign Выравнивание элементов по горизонтали
+   * @returns Настройки Flex контейнера в виде CSSProperties
+   */
+  public static getFlexColumnContainer(size: TControlSize, paddingControl: TControlPadding, isReverse:boolean = false, 
+    verticalAlign: TCssJustifyContent = 'flex-start', horizontalAlign: TCssAlignItems = 'center'): CSSProperties
+  {
+    return {
+      display: 'flex',
+      flexDirection:  isReverse ? 'column-reverse' : 'column',
+      justifyContent: verticalAlign,
+      alignItems: horizontalAlign,
+      rowGap: `${ThemeHelper.getRowGapFromSizeInRem(size, paddingControl)}rem`
     }
   }
   // #endregion

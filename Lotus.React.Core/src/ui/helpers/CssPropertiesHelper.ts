@@ -26,4 +26,22 @@ export class CssPropertiesHelper
 
     return result;
   }
+
+  public static overrideStyle(source:CSSProperties, override:CSSProperties)
+  {
+    for(const key in override)
+    {
+      // @ts-expect-error prop
+      const prop = override[key];
+      // @ts-expect-error prop
+      source[key] = prop;
+    }
+
+    // убираем общий свойства если установлены конкретные значения
+    // borderRadius
+    if(override.borderTopLeftRadius ?? override.borderTopRightRadius ?? override.borderBottomLeftRadius ?? override.borderBottomRightRadius)
+    {
+      source.borderRadius = undefined;
+    }
+  }
 }

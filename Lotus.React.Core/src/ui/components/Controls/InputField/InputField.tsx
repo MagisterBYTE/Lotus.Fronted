@@ -3,10 +3,11 @@ import { css, cx } from '@emotion/css';
 import React, { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { IGeneralElementProperties } from 'ui/components';
 import { ILabelProps, Label, TypographyHelper } from 'ui/components/Display';
-import { InteractivityLogic } from 'ui/interactivity';
-import { Theme } from 'ui/theme';
+import { IInteractivityBackgroundEffect, InteractivityLogic } from 'ui/interactivity';
+import { ThemeConstant, ThemeHelper } from 'ui/theme';
 
-export interface IInputFieldProps extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'color'>, IGeneralElementProperties
+export interface IInputFieldProps extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'color'>, 
+  IGeneralElementProperties, IInteractivityBackgroundEffect
 {
   /**
    * Параметры надписи
@@ -26,33 +27,39 @@ export const InputField: React.FC<IInputFieldProps> = (props: IInputFieldProps) 
     backColor, backImage,
     borderRadius, borderStyle, borderWidth, borderColor,
     size = 'medium', paddingControl = 'normal', extraClass,
-    labelProps, width, rightElement, ...propsInput } = props
+    labelProps, width, rightElement, 
+    hasRippleEffect, hasScaleEffect, hasShadowBorderEffect, hasShadowBoxEffect,
+    ...propsInput } = props
 
   const inputFieldClass = css(
     {
       boxSizing: 'border-box',
       width: width ? width : '',
-      ...Theme.getFontProps(size, fontBold, fontAccent),
-      ...Theme.getTextEffectProps(size, textEffect, textAlign),
-      ...Theme.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
-      ...Theme.getBorderRadiusProps(size, borderRadius),
-      ...Theme.getTransitionColorsProps(),
-      ...InteractivityLogic.getEffectProps('input', 'normal', props, false, false, false),
+      ...ThemeHelper.getFontProps(size, fontBold, fontAccent),
+      ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
+      ...ThemeHelper.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
+      ...ThemeHelper.getBorderRadiusProps(size, borderRadius),
+      ...ThemeHelper.getTransitionColorsProps(),
+      ...InteractivityLogic.getEffectProps('input', 'normal', props, false, props.disabled, false),
       '&:hover': 
       {
-        ...InteractivityLogic.getEffectProps('input', 'hover', props, false, false, false),
-        ...((!propsInput.disabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowHover) : {})
+        ...InteractivityLogic.getEffectProps('input', 'hover', props, false, props.disabled, false),
+        ...((!propsInput.disabled && hasShadowBorderEffect) ? ThemeHelper.getBorderShadowProps(4, backColor, undefined, ThemeConstant.OpacityForBorderShadowHover) : {}),
+        ...((!propsInput.disabled && hasShadowBoxEffect) ? ThemeHelper.getBoxShadowProps(4, backColor, undefined) : {}),
+        ...((!propsInput.disabled && hasScaleEffect) ? ThemeHelper.getTransformScaleProps(1.05) : {})
       },
       '&:focus':
       {
-        ...InteractivityLogic.getEffectProps('input', 'hover', props, false, false, true),
-        ...((!propsInput.disabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
-        outline: 0
+        outline: 0,
+        ...InteractivityLogic.getEffectProps('input', 'hover', props, false, props.disabled, true),
+        ...((!propsInput.disabled && hasShadowBorderEffect) ? ThemeHelper.getBorderShadowProps(6, backColor, undefined, ThemeConstant.OpacityForBorderShadowActive) : {}),
+        ...((!propsInput.disabled && hasShadowBoxEffect) ? ThemeHelper.getBoxShadowProps(8, backColor, undefined) : {}),
+        ...((!propsInput.disabled && hasScaleEffect) ? ThemeHelper.getTransformScaleProps(0.95) : {})
       },
       '&:disabled': 
       {
         ...InteractivityLogic.getEffectProps('input', 'normal', props, false, true, false),
-        ...Theme.getOpacityForDisabledProps()
+        ...ThemeHelper.getOpacityForDisabledProps()
       }
     });
   if (labelProps)

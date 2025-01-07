@@ -1,18 +1,19 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { IOption, OptionHelper, TKey } from 'lotus-core';
 import { ReactNode, useState } from 'react';
 import ReactSelect, { ActionMeta, components, MultiValue, MultiValueProps, OptionProps, Props, SingleValue, SingleValueProps, StylesConfig } from 'react-select';
-import { IGeneralElementProperties } from 'ui/components';
+import { IGeneralElementProperties, IGeneralIconProperties } from 'ui/components';
 import { ILabelProps, Label } from 'ui/components/Display/Label';
 import { TypographyHelper } from 'ui/components/Display/Typography';
-import { InteractivityLogic } from 'ui/interactivity';
-import { Theme } from 'ui/theme';
+import { IInteractivityBackgroundEffect, InteractivityLogic } from 'ui/interactivity';
+import { ThemeConstant, ThemeHelper } from 'ui/theme';
 import { TCssWidth } from 'ui/types';
 import { RenderComponentHelper } from 'ui/helpers';
 import { SelectOptionHelper } from './SelectOptionHelper';
 
-interface ISelectOptionBaseProps<IsMulti extends boolean = false, TValueOption extends TKey = TKey> extends Props<IOption, IsMulti>,
-  Omit<IGeneralElementProperties, 'extraClass'>
+interface ISelectOptionBaseProps<IsMulti extends boolean = boolean> extends Props<IOption, IsMulti>,
+  Omit<IGeneralElementProperties, 'extraClass'>, Omit<IGeneralIconProperties, 'icon'>, IInteractivityBackgroundEffect
 {
   /**
    * Фон поля
@@ -30,11 +31,6 @@ interface ISelectOptionBaseProps<IsMulti extends boolean = false, TValueOption e
   labelProps?: ILabelProps
 
   /**
-   * Имеют ли опции иконки
-   */
-  hasIcons?: boolean;
-
-  /**
    * Список опций
    */
   options: IOption[];
@@ -45,39 +41,39 @@ interface ISelectOptionBaseProps<IsMulti extends boolean = false, TValueOption e
   rightElement?: ReactNode;
 }
 
-interface ISelectOptionSingleProps<TValueOption extends TKey = TKey> extends ISelectOptionBaseProps<false, TValueOption>
+interface ISelectOptionSingleProps<TValueOption extends TKey = TKey> extends ISelectOptionBaseProps<false>
 {
   /**
    * Функция обратного вызова для установки выбранного значения
-   * @param selectedValue Выбранное значение
+   * @param selectedOption Выбранная опция
    * @returns 
    */
-  onSetSelectedValue?: (selectedValue: TValueOption | undefined) => void;
+  onSelectedOption?: (selectedOption?: IOption) => void;
 
   /**
    * Изначально выбранное значение
    */
   initialSelectedValue?: TValueOption;
 
-  onSetSelectedValues?: never;
+  onSelectedOptions?: never;
   initialSelectedValues?: never;
 }
 
-interface ISelectOptionMultiProps<TValueOption extends TKey = TKey> extends ISelectOptionBaseProps<true, TValueOption>
+interface ISelectOptionMultiProps<TValueOption extends TKey = TKey> extends ISelectOptionBaseProps<true>
 {
   /**
    * Функция обратного вызова для установки выбранных значений
-   * @param selectedValues Выбранные значения или пустой массив
+   * @param selectedOptions Выбранные опции или пустой массив
    * @returns 
    */
-  onSetSelectedValues?: (selectedValues: TValueOption[]) => void;
+  onSelectedOptions?: (selectedOptions: IOption[]) => void;
 
   /**
    * Изначально выбранные значения
    */
   initialSelectedValues?: TValueOption[];
 
-  onSetSelectedValue?: never;
+  onSelectedOption?: never;
   initialSelectedValue?: never;
 }
 
@@ -90,90 +86,88 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
     backColor, backImage,
     borderRadius, borderStyle, borderWidth, borderColor,
     size = 'medium', paddingControl = 'normal',
-    isBackground = false, width, labelProps, hasIcons = false, options, rightElement,
-    onSetSelectedValue,
-    initialSelectedValue,
-    onSetSelectedValues,
-    initialSelectedValues,
+    isBackground = false, width, labelProps, options, rightElement,
+    iconColor, iconStyle, iconPlacement = 'left', imageDatabase,
+    hasRippleEffect, hasScaleEffect, hasShadowBorderEffect, hasShadowBoxEffect,
+    onSelectedOption, initialSelectedValue, onSelectedOptions, initialSelectedValues,
     ...propsReactSelect } = props;
 
-  const [selectedOption, setSelectedOption] = useState<IOption | undefined>(options.find(x => x.value === initialSelectedValue));
-  const [selectedOptions, setSelectedOptions] = useState<IOption[]>(OptionHelper.getOptionsByValues(options, initialSelectedValues));
+  const [selectedOptions, setSelectedOptions] = useState<IOption[]>(OptionHelper.getOptionsByValues(options, initialSelectedValue ?? initialSelectedValues));
 
-  const handleSelect = (newValue: SingleValue<IOption>, _actionMeta: ActionMeta<IOption>) => 
+  const handleSelect = (newValue: SingleValue<IOption> | MultiValue<IOption>, actionMeta: ActionMeta<IOption>) => 
   {
-    if (newValue)
+    if(props.isMulti)
     {
-      setSelectedOption(newValue);
-      if (onSetSelectedValue)
+      const multiValue = newValue as MultiValue<IOption>;
+      if(multiValue && multiValue.length > 0)
       {
-        onSetSelectedValue(newValue.value);
+        // @ts-expect-error multiValue
+        setSelectedOptions(multiValue);
+
+        // @ts-expect-error multiValue
+        if(onSelectedOptions) onSelectedOptions(multiValue);
+      }
+      else
+      {
+        setSelectedOptions([]);
+        if(onSelectedOptions) onSelectedOptions([]);
       }
     }
     else
     {
-      setSelectedOption(undefined);
-      if (onSetSelectedValue)
+      const singleValue = newValue as SingleValue<IOption>;
+      if(singleValue)
       {
-        onSetSelectedValue(undefined);
+        setSelectedOptions([singleValue]);
+        if(onSelectedOption) onSelectedOption(singleValue);
+      }
+      else
+      {
+        setSelectedOptions([]);
+        if(onSelectedOption) onSelectedOption(undefined);
       }
     }
   };
 
-  const handleMultiSelect = (newValue: MultiValue<IOption>, _actionMeta: ActionMeta<IOption>) => 
-  {
-    if (newValue)
-    {
-      const values = newValue.map(x => x.value);
-      setSelectedOptions(Array.from(newValue));
-      if (onSetSelectedValues)
-      {
-        onSetSelectedValues(values);
-      }
-    }
-    else
-    {
-      setSelectedOptions([]);
-      if (onSetSelectedValues)
-      {
-        onSetSelectedValues([]);
-      }
-    }
-  };
+  const hasIcons = (options.filter((x => x.icon != undefined)).length > 0);
 
   const selectOptionStyles: StylesConfig<IOption> = {
     container: (base) => ({
       ...base,
       width: width,
-      minHeight: `${Theme.convertControlSizeToHeightPixel(size, paddingControl, 'half', 1.2)}px`
+      minHeight: `${ThemeHelper.convertControlSizeToHeightPixel(size, paddingControl, 'half', 1.2)}px`
     }),
     control: (styles, state) =>
       ({
         ...styles,
-        minHeight: `${Theme.convertControlSizeToHeightPixel(size, paddingControl, 'half', 1.2)}px`,
+        minHeight: `${ThemeHelper.convertControlSizeToHeightPixel(size, paddingControl, 'half', 1.2)}px`,
         paddingTop: 0,
         paddingBottom: 0,
         borderRadius: 0,
         boxShadow: 'none',
-        ...Theme.getFontProps(size, fontBold, fontAccent),
-        ...Theme.getTextEffectProps(size, textEffect, textAlign),
-        ...Theme.getBorderRadiusProps(size, borderRadius),
-        ...Theme.getTransitionColorsProps(),
-        ...InteractivityLogic.getEffectProps('input', 'normal', props, false, false, false),
-        ...((!propsReactSelect.isDisabled && state.menuIsOpen) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
-        ...((propsReactSelect.isDisabled) ? Theme.getOpacityForDisabledProps() : {}),
+        ...ThemeHelper.getFontProps(size, fontBold, fontAccent),
+        ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
+        ...ThemeHelper.getBorderRadiusProps(size, borderRadius),
+        ...ThemeHelper.getTransitionColorsProps(),
+        ...InteractivityLogic.getEffectProps('input', 'normal', props, false, props.isDisabled, false),
+        ...((!propsReactSelect.isDisabled && state.menuIsOpen) ? ThemeHelper.getBorderShadowProps(4, backColor, undefined, ThemeConstant.OpacityForBorderShadowActive) : {}),
+        ...((propsReactSelect.isDisabled) ? ThemeHelper.getOpacityForDisabledProps() : {}),
         ':hover':
       {
         ...InteractivityLogic.getEffectProps('input', 'hover', props, false, state.isDisabled, state.isFocused),
-        ...((!propsReactSelect.isDisabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowHover) : {})
+        ...((!propsReactSelect.isDisabled && hasShadowBorderEffect) ? ThemeHelper.getBorderShadowProps(4, backColor, undefined, ThemeConstant.OpacityForBorderShadowHover) : {}),
+        ...((!propsReactSelect.isDisabled && hasShadowBoxEffect) ? ThemeHelper.getBoxShadowProps(4, backColor, undefined) : {}),
+        ...((!propsReactSelect.isDisabled && hasScaleEffect) ? ThemeHelper.getTransformScaleProps(1.05) : {})
       },
         ':focus':
       {
-        ...((!propsReactSelect.isDisabled) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowActive) : {})
+        ...((!propsReactSelect.isDisabled && hasShadowBorderEffect) ? ThemeHelper.getBorderShadowProps(6, backColor, undefined, ThemeConstant.OpacityForBorderShadowActive) : {}),
+        ...((!propsReactSelect.isDisabled && hasShadowBoxEffect) ? ThemeHelper.getBoxShadowProps(8, backColor, undefined) : {}),
+        ...((!propsReactSelect.isDisabled && hasScaleEffect) ? ThemeHelper.getTransformScaleProps(0.95) : {})
       },
         ':disabled':
       {
-        ...Theme.getOpacityForDisabledProps()
+        ...ThemeHelper.getOpacityForDisabledProps()
       }
       }),
     dropdownIndicator: (base) => ({
@@ -185,10 +179,10 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
       ...base,
       zIndex: 0,
       padding: 0,
-      ...Theme.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
+      ...ThemeHelper.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
       paddingTop: 0,
       paddingBottom: 0,
-      columnGap: props.isMulti ? `${Theme.getColumnGapFromSizeInRem(size, paddingControl)}rem` : base.columnGap
+      columnGap: props.isMulti ? `${ThemeHelper.getColumnGapFromSizeInRem(size, paddingControl)}rem` : base.columnGap
     }),
     clearIndicator: (base) => ({
       ...base,
@@ -198,11 +192,11 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
     input: (base) => (
       {
         ...base,
-        marginLeft: `${SelectOptionHelper.getMarginOffsetInput(size, props.isMulti, hasIcons, props.isMulti ? selectedOptions : selectedOption)}px`,
+        marginLeft: `${SelectOptionHelper.getMarginOffsetInput(size, Boolean(props.isMulti), hasIcons, selectedOptions)}px`,
         marginRight: 0,
         marginTop: 0,
         marginBottom: 0,
-        ...Theme.getPaddingProps(size, paddingControl, ((size == 'large') ? 'half' : 'normal'), 'half')
+        ...ThemeHelper.getPaddingProps(size, paddingControl, ((size == 'large') ? 'half' : 'normal'), 'half')
       }
     ),
 
@@ -211,11 +205,11 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
       return {
         ...styles,
         cursor: isDisabled ? 'not-allowed' : 'default',
-        ...Theme.getFontProps(size, fontBold, fontAccent),
-        ...Theme.getTextEffectProps(size, textEffect, textAlign),
-        ...Theme.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
-        ...Theme.getTransitionColorsProps(),
-        ... (hasIcons ? Theme.getFlexRowContainer(size, paddingControl) : {}),
+        ...ThemeHelper.getFontProps(size, fontBold, fontAccent),
+        ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
+        ...ThemeHelper.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
+        ...ThemeHelper.getTransitionColorsProps(),
+        ... (hasIcons ? ThemeHelper.getFlexRowContainer(size, paddingControl) : {}),
         ...InteractivityLogic.getEffectProps('list', 'normal', props, isSelected, isDisabled, isFocused),
         ':hover':
         {
@@ -231,7 +225,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
         {
           ...styles[':disabled'],
           ...InteractivityLogic.getEffectProps('list', 'normal', props, isSelected, isDisabled, isFocused),
-          ...Theme.getOpacityForDisabledProps()
+          ...ThemeHelper.getOpacityForDisabledProps()
         }
       };
     },
@@ -241,10 +235,10 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
       return {
         ...styles,
         marginLeft: hasIcons ? `${SelectOptionHelper.getMarginOffsetSingleValue(size, data)}px` : '2px',
-        ...Theme.getFontProps(size, fontBold, fontAccent),
-        ...Theme.getTextEffectProps(size, textEffect, textAlign),
-        ...Theme.getTransitionColorsProps(),
-        ... (hasIcons ? Theme.getFlexRowContainer(size, paddingControl) : {})
+        ...ThemeHelper.getFontProps(size, fontBold, fontAccent),
+        ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
+        ...ThemeHelper.getTransitionColorsProps(),
+        ... (hasIcons ? ThemeHelper.getFlexRowContainer(size, paddingControl) : {})
       };
     },
 
@@ -253,12 +247,12 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
       return {
         ...styles,
         fontSize: '100%',
-        backgroundColor: Theme.getBackgroundColorProps(backColor, 'palest').backgroundColor,
-        ...Theme.getFontProps(size, fontBold, fontAccent),
-        ...Theme.getTextEffectProps(size, textEffect, textAlign),
-        ...Theme.getBorderRadiusProps(size, borderRadius),
-        ...Theme.getBorderStyleProps(size, borderStyle, borderWidth, borderColor),
-        ...Theme.getTransitionColorsProps()
+        backgroundColor: ThemeHelper.getBackgroundColorProps(backColor, 'palest').backgroundColor,
+        ...ThemeHelper.getFontProps(size, fontBold, fontAccent),
+        ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
+        ...ThemeHelper.getBorderRadiusProps(size, borderRadius),
+        ...ThemeHelper.getBorderStyleProps(size, borderStyle, borderWidth, borderColor),
+        ...ThemeHelper.getTransitionColorsProps()
       };
     },
 
@@ -268,7 +262,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
         ...styles,
         ':hover':
         {
-          backgroundColor: Theme.getBackgroundColorProps(backColor, 'dark').backgroundColor
+          backgroundColor: ThemeHelper.getBackgroundColorProps(backColor, 'dark').backgroundColor
         }
       };
     },
@@ -280,19 +274,19 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
         fontSize: '95%',
         padding: 0,
         paddingLeft: hasIcons ? '2px' : styles.paddingLeft,
-        ... (hasIcons ? Theme.getFlexRowContainer(size, paddingControl) : {})
+        ... (hasIcons ? ThemeHelper.getFlexRowContainer(size, paddingControl) : {})
       };
     }
   };
 
   const { Option, SingleValue, MultiValue } = components;
 
-  const RenderOption = (props: OptionProps<IOption>) => 
+  const renderOption = (props: OptionProps<IOption>) => 
   {
     if (props.data.icon)
     {
       return <Option {...props}>
-        {RenderComponentHelper.renderIcon(size, props.data.icon, props.data.text)}
+        {RenderComponentHelper.renderIconAndValue(size, props.data.icon, props.data.text, iconStyle, iconColor, imageDatabase)}
       </Option>
     }
     else
@@ -303,14 +297,14 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
     }
   }
 
-  const RenderSingleValue = (props: SingleValueProps<IOption>) =>
+  const renderSingleValue = (props: SingleValueProps<IOption>) =>
   {
     if (props.data.icon)
     {
-      const styleMarginLeft = (typeof props.data.icon === 'string') ? undefined : { marginLeft: '-10x' };
+      const iconStyleMarginLeft = (typeof props.data.icon === 'string') ? undefined : { marginLeft: '-10x' };
 
       return <SingleValue {...props}>
-        {RenderComponentHelper.renderIcon(size, props.data.icon, props.data.text, styleMarginLeft)}
+        {RenderComponentHelper.renderIconAndValue(size, props.data.icon, props.data.text, iconStyle ?? iconStyleMarginLeft, iconColor, imageDatabase)}
       </SingleValue>
     }
     else
@@ -321,13 +315,13 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
     }
   }
 
-  const RenderMultiValue = (props: MultiValueProps<IOption>) =>
+  const renderMultiValue = (props: MultiValueProps<IOption>) =>
   {
     if (props.data.icon)
     {
-      const styleMarginLeft = (typeof props.data.icon === 'string') ? { marginLeft: '1x' } : undefined;
+      const iconStyleMarginLeft = (typeof props.data.icon === 'string') ? { marginLeft: '1x' } : undefined;
       return <MultiValue {...props}>
-        {RenderComponentHelper.renderIcon(size, props.data.icon, props.data.text, styleMarginLeft)}
+        {RenderComponentHelper.renderIconAndValue(size, props.data.icon, props.data.text, iconStyle ?? iconStyleMarginLeft, iconColor, imageDatabase)}
       </MultiValue>
     }
     else
@@ -338,32 +332,33 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
     }
   }
 
-  const RenderReactSelect = () =>
+  const renderReactSelect = () =>
   {
+    // @ts-expect-error IsMulti
     return <ReactSelect
       {...propsReactSelect}
       options={options}
-      value={selectedOption}
+      value={selectedOptions}
       styles={selectOptionStyles}
       classNamePrefix='react-select'
       getOptionLabel={(selectOption) => selectOption.text}
       getOptionValue={(selectOption) => selectOption.value}
-      // @ts-expect-error onChange
-      onChange={props.isMulti ? handleMultiSelect : handleSelect}
-      components={{ Option: RenderOption, SingleValue: RenderSingleValue, MultiValue: RenderMultiValue }} />
+      onChange={handleSelect}
+      components={{ Option: renderOption, SingleValue: renderSingleValue, MultiValue: renderMultiValue }} />
   }
 
   if (labelProps)
   {
-    return <Label {...labelProps} size={size} variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
+    return <Label {...labelProps} size={size} 
+      variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
       textColor={labelProps.textColor ?? textColor}>
       {
-        RenderReactSelect()
+        renderReactSelect()
       }
     </Label>
   }
   else
   {
-    return RenderReactSelect();
+    return renderReactSelect();
   }
 }

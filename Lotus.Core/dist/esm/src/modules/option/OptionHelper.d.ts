@@ -2,6 +2,13 @@ import { TKey } from 'types/Key';
 import { IOption } from './Option';
 export declare class OptionHelper {
     /**
+     * Преобразование значение в значение корректного типа
+     * @param options Список опций
+     * @param value Значение
+     * @returns Значение корректного типа
+     */
+    static convertValue(options: IOption[], value: TKey): TKey;
+    /**
      * Преобразование в типизированный массив
      * @param options Список опций
      * @returns
@@ -47,7 +54,7 @@ export declare class OptionHelper {
      * @param selectedValue Выбранное значение
      * @returns Опция
      */
-    static getSelectOptionByValue(options: IOption[], selectedValue?: TKey): IOption;
+    static getOptionByValue(options: IOption[], selectedValue?: TKey): IOption;
     /**
      * Получение текста из значения опций
      * @param options Массив всех опций
@@ -68,7 +75,7 @@ export declare class OptionHelper {
      * @param selectedValues Выбранные значения
      * @returns Массив опций
      */
-    static getOptionsByValues(options: IOption[], selectedValues?: TKey[]): IOption[];
+    static getOptionsByValues(options: IOption[], selectedValues?: TKey | TKey[]): IOption[];
     /**
      * Получение массива текста из выбранных значений опций
      * @param options Массив всех опций
@@ -83,4 +90,11 @@ export declare class OptionHelper {
      * @returns Массив текста выбранных значений
      */
     static getTextsByUnknownValues(options: IOption[], item: any): string[];
+    /**
+     * Проверка на наличие опции
+     * @param options Массив всех опций
+     * @param value Выбранное значение
+     * @returns статус наличе опции
+     */
+    static hasOption(options: IOption[], value?: TKey): boolean;
 }

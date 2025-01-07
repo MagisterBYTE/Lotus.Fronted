@@ -50,3 +50,13 @@ export type TCssBoxShadow = Property.BoxShadow;
  * Тип свойства фонового изображения Css
  */
 export type TCssBackgroundImage = Property.BackgroundImage;
+
+/**
+ * Тип свойства выравнивания контента по основной оси Css
+ */
+export type TCssJustifyContent = Property.JustifyContent;
+
+/**
+ * Тип свойства выравнивания контента по второстепенной оси Css
+ */
+export type TCssAlignItems = Property.AlignItems;

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { GiAnt } from 'react-icons/gi';
-import { TColorPresentation, TControlPaddings, TControlSizes, TTextEffects } from 'ui/types';
-import { TThemeColors, TThemeColorVariants, TThemeModeColors } from 'ui/theme';
 import { Colors } from 'lotus-core';
+import { GiAnt } from 'react-icons/gi';
+import { TThemeColors, TThemeColorVariants, TThemeModeColors } from 'ui/theme';
+import { TColorPresentation, TControlPaddings, TControlSizes, TIconPlacements, TTextEffects } from 'ui/types';
 import { Button } from './Button';
 import { TButtonVariant } from './ButtonVariant';
 import { hydraulicAnalysisIcon } from '.storydata/IconsBase64';
@@ -14,14 +14,14 @@ const DivButton = (variant: TButtonVariant, backColor: TColorPresentation, props
   return <Button 
     key={`${variant}_${backColor}`}
     style={{margin: '1rem'}} {...propsOther} backColor={backColor} variant={variant} >
-    {variant}
+    {propsOther.children}
   </Button>
 }
 
 const DivButtonsColumn = (backColor: TColorPresentation, propsOther: any) =>
 {
   const variants:TButtonVariant[] = ['filled', 'outline', 'text', 'icon']
-  return <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'stretch'}}>
+  return <div key={`${backColor}`} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'stretch'}}>
     {
       variants.map(x =>
       {
@@ -56,12 +56,15 @@ const meta = {
     extraClass: { table: { disable: true } },
 
     // IButtonBaseProps
+    overrideButtonStyle: { table: { disable: true } },
     variant: { control: 'inline-radio', table: { category: 'Button', order: 4  } },
-    hasIcon: { control: 'boolean', table: { category: 'Button', order: 5 } },
-    hasBoxShadow: { control: 'boolean', table: { category: 'Button', order: 6 } },
-    hasRippleEffect: { control: 'boolean', table: { category: 'Button', order: 7 } },
-    hasScaleEffect: { control: 'boolean', table: { category: 'Button', order: 8 } },
-    hasShadowEffect: { control: 'boolean', table: { category: 'Button', order: 9 } },
+    isSelectedStatus: { control: 'boolean', table: { category: 'Button', order: 5  } },
+    isSelected: { table: { disable: true } },
+    onSelected: { table: { disable: true } },
+    hasRippleEffect: { control: 'boolean', table: { category: 'Button', order: 6 } },
+    hasScaleEffect: { control: 'boolean', table: { category: 'Button', order: 7 } },
+    hasShadowBorderEffect: { control: 'boolean', table: { category: 'Button', order: 8 } },
+    hasShadowBoxEffect: { control: 'boolean', table: { category: 'Button', order: 9 } },
 
     // IGeneralBackgroundProperties
     backColor: { control: 'inline-radio', options: [...TThemeModeColors, ...TThemeColors, undefined], table: { category: 'Background', order: 10 } },
@@ -86,6 +89,13 @@ const meta = {
     hoverBorderColor: { control: 'inline-radio', options: [...TThemeColorVariants, undefined], table: { category: 'Border', order: 25 } },
     pressedBorderColor: { control: 'inline-radio', options: [...TThemeColorVariants, undefined], table: { category: 'Border', order: 26 } },
 
+    // IGeneralIconProperties
+    icon: { table: { disable: true } },
+    iconColor: { control: 'inline-radio', options: [...TThemeModeColors, ...TThemeColors, undefined], table: { category: 'Icon', order: 27 } },
+    iconPlacement: { control: 'inline-radio', options: [...TIconPlacements, undefined], table: { category: 'Icon', order: 28 } },
+    iconStyle: { table: { disable: true } },
+    imageDatabase: { table: { disable: true } },
+
     onClick: { table: { disable: true } },
     children: { table: { disable: true } },
     style: { table: { disable: true } },
@@ -96,8 +106,8 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ButtonVariants: Story = {
-  name: 'Variants',
+export const TextVariants: Story = {
+  name: 'TextVariants',
   args: {
   },
   render: (args) =>
@@ -115,62 +125,102 @@ export const ButtonVariants: Story = {
   }
 };
 
-export const Outline: Story = {
-  name: 'Outline',
+export const IconReactVariants: Story = {
+  name: 'IconReactVariants',
   args: {
-    disabled: false,
-    variant: 'outline',
-    children: 'Outline',
-    borderStyle: 'solid'
+    icon: <GiAnt />,
+    borderRadius: '40%'
+  },
+  render: (args) =>
+  {
+    const colors:TColorPresentation[] = [...TThemeModeColors, ...TThemeColors];
+    return <div style={{ display: 'flex', flexDirection: 'row' }}>
+      {
+        colors.map(x =>
+        {
+          return DivButtonsColumn(x, args)
+        }
+        )
+      }
+    </div>
   }
 };
 
-export const Text: Story = {
-  name: 'Text',
+export const IconImageVariants: Story = {
+  name: 'IconImageVariants',
   args: {
-    disabled: false,
-    variant: 'text',
-    children: 'Text'
+    icon: hydraulicAnalysisIcon
+  },
+  render: (args) =>
+  {
+    const colors:TColorPresentation[] = [...TThemeModeColors, ...TThemeColors];
+    return <div style={{ display: 'flex', flexDirection: 'row' }}>
+      {
+        colors.map(x =>
+        {
+          return DivButtonsColumn(x, args)
+        }
+        )
+      }
+    </div>
   }
 };
 
-export const IconReact: Story = {
-  name: 'IconReact',
+export const TextAndImage: Story = {
+  name: 'TextAndImage',
   args: {
-    disabled: false,
-    hasIcon: true,
-    variant: 'icon',
-    children: <GiAnt />
+    children: 'TextAndImage',
+    icon: hydraulicAnalysisIcon
+  },
+  render: (args) =>
+  {
+    const colors:TColorPresentation[] = [...TThemeModeColors, ...TThemeColors];
+    return <div style={{ display: 'flex', flexDirection: 'row' }}>
+      {
+        colors.map(x =>
+        {
+          return DivButtonsColumn(x, args)
+        }
+        )
+      }
+    </div>
   }
 };
 
-export const IconImage: Story = {
-  name: 'IconImage',
+export const TextAndIcon: Story = {
+  name: 'TextAndIcon',
   args: {
-    disabled: true,
-    hasIcon: true,
-    variant: 'icon',
-    children: hydraulicAnalysisIcon
+    children: 'TextAndIcon',
+    icon: <GiAnt />
+  },
+  render: (args) =>
+  {
+    const colors:TColorPresentation[] = [...TThemeModeColors, ...TThemeColors];
+    return <div style={{ display: 'flex', flexDirection: 'row' }}>
+      {
+        colors.map(x =>
+        {
+          return DivButtonsColumn(x, args)
+        }
+        )
+      }
+    </div>
   }
 };
 
-export const MyBackColor: Story = {
-  name: 'MyBackColor',
+export const CustomBackColor: Story = {
+  name: 'CustomBackColor',
   args: {
-    disabled: false,
-    children: 'MyBackColor',
-    variant: 'filled',
+    children: 'CustomBackColor',
     backColor: Colors.coral,
     style: { width: '200px' }
   }
 };
 
-export const MyTextColor: Story = {
-  name: 'MyTextColor',
+export const CustomTextColor: Story = {
+  name: 'CustomTextColor',
   args: {
-    disabled: false,
     children: 'MyTextColor',
-    variant: 'filled',
     textColor: Colors.red,
     hoverTextColor: Colors.chocolate_1,
     pressedTextColor: Colors.chocolate_3,
@@ -178,12 +228,10 @@ export const MyTextColor: Story = {
   }
 };
 
-export const MyBackTextColor: Story = {
-  name: 'MyBackTextColor',
+export const CustomTextAndBackColor: Story = {
+  name: 'CustomTextAndBackColor',
   args: {
-    disabled: false,
-    children: 'MyBackTextColor',
-    variant: 'filled',
+    children: 'CustomTextAndBackColor',
     backColor: 'blueGrey',
     hoverBackColor: 'dark',
     pressedBackColor: 'darkest',

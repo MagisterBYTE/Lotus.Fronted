@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { css, cx } from '@emotion/css';
 import React, { ComponentPropsWithoutRef, CSSProperties } from 'react';
-import { ILabelProps, Label, Typography, TypographyHelper } from 'ui/components';
-import { IGeneralElementProperties } from 'ui/components';
-import { InteractivityLogic } from 'ui/interactivity';
-import { Theme } from 'ui/theme';
+import { IGeneralElementProperties, ILabelProps, Label, Typography, TypographyHelper } from 'ui/components';
+import { CssPropertiesBuilder } from 'ui/helpers';
+import { IInteractivityBackgroundEffect } from 'ui/interactivity';
+import { ThemeHelper } from 'ui/theme';
 import { ThemePaletteHelper } from 'ui/theme/helpers/ThemePaletteHelper';
 import { checkOfThemeModeColor } from 'ui/theme/types/ThemeModeColor';
 
-export interface ICheckBoxProps extends Omit<ComponentPropsWithoutRef<'input'>, keyof IGeneralElementProperties>, IGeneralElementProperties
+export interface ICheckBoxProps extends Omit<ComponentPropsWithoutRef<'input'>, keyof IGeneralElementProperties>, 
+  IGeneralElementProperties, IInteractivityBackgroundEffect
 {
   /**
    * Использовать НЕ стандартный checkbox или radio
@@ -25,16 +26,6 @@ export interface ICheckBoxProps extends Omit<ComponentPropsWithoutRef<'input'>, 
    * Параметры надписи
    */
   labelProps?: ILabelProps;
-  
-  /**
-   * Использовать эффект масштабирования
-   */
-  hasScaleEffect?: boolean;
-
-  /**
-   * Использовать эффект тени
-   */
-  hasShadowEffect?: boolean;
 }
 
 export const CheckBox: React.FC<ICheckBoxProps> = (props: ICheckBoxProps) =>
@@ -45,51 +36,27 @@ export const CheckBox: React.FC<ICheckBoxProps> = (props: ICheckBoxProps) =>
       backColor, backImage,
       borderRadius, borderStyle, borderWidth, borderColor,
       size = 'medium', paddingControl = 'normal', extraClass, 
-      useCustom, checkedSymbolStyle, labelProps, hasScaleEffect, hasShadowEffect, 
+      useCustom, checkedSymbolStyle, labelProps, 
+      hasRippleEffect, hasScaleEffect, hasShadowBorderEffect, hasShadowBoxEffect,
       children, checked,
       ...propsCheckBox
     } = props
 
+  const cssProperties = CssPropertiesBuilder.buildInteractivityElement('outline', props, { isSelected: checked });
+
   const checkBoxClass = css(
     {
+      ...cssProperties,
       appearance: useCustom ? 'none' :'auto', 
       cursor: 'pointer',
       margin: '0px',
       accentColor: useCustom ? 'initial' : ((checkOfThemeModeColor(backColor) 
         ? ThemePaletteHelper.getColor(backColor, 'main').toCSSRgbValue() 
-        : Theme.getBackgroundColorProps(backColor).backgroundColor)),
-      ...Theme.getFontProps(size, fontBold, fontAccent),
-      ...Theme.getSizeProps(size, paddingControl),
-      ...Theme.getTextEffectProps(size, textEffect, textAlign),
-      ...Theme.getPaddingProps(size, paddingControl, 'normal', 'half'),
-      ...Theme.getTransitionColorsProps(),
-      ...Theme.getBorderRadiusProps(size, borderRadius),
-      ...InteractivityLogic.getEffectProps('outline', 'normal', props, checked),
-      '&:hover':
-      {
-        ...InteractivityLogic.getEffectProps('outline', 'hover', props, checked, props.disabled),
-        ...((!propsCheckBox.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(4, backColor, undefined, Theme.OpacityForBorderShadowHover) : {}),
-        ...((!propsCheckBox.disabled && hasScaleEffect) ? Theme.getTransformScaleProps(1.2) : {})
-      },
-      '&:active':
-      {
-        ...InteractivityLogic.getEffectProps('outline', 'pressed', props, checked, props.disabled),
-        ...((!propsCheckBox.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(6, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
-        ...((!propsCheckBox.disabled && hasScaleEffect) ? Theme.getTransformScaleProps(1.2) : {})
-      },
-      '&:checked':
-      {
-        ...InteractivityLogic.getEffectProps('outline', 'normal', props, true, props.disabled),
-        ...((!propsCheckBox.disabled && hasShadowEffect) ? Theme.getBorderShadowProps(6, backColor, undefined, Theme.OpacityForBorderShadowActive) : {}),
-        ...((!propsCheckBox.disabled && hasScaleEffect) ? Theme.getTransformScaleProps(1.2) : {})
-      },
+        : ThemeHelper.getBackgroundColorProps(backColor).backgroundColor)),
+      ...ThemeHelper.getSizeProps(size, paddingControl),
       '&:checked::after':
       {
         ...checkedSymbolStyle
-      },
-      '&:disabled':
-      {
-        ...Theme.getOpacityForDisabledProps()
       }
     })
 
@@ -107,20 +74,25 @@ export const CheckBox: React.FC<ICheckBoxProps> = (props: ICheckBoxProps) =>
     return style;
   }
 
+  const renderCheckBox = () =>
+  {
+    return <input {...propsCheckBox} type={propsCheckBox.type == 'radio' ? 'radio' : 'checkbox'} className={cx(checkBoxClass, extraClass)} />
+  }
+
   if (labelProps)
   {
     return <Label {...labelProps} size={labelProps.size ?? size} valueStyle={getStyleValue()}
       variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
       textColor={labelProps.textColor ?? textColor}>
-      <input {...propsCheckBox} type={propsCheckBox.type == 'radio' ? 'radio' : 'checkbox'} className={cx(checkBoxClass, extraClass)} />
+      {renderCheckBox()}
     </Label>
   }
   else
   {
     if(props.children)
     {
-      return <span style={Theme.getFlexRowContainer(size, paddingControl)}>
-        <input {...propsCheckBox} type={propsCheckBox.type == 'radio' ? 'radio' : 'checkbox'} className={cx(checkBoxClass, extraClass)}/>
+      return <span style={ThemeHelper.getFlexRowContainer(size, paddingControl)}>
+        {renderCheckBox()}
         <Typography 
           textColor={textColor ?? backColor}
           variant={TypographyHelper.getTypographyVariantByControlSize(size)} >
@@ -130,7 +102,7 @@ export const CheckBox: React.FC<ICheckBoxProps> = (props: ICheckBoxProps) =>
     }
     else
     {
-      return <input {...propsCheckBox} type={propsCheckBox.type == 'radio' ? 'radio' : 'checkbox'} className={cx(checkBoxClass, extraClass)} />
+      return renderCheckBox();
     }
   }
 };

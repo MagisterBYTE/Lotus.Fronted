@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import React, { ComponentPropsWithoutRef } from 'react';
 import { IGeneralTextProperties } from 'ui/components/GeneralTextProperties';
-import { Theme, TThemeColorVariant } from 'ui/theme';
+import { ThemeHelper, TThemeColorVariant } from 'ui/theme';
 import { TypographyHelper } from './TypographyHelper';
 import { TTypographyVariant } from './TypographyVariant';
 import './Typography.css';
@@ -36,8 +36,8 @@ export const Typography: React.FC<ITypographyProps> = (props: ITypographyProps) 
 
   const typographyMain = css(
     {
-      ...Theme.getForegroundColorProps(textColor, textColorVariant, undefined, undefined, undefined),
-      ...Theme.getTextEffectProps(size, textEffect, textAlign)
+      ...ThemeHelper.getForegroundColorProps(textColor, textColorVariant, undefined, undefined, undefined),
+      ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign)
     }
   )
   
