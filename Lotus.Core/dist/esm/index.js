@@ -3734,6 +3734,19 @@ class ColorVariants {
         const black = main.combine(ColorNames['black'], 0.80);
         return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
+    static createFromColorRelativeLightness(mainColor, lightColor, darkColor) {
+        const main = new Color(mainColor);
+        const white = main.increaseLightness(0.95);
+        const palest = main.increaseLightness(0.87);
+        const pale = main.increaseLightness(0.82);
+        const lighter = main.increaseLightness(0.77);
+        const light = new Color(lightColor);
+        const dark = new Color(darkColor);
+        const darker = main.decreaseLightness(0.40);
+        const darkest = main.decreaseLightness(0.60);
+        const black = main.decreaseLightness(0.80);
+        return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+    }
     // #endregion
     white; // 1
     palest; // 2

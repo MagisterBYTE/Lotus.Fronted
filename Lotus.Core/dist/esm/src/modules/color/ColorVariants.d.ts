@@ -22,6 +22,7 @@ export interface IColorVariants {
 export declare class ColorVariants implements IColorVariants {
     static createFromColorLightness(red: number, green: number, blue: number): ColorVariants;
     static createFromColorCombine(red: number, green: number, blue: number): ColorVariants;
+    static createFromColorRelativeLightness(mainColor: string, lightColor: string, darkColor: string): ColorVariants;
     readonly white: Color;
     readonly palest: Color;
     readonly pale: Color;
