@@ -1,6 +1,6 @@
 import { ArrayHelper } from 'helpers/ArrayHelper';
 import { TKey } from 'types/Key';
-import { ObjectHelper } from 'helpers';
+import { Assert } from 'utils/Assert';
 import { IOption } from './Option';
 
 export class OptionHelper
@@ -68,7 +68,7 @@ export class OptionHelper
    */
   public static getDefaultValue<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): TValueOption
   {
-    if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false)
+    if (Assert.exist(initialSelectedValue))
     {
       return initialSelectedValue!;
     }
@@ -84,7 +84,7 @@ export class OptionHelper
    */
   public static getDefaultText<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): string
   {
-    if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false)
+    if (Assert.exist(initialSelectedValue))
     {
       let text = '';
       options.forEach((element) =>
@@ -111,7 +111,7 @@ export class OptionHelper
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static getDefaultIcon<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): any
   {
-    if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false)
+    if (Assert.exist(initialSelectedValue))
     {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let icon: any = undefined;
@@ -165,7 +165,7 @@ export class OptionHelper
    */
   public static getOptionByValue(options: IOption[], selectedValue?: TKey): IOption
   {
-    if (ObjectHelper.isNullOrUndefined(selectedValue) == false)
+    if (Assert.exist(selectedValue))
     {
       for (const element of options)
       {
@@ -188,7 +188,7 @@ export class OptionHelper
   public static getTextByValue(options: IOption[], selectedValue?: TKey): string
   {
     let text = '';
-    if (ObjectHelper.isNullOrUndefined(selectedValue) == false)
+    if (Assert.exist(selectedValue))
     {
       options.forEach((element) =>
       {
@@ -213,7 +213,7 @@ export class OptionHelper
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let icon: any = undefined;
-    if (ObjectHelper.isNullOrUndefined(selectedValue) == false)
+    if (Assert.exist(selectedValue))
     {
       options.forEach((element) =>
       {
@@ -342,13 +342,40 @@ export class OptionHelper
    * Проверка на наличие опции
    * @param options Массив всех опций
    * @param value Выбранное значение
-   * @returns статус наличе опции
+   * @returns Статус наличия опции
    */
   public static hasOption(options: IOption[], value?: TKey):boolean
   {
-    if(value)
+    if(Assert.exist(value))
     {
       return options.find((x) => x.value == value) !== undefined;
+    }
+
+    return false;
+  }
+
+  /**
+   * Проверка на наличие иконки
+   * @param options Массив всех опций
+   * @param context Контекст вызова
+   * @returns Статус наличия иконки
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public static hasIcons(options: IOption[], context?: any):boolean
+  {
+    for(const option of options)
+    {
+      if(option.icon)
+      {
+        if(typeof option.icon == 'function')
+        {
+          if(option.icon(option, context)) return true;
+        }
+        else
+        {
+          return true;
+        }
+      }
     }
 
     return false;

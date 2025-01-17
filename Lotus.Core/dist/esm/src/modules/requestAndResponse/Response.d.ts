@@ -16,11 +16,7 @@ export interface IResponse<TPayload = any> {
 /**
  * Интерфейс для постраничного получения данных
  */
-export interface IResponsePage<TPayload = any> {
-    /**
-     * Результат
-     */
-    result?: IResult;
+export interface IResponsePage<TPayload = any> extends Omit<IResponse<TPayload>, 'payload'> {
     /**
     * Данные
     */

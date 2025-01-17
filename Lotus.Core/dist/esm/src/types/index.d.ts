@@ -1,9 +1,10 @@
 export { type Dictionary } from './CommonTypes';
-export { type IConstantable, checkOfConstantable, instanceOfConstantable } from './Constantable';
+export { checkOfConstantable, instanceOfConstantable, type IConstantable } from './Constantable';
 export { type TDayOfWeek } from './DayOfWeek';
-export { type IEditable, checkOfEditable, instanceOfEditable } from './Editable';
+export { checkOfEditable, instanceOfEditable, type IEditable } from './Editable';
 export { type IEntity } from './Entity';
-export { type IGrouping, checkOfGrouping, instanceOfGrouping } from './Grouping';
+export { checkOfGrouping, instanceOfGrouping, type IGrouping } from './Grouping';
+export { type TGuid } from './Guid';
 export { type TKey } from './Key';
-export { type IResult, checkOfResult, instanceOfResult } from './Result';
-export { type IRoute, Route } from './Route';
+export { checkOfResult, instanceOfResult, type IResult } from './Result';
+export { Route, type IRoute } from './Route';

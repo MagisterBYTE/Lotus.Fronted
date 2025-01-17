@@ -3,4 +3,4 @@
  * @param timeoutInMs
  * @returns
  */
-export declare const sleep: (timeoutInMs: number) => Promise<number>;
+export declare function sleep(timeoutInMs: number): Promise<number>;

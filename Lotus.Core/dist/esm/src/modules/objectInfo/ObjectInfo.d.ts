@@ -3,7 +3,7 @@ import { IPropertyDescriptor } from './PropertyDescriptor';
 /**
  * Интерфейс для представления(описания) свойств объектов
  */
-export interface IObjectInfo<TObject = any> {
+export interface IObjectInfo {
     /**
      * Получение списка свойств
      */
@@ -23,9 +23,9 @@ export interface IObjectInfo<TObject = any> {
     getFilterFunctionsDesc(): Record<string, IFilterFunctionDesc>;
 }
 /**
- * Базовый класс для представления(описания) свойств объектов
+ * Класс для представления(описания) свойств объектов
  */
-export declare class ObjectInfoBase<TObject = any> implements IObjectInfo<TObject> {
+export declare class ObjectInfo implements IObjectInfo {
     descriptors: IPropertyDescriptor[];
     constructor();
     getProperties(): IPropertyDescriptor[];

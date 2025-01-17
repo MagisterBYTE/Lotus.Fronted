@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IResult } from 'types/Result';
 import { IPageInfoResponse } from './PageInfo';
 
 /**
  * Интерфейса для получения данных
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface IResponse<TPayload = any>
 {
   /**
@@ -21,14 +21,8 @@ export interface IResponse<TPayload = any>
 /**
  * Интерфейс для постраничного получения данных
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IResponsePage<TPayload = any>
+export interface IResponsePage<TPayload = any> extends Omit<IResponse<TPayload>, 'payload'>
 {
-  /**
-   * Результат
-   */
-  result?: IResult;
-
   /**
   * Данные
   */

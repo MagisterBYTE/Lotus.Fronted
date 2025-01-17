@@ -1,10 +1,18 @@
-import { BaseCommand } from './Command';
+import { BaseCommand, ICommand } from './Command';
+
+/**
+ * Интерфейс фейковой команды предназначенной для визуального разделения команд в списках
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface IDelimiterCommand extends ICommand
+{
+
+}
 
 /**
  * Фейковая команда предназначенная для визуального разделения команд в списках
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class DelimiterCommand<TCommandParameter = any> extends BaseCommand<TCommandParameter>
+export class DelimiterCommand extends BaseCommand implements IDelimiterCommand
 {
   constructor(name: string) 
   {

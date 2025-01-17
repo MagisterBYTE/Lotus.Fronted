@@ -94,7 +94,14 @@ export declare class OptionHelper {
      * Проверка на наличие опции
      * @param options Массив всех опций
      * @param value Выбранное значение
-     * @returns статус наличе опции
+     * @returns Статус наличия опции
      */
     static hasOption(options: IOption[], value?: TKey): boolean;
+    /**
+     * Проверка на наличие иконки
+     * @param options Массив всех опций
+     * @param context Контекст вызова
+     * @returns Статус наличия иконки
+     */
+    static hasIcons(options: IOption[], context?: any): boolean;
 }
