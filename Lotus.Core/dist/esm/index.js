@@ -348,9 +348,7 @@ class ObjectHelper {
      * @param shouldThrow Генерировать исключение если свойство не найдено
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static getValueByPropertyPath(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    source, propertyPath, shouldThrow = false) {
+    static getValueByPropertyPath(source, propertyPath, shouldThrow = false) {
         if (source === null || source === undefined) {
             return undefined;
         }
@@ -390,54 +388,6 @@ class ObjectHelper {
                 }
             }
         }, source);
-    }
-    /**
-     * Проверка значения на undefined или null
-     * @param value Проверяемое значение
-     * @returns Статус проверки
-     */
-    static isNullOrUndefined(value) {
-        return value === undefined || value === null;
-    }
-    /**
-     * Проверка объекта на то, что все его свойства имеют значения undefined
-     * @param object Проверяемый объект
-     * @returns Статус проверки
-     */
-    static isObjectValuesEmpty(object) {
-        return !Object.values(object).some((value) => value !== undefined);
-    }
-    /**
-     * Получить значение по условию if
-     * @param check Проверяемое значение
-     * @param positive Значение возвращаемое в случае не нулевого значения
-     * @param negative Значение возвращаемое в случае нулевого значения
-     * @returns Значение
-     */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static getIf(check, positive, negative) {
-        if (check) {
-            return positive;
-        }
-        else {
-            return negative;
-        }
-    }
-    /**
-     * Получить значение по условию if
-     * @param check Проверяемое значение
-     * @param positive Функция вызываемая в случае не нулевого значения
-     * @param negative Функция вызываемая в случае нулевого значения
-     * @returns Значение
-     */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static getIfFun(check, positive, negative) {
-        if (check) {
-            return positive(check);
-        }
-        else {
-            return negative(check);
-        }
     }
     /**
      * Searches the supplied object, and then down it's prototype chain until it
@@ -3688,7 +3638,7 @@ const TColorVariantIndexBlack = 10;
  */
 const TColorVariantNames = ['white', 'palest', 'pale', 'lighter', 'light', 'main', 'dark', 'darker', 'darkest', 'black'];
 
-class ColorVariantHelper {
+class ColorVariantsHelper {
     /**
      * Получить цвет по его индексу
      * @param index Числовой индекс в палитре цветов
@@ -3756,7 +3706,7 @@ class ColorVariantHelper {
 /**
  * Вариативность цветов
  */
-class ColorVariant {
+class ColorVariants {
     // #region  Static methods
     static createFromColorLightness(red, green, blue) {
         const main = new Color(red, green, blue);
@@ -3769,7 +3719,7 @@ class ColorVariant {
         const darker = main.decreaseLightness(0.40);
         const darkest = main.decreaseLightness(0.60);
         const black = main.decreaseLightness(0.80);
-        return new ColorVariant(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+        return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
     static createFromColorCombine(red, green, blue) {
         const main = new Color(red, green, blue);
@@ -3782,7 +3732,7 @@ class ColorVariant {
         const darker = main.combine(ColorNames['black'], 0.40);
         const darkest = main.combine(ColorNames['black'], 0.60);
         const black = main.combine(ColorNames['black'], 0.80);
-        return new ColorVariant(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+        return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
     // #endregion
     white; // 1
@@ -3839,7 +3789,7 @@ class ColorVariant {
      * @param modifyAlpha Модификация значения альфы от 0 до 1
      */
     getByIndex(index, modifyAlpha) {
-        const name = ColorVariantHelper.getNameByIndex(index);
+        const name = ColorVariantsHelper.getNameByIndex(index);
         return this.getByName(name, modifyAlpha);
     }
     /**
@@ -3849,7 +3799,7 @@ class ColorVariant {
      * @param modifyAlpha Модификация значения альфы от 0 до 1
      */
     getNextByName(name, delta, modifyAlpha) {
-        const nextName = ColorVariantHelper.getNameByIndex(ColorVariantHelper.getNextIndex(ColorVariantHelper.getIndexByName(name), delta));
+        const nextName = ColorVariantsHelper.getNameByIndex(ColorVariantsHelper.getNextIndex(ColorVariantsHelper.getIndexByName(name), delta));
         const color = this[nextName];
         if (modifyAlpha) {
             return color.toModifyAlpha(modifyAlpha);
@@ -3863,7 +3813,6 @@ class ColorVariant {
 /**
  * Базовый класс команды
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class BaseCommand {
     //
     // ОСНОВНЫЕ ДАННЫЕ
@@ -3905,7 +3854,6 @@ class BaseCommand {
     /**
      * Иконка
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon;
     /**
      * Порядок при сортировке команд
@@ -3918,28 +3866,33 @@ class BaseCommand {
     constructor(name) {
         this.name = name;
         this.label = '';
-        this.executeDefault = this.executeDefault.bind(this);
-        this.canExecuteDefault = this.canExecuteDefault.bind(this);
-        this.isSelectedDefault = this.isSelectedDefault.bind(this);
-        this.execute = this.executeDefault;
-        this.canExecute = this.canExecuteDefault;
-        this.isSelected = this.isSelectedDefault;
+        this.executeCommand = this.executeCommand.bind(this);
+        this.canExecuteCommand = this.canExecuteCommand.bind(this);
+        this.isSelectedCommand = this.isSelectedCommand.bind(this);
+        this.execute = () => { };
     }
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    executeDefault() {
+    executeCommand(context) {
+        this.execute(this, context);
     }
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecuteDefault() {
+    canExecuteCommand(context) {
+        if (this.canExecute) {
+            return this.canExecute(this, context);
+        }
         return true;
     }
     /**
      * Статус выбора
      */
-    isSelectedDefault() {
+    isSelectedCommand(context) {
+        if (this.isSelected) {
+            return this.isSelected(this, context);
+        }
         return false;
     }
 }
@@ -3996,7 +3949,6 @@ const CommandService = CommandServiceClass.Instance;
 /**
  * Фейковая команда предназначенная для визуального разделения команд в списках
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class DelimiterCommand extends BaseCommand {
     constructor(name) {
         super(name);
@@ -4007,6 +3959,8 @@ class DelimiterCommand extends BaseCommand {
  */
 const DelimiterCommandDefault = new DelimiterCommand('delimiter');
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Наименование(тип) события который посылают команды для генерирования пользовательских событий
  */
@@ -4021,52 +3975,24 @@ class EventCommand extends BaseCommand {
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    executeDefault() {
+    executeCommand(context) {
         const event = new CustomEvent(EventCommandKey, { detail: this.parameter });
         window.dispatchEvent(event);
-    }
-    /**
-     * Метод определяющий возможность выполнения команды
-     */
-    canExecuteDefault() {
-        return true;
-    }
-    /**
-     * Статус выбора
-     */
-    isSelectedDefault() {
-        if (window.location.pathname === this.route?.path) {
-            return true;
-        }
-        return false;
     }
 }
 
 /**
  * Класс команды для простой навигации
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class NavigationCommand extends BaseCommand {
     constructor(name, route) {
         super(name);
         this.route = route;
     }
     /**
-     * Основной метод команды отвечающий за ее выполнение
-     */
-    executeDefault() {
-        // TODO document why this method 'execute' is empty
-    }
-    /**
-     * Метод определяющий возможность выполнения команды
-     */
-    canExecuteDefault() {
-        return true;
-    }
-    /**
      * Статус выбора
      */
-    isSelectedDefault() {
+    isSelectedCommand(context) {
         if (window.location.pathname === this.route?.path) {
             return true;
         }
@@ -4370,10 +4296,9 @@ class HumanizerString {
 }
 
 /**
- * Базовый класс для представления(описания) свойств объектов
+ * Класс для представления(описания) свойств объектов
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-class ObjectInfoBase {
+class ObjectInfo {
     descriptors = [];
     constructor() {
         this.getProperties = this.getProperties.bind(this);
@@ -4704,6 +4629,33 @@ class SortPropertyHelper {
     }
 }
 
+class Assert {
+    /**
+     * Проверка значения на undefined или null
+     * @param value Проверяемое значение
+     * @returns Статус проверки
+     */
+    static empty(value) {
+        return value === undefined || value === null;
+    }
+    /**
+     * Проверка на наличие значения
+     * @param value Проверяемое значение
+     * @returns Статус проверки
+     */
+    static exist(value) {
+        return value !== undefined && value !== null;
+    }
+    /**
+     * Проверка объекта на то, что все его свойства имеют значения undefined
+     * @param object Проверяемый объект
+     * @returns Статус проверки
+     */
+    static allUndefined(object) {
+        return !Object.values(object).some((value) => value !== undefined);
+    }
+}
+
 class OptionHelper {
     /**
      * Преобразование значение в значение корректного типа
@@ -4757,7 +4709,7 @@ class OptionHelper {
      * @returns
      */
     static getDefaultValue(options, initialSelectedValue) {
-        if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false) {
+        if (Assert.exist(initialSelectedValue)) {
             return initialSelectedValue;
         }
         return options[0].value;
@@ -4769,7 +4721,7 @@ class OptionHelper {
      * @returns
      */
     static getDefaultText(options, initialSelectedValue) {
-        if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false) {
+        if (Assert.exist(initialSelectedValue)) {
             let text = '';
             options.forEach((element) => {
                 if (element.value === initialSelectedValue) {
@@ -4788,7 +4740,7 @@ class OptionHelper {
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static getDefaultIcon(options, initialSelectedValue) {
-        if (ObjectHelper.isNullOrUndefined(initialSelectedValue) == false) {
+        if (Assert.exist(initialSelectedValue)) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             let icon = undefined;
             options.forEach((element) => {
@@ -4827,7 +4779,7 @@ class OptionHelper {
      * @returns Опция
      */
     static getOptionByValue(options, selectedValue) {
-        if (ObjectHelper.isNullOrUndefined(selectedValue) == false) {
+        if (Assert.exist(selectedValue)) {
             for (const element of options) {
                 if (element.value === selectedValue) {
                     return element;
@@ -4844,7 +4796,7 @@ class OptionHelper {
      */
     static getTextByValue(options, selectedValue) {
         let text = '';
-        if (ObjectHelper.isNullOrUndefined(selectedValue) == false) {
+        if (Assert.exist(selectedValue)) {
             options.forEach((element) => {
                 if (element.value === selectedValue) {
                     text = element.text;
@@ -4863,7 +4815,7 @@ class OptionHelper {
     static getIconByValue(options, selectedValue) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let icon = undefined;
-        if (ObjectHelper.isNullOrUndefined(selectedValue) == false) {
+        if (Assert.exist(selectedValue)) {
             options.forEach((element) => {
                 if (element.value === selectedValue) {
                     icon = element.icon;
@@ -4955,11 +4907,32 @@ class OptionHelper {
      * Проверка на наличие опции
      * @param options Массив всех опций
      * @param value Выбранное значение
-     * @returns статус наличе опции
+     * @returns Статус наличия опции
      */
     static hasOption(options, value) {
-        if (value) {
+        if (Assert.exist(value)) {
             return options.find((x) => x.value == value) !== undefined;
+        }
+        return false;
+    }
+    /**
+     * Проверка на наличие иконки
+     * @param options Массив всех опций
+     * @param context Контекст вызова
+     * @returns Статус наличия иконки
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static hasIcons(options, context) {
+        for (const option of options) {
+            if (option.icon) {
+                if (typeof option.icon == 'function') {
+                    if (option.icon(option, context))
+                        return true;
+                }
+                else {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -5090,8 +5063,8 @@ class Route {
  * @param timeoutInMs
  * @returns
  */
-const sleep = (timeoutInMs) => {
+function sleep(timeoutInMs) {
     return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
-};
+}
 
-export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariant, ColorVariantHelper, Colors, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionDescriptors, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, OptionHelper, PathHelper, PropertyTypeDescriptors, RandomHelper, RequestHelper, Route, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
+export { ApiService, ArrayHelper, Assert, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariants, ColorVariantsHelper, Colors, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionDescriptors, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfo, OptionHelper, PathHelper, PropertyTypeDescriptors, RandomHelper, RequestHelper, Route, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };

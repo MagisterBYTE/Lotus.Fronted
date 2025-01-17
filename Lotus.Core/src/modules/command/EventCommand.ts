@@ -1,4 +1,6 @@
-import { BaseCommand } from './Command';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { BaseCommand, ICommand } from './Command';
 
 /**
  * Наименование(тип) события который посылают команды для генерирования пользовательских событий
@@ -17,9 +19,18 @@ export interface IBaseEventCommandData
 }
 
 /**
+ * Интерфейс команды предназначенной для генерирования пользовательских событий
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface IEventCommand extends ICommand
+{
+
+}
+
+/**
  * Класс команды для генерирования пользовательских событий
  */
-export class EventCommand<TCommandParameter extends IBaseEventCommandData> extends BaseCommand<TCommandParameter>
+export class EventCommand extends BaseCommand implements IEventCommand
 {
   constructor(name: string) 
   {
@@ -29,30 +40,9 @@ export class EventCommand<TCommandParameter extends IBaseEventCommandData> exten
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  public override executeDefault(): void
+  public override executeCommand(context?: any): void
   {
     const event = new CustomEvent<IBaseEventCommandData>(EventCommandKey, { detail: this.parameter });
     window.dispatchEvent(event);
-  }
-
-  /**
-   * Метод определяющий возможность выполнения команды
-   */
-  public override canExecuteDefault(): boolean
-  {
-    return true;
-  }
-
-  /**
-   * Статус выбора
-   */
-  public override isSelectedDefault(): boolean
-  {
-    if (window.location.pathname === this.route?.path)
-    {
-      return true;
-    }
-
-    return false;
   }
 }

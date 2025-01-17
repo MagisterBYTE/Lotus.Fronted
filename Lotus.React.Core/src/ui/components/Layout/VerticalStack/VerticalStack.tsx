@@ -1,6 +1,7 @@
-import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
+/* eslint-disable react/boolean-prop-naming */
+import React, { ComponentPropsWithRef } from 'react';
 
-export interface IVerticalStackProps extends ComponentPropsWithoutRef<'div'>
+export interface IVerticalStackProps extends ComponentPropsWithRef<'div'>
 {
   gap?: React.CSSProperties['gap'];
   alignItems?: React.CSSProperties['alignItems'];
@@ -11,11 +12,11 @@ export interface IVerticalStackProps extends ComponentPropsWithoutRef<'div'>
   fullHeight?: boolean;
 }
 
-export const VerticalStack = forwardRef<HTMLDivElement, IVerticalStackProps>((props, ref) => 
+export const VerticalStack: React.FC<IVerticalStackProps> = (props: IVerticalStackProps) =>
 {
   const { gap, alignItems, justifyContent, wrap, children, fullWidth, fullHeight, ...divProps } = props
   return (
-    <div ref={ref} {...divProps} style={{
+    <div {...divProps} style={{
       display: 'flex',
       flexDirection: 'column',
       gap: gap,
@@ -30,4 +31,3 @@ export const VerticalStack = forwardRef<HTMLDivElement, IVerticalStackProps>((pr
     </div>
   );
 }
-);

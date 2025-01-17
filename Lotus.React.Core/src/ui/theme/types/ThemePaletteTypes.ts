@@ -1,4 +1,4 @@
-import { Color, ColorVariant, TColorVariantName } from 'lotus-core';
+import { Color, ColorVariants, TColorVariantName } from 'lotus-core';
 
 /**
  * Общие базовые цвета для палитры
@@ -121,7 +121,7 @@ export interface IThemePaletteAdditionalColor
   /**
    * Варианты цветов
    */
-  variants: ColorVariant;
+  variants: ColorVariants;
 
   /**
    * Функция обратного вызова для получения цвета текста для указанного цвета фона

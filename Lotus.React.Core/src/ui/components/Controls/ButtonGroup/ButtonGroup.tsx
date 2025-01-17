@@ -161,7 +161,7 @@ export const ButtonGroup = <TValueOption extends TKey = TKey>(props: IButtonGrou
           isSelected={OptionHelper.hasOption(selectedOptions, option.value)}
           value={option.value}
           onSelected={handleButtonSelect}
-          disabled={isDisabled}
+          disabled={isDisabled || option.isDisabled}
           variant={variant}
           isSelectedStatus={true}
           overrideButtonStyle={getButtonStyleByIndex(index, options.length)}

@@ -2,14 +2,15 @@ import { Divider, Drawer } from '@mui/material';
 import { TScreenType } from 'app/layout/domain';
 import { openLeftPanelLayoutAction, useLayoutState } from 'app/layout/store';
 import { CommandService, DelimiterCommand } from 'lotus-core';
-import React, { ComponentPropsWithoutRef, useState } from 'react';
+import React, { ComponentPropsWithRef, useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
 import { Button } from 'ui/components/Controls';
 import { CommandButton, TCommandButtonType } from 'widget';
 import { useAppDispatchCore } from 'app/store';
 import './AppLeftPanel.css';
+
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface IAppLeftPanelProps extends ComponentPropsWithoutRef<'nav'> 
+export interface IAppLeftPanelProps extends ComponentPropsWithRef<'nav'> 
 {
 
 }

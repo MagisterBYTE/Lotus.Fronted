@@ -1,11 +1,11 @@
-import { Color, ColorVariant } from 'lotus-core';
+import { Color, ColorVariants } from 'lotus-core';
 
 /**
  * Наборы типовых вариантов цвета
  */
 export class ThemeColorVariants
 {
-  public static readonly AntPrimary:ColorVariant = new ColorVariant(
+  public static readonly AntPrimary:ColorVariants = new ColorVariants(
     new Color(230, 247, 255), // white
     new Color(186, 234, 255), // palest
     new Color(145, 213, 255), // pale
@@ -18,7 +18,7 @@ export class ThemeColorVariants
     new Color(0, 39, 102)  // black
   );
 
-  public static readonly MuiBlue:ColorVariant = new ColorVariant(
+  public static readonly MuiBlue:ColorVariants = new ColorVariants(
     new Color('#e3f2fd'), // white
     new Color('#bbdefb'), // palest
     new Color('#90caf9'), // pale
@@ -31,7 +31,7 @@ export class ThemeColorVariants
     new Color('#0d47a1')  // black
   );
 
-  public static readonly MuiBlueGrey:ColorVariant = new ColorVariant(
+  public static readonly MuiBlueGrey:ColorVariants = new ColorVariants(
     new Color('#eceff1'), // white
     new Color('#cfd8dc'), // palest
     new Color('#b0bec5'), // pale
@@ -44,7 +44,7 @@ export class ThemeColorVariants
     new Color('#263238')  // black
   );
   
-  public static readonly MuiIndigo:ColorVariant = new ColorVariant(
+  public static readonly MuiIndigo:ColorVariants = new ColorVariants(
     new Color('#e8eaf6'), // white
     new Color('#c5cae9'), // palest
     new Color('#9fa8da'), // pale
@@ -57,7 +57,7 @@ export class ThemeColorVariants
     new Color('#1a237e')  // black
   );
 
-  public static readonly MuiGreen:ColorVariant = new ColorVariant(
+  public static readonly MuiGreen:ColorVariants = new ColorVariants(
     new Color('#e8f5e9'), // white
     new Color('#c8e6c9'), // palest
     new Color('#a5d6a7'), // pale
@@ -70,7 +70,7 @@ export class ThemeColorVariants
     new Color('#1b5e20')  // black
   );
 
-  public static readonly MuiTeal:ColorVariant = new ColorVariant(
+  public static readonly MuiTeal:ColorVariants = new ColorVariants(
     new Color('#e0f2f1'), // white
     new Color('#b2dfdb'), // palest
     new Color('#80cbc4'), // pale
@@ -83,7 +83,7 @@ export class ThemeColorVariants
     new Color('#004d40')  // black
   );
 
-  public static readonly MuiYellow:ColorVariant = new ColorVariant(
+  public static readonly MuiYellow:ColorVariants = new ColorVariants(
     new Color('#fffde7'), // white
     new Color('#fff9c4'), // palest
     new Color('#fff59d'), // pale
@@ -96,7 +96,7 @@ export class ThemeColorVariants
     new Color('#f57f17')  // black
   );
 
-  public static readonly MuiAmber:ColorVariant = new ColorVariant(
+  public static readonly MuiAmber:ColorVariants = new ColorVariants(
     new Color('#fff8e1'), // white
     new Color('#ffecb3'), // palest
     new Color('#ffe082'), // pale
@@ -109,7 +109,7 @@ export class ThemeColorVariants
     new Color('#ff6f00')  // black
   );
 
-  public static readonly MuiRed:ColorVariant = new ColorVariant(
+  public static readonly MuiRed:ColorVariants = new ColorVariants(
     new Color('#ffebee'), // white
     new Color('#ffcdd2'), // palest
     new Color('#ef9a9a'), // pale
@@ -122,7 +122,7 @@ export class ThemeColorVariants
     new Color('#b71c1c')  // black
   );
 
-  public static readonly MuiBrown:ColorVariant = new ColorVariant(
+  public static readonly MuiBrown:ColorVariants = new ColorVariants(
     new Color('#efebe9'), // white
     new Color('#d7ccc8'), // palest
     new Color('#bcaaa4'), // pale
@@ -135,7 +135,7 @@ export class ThemeColorVariants
     new Color('#3e2723')  // black
   );
 
-  public static readonly MuiGray:ColorVariant = new ColorVariant(
+  public static readonly MuiGray:ColorVariants = new ColorVariants(
     new Color('#fafafa'), // white
     new Color('#f5f5f5'), // palest
     new Color('#eeeeee'), // pale

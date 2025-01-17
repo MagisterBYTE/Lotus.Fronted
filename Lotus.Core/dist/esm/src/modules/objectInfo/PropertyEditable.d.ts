@@ -14,11 +14,11 @@ export interface IPropertyEditable {
     /**
      * Тип элемента редактирования свойства
      */
-    editorType?: 'number' | 'text' | 'select' | 'multi-select';
+    editorType?: 'text' | 'select' | 'multi-select' | 'range' | 'checkbox' | 'date' | 'date-range' | 'autocomplete';
     /**
      * Валидации свойства
      * @param value Значения свойства
      * @returns Статус валидации
      */
-    onValidation: (value: any) => IValidationResult;
+    onValidation: (value: any, context?: any) => IValidationResult;
 }

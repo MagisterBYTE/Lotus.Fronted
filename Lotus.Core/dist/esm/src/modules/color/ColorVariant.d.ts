@@ -4,7 +4,7 @@ import { TColorVariantIndex, TColorVariantName } from './ColorVariantTypes';
  * Интерфейс вариативности цветов
  * Вариативность цветов - совокупность цветов расположенных от самого светлого до самого темного от основного цвета.
  */
-export interface IColorVariant {
+export interface IColorVariants {
     readonly white: Color;
     readonly palest: Color;
     readonly pale: Color;
@@ -19,9 +19,9 @@ export interface IColorVariant {
 /**
  * Вариативность цветов
  */
-export declare class ColorVariant implements IColorVariant {
-    static createFromColorLightness(red: number, green: number, blue: number): ColorVariant;
-    static createFromColorCombine(red: number, green: number, blue: number): ColorVariant;
+export declare class ColorVariants implements IColorVariants {
+    static createFromColorLightness(red: number, green: number, blue: number): ColorVariants;
+    static createFromColorCombine(red: number, green: number, blue: number): ColorVariants;
     readonly white: Color;
     readonly palest: Color;
     readonly pale: Color;

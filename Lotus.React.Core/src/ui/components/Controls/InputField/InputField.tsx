@@ -66,7 +66,7 @@ export const InputField: React.FC<IInputFieldProps> = (props: IInputFieldProps) 
   {
     return <Label {...labelProps} size={size} 
       variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
-      textColor={labelProps.textColor ?? textColor}>
+      textColor={(labelProps.textColor ?? textColor) ?? ThemeHelper.getForegroundColorByBack(backColor, undefined, textColor, undefined, textColorHarmonious)}>
       <input type='text' {...propsInput} className={cx(inputFieldClass, extraClass)} />
     </Label>
   }

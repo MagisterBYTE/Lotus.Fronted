@@ -1,4 +1,4 @@
-import { ColorVariant } from 'lotus-core';
+import { ColorVariants } from 'lotus-core';
 import { TThemeColor } from './ThemeColor';
 import { TThemeMode } from './ThemeMode';
 import { IThemePaletteAction, IThemePaletteAdditionalColor, IThemePaletteBackground, IThemePaletteCommon, 
@@ -53,7 +53,7 @@ export interface IThemePalette
   /**
    * Вариант серых цветов для палитры
    */
-  grey: ColorVariant;
+  grey: ColorVariants;
 
   /**
    * Цвета текста для палитры

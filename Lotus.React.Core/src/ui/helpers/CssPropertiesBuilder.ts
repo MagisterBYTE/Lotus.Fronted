@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { ObjectHelper } from 'lotus-core';
 import { CSSProperties } from 'react';
+import { hasBorderProps, IGeneralElementExtendedProperties, IGeneralElementProperties, TTypographyVariant, TypographyHelper } from 'ui/components';
 import { IInteractivityElement, InteractivityLogic, TInteractivityModel } from 'ui/interactivity';
 import { ThemeConstant, ThemeHelper } from 'ui/theme';
 
@@ -34,6 +36,96 @@ export interface ICssPropertiesBuilderContext
 
 export class CssPropertiesBuilder
 {
+  public static buildHeader(model: IGeneralElementProperties, variant: TTypographyVariant): CSSProperties
+  {
+    const hasIcon = Boolean(ObjectHelper.getValueByPropertyPath(model, 'icon'));
+    const size = model.size ?? 'medium';
+    const headerProps: CSSProperties = {}
+    const hFontSize = TypographyHelper.convertTypographyVariantToHeightPixel(variant);
+    let topOffset = hFontSize + (hasBorderProps(model) ? 2 : 0);
+    if (hasIcon)
+    {
+      const minIcon = ThemeHelper.convertControlSizeToIconSizeInPixel(size);
+      if (minIcon > topOffset)
+      {
+        topOffset = minIcon;
+      }
+    }
+
+    switch (size)
+    {
+      case 'smaller':
+        {
+          headerProps.height = `${topOffset}px`;
+          headerProps.top = `${-topOffset * 1.2}px`;
+          headerProps.left = '20px';
+          headerProps.paddingLeft = '6px';
+          headerProps.paddingRight = '6px';
+          headerProps.paddingTop = '2px';
+          headerProps.paddingBottom = '2px';
+          headerProps.marginBottom = `${-topOffset * 1.4}px`;
+        } break;
+      case 'small':
+        {
+          headerProps.height = `${topOffset}px`;
+          headerProps.top = `${-topOffset}px`;
+          headerProps.left = '20px';
+          headerProps.paddingLeft = '6px';
+          headerProps.paddingRight = '6px';
+          headerProps.paddingTop = '2px';
+          headerProps.paddingBottom = '2px';
+          headerProps.marginBottom = `${-topOffset * 1.2}px`;
+        } break;
+      case 'medium':
+        {
+          headerProps.height = `${topOffset}px`;
+          headerProps.top = `${-topOffset}px`;
+          headerProps.left = '20px';
+          headerProps.paddingLeft = '10px';
+          headerProps.paddingRight = '10px';
+          headerProps.paddingTop = '3px';
+          headerProps.paddingBottom = '3px';
+          headerProps.marginBottom = `${-topOffset * 1.2}px`;
+        } break;
+      case 'large':
+        {
+          headerProps.height = `${topOffset}px`;
+          headerProps.top = `${-topOffset * 1.4}px`;
+          headerProps.left = '20px';
+          headerProps.paddingLeft = '10px';
+          headerProps.paddingRight = '10px';
+          headerProps.paddingTop = '3px';
+          headerProps.paddingBottom = '3px';
+          headerProps.marginBottom = `${-topOffset * 1.4}px`;
+        } break;
+    }
+
+    return headerProps;
+  }
+
+  public static buildElementExtended(model: IGeneralElementExtendedProperties, leftRight?: 'normal' | 'half', topBottom?: 'normal' | 'half'): CSSProperties
+  {
+    const {
+      fontBold, fontAccent, textEffect, textAlign, textColorHarmonious, textColor,
+      backColor, backImage,
+      borderRadius, borderStyle, borderWidth, borderColor,
+      size = 'medium', paddingControl = 'normal', extraClass,
+      backColorVariant, textColorVariant, shadowElevation
+    } = model;
+    
+    return {
+      ...ThemeHelper.getFontProps(size, fontBold, fontAccent),
+      ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
+      ...ThemeHelper.getPaddingProps(size, paddingControl, 'normal', 'normal'),
+      ...ThemeHelper.getBackgroundColorProps(backColor, backColorVariant, undefined),
+      ...ThemeHelper.getForegroundColorByBackProps(backColor, backColorVariant, textColor, textColorVariant, textColorHarmonious),
+      ...ThemeHelper.getBorderRadiusProps(size, borderRadius),
+      ...(hasBorderProps(model) ? ThemeHelper.getBorderStyleProps(size, borderStyle, borderWidth, borderColor) : {}),
+      ...(hasBorderProps(model) ? ThemeHelper.getBorderColorProps(borderColor ?? backColor, backColorVariant, 3, undefined) : {}),
+      ...(shadowElevation ? ThemeHelper.getBoxShadowProps(shadowElevation, backColor, undefined) : {})
+    };
+  }
+
   public static buildInteractivityElement(model: TInteractivityModel, props: IInteractivityElement, context?: ICssPropertiesBuilderContext): CSSProperties
   {
     // @ts-expect-error disabled
@@ -79,7 +171,7 @@ export class CssPropertiesBuilder
         ...InteractivityLogic.getEffectProps(model, 'hover', props, isSelected, isDisabled, false, { hasRippleEffect: hasRippleEffect }),
         ...((!isDisabled && hasShadowBorderEffect && !isSelected) ? ThemeHelper.getBorderShadowProps(4, backColor, undefined, ThemeConstant.OpacityForBorderShadowHover) : {}),
         ...((!isDisabled && hasShadowBoxEffect && !isSelected) ? ThemeHelper.getBoxShadowProps(4, backColor, undefined) : {}),
-        ...((!isDisabled && hasScaleEffect&& !isSelected) ? ThemeHelper.getTransformScaleProps(1.05) : {})
+        ...((!isDisabled && hasScaleEffect && !isSelected) ? ThemeHelper.getTransformScaleProps(1.05) : {})
       },
       '&:active':
       {

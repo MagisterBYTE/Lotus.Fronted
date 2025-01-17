@@ -1,4 +1,4 @@
-import { Colors, ColorVariantHelper, TColorVariantName } from 'lotus-core';
+import { Colors, ColorVariantsHelper, TColorVariantName } from 'lotus-core';
 import { IThemePalette, TThemeMode } from '../types';
 import { ThemeColorVariants } from './ThemeColorVariants';
 
@@ -16,7 +16,7 @@ export class ThemeColorPalettes
     }
     else
     {
-      return (ColorVariantHelper.getIndexByName(colorVariant) <= 5) ? Colors.black : Colors.white;
+      return (ColorVariantsHelper.getIndexByName(colorVariant) <= 5) ? Colors.black : Colors.white;
     }
   }
 
@@ -28,7 +28,7 @@ export class ThemeColorPalettes
     }
     else
     {
-      return (ColorVariantHelper.getIndexByName(colorVariant) <= 5) ? Colors.black : Colors.white;
+      return (ColorVariantsHelper.getIndexByName(colorVariant) <= 5) ? Colors.black : Colors.white;
     }
   }
 
@@ -40,7 +40,7 @@ export class ThemeColorPalettes
     }
     else
     {
-      return (ColorVariantHelper.getIndexByName(colorVariant) <= 3) ? Colors.black : Colors.white;
+      return (ColorVariantsHelper.getIndexByName(colorVariant) <= 3) ? Colors.black : Colors.white;
     }
   }
 
@@ -52,7 +52,7 @@ export class ThemeColorPalettes
     }
     else
     {
-      return (ColorVariantHelper.getIndexByName(colorVariant) <= 6) ? Colors.black : Colors.white;
+      return (ColorVariantsHelper.getIndexByName(colorVariant) <= 6) ? Colors.black : Colors.white;
     }
   }
 
@@ -64,7 +64,7 @@ export class ThemeColorPalettes
     }
     else
     {
-      return (ColorVariantHelper.getIndexByName(colorVariant) <= 4) ? Colors.black : Colors.white;
+      return (ColorVariantsHelper.getIndexByName(colorVariant) <= 4) ? Colors.black : Colors.white;
     }
   }
 
@@ -100,7 +100,7 @@ export class ThemeColorPalettes
     }
     else
     {
-      return (ColorVariantHelper.getIndexByName(colorVariant) <= 4) ? Colors.black : Colors.white;
+      return (ColorVariantsHelper.getIndexByName(colorVariant) <= 4) ? Colors.black : Colors.white;
     }
   }
 
@@ -112,7 +112,7 @@ export class ThemeColorPalettes
     }
     else
     {
-      return (ColorVariantHelper.getIndexByName(colorVariant) <= 3) ? Colors.black : Colors.white;
+      return (ColorVariantsHelper.getIndexByName(colorVariant) <= 3) ? Colors.black : Colors.white;
     }
   }
   // #endregion

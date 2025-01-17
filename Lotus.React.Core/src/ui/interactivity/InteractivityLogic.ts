@@ -72,28 +72,26 @@ export class InteractivityLogic
               {
                 if(isSelected)
                 {
-                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) ? ThemePaletteHelper.getColor(backColor, 'light').toCSSRgbValue()
+                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) 
+                    ? ThemePaletteHelper.getColor(backColor, 'light').toCSSRgbValue()
                     : ThemeHelper.getColor(backColor, pressedBackColor ?? 'dark').toCSSRgbValue();
                 }
                 else
                 {
-                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) ? ThemePaletteHelper.getColor(backColor, 'main').toCSSRgbValue()
+                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) 
+                    ? ThemePaletteHelper.getColor(backColor, 'main').toCSSRgbValue()
                     : ThemeHelper.getColor(backColor).toCSSRgbValue();
                 }
                 
-                effectProps.color = (textColor == undefined && checkOfThemeModeColor(backColor)) ? ThemePaletteHelper.getColor(backColor, 'contrastText').toCSSRgbValue()
-                  : ThemeHelper.getColor(textColor ?? backColor, undefined,
-                    (textColor ? false : true),
-                    (textColor ? false : textColorHarmonious)).toCSSRgbValue();
+                effectProps.color = ThemeHelper.getForegroundColorByBack(backColor, undefined, textColor, undefined, textColorHarmonious,
+                  {isFilled: true}).toCSSRgbValue();
 
                 // Граница произвольна
                 if (hasBorderProps(elem))
                 {
                   effectProps.borderWidth = borderWidth ?? '1px';
                   effectProps.borderStyle = borderStyle ?? 'solid';
-                  effectProps.borderColor = (borderColor == undefined && checkOfThemeModeColor(backColor)) ? ThemePaletteHelper.getDividerColor().toCSSRgbValue()
-                    : ThemeHelper.getColor(borderColor ?? backColor, undefined, undefined, undefined,
-                      ((borderColor) ? undefined : 2)).toCSSRgbValue();
+                  effectProps.borderColor = ThemeHelper.getBorderColorProps(borderColor ?? backColor, undefined, ((borderColor) ? undefined : 2)).borderColor
                 }
                 else
                 {
@@ -106,31 +104,31 @@ export class InteractivityLogic
               {
                 if(isSelected)
                 {
-                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) ? ThemePaletteHelper.getColor(backColor, 'dark').toCSSRgbValue()
+                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) 
+                    ? ThemePaletteHelper.getColor(backColor, 'dark').toCSSRgbValue()
                     : ThemeHelper.getColor(backColor, hoverBackColor ?? 'palest').toCSSRgbValue();
                 }
                 else
                 {
-                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) ? ThemePaletteHelper.getColor(backColor, 'dark').toCSSRgbValue()
+                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) 
+                    ? ThemePaletteHelper.getColor(backColor, 'dark').toCSSRgbValue()
                     : ThemeHelper.getColor(backColor, hoverBackColor ?? 'palest').toCSSRgbValue();
                 }
 
-                effectProps.color = (hoverTextColor === undefined && textColor === undefined && checkOfThemeModeColor(backColor)) ?
-                  ThemePaletteHelper.getColor(backColor, 'contrastText').toCSSRgbValue()
-                  : ThemeHelper.getColor((InteractivityLogic.getPriorityColor(hoverTextColor, textColor)),
-                    ((hoverTextColor ?? textColor) ? (hoverTextColor ?? 'palest') : ((!hoverTextColor && checkOfThemeColorOrColor(backColor)) ? 'palest' : undefined)),
-                    ((hoverTextColor ?? textColor) ? false : true),
-                    ((hoverTextColor ?? textColor) ? false : textColorHarmonious)).toCSSRgbValue();
+                effectProps.color = ThemeHelper.getForegroundColorByBack(backColor,
+                  undefined,
+                  (hoverTextColor ?? textColor),
+                  (hoverTextColor ?? 'palest'),
+                  textColorHarmonious,
+                  {isFilled: true}).toCSSRgbValue();
 
                 // Граница произвольна
                 if (hasBorderProps(elem))
                 {
                   effectProps.borderWidth = borderWidth ?? '1px';
                   effectProps.borderStyle = borderStyle ?? 'solid';
-                  effectProps.borderColor = (hoverBorderColor === undefined && borderColor === undefined && checkOfThemeModeColor(backColor)) ?
-                    ThemePaletteHelper.getDividerColor().toCSSRgbValue()
-                    : ThemeHelper.getColor(InteractivityLogic.getPriorityColor(hoverBorderColor, borderColor),
-                      hoverBorderColor, undefined, undefined, ((hoverBorderColor ?? borderColor) ? undefined : 2)).toCSSRgbValue();
+                  effectProps.borderColor = ThemeHelper.getBorderColorProps(InteractivityLogic.getPriorityColor(hoverBorderColor, borderColor), 
+                    undefined, ((hoverBorderColor ?? borderColor) ? undefined : 2)).borderColor
                 }
                 else
                 {
@@ -142,7 +140,8 @@ export class InteractivityLogic
               {
                 if(!(context && context.hasRippleEffect))
                 {
-                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) ? ThemePaletteHelper.getColor(backColor, 'light').toCSSRgbValue()
+                  effectProps.backgroundColor = checkOfThemeModeColor(backColor) 
+                    ? ThemePaletteHelper.getColor(backColor, 'light').toCSSRgbValue()
                     : ThemeHelper.getColor(backColor, pressedBackColor ?? 'dark').toCSSRgbValue();
                 }
 
@@ -456,7 +455,7 @@ export class InteractivityLogic
 
                 effectProps.color = (checkOfThemeModeColor(textColor))
                   ? ThemePaletteHelper.getTextColor(textColor, isDisabled ? 'disabled' : undefined).toCSSRgbValue()
-                  : ThemeHelper.getColor(textColor ?? backColor, undefined, undefined, undefined, undefined).toCSSRgbValue();
+                  : ThemeHelper.getForegroundColorByBackProps(backColor, undefined, textColor, undefined, textColorHarmonious).color
 
                 // Граница обязательна
                 effectProps.borderWidth = borderWidth ?? '1px';
@@ -471,7 +470,7 @@ export class InteractivityLogic
 
                 effectProps.color = (hoverTextColor == undefined && checkOfThemeModeColor(textColor))
                   ? ThemePaletteHelper.getTextColor(textColor, isDisabled ? 'disabled' : undefined).toCSSRgbValue()
-                  : ThemeHelper.getColor(textColor ?? backColor, undefined, undefined, undefined, undefined).toCSSRgbValue();
+                  : ThemeHelper.getForegroundColorByBackProps(backColor, undefined, textColor, undefined, textColorHarmonious).color
 
                 // Граница обязательна
                 effectProps.borderWidth = borderWidth ?? '1px';
@@ -488,7 +487,7 @@ export class InteractivityLogic
 
                 effectProps.color = (pressedTextColor == undefined && checkOfThemeModeColor(textColor))
                   ? ThemePaletteHelper.getTextColor(textColor, isDisabled ? 'disabled' : undefined).toCSSRgbValue()
-                  : ThemeHelper.getColor(textColor ?? backColor, undefined, undefined, undefined, undefined).toCSSRgbValue()
+                  : ThemeHelper.getForegroundColorByBackProps(backColor, undefined, textColor, undefined, textColorHarmonious).color
 
                 // Граница обязательна
                 effectProps.borderWidth = borderWidth ?? '1px';

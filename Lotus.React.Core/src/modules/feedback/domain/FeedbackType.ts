@@ -2,7 +2,7 @@
 /**
  * Перечисление для типа обратной связи
  */
-export const FeedbackTypeEnum =
+export const FeedbackTypeDesc =
   {
     /**
      * Простое предупреждение без взаимодействия
@@ -44,4 +44,4 @@ export const FeedbackTypeEnum =
 /**
  * Тип обратной связи
  */
-export type TFeedbackType = keyof typeof FeedbackTypeEnum;
+export type TFeedbackType = keyof typeof FeedbackTypeDesc;

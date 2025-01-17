@@ -21,8 +21,8 @@ export class RenderComponentHelper
    * @returns ReactElement
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static renderIconAndValue(size: TControlSize, icon:any, other?:ReactNode, iconStyle?:CSSProperties, 
-    iconColor?: TColorPresentation, imageDatabase?:IImageDatabase, wrapDiv?: boolean, wrapDivStyle?:CSSProperties):ReactElement
+  public static renderIconAndValue(size: TControlSize, icon: any, other?: ReactNode, iconStyle?: CSSProperties,
+    iconColor?: TColorPresentation, imageDatabase?: IImageDatabase, wrapDiv?: boolean, wrapDivStyle?: CSSProperties): ReactElement
   {
     const iconColorText = (iconColor !== undefined) ? ThemeHelper.getColor(iconColor).toCSSRgbValue() : undefined;
 
@@ -30,9 +30,9 @@ export class RenderComponentHelper
     if (typeof icon === 'string')
     {
       const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
-      if(other)
+      if (other)
       {
-        if(wrapDiv)
+        if (wrapDiv)
         {
           return <div style={wrapDivStyle}>
             <img src={icon} width={sizeIcon} height={sizeIcon} style={iconStyle} />
@@ -54,17 +54,17 @@ export class RenderComponentHelper
     }
 
     // Если это число есть база данных
-    if(typeof icon === 'number' && imageDatabase)
+    if (typeof icon === 'number' && imageDatabase)
     {
       const iconData = imageDatabase.getImageByIdOrName(icon);
-      
-      if(iconData)
+
+      if (iconData)
       {
         const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInPixel(size)}px`;
 
-        if(other)
+        if (other)
         {
-          if(wrapDiv)
+          if (wrapDiv)
           {
             return <div style={wrapDivStyle}>
               <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={iconStyle} />
@@ -92,12 +92,12 @@ export class RenderComponentHelper
     else
     {
       const sizeIcon = `${ThemeHelper.convertControlSizeToIconSizeInRem(size)}rem`;
-      if(other)
+      if (other)
       {
-        if(wrapDiv)
+        if (wrapDiv)
         {
           return <div style={wrapDivStyle}>
-            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}} >
+            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }} >
               {icon}
             </IconContext.Provider>
             {other}
@@ -106,7 +106,7 @@ export class RenderComponentHelper
         else
         {
           return <>
-            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}} >
+            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }} >
               {icon}
             </IconContext.Provider>
             {other}
@@ -115,7 +115,7 @@ export class RenderComponentHelper
       }
       else
       {
-        return <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}}>
+        return <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }}>
           {icon}
         </IconContext.Provider>
       }

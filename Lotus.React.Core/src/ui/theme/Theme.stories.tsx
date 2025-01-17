@@ -3,7 +3,7 @@ import { Button, CheckBox, HorizontalStack, InputField, Label, Panel, SelectOpti
 import { TColorPresentation, TControlSize, TControlSizes, TCssBorderRadius, TShadowElevation } from 'ui/types';
 import { TThemeColor, TThemeColors, TThemeModeColors } from './types';
 import { ThemeHelper } from './helpers';
-import { SelectOptionsIconsSvg } from '.storydata/SelectOptionsData';
+import { OptionsTextAndIconReact } from '.storydata/OptionsData';
 
 const DivColorsColumn = (colorTheme: TThemeColor, isHarmonious?: boolean) =>
 {
@@ -99,6 +99,7 @@ export const SimpleDarkTheme: Story = {
             { label: 'Фамилия', textColor: args.textColor, labelWidth: '60%' }}
           size={args.size}
           backColor={args.backColor}
+          textColor={args.textColor}
           disabled={args.isDisabled}
           borderRadius={args.borderRadius}
           width='100%' />
@@ -106,6 +107,7 @@ export const SimpleDarkTheme: Story = {
             { label: 'Имя', textColor: args.textColor, labelWidth: '60%' }}
           size={args.size}
           backColor={args.backColor}
+          textColor={args.textColor}
           disabled={args.isDisabled}
           borderRadius={args.borderRadius}
           width='100%' />
@@ -113,6 +115,7 @@ export const SimpleDarkTheme: Story = {
             { label: 'Отчество', textColor: args.textColor, labelWidth: '60%' }}
           size={args.size}
           backColor={args.backColor}
+          textColor={args.textColor}
           disabled={args.isDisabled}
           borderRadius={args.borderRadius}
           width='100%' />
@@ -120,11 +123,12 @@ export const SimpleDarkTheme: Story = {
             { label: 'Сфера деятельности', textColor: args.textColor, labelWidth: '60%' }}
           size={args.size}
           backColor={args.backColor}
+          textColor={args.textColor}
           disabled={args.isDisabled}
           borderRadius={args.borderRadius}
           width='100%' />
           <SelectOption labelProps={
-            { label: 'Раса', textColor: args.textColor, labelWidth: '60%' }} hasIcons options={SelectOptionsIconsSvg}
+            { label: 'Раса', textColor: args.textColor, labelWidth: '60%' }} options={OptionsTextAndIconReact}
           size={args.size}
           backColor={args.backColor}
           isDisabled={args.isDisabled}

@@ -7,7 +7,7 @@ import { IGeneralElementProperties, IGeneralIconProperties } from 'ui/components
 import { ILabelProps, Label } from 'ui/components/Display/Label';
 import { TypographyHelper } from 'ui/components/Display/Typography';
 import { IInteractivityBackgroundEffect, InteractivityLogic } from 'ui/interactivity';
-import { ThemeConstant, ThemeHelper } from 'ui/theme';
+import { Theme, ThemeConstant, ThemeHelper, ThemePaletteHelper } from 'ui/theme';
 import { TCssWidth } from 'ui/types';
 import { RenderComponentHelper } from 'ui/helpers';
 import { SelectOptionHelper } from './SelectOptionHelper';
@@ -137,6 +137,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
       width: width,
       minHeight: `${ThemeHelper.convertControlSizeToHeightPixel(size, paddingControl, 'half', 1.2)}px`
     }),
+
     control: (styles, state) =>
       ({
         ...styles,
@@ -170,25 +171,30 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
         ...ThemeHelper.getOpacityForDisabledProps()
       }
       }),
+
     dropdownIndicator: (base) => ({
       ...base,
       paddingTop: 0,
       paddingBottom: 0
     }),
+
     valueContainer: (base) => ({
       ...base,
       zIndex: 0,
       padding: 0,
+      backgroundColor: Theme.currentPalette.background.default,
       ...ThemeHelper.getPaddingProps(size, paddingControl, (size == 'large') ? 'half' : 'normal', 'half'),
       paddingTop: 0,
       paddingBottom: 0,
       columnGap: props.isMulti ? `${ThemeHelper.getColumnGapFromSizeInRem(size, paddingControl)}rem` : base.columnGap
     }),
+
     clearIndicator: (base) => ({
       ...base,
       paddingTop: 0,
       paddingBottom: 0
     }),
+
     input: (base) => (
       {
         ...base,
@@ -196,7 +202,19 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
         marginRight: 0,
         marginTop: 0,
         marginBottom: 0,
+        // @ts-expect-error getTextColor
+        color: ThemePaletteHelper.getTextColor(textColor, propsReactSelect.isDisabled ? 'disabled' : undefined).toCSSRgbValue(),
         ...ThemeHelper.getPaddingProps(size, paddingControl, ((size == 'large') ? 'half' : 'normal'), 'half')
+      }
+    ),
+
+    menu: (base) => (
+      {
+        ...base,
+        backgroundColor: Theme.currentPalette.background.default,
+        borderColor: Theme.currentPalette.divider,
+        borderWidth: '1px',
+        borderStyle: 'solid'
       }
     ),
 
@@ -234,6 +252,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
     {
       return {
         ...styles,
+        color: 'inherit',
         marginLeft: hasIcons ? `${SelectOptionHelper.getMarginOffsetSingleValue(size, data)}px` : '2px',
         ...ThemeHelper.getFontProps(size, fontBold, fontAccent),
         ...ThemeHelper.getTextEffectProps(size, textEffect, textAlign),
@@ -246,6 +265,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
     {
       return {
         ...styles,
+        color: 'inherit',
         fontSize: '100%',
         backgroundColor: ThemeHelper.getBackgroundColorProps(backColor, 'palest').backgroundColor,
         ...ThemeHelper.getFontProps(size, fontBold, fontAccent),
@@ -351,7 +371,7 @@ export const SelectOption = <TValueOption extends TKey = TKey>(props: ISelectOpt
   {
     return <Label {...labelProps} size={size} 
       variant={labelProps.variant ?? TypographyHelper.getTypographyVariantByControlSize(size)}
-      textColor={labelProps.textColor ?? textColor}>
+      textColor={(labelProps.textColor ?? textColor) ?? ThemeHelper.getForegroundColorByBack(backColor, undefined, textColor, undefined, textColorHarmonious)}>
       {
         renderReactSelect()
       }

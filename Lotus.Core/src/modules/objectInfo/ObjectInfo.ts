@@ -4,8 +4,7 @@ import { IPropertyDescriptor } from './PropertyDescriptor';
 /**
  * Интерфейс для представления(описания) свойств объектов
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-export interface IObjectInfo<TObject = any>
+export interface IObjectInfo
 {
   /**
    * Получение списка свойств
@@ -30,10 +29,9 @@ export interface IObjectInfo<TObject = any>
 }
 
 /**
- * Базовый класс для представления(описания) свойств объектов
+ * Класс для представления(описания) свойств объектов
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class ObjectInfoBase<TObject = any> implements IObjectInfo<TObject>
+export class ObjectInfo implements IObjectInfo
 {
   public descriptors: IPropertyDescriptor[] = [];
 

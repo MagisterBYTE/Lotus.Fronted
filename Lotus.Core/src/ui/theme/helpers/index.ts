@@ -1,0 +1,1 @@
+export { ThemePaletteHelper } from './ThemePaletteHelper';

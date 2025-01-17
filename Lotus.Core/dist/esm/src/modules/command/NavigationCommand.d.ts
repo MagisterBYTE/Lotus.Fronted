@@ -1,20 +1,17 @@
 import { IRoute } from 'types/Route';
-import { BaseCommand } from './Command';
+import { BaseCommand, ICommand } from './Command';
+/**
+ * Интерфейс команды предназначенной для простой навигации
+ */
+export interface INavigationCommand extends ICommand {
+}
 /**
  * Класс команды для простой навигации
  */
-export declare class NavigationCommand<TCommandParameter = any> extends BaseCommand<TCommandParameter> {
+export declare class NavigationCommand extends BaseCommand implements INavigationCommand {
     constructor(name: string, route: IRoute);
-    /**
-     * Основной метод команды отвечающий за ее выполнение
-     */
-    executeDefault(): void;
-    /**
-     * Метод определяющий возможность выполнения команды
-     */
-    canExecuteDefault(): boolean;
     /**
      * Статус выбора
      */
-    isSelectedDefault(): boolean;
+    isSelectedCommand(context?: any): boolean;
 }

@@ -1,6 +1,6 @@
-import React, { ComponentPropsWithoutRef, CSSProperties, forwardRef } from 'react';
+import React, { ComponentPropsWithRef, CSSProperties } from 'react';
 
-export interface IGridProps extends ComponentPropsWithoutRef<'div'>
+export interface IGridProps extends ComponentPropsWithRef<'div'>
 {
   gridTemplateColumns: CSSProperties['gridTemplateColumns'];
   gridTemplateRows: CSSProperties['gridTemplateRows'];
@@ -12,12 +12,12 @@ export interface IGridProps extends ComponentPropsWithoutRef<'div'>
   verticalContentAlign?: CSSProperties['alignItems'];
 }
 
-export const Grid = forwardRef<HTMLDivElement, IGridProps>((props, ref) => 
+export const Grid: React.FC<IGridProps> = (props: IGridProps) =>
 {
   const { gridTemplateColumns, gridTemplateRows, columnGap, rowGap, horizontalAlign, verticalAlign, horizontalContentAlign,
     verticalContentAlign, children, ...divProps } = props
   return (
-    <div ref={ref} {...divProps} style={{
+    <div {...divProps} style={{
       display: 'grid',
       gridTemplateColumns: gridTemplateColumns,
       gridTemplateRows: gridTemplateRows,
@@ -33,4 +33,3 @@ export const Grid = forwardRef<HTMLDivElement, IGridProps>((props, ref) =>
     </div>
   );
 }
-)

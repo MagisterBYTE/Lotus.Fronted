@@ -1,17 +1,23 @@
 /* eslint-disable max-lines */
-import { Color, Colors, ColorVariantHelper, NumberHelper } from 'lotus-core';
+import { Color, Colors, ColorVariantsHelper, NumberHelper } from 'lotus-core';
 import { CSSProperties } from 'react';
 import { TColorPresentation, TColorAndVariant, TControlSize, TTextEffect, 
   TCssTextAlign, TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TShadowElevation, TControlPadding, 
   TCssJustifyContent,
-  TCssAlignItems} from 'ui/types';
+  TCssAlignItems,
+  TIconPlacement} from 'ui/types';
 import { hasBorderProperties } from 'ui/components';
-import { TThemeColor, IThemePaletteAdditionalColor, Theme, checkOfThemeColorVariant, TThemeColors, TThemeData } from '../types';
+import { TThemeColor, IThemePaletteAdditionalColor, Theme, checkOfThemeColorVariant, TThemeColors, TThemeData, TThemePaletteModeColorType } from '../types';
 import { checkOfThemeModeColor } from '../types/ThemeModeColor';
 import { ThemeConstant } from '../constants';
 import { ThemePaletteHelper } from './ThemePaletteHelper';
 
 type TControlPaddingOffset = 'normal' | 'half';
+
+interface IForegroundColorByBackSettings
+{
+  isFilled?: boolean
+}
 
 /**
  * Вспомогательный класс для работы с темой
@@ -66,11 +72,11 @@ export class ThemeHelper
         {
           if (isText)
           {
-            return ColorVariantHelper.calcColor(color, colorVariant).createContrastOrHarmoniousColor(isHarmonious)
+            return ColorVariantsHelper.calcColor(color, colorVariant).createContrastOrHarmoniousColor(isHarmonious)
           }
           else
           {
-            return ColorVariantHelper.calcColor(color, colorVariant);
+            return ColorVariantsHelper.calcColor(color, colorVariant);
           }
         }
         else
@@ -221,6 +227,21 @@ export class ThemeHelper
       // Ошибка в комбинации
       return Colors.red.toCSSRgbValue();
     }
+  }
+
+  public static convertToPaletteModeColorType(colorVariant?: TColorAndVariant):TThemePaletteModeColorType
+  {
+    if(colorVariant)
+    {
+      if(checkOfThemeColorVariant(colorVariant))
+      {
+        if(colorVariant == 'black' || colorVariant == 'darkest' || colorVariant == 'darker' || colorVariant == 'dark') return 'dark';
+        if(colorVariant == 'main') return 'main';
+        return 'light'
+      }
+    }
+
+    return 'main';
   }
   // #endregion
 
@@ -395,15 +416,79 @@ export class ThemeHelper
   {
     if(checkOfThemeModeColor(color))
     {
-      return {
-        color: ThemePaletteHelper.getTextColor(color).toCSSRgbValue(modifyAlpha)
-      };
+      if(color == 'primary' || color == 'secondary')
+        return {
+          color: ThemePaletteHelper.getTextColor(color).toCSSRgbValue(modifyAlpha)
+        };
+      else
+      {
+        return {
+          color: ThemePaletteHelper.getPaletteModeColor(color).main
+        };
+      }
     }
     else
     {
       return {
         color: ThemeHelper.getColor(color, colorVariant, isText, isHarmonious, undefined).toCSSRgbValue(modifyAlpha)
       };
+    }
+  }
+
+  /**
+   * Получение цвет текста по указанному фону или напрямую
+   * @param backColor фоновый цвет
+   * @param backColorVariant Вариант фонового цвета
+   * @param textColor Цвет текста
+   * @param textColorVariant Вариант цвет текста
+   * @param isHarmonious Гармоничный цвет текста 
+   * @returns Цвет
+   */
+  public static getForegroundColorByBack(backColor?: TColorPresentation, backColorVariant?: TColorAndVariant, textColor?: TColorPresentation,
+    textColorVariant?: TColorAndVariant, isHarmonious?: boolean, settings?: IForegroundColorByBackSettings): Color
+  {
+    if(checkOfThemeModeColor(textColor))
+    {
+      // Если есть заливка
+      if(settings && settings.isFilled)
+      {
+        // Если установлен такой же цвет, то берем контраст от backColor
+        if(checkOfThemeModeColor(backColor) && backColor == textColor)
+        {
+          return new Color(ThemePaletteHelper.getColor(backColor, 'contrastText'));
+        }
+        else
+        {
+          return new Color(ThemePaletteHelper.getColor(textColor, ThemeHelper.convertToPaletteModeColorType(textColorVariant)));
+        }
+      }
+      else
+      {
+        if(textColor == 'primary' || textColor == 'secondary') return ThemePaletteHelper.getTextColor(textColor);
+        else return new Color(ThemePaletteHelper.getPaletteModeColor(textColor).main);
+      }
+    }
+    else
+    {
+      if(checkOfThemeModeColor(backColor))
+      {
+        // Если есть заливка
+        if(settings && settings.isFilled)
+        {
+          return new Color(ThemePaletteHelper.getColor(backColor, 'contrastText'));
+        }
+        else
+        {
+          return new Color(Theme.currentPalette.text.primary);
+        }
+      }
+      else
+      {
+        return ThemeHelper.getColor(textColor ?? backColor,
+          (textColor ? textColorVariant : backColorVariant),
+          (textColor ? undefined : true),
+          (textColor ? undefined : isHarmonious));
+      }
     }
   }
 
@@ -420,12 +505,37 @@ export class ThemeHelper
   public static getForegroundColorByBackProps(backColor?: TColorPresentation, backColorVariant?: TColorAndVariant, textColor?: TColorPresentation,
     textColorVariant?: TColorAndVariant, isHarmonious?: boolean, modifyAlpha?: number): CSSProperties
   {
-    return {
-      color: ThemeHelper.getColor(textColor ?? backColor,
-        (textColor ? textColorVariant : backColorVariant),
-        (textColor ? undefined : true),
-        (textColor ? undefined : isHarmonious)).toCSSRgbValue(modifyAlpha)
-    };
+    if(checkOfThemeModeColor(textColor))
+    {
+      if(textColor == 'primary' || textColor == 'secondary')
+        return {
+          color: ThemePaletteHelper.getTextColor(textColor).toCSSRgbValue(modifyAlpha)
+        };
+      else
+      {
+        return {
+          color: ThemePaletteHelper.getPaletteModeColor(textColor).main
+        };
+      }
+    }
+    else
+    {
+      if(checkOfThemeModeColor(backColor))
+      {
+        return {
+          color: Theme.currentPalette.text.primary
+        };
+      }
+      else
+      {
+        return {
+          color: ThemeHelper.getColor(textColor ?? backColor,
+            (textColor ? textColorVariant : backColorVariant),
+            (textColor ? undefined : true),
+            (textColor ? undefined : isHarmonious)).toCSSRgbValue(modifyAlpha)
+        };
+      }
+    }
   }
   // #endregion
 
@@ -1432,6 +1542,30 @@ export class ThemeHelper
       alignItems: horizontalAlign,
       rowGap: `${ThemeHelper.getRowGapFromSizeInRem(size, paddingControl)}rem`
     }
+  }
+  // #endregion
+
+
+  // #region FlexContainerByIcon
+
+  /**
+   * Получить оптимальные настройки Flex контейнера для иконки в виде CSSProperties
+   * @param size Размер элемента
+   * @param paddingControl Внутренний отступ
+   * @param iconPlacement Вариант размещения иконки
+   * @returns Настройки Flex контейнера в виде CSSProperties
+   */
+  public static getFlexContainerByIcon(size: TControlSize, paddingControl: TControlPadding, iconPlacement: TIconPlacement): CSSProperties
+  {
+    switch (iconPlacement)
+    {
+      case 'left': return ThemeHelper.getFlexRowContainer(size, paddingControl);
+      case 'right': return ThemeHelper.getFlexRowContainer(size, paddingControl, true);
+      case 'top': return ThemeHelper.getFlexColumnContainer(size, paddingControl);
+      case 'bottom': return ThemeHelper.getFlexColumnContainer(size, paddingControl, true);
+    }
+
+    return {};
   }
   // #endregion
 }

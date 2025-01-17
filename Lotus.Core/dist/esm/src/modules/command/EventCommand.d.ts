@@ -1,4 +1,4 @@
-import { BaseCommand } from './Command';
+import { BaseCommand, ICommand } from './Command';
 /**
  * Наименование(тип) события который посылают команды для генерирования пользовательских событий
  */
@@ -13,20 +13,17 @@ export interface IBaseEventCommandData {
     discriminator: string;
 }
 /**
+ * Интерфейс команды предназначенной для генерирования пользовательских событий
+ */
+export interface IEventCommand extends ICommand {
+}
+/**
  * Класс команды для генерирования пользовательских событий
  */
-export declare class EventCommand<TCommandParameter extends IBaseEventCommandData> extends BaseCommand<TCommandParameter> {
+export declare class EventCommand extends BaseCommand implements IEventCommand {
     constructor(name: string);
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    executeDefault(): void;
-    /**
-     * Метод определяющий возможность выполнения команды
-     */
-    canExecuteDefault(): boolean;
-    /**
-     * Статус выбора
-     */
-    isSelectedDefault(): boolean;
+    executeCommand(context?: any): void;
 }

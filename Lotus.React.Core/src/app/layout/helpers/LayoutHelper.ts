@@ -1,8 +1,8 @@
 import { TBreakpoint } from 'ui/types/Breakpoint';
 import { CssTypesHelper } from 'ui/helpers';
+import { EventCommandKey } from 'lotus-core';
 import { defaultStateDesktop, ILayoutState } from '../store/LayoutState';
 import { IOpenViewSettingsEventData, OpenViewSettingsEventDiscriminator } from '../events';
-import { EventCommandKey } from 'lotus-core';
 
 export class LayoutHelper
 {
@@ -61,7 +61,7 @@ export class LayoutHelper
    * @param delta Увеличение к расчету
    * @returns 
    */
-  public static geMarginBottom(delta?: number): number
+  public static getMarginBottom(delta?: number): number
   {
     const layoutState = LayoutHelper.loadFromStorage();
     const footer = layoutState.footer;

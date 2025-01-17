@@ -1,12 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IRoute } from 'types/Route';
+
+/**
+ * Делегат для интерфейса команды, возвращает any
+ */
+export type FunctionCommandDelegateAny = (option: ICommand, context?: any) => any
+
+/**
+ * Делегат для интерфейса команды, возвращает boolean
+ */
+export type FunctionCommandDelegateBool = (option: ICommand, context?: any) => boolean
 
 /**
  * Интерфейс команды
  * @description Команда предоставляет собой концепцию (паттерн) для связывания логики выполнения действия и визуального элемента. 
  * Как паттерн, команда позволяет инкапсулировать запрос на выполнение определенного действия в виде отдельного объекта
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface ICommand<TCommandParameter = any>
+export interface ICommand
 {
   //
   // ОСНОВНЫЕ ДАННЫЕ
@@ -19,22 +29,22 @@ export interface ICommand<TCommandParameter = any>
   /**
    * Параметр команды
    */
-  parameter?: TCommandParameter;
+  parameter?: any;
 
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  execute: ()=>void;
+  execute: FunctionCommandDelegateAny;
 
   /**
    * Метод определяющий возможность выполнения команды
    */
-  canExecute: ()=>boolean;
+  canExecute?: FunctionCommandDelegateBool;
 
   /**
    * Статус выбора
    */
-  isSelected: ()=>boolean;
+  isSelected?: FunctionCommandDelegateBool;
 
   //
   // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
@@ -55,8 +65,7 @@ export interface ICommand<TCommandParameter = any>
   /**
   * Иконка
   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon?: any;
+  icon?: any | FunctionCommandDelegateAny;
 
   /**
    * Порядок при сортировке команд
@@ -73,8 +82,7 @@ export interface ICommand<TCommandParameter = any>
  * Базовый класс команды
  */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class BaseCommand<TCommandParameter = any> implements ICommand<TCommandParameter>
+export class BaseCommand implements ICommand
 {
   //
   // ОСНОВНЫЕ ДАННЫЕ
@@ -87,22 +95,22 @@ export class BaseCommand<TCommandParameter = any> implements ICommand<TCommandPa
   /**
    * Параметр команды
    */
-  public parameter?: TCommandParameter;
+  public parameter?: any;
 
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  public execute: ()=>void;
+  public execute: FunctionCommandDelegateAny
 
   /**
    * Метод определяющий возможность выполнения команды
    */
-  public canExecute: ()=>boolean;
+  public canExecute?: FunctionCommandDelegateBool;
 
   /**
    * Статус выбора
    */
-  public isSelected: ()=>boolean;
+  public isSelected?: FunctionCommandDelegateBool;
 
   //
   // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
@@ -123,8 +131,7 @@ export class BaseCommand<TCommandParameter = any> implements ICommand<TCommandPa
   /**
    * Иконка
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public icon?: any;
+  public icon?: any | FunctionCommandDelegateAny;
 
   /**
    * Порядок при сортировке команд
@@ -140,36 +147,44 @@ export class BaseCommand<TCommandParameter = any> implements ICommand<TCommandPa
   {
     this.name = name;
     this.label = '';
-    this.executeDefault = this.executeDefault.bind(this);
-    this.canExecuteDefault = this.canExecuteDefault.bind(this);
-    this.isSelectedDefault = this.isSelectedDefault.bind(this);
-    this.execute = this.executeDefault;
-    this.canExecute = this.canExecuteDefault;
-    this.isSelected = this.isSelectedDefault;
+    this.executeCommand = this.executeCommand.bind(this);
+    this.canExecuteCommand = this.canExecuteCommand.bind(this);
+    this.isSelectedCommand = this.isSelectedCommand.bind(this);
+    this.execute = () => {};
   }
 
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  public executeDefault(): void
+  public executeCommand(context?: any): void
   {
-
+    this.execute(this, context);
   }
 
 
   /**
    * Метод определяющий возможность выполнения команды
    */
-  public canExecuteDefault(): boolean
+  public canExecuteCommand(context?: any): boolean
   {
+    if(this.canExecute)
+    {
+      return this.canExecute(this, context);
+    }
+
     return true;
   }
 
   /**
    * Статус выбора
    */
-  public isSelectedDefault(): boolean
+  public isSelectedCommand(context?: any): boolean
   {
+    if(this.isSelected)
+    {
+      return this.isSelected(this, context);
+    }
+  
     return false;
   }
 }

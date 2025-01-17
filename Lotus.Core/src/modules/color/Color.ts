@@ -812,6 +812,24 @@ export class Color
   }
 
   /**
+   * Вернуть этот же цвет, но с модифицированным альфа значением или текущий цвет
+   * @param amount Альфа значение от 0 до 1
+   * @returns {Color} new Color() instance
+   */
+  toModifyAlphaOrThis(amount?: number): Color
+  {
+    if(amount)
+    {
+      const rgb = this._getRGB();
+      return new Color(rgb[0], rgb[1], rgb[2], amount);
+    }
+    else
+    {
+      return this;
+    }
+  }
+
+  /**
    * Returns the CSS string of the color, either as hex value, or rgba if an alpha value is defined
    *
    * @method toString

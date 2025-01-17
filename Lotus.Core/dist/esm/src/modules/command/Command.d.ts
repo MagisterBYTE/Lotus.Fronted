@@ -1,10 +1,18 @@
 import { IRoute } from 'types/Route';
 /**
+ * Делегат для интерфейса команды, возвращает any
+ */
+export type FunctionCommandDelegateAny = (option: ICommand, context?: any) => any;
+/**
+ * Делегат для интерфейса команды, возвращает boolean
+ */
+export type FunctionCommandDelegateBool = (option: ICommand, context?: any) => boolean;
+/**
  * Интерфейс команды
  * @description Команда предоставляет собой концепцию (паттерн) для связывания логики выполнения действия и визуального элемента.
  * Как паттерн, команда позволяет инкапсулировать запрос на выполнение определенного действия в виде отдельного объекта
  */
-export interface ICommand<TCommandParameter = any> {
+export interface ICommand {
     /**
      * Имя команды
      */
@@ -12,19 +20,19 @@ export interface ICommand<TCommandParameter = any> {
     /**
      * Параметр команды
      */
-    parameter?: TCommandParameter;
+    parameter?: any;
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute: () => void;
+    execute: FunctionCommandDelegateAny;
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecute: () => boolean;
+    canExecute?: FunctionCommandDelegateBool;
     /**
      * Статус выбора
      */
-    isSelected: () => boolean;
+    isSelected?: FunctionCommandDelegateBool;
     /**
      * Маршрут команды
      */
@@ -36,7 +44,7 @@ export interface ICommand<TCommandParameter = any> {
     /**
     * Иконка
     */
-    icon?: any;
+    icon?: any | FunctionCommandDelegateAny;
     /**
      * Порядок при сортировке команд
      */
@@ -49,7 +57,7 @@ export interface ICommand<TCommandParameter = any> {
 /**
  * Базовый класс команды
  */
-export declare class BaseCommand<TCommandParameter = any> implements ICommand<TCommandParameter> {
+export declare class BaseCommand implements ICommand {
     /**
      * Имя команды
      */
@@ -57,19 +65,19 @@ export declare class BaseCommand<TCommandParameter = any> implements ICommand<TC
     /**
      * Параметр команды
      */
-    parameter?: TCommandParameter;
+    parameter?: any;
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute: () => void;
+    execute: FunctionCommandDelegateAny;
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecute: () => boolean;
+    canExecute?: FunctionCommandDelegateBool;
     /**
      * Статус выбора
      */
-    isSelected: () => boolean;
+    isSelected?: FunctionCommandDelegateBool;
     /**
      * Маршрут команды
      */
@@ -81,7 +89,7 @@ export declare class BaseCommand<TCommandParameter = any> implements ICommand<TC
     /**
      * Иконка
      */
-    icon?: any;
+    icon?: any | FunctionCommandDelegateAny;
     /**
      * Порядок при сортировке команд
      */
@@ -94,13 +102,13 @@ export declare class BaseCommand<TCommandParameter = any> implements ICommand<TC
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    executeDefault(): void;
+    executeCommand(context?: any): void;
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecuteDefault(): boolean;
+    canExecuteCommand(context?: any): boolean;
     /**
      * Статус выбора
      */
-    isSelectedDefault(): boolean;
+    isSelectedCommand(context?: any): boolean;
 }

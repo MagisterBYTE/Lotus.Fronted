@@ -1,6 +1,6 @@
 import { Color } from './Color';
 import { TColorVariantIndex, TColorVariantName } from './ColorVariantTypes';
-export declare class ColorVariantHelper {
+export declare class ColorVariantsHelper {
     /**
      * Получить цвет по его индексу
      * @param index Числовой индекс в палитре цветов

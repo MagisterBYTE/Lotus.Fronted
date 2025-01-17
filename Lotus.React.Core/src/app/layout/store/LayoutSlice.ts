@@ -30,7 +30,7 @@ export const layoutSlice = createSlice({
   {
     //
     // В целом для сайта
-    //       
+    //
     builder.addCase(setScreenTypeAction, (state, action) => 
     {
       state.screenType = action.payload;
@@ -86,7 +86,7 @@ export const layoutSlice = createSlice({
 
     //
     // Шапка
-    //    
+    //
     builder.addCase(showHeaderLayoutAction, (state, action) => 
     {
       state.header.isVisible = action.payload;
@@ -100,7 +100,7 @@ export const layoutSlice = createSlice({
 
     //
     // Левая панель
-    //      
+    //
     builder.addCase(showLeftPanelLayoutAction, (state, action) => 
     {
       state.leftPanel.isVisible = action.payload;
@@ -156,7 +156,7 @@ export const layoutSlice = createSlice({
 
     //
     // Правая панель
-    //    
+    //
     builder.addCase(showRightPanelLayoutAction, (state, action) => 
     {
       state.rightPanel.isVisible = action.payload;

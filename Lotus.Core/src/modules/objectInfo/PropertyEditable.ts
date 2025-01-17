@@ -18,7 +18,7 @@ export interface IPropertyEditable
   /**
    * Тип элемента редактирования свойства
    */
-  editorType?: 'number' | 'text' | 'select' | 'multi-select';
+  editorType?: 'text' | 'select' | 'multi-select' | 'range' | 'checkbox' | 'date' | 'date-range' | 'autocomplete';
 
   /**
    * Валидации свойства
@@ -26,5 +26,5 @@ export interface IPropertyEditable
    * @returns Статус валидации
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onValidation: (value: any) => IValidationResult;
+  onValidation: (value: any, context?: any) => IValidationResult;
 }

@@ -12,12 +12,7 @@ export class ObjectHelper
    * @param shouldThrow Генерировать исключение если свойство не найдено
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getValueByPropertyPath<TValue = any>(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    source: any,
-    propertyPath: string,
-    shouldThrow: boolean = false
-  ): TValue | undefined
+  public static getValueByPropertyPath<TValue = any>(source: any, propertyPath: string, shouldThrow: boolean = false): TValue | undefined
   {
     if (source === null || source === undefined)
     {
@@ -74,66 +69,6 @@ export class ObjectHelper
         }
       }
     }, source) as TValue;
-  }
-
-  /**
-   * Проверка значения на undefined или null
-   * @param value Проверяемое значение
-   * @returns Статус проверки
-   */
-  public static isNullOrUndefined(value: unknown)
-  {
-    return value === undefined || value === null;
-  }
-
-  /**
-   * Проверка объекта на то, что все его свойства имеют значения undefined
-   * @param object Проверяемый объект
-   * @returns Статус проверки
-   */
-  public static isObjectValuesEmpty(object: object): boolean
-  {
-    return !Object.values(object).some((value) => value !== undefined)
-  }
-
-  /**
-   * Получить значение по условию if
-   * @param check Проверяемое значение
-   * @param positive Значение возвращаемое в случае не нулевого значения
-   * @param negative Значение возвращаемое в случае нулевого значения
-   * @returns Значение
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getIf<TResult = any>(check: any, positive: TResult, negative: TResult): TResult 
-  {
-    if (check)
-    {
-      return positive;
-    }
-    else
-    {
-      return negative;
-    }
-  }
-
-  /**
-   * Получить значение по условию if
-   * @param check Проверяемое значение
-   * @param positive Функция вызываемая в случае не нулевого значения
-   * @param negative Функция вызываемая в случае нулевого значения
-   * @returns Значение
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getIfFun<TResult = any>(check: any, positive: (check: any) => TResult, negative: (check: any) => TResult): TResult 
-  {
-    if (check)
-    {
-      return positive(check);
-    }
-    else
-    {
-      return negative(check);
-    }
   }
 
   /**

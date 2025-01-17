@@ -2,7 +2,7 @@
 /**
  * Перечисление для типа простого информирования
  */
-export const AlertTypeEnum =
+export const AlertTypeDesc =
   {
     /**
      * Ошибка
@@ -44,4 +44,4 @@ export const AlertTypeEnum =
 /**
  * Тип простого информирования
  */
-export type TAlertType = keyof typeof AlertTypeEnum;
+export type TAlertType = keyof typeof AlertTypeDesc;

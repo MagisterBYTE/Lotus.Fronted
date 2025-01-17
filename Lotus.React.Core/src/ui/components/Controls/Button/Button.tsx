@@ -67,19 +67,6 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
   const rippleColor = ThemeHelper.getRippleColor(backColor, (variant == 'text' || variant == 'icon'));
   const [ripple, event] = useRippleEffect({ duration: ThemeConstant.TransitionSpeed * 2, color: rippleColor, disabled: props.disabled });
 
-  const getFlexContainer = (): CSSProperties =>
-  {
-    switch (iconPlacement)
-    {
-      case 'left': return ThemeHelper.getFlexRowContainer(size, paddingControl);
-      case 'right': return ThemeHelper.getFlexRowContainer(size, paddingControl, true);
-      case 'top': return ThemeHelper.getFlexColumnContainer(size, paddingControl);
-      case 'bottom': return ThemeHelper.getFlexColumnContainer(size, paddingControl, true);
-    }
-
-    return {};
-  }
-
   const handleSelect = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
   {
     setSelectedButton(!selectedButton);
@@ -99,7 +86,8 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
     return (<button {...propsButton} ref={hasRippleEffect ? ripple : props.ref} className={cx(buttonClass, extraClass)}
       onClick={isSelectedStatus ? handleSelect : props.onClick}
       onPointerDown={event}>
-      {RenderComponentHelper.renderIconAndValue(size, icon, propsButton.children, iconStyle, iconColor, imageDatabase, true, getFlexContainer())}
+      {RenderComponentHelper.renderIconAndValue(size, icon, propsButton.children, iconStyle, iconColor, imageDatabase, true, 
+        ThemeHelper.getFlexContainerByIcon(size, paddingControl, iconPlacement))}
     </button>);
   }
   else

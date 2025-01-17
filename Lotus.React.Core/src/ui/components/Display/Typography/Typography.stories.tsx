@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { VerticalStack } from 'ui/components/Layout';
-import { TThemeColors, TThemeColorVariants } from 'ui/theme';
+import { TThemeColors, TThemeColorVariants, TThemeModeColors } from 'ui/theme';
 import { TTextEffects } from 'ui/types';
 import { Typography } from './Typography';
 import { TTypographyVariants } from './TypographyVariant';
@@ -22,7 +22,7 @@ const meta = {
     fontAccent: { control: 'boolean' },
     textEffect: { control: 'inline-radio', options: [...TTextEffects, undefined] },
     textAlign: { control: 'inline-radio', options: ['left', 'right', 'center', undefined] },
-    textColor: { control: 'inline-radio', options: [...TThemeColors, undefined] },
+    textColor: { control: 'inline-radio', options: [...TThemeModeColors, ...TThemeColors, undefined] },
     
     textColorVariant: { control: 'inline-radio', options: [...TThemeColorVariants, undefined] },
     variant: { control: 'inline-radio', options: [...TTypographyVariants, undefined] },

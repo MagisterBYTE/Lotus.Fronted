@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { CSSProperties, ReactElement } from 'react';
 import { HorizontalStack } from 'ui/components';
-import { useLayoutState } from '../store/LayoutSelector';
+import { ThemeHelper } from 'ui/theme';
 import { TScreenType } from '../domain/ScreenType';
 import { useScreenTypeChanged } from '../hooks';
+import { useLayoutState } from '../store/LayoutSelector';
+import { AppFooter, IAppFooterProps } from './components/AppFooter';
 import { AppHeader, IAppHeaderProps } from './components/AppHeader';
 import { AppLeftPanel, IAppLeftPanelProps } from './components/AppLeftPanel';
-import { AppFooter, IAppFooterProps } from './components/AppFooter';
-import { Theme } from 'ui/theme';
 
 export interface IAppMainLayoutProps
 {
@@ -50,7 +50,7 @@ export const AppMainLayout: React.FC<IAppMainLayoutProps> = (props: IAppMainLayo
     case TScreenType.Desktop:
     {
       return (
-        <div style={{display: 'flex', flexDirection: 'column', ...Theme.getBackgroundColorProps(undefined, 'white')}}>
+        <div style={{display: 'flex', flexDirection: 'column', ...ThemeHelper.getBackgroundColorProps(undefined, 'white')}}>
           <div style={{flexGrow: '0'}} >
             <AppHeader {...appHeaderProps} />
           </div>

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { css, cx } from '@emotion/css';
 import { ObjectHelper } from 'lotus-core';
 import React, { CSSProperties, ReactNode } from 'react';
 import { IGeneralIconProperties } from 'ui/components';
 import { RenderComponentHelper } from 'ui/helpers';
-import { Theme } from 'ui/theme';
+import { Theme, ThemeHelper } from 'ui/theme';
 import { TControlSize, TCssWidth } from 'ui/types';
 import { ITypographyProps, Typography } from '../Typography';
 import './Label.css';
@@ -44,9 +45,9 @@ export interface ILabelProps extends ITypographyProps, IGeneralIconProperties
 export const Label: React.FC<ILabelProps> = (props: ILabelProps) => 
 {
   const {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    icon, iconColor, iconStyle,
-    size = 'medium', label, isTopLabel, labelWidth, containerWidth = '100%', valueStyle, ...propsTypography } = props;
+    size = 'medium', label, isTopLabel, labelWidth, containerWidth = '100%', valueStyle, 
+    icon, iconColor, iconStyle, iconPlacement = 'left', imageDatabase,
+    ...propsTypography } = props;
 
   if (label)
   {
@@ -61,7 +62,7 @@ export const Label: React.FC<ILabelProps> = (props: ILabelProps) =>
         justifyContent: propsTypography.textAlign,
         flexGrow: 1,
         width: labelWidth,
-        ...(icon ? Theme.getFlexRowContainer(size, 'normal') : {})
+        ...(icon ? ThemeHelper.getFlexRowContainer(size, 'normal') : {})
       }
     );
 
@@ -78,7 +79,7 @@ export const Label: React.FC<ILabelProps> = (props: ILabelProps) =>
       return (
         <div className={cx('lotus-label-container-v', `lotus-label-gap-v-${size}`, ObjectHelper.getIf(containerWidth, containerClass, ''))}>
           <div className={labelClass}>
-            {Boolean(icon) && RenderComponentHelper.renderIconProps(size, props)}
+            {Boolean(icon) && RenderComponentHelper.renderIconAndValue(size, icon, undefined, iconStyle, iconColor, imageDatabase)}
             <Typography {...propsTypography}>
               {label}
             </Typography>
@@ -93,7 +94,7 @@ export const Label: React.FC<ILabelProps> = (props: ILabelProps) =>
     {
       return (<div className={cx('lotus-label-container-h', `lotus-label-gap-h-${size}`, ObjectHelper.getIf(containerWidth, containerClass, ''))}>
         <div className={labelClass}>
-          {Boolean(icon) && RenderComponentHelper.renderIconProps(size, props)}
+          {Boolean(icon) && RenderComponentHelper.renderIconAndValue(size, icon, undefined, iconStyle, iconColor, imageDatabase)}
           <Typography {...propsTypography}>
             {label}
           </Typography>
