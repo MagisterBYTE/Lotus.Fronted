@@ -1,13 +1,13 @@
 import { Color } from './Color';
 import { ColorNames } from './ColorNames';
-import { ColorVariantHelper } from './ColorVariantHelper';
-import { TColorVariantIndex, TColorVariantName } from './ColorVariantTypes';
+import { ColorVariantsHelper } from './ColorVariantsHelper';
+import { TColorVariantIndex, TColorVariantName } from './ColorVariantsTypes';
 
 /**
  * Интерфейс вариативности цветов
  * Вариативность цветов - совокупность цветов расположенных от самого светлого до самого темного от основного цвета.
  */
-export interface IColorVariant
+export interface IColorVariants
 {
   readonly white: Color; // 1
 
@@ -33,10 +33,10 @@ export interface IColorVariant
 /**
  * Вариативность цветов
  */
-export class ColorVariant implements IColorVariant
+export class ColorVariants implements IColorVariants
 {
   // #region  Static methods
-  public static createFromColorLightness(red: number, green: number, blue: number):ColorVariant
+  public static createFromColorLightness(red: number, green: number, blue: number):ColorVariants
   {
     const main = new Color(red, green, blue);
     const white = main.increaseLightness(0.95)
@@ -49,10 +49,10 @@ export class ColorVariant implements IColorVariant
     const darkest = main.decreaseLightness(0.60);
     const black = main.decreaseLightness(0.80);
 
-    return new ColorVariant(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+    return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
   }
 
-  public static createFromColorCombine(red: number, green: number, blue: number):ColorVariant
+  public static createFromColorCombine(red: number, green: number, blue: number):ColorVariants
   {
     const main = new Color(red, green, blue);
     const white =  main.combine(ColorNames['white'], 0.95);
@@ -65,7 +65,7 @@ export class ColorVariant implements IColorVariant
     const darkest =  main.combine(ColorNames['black'], 0.60);
     const black =  main.combine(ColorNames['black'], 0.80);
   
-    return new ColorVariant(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+    return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
   }
   // #endregion
 
@@ -144,7 +144,7 @@ export class ColorVariant implements IColorVariant
    */
   public getByIndex(index?: TColorVariantIndex, modifyAlpha?: number):Color
   {
-    const name = ColorVariantHelper.getNameByIndex(index);
+    const name = ColorVariantsHelper.getNameByIndex(index);
     return this.getByName(name, modifyAlpha);
   }
 
@@ -156,7 +156,7 @@ export class ColorVariant implements IColorVariant
    */
   public getNextByName(name?: TColorVariantName, delta?: number, modifyAlpha?: number):Color
   {
-    const nextName = ColorVariantHelper.getNameByIndex(ColorVariantHelper.getNextIndex(ColorVariantHelper.getIndexByName(name), delta));
+    const nextName = ColorVariantsHelper.getNameByIndex(ColorVariantsHelper.getNextIndex(ColorVariantsHelper.getIndexByName(name), delta));
     const color = this[nextName] as Color;
     if(modifyAlpha)
     {

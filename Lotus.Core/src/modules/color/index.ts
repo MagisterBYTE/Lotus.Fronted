@@ -3,8 +3,8 @@ export { ColorHelper } from './ColorHelper';
 export { type IColorModelHSL } from './ColorModel';
 export { ColorNames } from './ColorNames';
 export { Colors } from './Colors';
-export { ColorVariant, type IColorVariant } from './ColorVariant';
-export { ColorVariantHelper } from './ColorVariantHelper';
+export { ColorVariants, type IColorVariants } from './ColorVariants';
+export { ColorVariantsHelper } from './ColorVariantsHelper';
 export
 {
   TColorVariantIndexBlack,
@@ -19,5 +19,5 @@ export
   TColorVariantNames,
   type TColorVariantIndex,
   type TColorVariantName
-} from './ColorVariantTypes';
+} from './ColorVariantsTypes';
 

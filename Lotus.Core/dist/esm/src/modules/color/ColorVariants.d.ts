@@ -1,5 +1,5 @@
 import { Color } from './Color';
-import { TColorVariantIndex, TColorVariantName } from './ColorVariantTypes';
+import { TColorVariantIndex, TColorVariantName } from './ColorVariantsTypes';
 /**
  * Интерфейс вариативности цветов
  * Вариативность цветов - совокупность цветов расположенных от самого светлого до самого темного от основного цвета.

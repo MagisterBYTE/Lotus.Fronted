@@ -3688,7 +3688,7 @@ const TColorVariantIndexBlack = 10;
  */
 const TColorVariantNames = ['white', 'palest', 'pale', 'lighter', 'light', 'main', 'dark', 'darker', 'darkest', 'black'];
 
-class ColorVariantHelper {
+class ColorVariantsHelper {
     /**
      * Получить цвет по его индексу
      * @param index Числовой индекс в палитре цветов
@@ -3756,7 +3756,7 @@ class ColorVariantHelper {
 /**
  * Вариативность цветов
  */
-class ColorVariant {
+class ColorVariants {
     // #region  Static methods
     static createFromColorLightness(red, green, blue) {
         const main = new Color(red, green, blue);
@@ -3769,7 +3769,7 @@ class ColorVariant {
         const darker = main.decreaseLightness(0.40);
         const darkest = main.decreaseLightness(0.60);
         const black = main.decreaseLightness(0.80);
-        return new ColorVariant(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+        return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
     static createFromColorCombine(red, green, blue) {
         const main = new Color(red, green, blue);
@@ -3782,7 +3782,7 @@ class ColorVariant {
         const darker = main.combine(ColorNames['black'], 0.40);
         const darkest = main.combine(ColorNames['black'], 0.60);
         const black = main.combine(ColorNames['black'], 0.80);
-        return new ColorVariant(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
+        return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
     // #endregion
     white; // 1
@@ -3839,7 +3839,7 @@ class ColorVariant {
      * @param modifyAlpha Модификация значения альфы от 0 до 1
      */
     getByIndex(index, modifyAlpha) {
-        const name = ColorVariantHelper.getNameByIndex(index);
+        const name = ColorVariantsHelper.getNameByIndex(index);
         return this.getByName(name, modifyAlpha);
     }
     /**
@@ -3849,7 +3849,7 @@ class ColorVariant {
      * @param modifyAlpha Модификация значения альфы от 0 до 1
      */
     getNextByName(name, delta, modifyAlpha) {
-        const nextName = ColorVariantHelper.getNameByIndex(ColorVariantHelper.getNextIndex(ColorVariantHelper.getIndexByName(name), delta));
+        const nextName = ColorVariantsHelper.getNameByIndex(ColorVariantsHelper.getNextIndex(ColorVariantsHelper.getIndexByName(name), delta));
         const color = this[nextName];
         if (modifyAlpha) {
             return color.toModifyAlpha(modifyAlpha);
@@ -5094,4 +5094,4 @@ const sleep = (timeoutInMs) => {
     return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
 };
 
-export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariant, ColorVariantHelper, Colors, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionDescriptors, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, OptionHelper, PathHelper, PropertyTypeDescriptors, RandomHelper, RequestHelper, Route, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
+export { ApiService, ArrayHelper, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariants, ColorVariantsHelper, Colors, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionDescriptors, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfoBase, OptionHelper, PathHelper, PropertyTypeDescriptors, RandomHelper, RequestHelper, Route, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
