@@ -5,8 +5,7 @@ export { ColorNames } from './ColorNames';
 export { Colors } from './Colors';
 export { ColorVariants, type IColorVariants } from './ColorVariants';
 export { ColorVariantsHelper } from './ColorVariantsHelper';
-export
-{
+export {
   TColorVariantIndexBlack,
   TColorVariantIndexDark,
   TColorVariantIndexDarker,
@@ -16,8 +15,7 @@ export
   TColorVariantIndexMain,
   TColorVariantIndexPale,
   TColorVariantIndexWhite,
-  TColorVariantNames,
-  type TColorVariantIndex,
+  TColorVariantNames, checkOfColorVariantName, type TColorVariantIndex,
   type TColorVariantName
 } from './ColorVariantsTypes';
 

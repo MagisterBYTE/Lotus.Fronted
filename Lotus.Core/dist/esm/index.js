@@ -2925,6 +2925,20 @@ class Color {
         return new Color(rgb[0], rgb[1], rgb[2], amount);
     }
     /**
+     * Вернуть этот же цвет, но с модифицированным альфа значением или текущий цвет
+     * @param amount Альфа значение от 0 до 1
+     * @returns {Color} new Color() instance
+     */
+    toModifyAlphaOrThis(amount) {
+        if (amount) {
+            const rgb = this._getRGB();
+            return new Color(rgb[0], rgb[1], rgb[2], amount);
+        }
+        else {
+            return this;
+        }
+    }
+    /**
      * Returns the CSS string of the color, either as hex value, or rgba if an alpha value is defined
      *
      * @method toString
@@ -3637,6 +3651,15 @@ const TColorVariantIndexBlack = 10;
  * Массив всех именованных типов в вариативности цветов
  */
 const TColorVariantNames = ['white', 'palest', 'pale', 'lighter', 'light', 'main', 'dark', 'darker', 'darkest', 'black'];
+/**
+ * Функция для проверки, является ли значение именованным типом в вариативности цветов
+ * @param value Проверяемое значение
+ * @returns Статус проверки
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function checkOfColorVariantName(value) {
+    return TColorVariantNames.includes(value);
+}
 
 class ColorVariantsHelper {
     /**
@@ -5080,4 +5103,4 @@ function sleep(timeoutInMs) {
     return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
 }
 
-export { ApiService, ArrayHelper, Assert, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariants, ColorVariantsHelper, Colors, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionDescriptors, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfo, OptionHelper, PathHelper, PropertyTypeDescriptors, RandomHelper, RequestHelper, Route, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
+export { ApiService, ArrayHelper, Assert, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariants, ColorVariantsHelper, Colors, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionDescriptors, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfo, OptionHelper, PathHelper, PropertyTypeDescriptors, RandomHelper, RequestHelper, Route, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfColorVariantName, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };

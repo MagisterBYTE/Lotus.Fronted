@@ -1,4 +1,4 @@
-import { TThemeColor } from 'ui/theme/types';
+import { TThemeColorVariant } from 'ui/theme';
 import { TTextEffect } from 'ui/types';
 import { TCssTextAlign } from 'ui/types/CssTypes';
 
@@ -35,5 +35,5 @@ export interface IGeneralTextProperties
   /**
    * Цвет текста
    */
-  textColor?:TThemeColor;
+  textColor?:TThemeColorVariant;
 }

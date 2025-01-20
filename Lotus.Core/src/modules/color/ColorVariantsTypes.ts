@@ -23,3 +23,15 @@ export type TColorVariantName = 'white' | 'palest' | 'pale' | 'lighter' | 'light
  * Массив всех именованных типов в вариативности цветов
  */
 export const TColorVariantNames: readonly TColorVariantName[] = ['white', 'palest', 'pale', 'lighter', 'light', 'main', 'dark', 'darker', 'darkest', 'black'];
+
+
+/**
+ * Функция для проверки, является ли значение именованным типом в вариативности цветов
+ * @param value Проверяемое значение
+ * @returns Статус проверки
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function checkOfColorVariantName(value: any): value is TColorVariantName 
+{
+  return TColorVariantNames.includes(value);
+}

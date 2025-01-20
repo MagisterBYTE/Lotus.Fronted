@@ -1,4 +1,9 @@
-import { Property } from 'csstype';
+import { Property, Properties } from 'csstype';
+
+/**
+ * Все свойства Css
+ */
+export type TCssProperties = Properties<string | number> 
 
 /**
  * Тип свойства - ширина Css

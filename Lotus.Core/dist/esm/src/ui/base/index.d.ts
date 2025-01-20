@@ -1,4 +1,3 @@
-export { type IGeneralBackgroundExtendedProperties } from './GeneralBackgroundExtendedProperties';
 export { type IGeneralBackgroundProperties } from './GeneralBackgroundProperties';
 export { hasBorderProperties, hasBorderProps, type IGeneralBorderProperties } from './GeneralBorderProperties';
 export { type IGeneralBaseElementProperties, type IGeneralElementProperties } from './GeneralElementProperties';

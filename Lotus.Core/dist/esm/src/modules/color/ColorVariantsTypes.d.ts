@@ -20,3 +20,9 @@ export type TColorVariantName = 'white' | 'palest' | 'pale' | 'lighter' | 'light
  * Массив всех именованных типов в вариативности цветов
  */
 export declare const TColorVariantNames: readonly TColorVariantName[];
+/**
+ * Функция для проверки, является ли значение именованным типом в вариативности цветов
+ * @param value Проверяемое значение
+ * @returns Статус проверки
+ */
+export declare function checkOfColorVariantName(value: any): value is TColorVariantName;

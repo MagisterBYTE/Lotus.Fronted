@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type * as CSS from 'csstype';
 import { IImageDatabase } from 'resources/image';
-import { TThemeColor } from 'ui/theme/types';
-import { TIconPlacement } from 'ui/types';
+import { TThemeColorVariant } from 'ui/theme/types';
+import { TCssProperties, TIconPlacement } from 'ui/types';
 
 export type FunctionGeneralIconDelegate = (props: IGeneralIconProperties, context?: any) => any
 
@@ -19,12 +18,12 @@ export interface IGeneralIconProperties
   /**
    * Цвет иконки (влияет только на векторные)
    */
-  iconColor?: TThemeColor;
+  iconColor?: TThemeColorVariant;
 
   /**
    * Стиль для отображения иконки
    */
-  iconStyle?: CSS.Properties;
+  iconStyle?: TCssProperties;
 
   /**
    * Местоположение иконки

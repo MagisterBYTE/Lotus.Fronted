@@ -424,6 +424,12 @@ export declare class Color {
      */
     toModifyAlpha(amount: number): Color;
     /**
+     * Вернуть этот же цвет, но с модифицированным альфа значением или текущий цвет
+     * @param amount Альфа значение от 0 до 1
+     * @returns {Color} new Color() instance
+     */
+    toModifyAlphaOrThis(amount?: number): Color;
+    /**
      * Returns the CSS string of the color, either as hex value, or rgba if an alpha value is defined
      *
      * @method toString

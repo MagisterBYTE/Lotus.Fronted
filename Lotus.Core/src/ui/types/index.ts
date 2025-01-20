@@ -2,6 +2,7 @@ export { TControlPaddings, type TControlPadding } from './ControlPadding';
 export { TControlSizes, type TControlSize } from './ControlSize';
 export {
   TCssBorderStyles,
+  type TCssProperties,
   type TCssAlignItems,
   type TCssBackgroundImage,
   type TCssBorderRadius,

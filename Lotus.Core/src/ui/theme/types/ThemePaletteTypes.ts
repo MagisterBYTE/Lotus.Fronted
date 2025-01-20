@@ -64,6 +64,15 @@ export interface IThemePaletteBorder
 }
 
 /**
+ * Тип цвета с точки зрения специализации его применения к структурной элемента UI
+ */
+export type TThemePaletteComponentStructuralPart = 
+  | 'element'         // Тип цвета берется из основного массива цветов 
+  | 'background'      // Для типа "primary" и "secondary" тип цвета берется из свойства background, для остальных типов из основного массива цветов 
+  | 'text'            // Для типа "primary" и "secondary" тип цвета берется из свойства text, для остальных типов из основного массива цветов 
+  | 'border';         // Для типа "primary" и "secondary" тип цвета берется из свойства border, для остальных типов из основного массива цветов 
+
+/**
  * Тип действий для модификации цвета для соответствующей темы
  */
 export type TThemePaletteActionType = 'active' | 'hover' | 'selected' | 'disabled' | 'focus';

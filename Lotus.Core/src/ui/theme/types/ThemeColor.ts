@@ -2,7 +2,7 @@ import { StringHelper } from 'helpers';
 import { IOption } from 'modules/option';
 
 /**
- * Тип цвета 
+ * Тип цвета темы
  */
 export type TThemeColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' |
  'blue' | 'blueGrey' | 'indigo' | 'green' | 'teal' | 'yellow' | 'amber' | 'red' | 'brown';
@@ -25,7 +25,7 @@ export const ThemeColorOptions:IOption[] = TThemeColors.map((x) =>
 })
 
 /**
- * Функция для проверки, является ли цвет типом цвета
+ * Функция для проверки, является ли цвет типом цвета темы
  * @param color Проверяемый цвет
  * @returns Статус проверки
  */

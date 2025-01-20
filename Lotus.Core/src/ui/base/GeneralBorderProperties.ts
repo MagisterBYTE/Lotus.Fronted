@@ -1,5 +1,5 @@
-import { TThemeColor } from 'ui/theme/types';
-import { TCssBorderStyle, TCssBorderWidth } from 'ui/types/CssTypes';
+import { TThemeColorVariant } from 'ui/theme/types';
+import { TCssBorderStyle, TCssBorderWidth } from 'ui/types';
 
 /**
  * Общие свойства для границы элемента UI
@@ -19,7 +19,7 @@ export interface IGeneralBorderProperties
   /**
    * Цвет границы
    */
-  borderColor?: TThemeColor;
+  borderColor?: TThemeColorVariant;
 }
 
 /**
@@ -29,7 +29,7 @@ export interface IGeneralBorderProperties
  * @param borderColor Цвет границы
  */
 export function hasBorderProperties(borderStyle?: TCssBorderStyle,
-  borderWidth?: TCssBorderWidth, borderColor?: TThemeColor): boolean 
+  borderWidth?: TCssBorderWidth, borderColor?: TThemeColorVariant): boolean 
 {
   return (!!borderStyle) || (!!borderWidth) || (!!borderColor)
 }

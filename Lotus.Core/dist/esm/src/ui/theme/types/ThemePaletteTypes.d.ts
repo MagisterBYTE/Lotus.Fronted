@@ -51,6 +51,10 @@ export interface IThemePaletteBorder {
     readonly disabledOpacity: number;
 }
 /**
+ * Тип цвета с точки зрения специализации его применения к структурной элемента UI
+ */
+export type TThemePaletteComponentStructuralPart = 'element' | 'background' | 'text' | 'border';
+/**
  * Тип действий для модификации цвета для соответствующей темы
  */
 export type TThemePaletteActionType = 'active' | 'hover' | 'selected' | 'disabled' | 'focus';
