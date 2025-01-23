@@ -3,5 +3,5 @@ import { TThemeColor } from './ThemeColor';
 /**
  * Вариант цвета темы
  */
-export type TThemeColorVariant = `${TThemeColor}${Capitalize<TColorVariantName>}`;
+export type TThemeColorVariant = `${TThemeColor}${Exclude<Capitalize<TColorVariantName>, 'Main'>}` | TThemeColor;
 export type TThemeColorVariantUndef = TThemeColorVariant | undefined;

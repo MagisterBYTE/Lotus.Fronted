@@ -1,5 +1,5 @@
-import { IGeneralTextProperties } from 'ui/base';
-import { TThemePaletteComponentStructuralPart, TThemeColorVariant, TThemePaletteActionType } from 'ui/theme';
+import { IGeneralTextProperties } from 'ui/base/GeneralTextProperties';
+import { TThemeColorVariant, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from 'ui/theme';
 import { TCssProperties } from 'ui/types';
 import { TInteractivityState } from './InteractivityState';
 export type TInteractivityTextType = 'default' | 'background';

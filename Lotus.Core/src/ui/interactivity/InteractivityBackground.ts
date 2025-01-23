@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IGeneralBackgroundProperties } from 'ui/base';
+import { ObjectHelper } from 'helpers';
+import { IGeneralBackgroundProperties } from 'ui/base/GeneralBackgroundProperties';
 import
 {
   ThemeColorVariantHelper, ThemePaletteHelper, TThemeColorVariant, TThemeColorVariantUndef,
   TThemePaletteActionType, TThemePaletteComponentStructuralPart
 } from 'ui/theme';
-import { ObjectHelper } from 'helpers';
 import { TCssProperties } from 'ui/types';
 import { TInteractivityState } from './InteractivityState';
+
 
 export type TInteractivityBackgroundType = 'initial' | 'none' | 'mandatory';
 
@@ -43,17 +44,17 @@ export class InteractivityBackgroundLogic
     {
       case 'normal':
         {
-          backProps.backgroundColor = ThemePaletteHelper.getColorByStructuralPart(part, backColor ?? 'primaryMain', actionType).toCSSRgbValue()
+          backProps.backgroundColor = ThemePaletteHelper.getColorByStructuralPart(part, backColor ?? 'primary', actionType).toCSSRgbValue()
         } break;
       case 'hover':
         {
           backProps.backgroundColor = ThemePaletteHelper.getColorByStructuralPart(part, hoverBackColor ??
-            ThemeColorVariantHelper.next(backColor ?? 'primaryMain', -2), actionType).toCSSRgbValue()
+            ThemeColorVariantHelper.next(backColor ?? 'primary', -2), actionType).toCSSRgbValue()
         } break;
       case 'pressed':
         {
           backProps.backgroundColor = ThemePaletteHelper.getColorByStructuralPart(part, pressedBackColor ??
-            ThemeColorVariantHelper.next(backColor ?? 'primaryMain', 2), actionType).toCSSRgbValue()
+            ThemeColorVariantHelper.next(backColor ?? 'primary', 2), actionType).toCSSRgbValue()
         } break;
     }
 

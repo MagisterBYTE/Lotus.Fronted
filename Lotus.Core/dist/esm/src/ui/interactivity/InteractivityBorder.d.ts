@@ -1,7 +1,6 @@
-import { TColorVariantName } from 'modules/color';
-import { IGeneralBorderProperties } from 'ui/base';
-import { TThemePaletteActionType, TThemePaletteComponentStructuralPart } from 'ui/theme';
+import { TThemeColorVariant, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from 'ui/theme';
 import { TCssProperties } from 'ui/types';
+import { IGeneralBorderProperties } from 'ui/base/GeneralBorderProperties';
 import { TInteractivityState } from './InteractivityState';
 export type TInteractivityBorderType = 'none' | 'maybe' | 'invisible' | 'mandatory';
 /**
@@ -11,11 +10,11 @@ export interface IInteractivityBorderProperties extends IGeneralBorderProperties
     /**
      * Цвет границы при наведении
      */
-    hoverBorderColor?: TColorVariantName;
+    hoverBorderColor?: TThemeColorVariant;
     /**
      * Цвет границы при нажатии
      */
-    pressedBorderColor?: TColorVariantName;
+    pressedBorderColor?: TThemeColorVariant;
 }
 export declare class InteractivityBorderLogic {
     static getEffectByState(element: any, state: TInteractivityState, part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties;

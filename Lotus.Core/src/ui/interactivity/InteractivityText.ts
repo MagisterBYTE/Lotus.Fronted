@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectHelper } from 'helpers';
-import { IGeneralTextProperties } from 'ui/base';
+import { IGeneralTextProperties } from 'ui/base/GeneralTextProperties';
 import
 {
-  TThemePaletteComponentStructuralPart, ThemePaletteHelper, TThemeColorVariant, TThemeColorVariantUndef,
-  TThemePaletteActionType, ThemeColorVariantHelper
+  TThemeColorVariant, TThemeColorVariantUndef,
+  TThemePaletteActionType,
+  TThemePaletteComponentStructuralPart,
+  ThemeColorVariantHelper,
+  ThemePaletteHelper
 } from 'ui/theme';
 import { TCssProperties } from 'ui/types';
 import { TInteractivityState } from './InteractivityState';
@@ -45,17 +48,17 @@ export class InteractivityTextLogic
     {
       case 'normal':
         {
-          textProps.color = ThemePaletteHelper.getColorByStructuralPart(part, textColor ?? backColor ?? 'primaryMain', actionType).toCSSRgbValue()
+          textProps.color = ThemePaletteHelper.getColorByStructuralPart(part, textColor ?? backColor ?? 'primary', actionType).toCSSRgbValue()
         } break;
       case 'hover':
         {
           textProps.color = ThemePaletteHelper.getColorByStructuralPart(part, hoverTextColor ??
-            ThemeColorVariantHelper.next(textColor ?? backColor ?? 'primaryMain', 2), actionType).toCSSRgbValue()
+            ThemeColorVariantHelper.next(textColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue()
         } break;
       case 'pressed':
         {
           textProps.color = ThemePaletteHelper.getColorByStructuralPart(part, pressedTextColor ??
-            ThemeColorVariantHelper.next(textColor ?? backColor ?? 'primaryMain', -2), actionType).toCSSRgbValue()
+            ThemeColorVariantHelper.next(textColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue()
         } break;
     }
 
@@ -90,7 +93,7 @@ export class InteractivityTextLogic
           }
           else
           {
-            target.color = ThemePaletteHelper.getPaletteColor(backColor ?? 'primaryMain')?.onText('main').toCSSRgbValue();
+            target.color = ThemePaletteHelper.getPaletteColor(backColor ?? 'primary')?.onText('main').toCSSRgbValue();
           }
         } break;
     }

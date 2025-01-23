@@ -1,4 +1,4 @@
-import { IGeneralElementProperties } from 'ui/base';
+import { IGeneralElementProperties } from 'ui/base/GeneralElementProperties';
 import { IInteractivityBackgroundProperties } from './InteractivityBackground';
 import { IInteractivityBorderProperties } from './InteractivityBorder';
 import { IInteractivityTextProperties } from './InteractivityText';

@@ -1,4 +1,4 @@
-import { IGeneralBackgroundProperties } from 'ui/base';
+import { IGeneralBackgroundProperties } from 'ui/base/GeneralBackgroundProperties';
 import { TThemeColorVariant, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from 'ui/theme';
 import { TCssProperties } from 'ui/types';
 import { TInteractivityState } from './InteractivityState';

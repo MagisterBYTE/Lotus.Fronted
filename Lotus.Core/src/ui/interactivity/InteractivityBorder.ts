@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ObjectHelper } from 'helpers';
-import { TColorVariantName } from 'modules/color';
-import { hasBorderProperties, IGeneralBorderProperties } from 'ui/base';
-import { ThemeColorVariantHelper, ThemePaletteHelper, TThemeColorVariantUndef, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from 'ui/theme';
+import { ObjectHelper } from 'helpers/ObjectHelper';
+import
+{
+  ThemeColorVariantHelper, ThemePaletteHelper, TThemeColorVariant,
+  TThemeColorVariantUndef, TThemePaletteActionType, TThemePaletteComponentStructuralPart
+} from 'ui/theme';
 import { TCssBorderStyle, TCssBorderWidth, TCssProperties } from 'ui/types';
+import { hasBorderProperties, IGeneralBorderProperties } from 'ui/base/GeneralBorderProperties';
 import { TInteractivityState } from './InteractivityState';
 
 export type TInteractivityBorderType =
@@ -20,12 +23,12 @@ export interface IInteractivityBorderProperties extends IGeneralBorderProperties
   /**
    * Цвет границы при наведении
    */
-  hoverBorderColor?: TColorVariantName;
+  hoverBorderColor?: TThemeColorVariant;
 
   /**
    * Цвет границы при нажатии
    */
-  pressedBorderColor?: TColorVariantName;
+  pressedBorderColor?: TThemeColorVariant;
 }
 
 export class InteractivityBorderLogic
@@ -44,17 +47,17 @@ export class InteractivityBorderLogic
     {
       case 'normal':
         {
-          borderProps.borderColor = ThemePaletteHelper.getColorByStructuralPart(part, borderColor ?? backColor ?? 'primaryMain', actionType).toCSSRgbValue()
+          borderProps.borderColor = ThemePaletteHelper.getColorByStructuralPart(part, borderColor ?? backColor ?? 'primary', actionType).toCSSRgbValue()
         } break;
       case 'hover':
         {
           borderProps.borderColor = ThemePaletteHelper.getColorByStructuralPart(part, hoverBorderColor ??
-            ThemeColorVariantHelper.next(borderColor ?? backColor ?? 'primaryMain', 2), actionType).toCSSRgbValue()
+            ThemeColorVariantHelper.next(borderColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue()
         } break;
       case 'pressed':
         {
           borderProps.borderColor = ThemePaletteHelper.getColorByStructuralPart(part, pressedBorderColor ??
-            ThemeColorVariantHelper.next(borderColor ?? backColor ?? 'primaryMain', -2), actionType).toCSSRgbValue()
+            ThemeColorVariantHelper.next(borderColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue()
         } break;
     }
 

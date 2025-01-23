@@ -5095,6 +5095,2283 @@ class Route {
 }
 
 /**
+ * Проверка на наличие любой свойства из границ элемента UI
+ * @param borderStyle Тип стиля границы
+ * @param borderWidth Ширина границы
+ * @param borderColor Цвет границы
+ */
+function hasBorderProperties(borderStyle, borderWidth, borderColor) {
+    return (!!borderStyle) || (!!borderWidth) || (!!borderColor);
+}
+/**
+ * Проверка на наличие любой свойства из границ элемента UI
+ * @param borderProps Общие свойства для границы элемента UI
+ */
+function hasBorderProps(borderProps) {
+    return (!!borderProps.borderStyle) || (!!borderProps.borderWidth) || (!!borderProps.borderColor);
+}
+
+/**
+ * Наборы типовых вариантов цвета
+ */
+class ThemeColorVariants {
+    static AntPrimary = new ColorVariants(new Color(230, 247, 255), // white
+    new Color(186, 234, 255), // palest
+    new Color(145, 213, 255), // pale
+    new Color(105, 192, 255), // lighter
+    new Color(24, 144, 255), // light
+    new Color(64, 169, 255), // main
+    new Color(9, 109, 217), // dark
+    new Color(0, 80, 179), // darker
+    new Color(0, 58, 140), // darkest
+    new Color(0, 39, 102) // black
+    );
+    static MuiBlue = new ColorVariants(new Color('#e3f2fd'), // white
+    new Color('#bbdefb'), // palest
+    new Color('#90caf9'), // pale
+    new Color('#64b5f6'), // lighter
+    new Color('#42a5f5'), // light
+    new Color('#2196f3'), // main
+    new Color('#1e88e5'), // dark
+    new Color('#1976d2'), // darker
+    new Color('#1565c0'), // darkest
+    new Color('#0d47a1') // black
+    );
+    static MuiBlueGrey = new ColorVariants(new Color('#eceff1'), // white
+    new Color('#cfd8dc'), // palest
+    new Color('#b0bec5'), // pale
+    new Color('#90a4ae'), // lighter
+    new Color('#78909c'), // light
+    new Color('#607d8b'), // main
+    new Color('#546e7a'), // dark
+    new Color('#455a64'), // darker
+    new Color('#37474f'), // darkest
+    new Color('#263238') // black
+    );
+    static MuiIndigo = new ColorVariants(new Color('#e8eaf6'), // white
+    new Color('#c5cae9'), // palest
+    new Color('#9fa8da'), // pale
+    new Color('#7986cb'), // lighter
+    new Color('#5c6bc0'), // light
+    new Color('#3f51b5'), // main
+    new Color('#3949ab'), // dark
+    new Color('#303f9f'), // darker
+    new Color('#283593'), // darkest
+    new Color('#1a237e') // black
+    );
+    static MuiGreen = new ColorVariants(new Color('#e8f5e9'), // white
+    new Color('#c8e6c9'), // palest
+    new Color('#a5d6a7'), // pale
+    new Color('#81c784'), // lighter
+    new Color('#66bb6a'), // light
+    new Color('#4caf50'), // main
+    new Color('#43a047'), // dark
+    new Color('#388e3c'), // darker
+    new Color('#2e7d32'), // darkest
+    new Color('#1b5e20') // black
+    );
+    static MuiTeal = new ColorVariants(new Color('#e0f2f1'), // white
+    new Color('#b2dfdb'), // palest
+    new Color('#80cbc4'), // pale
+    new Color('#4db6ac'), // lighter
+    new Color('#26a69a'), // light
+    new Color('#009688'), // main
+    new Color('#00897b'), // dark
+    new Color('#00796b'), // darker
+    new Color('#00695c'), // darkest
+    new Color('#004d40') // black
+    );
+    static MuiYellow = new ColorVariants(new Color('#fffde7'), // white
+    new Color('#fff9c4'), // palest
+    new Color('#fff59d'), // pale
+    new Color('#fff176'), // lighter
+    new Color('#ffee58'), // light
+    new Color('#ffeb3b'), // main
+    new Color('#fdd835'), // dark
+    new Color('#fbc02d'), // darker
+    new Color('#f9a825'), // darkest
+    new Color('#f57f17') // black
+    );
+    static MuiAmber = new ColorVariants(new Color('#fff8e1'), // white
+    new Color('#ffecb3'), // palest
+    new Color('#ffe082'), // pale
+    new Color('#ffd54f'), // lighter
+    new Color('#ffca28'), // light
+    new Color('#ffc107'), // main
+    new Color('#ffb300'), // dark
+    new Color('#ffa000'), // darker
+    new Color('#ff8f00'), // darkest
+    new Color('#ff6f00') // black
+    );
+    static MuiRed = new ColorVariants(new Color('#ffebee'), // white
+    new Color('#ffcdd2'), // palest
+    new Color('#ef9a9a'), // pale
+    new Color('#e57373'), // lighter
+    new Color('#ef5350'), // light
+    new Color('#f44336'), // main
+    new Color('#e53935'), // dark
+    new Color('#d32f2f'), // darker
+    new Color('#c62828'), // darkest
+    new Color('#b71c1c') // black
+    );
+    static MuiBrown = new ColorVariants(new Color('#efebe9'), // white
+    new Color('#d7ccc8'), // palest
+    new Color('#bcaaa4'), // pale
+    new Color('#a1887f'), // lighter
+    new Color('#8d6e63'), // light
+    new Color('#795548'), // main
+    new Color('#6d4c41'), // dark
+    new Color('#5d4037'), // darker
+    new Color('#4e342e'), // darkest
+    new Color('#3e2723') // black
+    );
+    static MuiGray = new ColorVariants(new Color('#fafafa'), // white
+    new Color('#f5f5f5'), // palest
+    new Color('#eeeeee'), // pale
+    new Color('#e0e0e0'), // lighter
+    new Color('#bdbdbd'), // light
+    new Color('#9e9e9e'), // main
+    new Color('#757575'), // dark
+    new Color('#616161'), // darker
+    new Color('#424242'), // darkest
+    new Color('#212121') // black
+    );
+}
+
+/**
+ * Наборы палитр тем
+ */
+class ThemeColorPalettes {
+    // #region Static methods
+    static getMuiBlueColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiBlue.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 5) ? Colors.black : Colors.white;
+        }
+    }
+    static getMuiBlueGreyColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiBlueGrey.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 5) ? Colors.black : Colors.white;
+        }
+    }
+    static getMuiIndigoColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiIndigo.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 3) ? Colors.black : Colors.white;
+        }
+    }
+    static getMuiGreenColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiGreen.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 6) ? Colors.black : Colors.white;
+        }
+    }
+    static getMuiTealColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiTeal.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 4) ? Colors.black : Colors.white;
+        }
+    }
+    static getMuiYellowColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiYellow.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return Colors.black;
+        }
+    }
+    static getMuiAmberColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiAmber.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return Colors.black;
+        }
+    }
+    static getMuiRedColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiRed.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 4) ? Colors.black : Colors.white;
+        }
+    }
+    static getMuiBrownColor(colorVariant, isHarmonious) {
+        if (isHarmonious) {
+            return ThemeColorVariants.MuiBrown.getByName(colorVariant).createHarmoniousColor();
+        }
+        else {
+            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 3) ? Colors.black : Colors.white;
+        }
+    }
+    // #endregion
+    static Palettes = {
+        'light': {
+            mode: 'light',
+            text: {
+                primary: new Color('rgba(0, 0, 0, 0.87)'),
+                secondary: new Color('rgba(0, 0, 0, 0.6)'),
+                disabledOpacity: 0.38
+            },
+            background: {
+                default: new Color('#fff'),
+                secondary: new Color('#fff'),
+                disabledOpacity: 0.12
+            },
+            border: {
+                primary: new Color('rgba(0, 0, 0, 0.25)'),
+                secondary: new Color('rgba(0, 0, 0, 0.4)'),
+                disabledOpacity: 0.26
+            },
+            action: {
+                activatedOpacity: 0.12,
+                hoverOpacity: 0.1,
+                selectedOpacity: 0.08,
+                disabledOpacity: 0.38,
+                focusOpacity: 0.12
+            },
+            colors: {
+                'primary': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#1976d2', '#42a5f5', '#1565c0'),
+                    onText: () => Colors.white
+                },
+                'secondary': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#9c27b0', '#ba68c8', '#7b1fa2'),
+                    onText: () => Colors.white
+                },
+                'error': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#d32f2f', '#ef5350', '#c62828'),
+                    onText: () => Colors.white
+                },
+                'warning': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#ed6c02', '#ff9800', '#e65100'),
+                    onText: () => Colors.white
+                },
+                'info': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#0288d1', '#03a9f4', '#01579b'),
+                    onText: () => Colors.white
+                },
+                'success': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#2e7d32', '#4caf50', '#1b5e20'),
+                    onText: () => Colors.white
+                },
+                'blue': {
+                    variants: ThemeColorVariants.MuiBlue,
+                    onText: ThemeColorPalettes.getMuiBlueColor
+                },
+                'blueGrey': {
+                    variants: ThemeColorVariants.MuiBlueGrey,
+                    onText: ThemeColorPalettes.getMuiBlueGreyColor
+                },
+                'indigo': {
+                    variants: ThemeColorVariants.MuiIndigo,
+                    onText: ThemeColorPalettes.getMuiIndigoColor
+                },
+                'green': {
+                    variants: ThemeColorVariants.MuiGreen,
+                    onText: ThemeColorPalettes.getMuiGreenColor
+                },
+                'teal': {
+                    variants: ThemeColorVariants.MuiTeal,
+                    onText: ThemeColorPalettes.getMuiTealColor
+                },
+                'yellow': {
+                    variants: ThemeColorVariants.MuiYellow,
+                    onText: ThemeColorPalettes.getMuiYellowColor
+                },
+                'amber': {
+                    variants: ThemeColorVariants.MuiAmber,
+                    onText: ThemeColorPalettes.getMuiAmberColor
+                },
+                'red': {
+                    variants: ThemeColorVariants.MuiRed,
+                    onText: ThemeColorPalettes.getMuiRedColor
+                },
+                'brown': {
+                    variants: ThemeColorVariants.MuiBrown,
+                    onText: ThemeColorPalettes.getMuiBrownColor
+                }
+            }
+        },
+        'dark': {
+            mode: 'dark',
+            text: {
+                primary: new Color('rgba(255, 255, 255, 0.9)'),
+                secondary: new Color('rgba(255, 255, 255, 0.7)'),
+                disabledOpacity: 0.5
+            },
+            background: {
+                default: new Color('#121212'),
+                secondary: new Color('#121212'),
+                disabledOpacity: 0.12
+            },
+            border: {
+                primary: new Color('rgba(255, 255, 255, 0.25)'),
+                secondary: new Color('rgba(255, 255, 255, 0.4)'),
+                disabledOpacity: 0.26
+            },
+            action: {
+                activatedOpacity: 0.12,
+                hoverOpacity: 0.1,
+                selectedOpacity: 0.16,
+                disabledOpacity: 0.3,
+                focusOpacity: 0.12
+            },
+            colors: {
+                'primary': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#90caf9', '#e3f2fd', '#42a5f5'),
+                    onText: () => new Color('rgba(0, 0, 0, 0.87)')
+                },
+                'secondary': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#ce93d8', '#f3e5f5', '#ab47bc'),
+                    onText: () => new Color('rgba(0, 0, 0, 0.87)')
+                },
+                'error': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#f44336', '#e57373', '#d32f2f'),
+                    onText: () => Colors.white
+                },
+                'warning': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#ffa726', '#ffb74d', '#f57c00'),
+                    onText: () => new Color('rgba(0, 0, 0, 0.87)')
+                },
+                'info': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#29b6f6', '#4fc3f7', '#4fc3f7'),
+                    onText: () => new Color('rgba(0, 0, 0, 0.87)')
+                },
+                'success': {
+                    variants: ColorVariants.createFromColorRelativeLightness('#66bb6a', '#81c784', '#388e3c'),
+                    onText: () => new Color('rgba(0, 0, 0, 0.87)')
+                },
+                'blue': {
+                    variants: ThemeColorVariants.MuiBlue,
+                    onText: ThemeColorPalettes.getMuiBlueColor
+                },
+                'blueGrey': {
+                    variants: ThemeColorVariants.MuiBlueGrey,
+                    onText: ThemeColorPalettes.getMuiBlueGreyColor
+                },
+                'indigo': {
+                    variants: ThemeColorVariants.MuiIndigo,
+                    onText: ThemeColorPalettes.getMuiIndigoColor
+                },
+                'green': {
+                    variants: ThemeColorVariants.MuiGreen,
+                    onText: ThemeColorPalettes.getMuiGreenColor
+                },
+                'teal': {
+                    variants: ThemeColorVariants.MuiTeal,
+                    onText: ThemeColorPalettes.getMuiTealColor
+                },
+                'yellow': {
+                    variants: ThemeColorVariants.MuiYellow,
+                    onText: ThemeColorPalettes.getMuiYellowColor
+                },
+                'amber': {
+                    variants: ThemeColorVariants.MuiAmber,
+                    onText: ThemeColorPalettes.getMuiAmberColor
+                },
+                'red': {
+                    variants: ThemeColorVariants.MuiRed,
+                    onText: ThemeColorPalettes.getMuiRedColor
+                },
+                'brown': {
+                    variants: ThemeColorVariants.MuiBrown,
+                    onText: ThemeColorPalettes.getMuiBrownColor
+                }
+            }
+        }
+    };
+}
+
+/**
+ * Набор констант для темы
+ */
+class ThemeConstant {
+    // #region Const 
+    /**
+     * Ключ под которым сохраняется тема сайта
+     */
+    static SaveKey = 'lotus-theme';
+    /**
+     * Названия атрибута в документа под которым сохраняется тема сайта
+     */
+    static DataAttributeThemeMode = 'data-theme';
+    /**
+     * Названия атрибута в документа под которым сохраняется цвет темы сайта
+     */
+    static DataAttributeThemeColor = 'data-color';
+    /**
+     * Шрифт по умолчанию
+     */
+    static FontDefault = 'Verdana, Geneva, Tahoma, sans-serif';
+    /**
+     * Шрифт для акцента
+     */
+    static FontAccent = 'Arial, Helvetica, sans-serif';
+    /**
+     * Скорость переходов анимации/состояния, в миллисекундах
+     */
+    static TransitionSpeed = 400;
+    /**
+     * Скорость переходов анимации/состояния, в миллисекундах
+     */
+    static TransitionSpeedFast = 250;
+    /**
+     * Прозрачность тени для границы элементов UI которые при наведении
+     */
+    static OpacityForBorderShadowHover = 0.2;
+    /**
+     * Прозрачность тени для границы элементов UI которые при активном состоянии
+     */
+    static OpacityForBorderShadowActive = 0.4;
+}
+
+/**
+ * Тема приложения
+ */
+class Theme {
+    // #region Static properties
+    static _currentPalette;
+    static _currentColor;
+    /**
+     * Получить текущую палитру цвета
+     */
+    static get currentPalette() {
+        if (Theme._currentPalette)
+            return Theme._currentPalette;
+        return ThemeColorPalettes.Palettes['light'];
+    }
+    /**
+     * Установить текущую палитру цвета
+     */
+    static set currentPalette(palette) {
+        Theme._currentPalette = palette;
+    }
+    /**
+     * Получить основной цвет
+     */
+    static get currentColor() {
+        if (Theme._currentColor)
+            return Theme._currentColor;
+        return 'blue';
+    }
+    /**
+     * Установить основной цвет
+     */
+    static set currentColor(themeColor) {
+        Theme._currentColor = themeColor;
+    }
+}
+
+/**
+ * Массив типов цветов
+ */
+const TThemeColors = ['primary', 'secondary', 'error', 'warning', 'info', 'success',
+    'blue', 'blueGrey', 'indigo', 'green', 'teal', 'yellow', 'amber', 'brown'];
+/**
+ * Набор типов цветов в виде опций
+ */
+const ThemeColorOptions = TThemeColors.map((x) => {
+    return {
+        text: StringHelper.capitalizeFirstLetter(x),
+        value: x
+    };
+});
+/**
+ * Функция для проверки, является ли цвет типом цвета темы
+ * @param color Проверяемый цвет
+ * @returns Статус проверки
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function checkOfThemeColor(color) {
+    return TThemeColors.includes(color);
+}
+
+/**
+ * Массив режимов тем
+ */
+const TThemeModes = ['light', 'dark'];
+/**
+ * Набор режимов тем в виде опций
+ */
+const ThemeModeOptions = TThemeModes.map((x) => {
+    return {
+        text: StringHelper.capitalizeFirstLetter(x),
+        value: x
+    };
+});
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+class ThemeColorVariantHelper {
+    /**
+     * Функция для проверки, является ли цвет вариантом цвета темы
+     * @param color Проверяемый цвет
+     * @returns Статус проверки
+     */
+    static checkOf(color) {
+        if (typeof color == 'string') {
+            for (let index = color.length - 1; index >= 0; index--) {
+                const c = color[index];
+                if (c == c.toUpperCase()) {
+                    const themeColor = color.substring(0, index);
+                    const colorVariant = StringHelper.lowercaseFirstLetter(color.substring(index));
+                    return checkOfThemeColor(themeColor) && checkOfColorVariantName(colorVariant);
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * Создание вариант цвета темы
+     * @param color Тип цвета темы
+     * @param colorVariant Именованный тип в вариативности цветов
+     * @returns Вариант цвета темы
+     */
+    static create(color, colorVariant) {
+        if (colorVariant == 'main')
+            return color;
+        return `${color}${StringHelper.capitalizeFirstLetter(colorVariant)}`;
+    }
+    /**
+     * Деконструкция варианта цвета темы в тип цвета темы и именованный тип в вариативности цветов
+     * @param color Вариант цвета темы
+     * @returns Тип цвета темы и именованный тип в вариативности цветов
+     */
+    static deconstruction(color) {
+        if (typeof color == 'string') {
+            if (checkOfThemeColor(color))
+                return { themeColor: color, colorVariant: 'main' };
+            for (let index = color.length - 1; index >= 0; index--) {
+                const c = color[index];
+                if (c == c.toUpperCase()) {
+                    const themeColor = color.substring(0, index);
+                    const colorVariant = StringHelper.lowercaseFirstLetter(color.substring(index));
+                    if (checkOfThemeColor(themeColor) && checkOfColorVariantName(colorVariant)) {
+                        return {
+                            themeColor: themeColor,
+                            colorVariant: colorVariant
+                        };
+                    }
+                }
+            }
+        }
+        // eslint-disable-next-line consistent-return
+        return undefined;
+    }
+    /**
+     * Получить варианта цвета темы смещенный на указанную величину
+     * @param color Вариант цвета темы
+     * @returns Смещенный варианта цвета
+     */
+    static next(color, delta) {
+        if (typeof color == 'string') {
+            for (let index = color.length - 1; index >= 0; index--) {
+                const c = color[index];
+                if (c == c.toUpperCase()) {
+                    const themeColor = color.substring(0, index);
+                    const colorVariant = StringHelper.lowercaseFirstLetter(color.substring(index));
+                    if (checkOfThemeColor(themeColor) && checkOfColorVariantName(colorVariant)) {
+                        const colorVariantNext = ColorVariantsHelper.getNextIndex(ColorVariantsHelper.getIndexByName(colorVariant), delta);
+                        return ThemeColorVariantHelper.create(themeColor, ColorVariantsHelper.getNameByIndex(colorVariantNext));
+                    }
+                }
+            }
+        }
+        return color;
+    }
+}
+
+class ThemePaletteHelper {
+    /**
+     * Получить степень прозрачности
+     * @param actionType Тип действия
+     */
+    static getOpacity(actionType) {
+        let opacity = undefined;
+        if (actionType) {
+            switch (actionType) {
+                case 'active':
+                    opacity = Theme.currentPalette.action.activatedOpacity;
+                    break;
+                case 'hover':
+                    opacity = Theme.currentPalette.action.hoverOpacity;
+                    break;
+                case 'selected':
+                    opacity = Theme.currentPalette.action.selectedOpacity;
+                    break;
+                case 'disabled':
+                    opacity = Theme.currentPalette.action.disabledOpacity;
+                    break;
+                case 'focus':
+                    opacity = Theme.currentPalette.action.focusOpacity;
+                    break;
+            }
+        }
+        return opacity;
+    }
+    /**
+     * Получить палитру цвета
+     * @param color Вариант цвета темы
+     */
+    static getPaletteColor(color) {
+        const colorData = ThemeColorVariantHelper.deconstruction(color);
+        if (!colorData)
+            return;
+        const palette = Theme.currentPalette.colors[colorData.themeColor];
+        // eslint-disable-next-line consistent-return
+        return palette;
+    }
+    /**
+     * Получить цвет текущей темы
+     * @param color Вариант цвета темы
+     * @param actionType Тип действия
+     * @returns Цвет
+     */
+    static getElementColor(color, actionType) {
+        const colorData = ThemeColorVariantHelper.deconstruction(color);
+        if (!colorData)
+            return Colors.red;
+        const palette = Theme.currentPalette.colors[colorData.themeColor];
+        return palette.variants.getByName(colorData.colorVariant, ThemePaletteHelper.getOpacity(actionType));
+    }
+    /**
+     * Получить цвет текста текущей темы
+     * @param color Вариант цвета темы
+     * @param allColor Если True то будет браться не только основной или дополнительный цвет
+     * @param actionType Тип действия
+     * @returns Цвет
+     */
+    static getTextColor(color, allColor, actionType) {
+        const colorData = ThemeColorVariantHelper.deconstruction(color);
+        if (!colorData)
+            return Colors.red;
+        let opacity = undefined;
+        if (actionType) {
+            switch (actionType) {
+                case 'active':
+                    opacity = Theme.currentPalette.action.activatedOpacity;
+                    break;
+                case 'hover':
+                    opacity = Theme.currentPalette.action.hoverOpacity;
+                    break;
+                case 'selected':
+                    opacity = Theme.currentPalette.action.selectedOpacity;
+                    break;
+                case 'disabled':
+                    opacity = Theme.currentPalette.text.disabledOpacity;
+                    break;
+                case 'focus':
+                    opacity = Theme.currentPalette.action.focusOpacity;
+                    break;
+            }
+        }
+        if (allColor) {
+            if (colorData.themeColor !== 'primary' && colorData.themeColor !== 'secondary') {
+                const palette = Theme.currentPalette.colors[colorData.themeColor];
+                return palette.variants.getByName(colorData.colorVariant, opacity);
+            }
+        }
+        if (colorData.themeColor == 'primary') {
+            return Theme.currentPalette.text.primary.toModifyAlphaOrThis(opacity);
+        }
+        else {
+            return Theme.currentPalette.text.secondary.toModifyAlphaOrThis(opacity);
+        }
+    }
+    /**
+     * Получить цвет фона текущей темы
+     * @param color Вариант цвета темы
+     * @param allColor Если True то будет браться не только основной или дополнительный цвет
+     * @param actionType Тип действия
+     * @returns Цвет
+     */
+    static getBackgroundColor(color, allColor, actionType) {
+        const colorData = ThemeColorVariantHelper.deconstruction(color);
+        if (!colorData)
+            return Colors.red;
+        let opacity = undefined;
+        if (actionType) {
+            switch (actionType) {
+                case 'active':
+                    opacity = Theme.currentPalette.action.activatedOpacity;
+                    break;
+                case 'hover':
+                    opacity = Theme.currentPalette.action.hoverOpacity;
+                    break;
+                case 'selected':
+                    opacity = Theme.currentPalette.action.selectedOpacity;
+                    break;
+                case 'disabled':
+                    opacity = Theme.currentPalette.background.disabledOpacity;
+                    break;
+                case 'focus':
+                    opacity = Theme.currentPalette.action.focusOpacity;
+                    break;
+            }
+        }
+        if (allColor) {
+            if (colorData.themeColor !== 'primary' && colorData.themeColor !== 'secondary') {
+                const palette = Theme.currentPalette.colors[colorData.themeColor];
+                return palette.variants.getByName(colorData.colorVariant, opacity);
+            }
+        }
+        if (colorData.themeColor == 'primary') {
+            return Theme.currentPalette.background.default.toModifyAlphaOrThis(opacity);
+        }
+        else {
+            return Theme.currentPalette.background.secondary.toModifyAlphaOrThis(opacity);
+        }
+    }
+    /**
+     * Получить цвет границы текущей темы
+     * @param color Вариант цвета темы
+     * @param allColor Если True то будет браться не только основной или дополнительный цвет
+     * @param actionType Тип действия
+     * @returns Цвет
+     */
+    static getBorderColor(color, allColor, actionType) {
+        const colorData = ThemeColorVariantHelper.deconstruction(color);
+        if (!colorData)
+            return Colors.red;
+        let opacity = undefined;
+        if (actionType) {
+            switch (actionType) {
+                case 'active':
+                    opacity = Theme.currentPalette.action.activatedOpacity;
+                    break;
+                case 'hover':
+                    opacity = Theme.currentPalette.action.hoverOpacity;
+                    break;
+                case 'selected':
+                    opacity = Theme.currentPalette.action.selectedOpacity;
+                    break;
+                case 'disabled':
+                    opacity = Theme.currentPalette.border.disabledOpacity;
+                    break;
+                case 'focus':
+                    opacity = Theme.currentPalette.action.focusOpacity;
+                    break;
+            }
+        }
+        if (allColor) {
+            if (colorData.themeColor !== 'primary' && colorData.themeColor !== 'secondary') {
+                const palette = Theme.currentPalette.colors[colorData.themeColor];
+                return palette.variants.getByName(colorData.colorVariant, opacity);
+            }
+        }
+        if (colorData.themeColor == 'primary') {
+            return Theme.currentPalette.border.primary.toModifyAlphaOrThis(opacity);
+        }
+        else {
+            return Theme.currentPalette.border.secondary.toModifyAlphaOrThis(opacity);
+        }
+    }
+    /**
+     * Получить цвет текущей темы для указанной структурной части элемента
+     * @param part Структурная часть UI
+     * @param color Вариант цвета темы
+     * @param actionType Тип действия
+     * @returns Цвет
+     */
+    static getColorByStructuralPart(part, color, actionType) {
+        switch (part) {
+            case 'element': return ThemePaletteHelper.getElementColor(color, actionType);
+            case 'background': return ThemePaletteHelper.getBackgroundColor(color, true, actionType);
+            case 'text': return ThemePaletteHelper.getTextColor(color, true, actionType);
+            case 'border': return ThemePaletteHelper.getBorderColor(color, true, actionType);
+        }
+        return Colors.red;
+    }
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+class InteractivityBackgroundLogic {
+    static getEffectByState(element, state, part, actionType) {
+        const backProps = {};
+        const backColor = ObjectHelper.getValueByPropertyPath(element, 'backColor');
+        const hoverBackColor = ObjectHelper.getValueByPropertyPath(element, 'hoverBackColor');
+        const pressedBackColor = ObjectHelper.getValueByPropertyPath(element, 'pressedBackColor');
+        switch (state) {
+            case 'normal':
+                {
+                    backProps.backgroundColor = ThemePaletteHelper.getColorByStructuralPart(part, backColor ?? 'primary', actionType).toCSSRgbValue();
+                }
+                break;
+            case 'hover':
+                {
+                    backProps.backgroundColor = ThemePaletteHelper.getColorByStructuralPart(part, hoverBackColor ??
+                        ThemeColorVariantHelper.next(backColor ?? 'primary', -2), actionType).toCSSRgbValue();
+                }
+                break;
+            case 'pressed':
+                {
+                    backProps.backgroundColor = ThemePaletteHelper.getColorByStructuralPart(part, pressedBackColor ??
+                        ThemeColorVariantHelper.next(backColor ?? 'primary', 2), actionType).toCSSRgbValue();
+                }
+                break;
+        }
+        return backProps;
+    }
+    static getProperties(element, type, state, part, actionType) {
+        const backProps = {};
+        return InteractivityBackgroundLogic.fillProperties(backProps, element, type, state, part, actionType);
+    }
+    static fillProperties(target, element, type, state, part, actionType) {
+        switch (type) {
+            case 'initial':
+                {
+                    target.backgroundColor = 'initial';
+                }
+                break;
+            case 'none':
+                {
+                    target.backgroundColor = 'transparent';
+                }
+                break;
+            case 'mandatory':
+                {
+                    target.backgroundColor = InteractivityBackgroundLogic.getEffectByState(element, state, part, actionType).backgroundColor;
+                }
+                break;
+        }
+        return target;
+    }
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+class InteractivityBorderLogic {
+    static getEffectByState(element, state, part, actionType) {
+        const borderProps = {};
+        const backColor = ObjectHelper.getValueByPropertyPath(element, 'backColor');
+        const borderColor = ObjectHelper.getValueByPropertyPath(element, 'borderColor');
+        const hoverBorderColor = ObjectHelper.getValueByPropertyPath(element, 'hoverBorderColor');
+        const pressedBorderColor = ObjectHelper.getValueByPropertyPath(element, 'pressedBorderColor');
+        switch (state) {
+            case 'normal':
+                {
+                    borderProps.borderColor = ThemePaletteHelper.getColorByStructuralPart(part, borderColor ?? backColor ?? 'primary', actionType).toCSSRgbValue();
+                }
+                break;
+            case 'hover':
+                {
+                    borderProps.borderColor = ThemePaletteHelper.getColorByStructuralPart(part, hoverBorderColor ??
+                        ThemeColorVariantHelper.next(borderColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue();
+                }
+                break;
+            case 'pressed':
+                {
+                    borderProps.borderColor = ThemePaletteHelper.getColorByStructuralPart(part, pressedBorderColor ??
+                        ThemeColorVariantHelper.next(borderColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue();
+                }
+                break;
+        }
+        return borderProps;
+    }
+    static getProperties(element, type, state, part, actionType) {
+        const borderProps = {};
+        return InteractivityBorderLogic.fillProperties(borderProps, element, type, state, part, actionType);
+    }
+    static fillProperties(target, element, type, state, part, actionType) {
+        const borderStyle = ObjectHelper.getValueByPropertyPath(element, 'borderStyle');
+        const borderWidth = ObjectHelper.getValueByPropertyPath(element, 'borderWidth');
+        const borderColor = ObjectHelper.getValueByPropertyPath(element, 'borderColor');
+        switch (type) {
+            // Границы нет
+            case 'none':
+                {
+                    target.border = 'none';
+                    target.borderColor = 'transparent';
+                }
+                break;
+            // Граница может быть
+            case 'maybe':
+                {
+                    if (hasBorderProperties(borderStyle, borderWidth, borderColor)) {
+                        target.borderWidth = borderWidth ?? '1px';
+                        target.borderStyle = borderStyle ?? 'solid';
+                        target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, part, actionType).borderColor;
+                    }
+                    else {
+                        target.border = 'none';
+                        target.borderColor = 'transparent';
+                    }
+                }
+                break;
+            // Граница не видна
+            case 'invisible':
+                {
+                    target.borderColor = 'transparent';
+                    target.borderWidth = borderWidth ?? '1px';
+                }
+                break;
+            // Граница обязательна
+            case 'mandatory':
+                {
+                    target.borderWidth = borderWidth ?? '1px';
+                    target.borderStyle = borderStyle ?? 'solid';
+                    target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, part, actionType).borderColor;
+                }
+                break;
+        }
+        return target;
+    }
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+class InteractivityTextLogic {
+    static getEffectByState(element, state, part, actionType) {
+        const textProps = {};
+        const backColor = ObjectHelper.getValueByPropertyPath(element, 'backColor');
+        const textColor = ObjectHelper.getValueByPropertyPath(element, 'textColor');
+        const hoverTextColor = ObjectHelper.getValueByPropertyPath(element, 'hoverTextColor');
+        const pressedTextColor = ObjectHelper.getValueByPropertyPath(element, 'pressedTextColor');
+        switch (state) {
+            case 'normal':
+                {
+                    textProps.color = ThemePaletteHelper.getColorByStructuralPart(part, textColor ?? backColor ?? 'primary', actionType).toCSSRgbValue();
+                }
+                break;
+            case 'hover':
+                {
+                    textProps.color = ThemePaletteHelper.getColorByStructuralPart(part, hoverTextColor ??
+                        ThemeColorVariantHelper.next(textColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue();
+                }
+                break;
+            case 'pressed':
+                {
+                    textProps.color = ThemePaletteHelper.getColorByStructuralPart(part, pressedTextColor ??
+                        ThemeColorVariantHelper.next(textColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue();
+                }
+                break;
+        }
+        return textProps;
+    }
+    static getProperties(element, type, state, part, actionType) {
+        const textProps = {};
+        return InteractivityTextLogic.fillProperties(textProps, element, type, state, part, actionType);
+    }
+    static fillProperties(target, element, type, state, part, actionType) {
+        const backColor = ObjectHelper.getValueByPropertyPath(element, 'backColor');
+        const textColor = ObjectHelper.getValueByPropertyPath(element, 'textColor');
+        switch (type) {
+            case 'default':
+                {
+                    target.color = InteractivityTextLogic.getEffectByState(element, state, part, actionType).color;
+                }
+                break;
+            case 'background':
+                {
+                    if (textColor) {
+                        target.color = InteractivityTextLogic.getEffectByState(element, state, part, actionType).color;
+                    }
+                    else {
+                        target.color = ThemePaletteHelper.getPaletteColor(backColor ?? 'primary')?.onText('main').toCSSRgbValue();
+                    }
+                }
+                break;
+        }
+        return target;
+    }
+}
+
+/**
+ * Логика применения визуальных эффектов к элементу UI в зависимости от модель применения и состояния интерактивности элемента
+ */
+class InteractivityLogic {
+    /**
+     * Получить визуальный эффекты для фона элемента UI
+     * @param model Модель применения визуальных эффектов к элементу UI
+     * @param state Состояние интерактивности элемента UI
+     * @param elem Интерактивный элемент
+     * @param isSelected Контекст элемента UI для применения визуального эффекта
+     * @returns Свойства CSSProperties
+     */
+    static getEffectProps(model, state, element, context) {
+        const isSelected = Boolean(context?.isSelected);
+        Boolean(context?.isDisabled);
+        Boolean(context?.isFocused);
+        Boolean(context?.hasRippleEffect);
+        const effectProps = {};
+        switch (model) {
+            case 'filled':
+                {
+                    switch (state) {
+                        case 'normal':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'normal', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'background', 'normal', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'maybe', 'normal', 'element');
+                            }
+                            break;
+                        case 'hover':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'hover', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'background', 'hover', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'maybe', 'hover', 'element');
+                            }
+                            break;
+                        case 'pressed':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'pressed', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'background', 'pressed', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'maybe', 'pressed', 'element');
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 'outline':
+                {
+                    switch (state) {
+                        case 'normal':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'none', 'normal', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'normal', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'mandatory', 'normal', 'element');
+                            }
+                            break;
+                        case 'hover':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'hover', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'background', 'hover', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'mandatory', 'hover', 'element');
+                            }
+                            break;
+                        case 'pressed':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'pressed', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'background', 'pressed', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'mandatory', 'pressed', 'element');
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 'text':
+                {
+                    switch (state) {
+                        case 'normal':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'none', 'normal', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'normal', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'normal', 'element');
+                            }
+                            break;
+                        case 'hover':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'hover', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'hover', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'hover', 'element');
+                            }
+                            break;
+                        case 'pressed':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'pressed', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'pressed', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'pressed', 'element');
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 'icon':
+                {
+                    switch (state) {
+                        case 'normal':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'none', 'normal', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'normal', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'invisible', 'normal', 'element');
+                            }
+                            break;
+                        case 'hover':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'hover', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'hover', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'mandatory', 'hover', 'element');
+                            }
+                            break;
+                        case 'pressed':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'pressed', 'element');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'background', 'pressed', 'element');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'mandatory', 'pressed', 'element');
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 'menu':
+            case 'input':
+                {
+                    switch (state) {
+                        case 'normal':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'initial', 'normal', 'background');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'normal', 'text');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'mandatory', 'normal', 'border');
+                            }
+                            break;
+                        case 'hover':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'initial', 'hover', 'background');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'hover', 'text');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'mandatory', 'hover', 'border');
+                            }
+                            break;
+                        case 'pressed':
+                            {
+                                InteractivityBackgroundLogic.fillProperties(effectProps, model, 'initial', 'pressed', 'background');
+                                InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'pressed', 'text');
+                                InteractivityBorderLogic.fillProperties(effectProps, model, 'mandatory', 'pressed', 'border');
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 'list':
+                {
+                    switch (state) {
+                        case 'normal':
+                            {
+                                if (isSelected) {
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'normal', 'background');
+                                    InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'normal', 'text');
+                                    InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'normal', 'border');
+                                }
+                                else {
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, model, 'initial', 'normal', 'background');
+                                    InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'normal', 'text');
+                                    InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'normal', 'border');
+                                }
+                            }
+                            break;
+                        case 'hover':
+                            {
+                                if (isSelected) {
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'hover', 'background');
+                                    InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'hover', 'text');
+                                    InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'hover', 'border');
+                                }
+                                else {
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, model, 'initial', 'hover', 'background');
+                                    InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'hover', 'text');
+                                    InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'hover', 'border');
+                                }
+                            }
+                            break;
+                        case 'pressed':
+                            {
+                                if (isSelected) {
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, model, 'mandatory', 'pressed', 'background');
+                                    InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'pressed', 'text');
+                                    InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'pressed', 'border');
+                                }
+                                else {
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, model, 'initial', 'pressed', 'background');
+                                    InteractivityTextLogic.fillProperties(effectProps, model, 'default', 'pressed', 'text');
+                                    InteractivityBorderLogic.fillProperties(effectProps, model, 'none', 'pressed', 'border');
+                                }
+                            }
+                            break;
+                    }
+                }
+                break;
+        }
+        return effectProps;
+    }
+}
+
+class CssSizerHelper {
+    // #region Padding And Size
+    /**
+     * Получить свойства CSS по внутреннему отступу в виде TCssProperties
+     * @param size Размере элемента UI
+     * @param paddingControl Внутренний отступ
+     * @param leftRight Тип отступа слева/справа
+     * @param topBottom Тип отступа сверху/снизу
+     * @returns Свойства CSS по внутреннему отступу в виде TCssProperties
+     */
+    static getPaddingProps(size, paddingControl, leftRight, topBottom) {
+        const paddingProps = {};
+        switch (size) {
+            case 'smaller':
+                {
+                    switch (paddingControl) {
+                        case 'minimum':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.06rem';
+                                    paddingProps.paddingBottom = '0.08rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.06rem';
+                                    paddingProps.paddingBottom = '0.08rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.06rem';
+                                    paddingProps.paddingRight = '0.06rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.06rem';
+                                    paddingProps.paddingRight = '0.06rem';
+                                }
+                            }
+                            break;
+                        case 'normal':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.15rem';
+                                    paddingProps.paddingBottom = '0.15rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.1rem';
+                                    paddingProps.paddingBottom = '0.15rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.15rem';
+                                    paddingProps.paddingRight = '0.15rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.1rem';
+                                    paddingProps.paddingRight = '0.1rem';
+                                }
+                            }
+                            break;
+                        case 'enlarged':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.25rem';
+                                    paddingProps.paddingBottom = '0.25rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.15rem';
+                                    paddingProps.paddingBottom = '0.15rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.25rem';
+                                    paddingProps.paddingRight = '0.25rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.15rem';
+                                    paddingProps.paddingRight = '0.15rem';
+                                }
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 'small':
+                {
+                    switch (paddingControl) {
+                        case 'minimum':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.12rem';
+                                    paddingProps.paddingBottom = '0.12rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.08rem';
+                                    paddingProps.paddingBottom = '0.1rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.12rem';
+                                    paddingProps.paddingRight = '0.12rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.08rem';
+                                    paddingProps.paddingRight = '0.08rem';
+                                }
+                            }
+                            break;
+                        case 'normal':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.25rem';
+                                    paddingProps.paddingBottom = '0.25rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.15rem';
+                                    paddingProps.paddingBottom = '0.175rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.25rem';
+                                    paddingProps.paddingRight = '0.25rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.15rem';
+                                    paddingProps.paddingRight = '0.15rem';
+                                }
+                            }
+                            break;
+                        case 'enlarged':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.4rem';
+                                    paddingProps.paddingBottom = '0.4rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.2rem';
+                                    paddingProps.paddingBottom = '0.25rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.4rem';
+                                    paddingProps.paddingRight = '0.4rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.2rem';
+                                    paddingProps.paddingRight = '0.2rem';
+                                }
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 'medium':
+                {
+                    switch (paddingControl) {
+                        case 'minimum':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.25rem';
+                                    paddingProps.paddingBottom = '0.25rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.13rem';
+                                    paddingProps.paddingBottom = '0.13rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.25rem';
+                                    paddingProps.paddingRight = '0.25rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.13rem';
+                                    paddingProps.paddingRight = '0.13rem';
+                                }
+                            }
+                            break;
+                        case 'normal':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.375rem';
+                                    paddingProps.paddingBottom = '0.375rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.2rem';
+                                    paddingProps.paddingBottom = '0.2rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.375rem';
+                                    paddingProps.paddingRight = '0.375rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.2rem';
+                                    paddingProps.paddingRight = '0.2rem';
+                                }
+                            }
+                            break;
+                        case 'enlarged':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.55rem';
+                                    paddingProps.paddingBottom = '0.55rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.28rem';
+                                    paddingProps.paddingBottom = '0.28rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.55rem';
+                                    paddingProps.paddingRight = '0.55rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.28rem';
+                                    paddingProps.paddingRight = '0.28rem';
+                                }
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 'large':
+                {
+                    switch (paddingControl) {
+                        case 'minimum':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.5rem';
+                                    paddingProps.paddingBottom = '0.5rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.25rem';
+                                    paddingProps.paddingBottom = '0.25rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.5rem';
+                                    paddingProps.paddingRight = '0.5rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.25rem';
+                                    paddingProps.paddingRight = '0.25rem';
+                                }
+                            }
+                            break;
+                        case 'normal':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '0.75rem';
+                                    paddingProps.paddingBottom = '0.75rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.375rem';
+                                    paddingProps.paddingBottom = '0.375rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '0.75rem';
+                                    paddingProps.paddingRight = '0.75rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.375rem';
+                                    paddingProps.paddingRight = '0.375rem';
+                                }
+                            }
+                            break;
+                        case 'enlarged':
+                            {
+                                if (topBottom == 'normal') {
+                                    paddingProps.paddingTop = '1.0rem';
+                                    paddingProps.paddingBottom = '1.0rem';
+                                }
+                                if (topBottom == 'half') {
+                                    paddingProps.paddingTop = '0.5rem';
+                                    paddingProps.paddingBottom = '0.5rem';
+                                }
+                                if (leftRight == 'normal') {
+                                    paddingProps.paddingLeft = '1.0rem';
+                                    paddingProps.paddingRight = '1.0rem';
+                                }
+                                if (leftRight == 'half') {
+                                    paddingProps.paddingLeft = '0.5rem';
+                                    paddingProps.paddingRight = '0.5rem';
+                                }
+                            }
+                            break;
+                    }
+                }
+                break;
+        }
+        return paddingProps;
+    }
+    /**
+     * Конвертация размера элемента UI в высоту в пикселях
+     * @param size Размере элемента UI
+     * @param paddingControl Размер отступов элемента UI
+     * @param topBottom Режим отступов по высоте элемента UI
+     * @param lineHeight Коэффициент высоты строки
+     * @returns Соответствующий размер высоты в пикселях
+     */
+    static getSizeProps(size, paddingControl, topBottom, lineHeight) {
+        const result = CssSizerHelper.convertControlSizeToHeightRem(size, paddingControl, topBottom);
+        if (lineHeight) {
+            return {
+                width: `${result * 16 * lineHeight}px`,
+                height: `${result * 16 * lineHeight}px`
+            };
+        }
+        else {
+            return {
+                width: `${result * 16}px`,
+                height: `${result * 16}px`
+            };
+        }
+    }
+    // #endregion
+    /**
+     * Конвертация размера элемента UI в высоту в rem
+     * @param size Размере элемента UI
+     * @param paddingControl Размер отступов элемента UI
+     * @param topBottom Режим отступов по высоте элемента UI
+     * @returns Соответствующий размер высоты в rem
+     */
+    static convertControlSizeToHeightRem(size, paddingControl, topBottom) {
+        let result = 0;
+        if (size) {
+            switch (size) {
+                case 'smaller':
+                    result = 10 / 16;
+                    break;
+                case 'small':
+                    result = 13 / 16;
+                    break;
+                case 'medium':
+                    result = 1;
+                    break;
+                case 'large':
+                    result = 19 / 16;
+                    break;
+            }
+        }
+        const css = CssSizerHelper.getPaddingProps(size, paddingControl, 'normal', topBottom);
+        if (css.paddingTop)
+            result += NumberHelper.parseFloat(css.paddingTop);
+        if (css.paddingBottom)
+            result += NumberHelper.parseFloat(css.paddingBottom);
+        return result;
+    }
+    /**
+     * Конвертация размера элемента UI в высоту в пикселях
+     * @param size Размере элемента UI
+     * @param paddingControl Размер отступов элемента UI
+     * @param topBottom Режим отступов по высоте элемента UI
+     * @param lineHeight Коэффициент высоты строки
+     * @returns Соответствующий размер высоты в пикселях
+     */
+    static convertControlSizeToHeightPixel(size, paddingControl, topBottom, lineHeight) {
+        const result = CssSizerHelper.convertControlSizeToHeightRem(size, paddingControl, topBottom);
+        if (lineHeight) {
+            return result * 16 * lineHeight;
+        }
+        else {
+            return result * 16;
+        }
+    }
+    /**
+     * Конвертация размера элемента UI в соответствующий размер иконки в rem
+     * @param size Размере элемента UI
+     * @returns Соответствующий размер иконки в rem
+     */
+    static convertControlSizeToIconSizeInRem(size) {
+        if (size) {
+            switch (size) {
+                case 'smaller': return 10 / 16 * 1.5;
+                case 'small': return 13 / 16 * 1.5;
+                case 'medium': return 1.5;
+                case 'large': return 19 / 16 * 1.5;
+            }
+        }
+        return 1.5;
+    }
+    /**
+     * Конвертация размера элемента UI в соответствующий размер иконки в пикселях
+     * @param size Размере элемента UI
+     * @returns Соответствующий размер иконки в пикселях
+     */
+    static convertControlSizeToIconSizeInPixel(size) {
+        if (size) {
+            switch (size) {
+                case 'smaller': return 10 * 1.5;
+                case 'small': return 13 * 1.5;
+                case 'medium': return 16 * 1.5;
+                case 'large': return 19 * 1.5;
+            }
+        }
+        return 16 * 1.5;
+    }
+}
+
+class CssPropertiesHelper {
+    // #region Font
+    /**
+     * Получить свойства CSS по настройкам шрифта в виде TCssProperties
+     * @param size Размере элемента UI
+     * @param isBold Жирный шрифт
+     * @param isFontAccent  Использовать шрифт для акцента внимания
+     * @returns Свойства CSS по настройкам шрифта в виде TCssProperties
+     */
+    static getFontProps(size, isBold, isFontAccent) {
+        const fontProps = {};
+        if (isFontAccent) {
+            fontProps.fontFamily = ThemeConstant.FontDefault;
+        }
+        else {
+            fontProps.fontFamily = ThemeConstant.FontAccent;
+        }
+        if (size) {
+            switch (size) {
+                case 'smaller':
+                    fontProps.fontSize = 'x-small';
+                    break;
+                case 'small':
+                    fontProps.fontSize = 'small';
+                    break;
+                case 'medium':
+                    fontProps.fontSize = 'medium';
+                    break;
+                case 'large':
+                    fontProps.fontSize = 'large';
+                    break;
+            }
+        }
+        if (isBold) {
+            fontProps.fontWeight = 'bold';
+        }
+        return fontProps;
+    }
+    // #endregion
+    // #region TextEffect
+    /**
+     * Получить свойства CSS по эффектам текста в виде TCssProperties
+     * @param size Размере элемента UI
+     * @param effect Эффекты текста
+     * @param textAlign Выравнивание текста по горизонтали внутри блока
+     * @returns Свойства CSS по эффектам текста в виде TCssProperties
+     */
+    static getTextEffectProps(size, effect, textAlign) {
+        const textProps = {};
+        const getSizeShadow = () => {
+            if (size) {
+                switch (size) {
+                    case 'smaller': return 0.05;
+                    case 'small': return 0.07;
+                    case 'medium': return 0.085;
+                    case 'large': return 0.1;
+                }
+            }
+            return 0.07;
+        };
+        const getSizeStroke = () => {
+            if (size) {
+                switch (size) {
+                    case 'smaller': return 0.4;
+                    case 'small': return 0.5;
+                    case 'medium': return 0.7;
+                    case 'large': return 1;
+                }
+            }
+            return 0.5;
+        };
+        if (effect) {
+            switch (effect) {
+                case 'shadow':
+                    {
+                        const sizeShadow = getSizeShadow();
+                        textProps.textShadow = `${sizeShadow}rem ${sizeShadow}rem 0 rgba(0, 0, 0, 0.15)`;
+                    }
+                    break;
+                case 'stroke':
+                    {
+                        const sizeStroke = getSizeStroke();
+                        textProps.WebkitTextStroke = `${sizeStroke}px black`;
+                    }
+                    break;
+            }
+        }
+        if (textAlign) {
+            textProps.textAlign = textAlign;
+        }
+        return textProps;
+    }
+    // #endregion
+    // #region Border
+    /**
+     * Получить свойства CSS по радиусу границе в виде TCssProperties
+     * @param size Размер элемента UI для получения оптимального радиуса
+     * @param borderRadius Радиус скругления или статус того что его надо вычислить
+     * @returns Свойства CSS по радиусу границе в виде TCssProperties
+     */
+    static getBorderRadiusProps(size, borderRadius) {
+        const getBorderRadius = () => {
+            let rem = 0.4;
+            switch (size) {
+                case 'smaller':
+                    {
+                        rem = 0.2;
+                    }
+                    break;
+                case 'small':
+                    {
+                        rem = 0.25;
+                    }
+                    break;
+                case 'medium':
+                    {
+                        rem = 0.375;
+                    }
+                    break;
+                case 'large':
+                    {
+                        rem = 0.5;
+                    }
+                    break;
+            }
+            return `${rem}rem`;
+        };
+        if (borderRadius) {
+            if (typeof borderRadius === 'boolean') {
+                return { borderRadius: getBorderRadius() };
+            }
+            else {
+                return { borderRadius: borderRadius };
+            }
+        }
+        return {};
+    }
+    /**
+     * Получить свойства CSS по индивидуальному радиусу границе в виде TCssProperties
+     * @param size Размер элемента UI для получения оптимального радиуса
+     * @param borderRadius Радиус скругления или статус того что его надо вычислить
+     * @param isTopLeft Скругление верхнего левого угла
+     * @param isTopRight Скругление верхнего правого угла
+     * @param isBottomLeft Скругление нижнего левого угла
+     * @param isBottomRight Скругление нижнего правого угла
+     * @returns
+     */
+    static getBorderRadiusIndividualProps(size, borderRadius, isTopLeft, isTopRight, isBottomLeft, isBottomRight) {
+        const getBorderRadius = () => {
+            let rem = 0.4;
+            switch (size) {
+                case 'smaller':
+                    {
+                        rem = 0.2;
+                    }
+                    break;
+                case 'small':
+                    {
+                        rem = 0.25;
+                    }
+                    break;
+                case 'medium':
+                    {
+                        rem = 0.375;
+                    }
+                    break;
+                case 'large':
+                    {
+                        rem = 0.5;
+                    }
+                    break;
+            }
+            return `${rem}rem`;
+        };
+        const borderProps = {
+            borderRadius: 'undefined'
+        };
+        if (borderRadius) {
+            if (typeof borderRadius === 'boolean') {
+                if (isTopLeft)
+                    borderProps.borderTopLeftRadius = getBorderRadius();
+                if (isTopRight)
+                    borderProps.borderTopRightRadius = getBorderRadius();
+                if (isBottomLeft)
+                    borderProps.borderBottomLeftRadius = getBorderRadius();
+                if (isBottomRight)
+                    borderProps.borderBottomRightRadius = getBorderRadius();
+            }
+            else {
+                if (isTopLeft)
+                    borderProps.borderTopLeftRadius = borderRadius;
+                if (isTopRight)
+                    borderProps.borderTopRightRadius = borderRadius;
+                if (isBottomLeft)
+                    borderProps.borderBottomLeftRadius = borderRadius;
+                if (isBottomRight)
+                    borderProps.borderBottomRightRadius = borderRadius;
+            }
+        }
+        return borderProps;
+    }
+    /**
+     * Получить свойства CSS по границе в виде TCssProperties
+     * @param size Размер элемента UI для получения оптимального радиуса
+     * @param borderStyle Стиль границ
+     * @param borderWidth Ширина границ
+     * @param borderColor Цвет границ
+     * @returns Свойства CSS по границе в виде TCssProperties
+     */
+    static getBorderStyleProps(size, borderStyle, borderWidth, borderColor) {
+        if (hasBorderProperties(borderStyle, borderWidth, borderColor) == false) {
+            return { border: 'none' };
+        }
+        const getBorderWidth = () => {
+            let pixel = 1;
+            switch (size) {
+                case 'smaller':
+                    {
+                        pixel = 1;
+                    }
+                    break;
+                case 'small':
+                    {
+                        pixel = 1;
+                    }
+                    break;
+                case 'medium':
+                    {
+                        if (borderStyle === 'solid' || borderStyle === undefined)
+                            pixel = 1;
+                        else
+                            pixel = 3;
+                    }
+                    break;
+                case 'large':
+                    {
+                        if (borderStyle === 'solid' || borderStyle === undefined)
+                            pixel = 2;
+                        else
+                            pixel = 3;
+                    }
+                    break;
+            }
+            return `${pixel}px`;
+        };
+        const borderProps = {
+            borderWidth: borderWidth ?? getBorderWidth(),
+            borderStyle: borderStyle ?? 'solid'
+        };
+        return borderProps;
+    }
+    /**
+     * Получить свойства CSS по индивидуальной границе в виде TCssProperties
+     * @param size Размер элемента UI для получения оптимального радиуса
+     * @param borderStyle Стиль границ
+     * @param borderWidth Ширина границ
+     * @param borderColor Цвет границ
+     * @returns Свойства CSS по индивидуальной границе в виде TCssProperties
+     */
+    static getBorderStyleIndividualProps(size, borderStyle, borderWidth, borderColor, isLeft, isTop, isRight, isBottom) {
+        if (hasBorderProperties(borderStyle, borderWidth, borderColor) == false) {
+            return { border: 'none' };
+        }
+        const getBorderWidth = () => {
+            let pixel = 1;
+            switch (size) {
+                case 'smaller':
+                    {
+                        pixel = 1;
+                    }
+                    break;
+                case 'small':
+                    {
+                        pixel = 1;
+                    }
+                    break;
+                case 'medium':
+                    {
+                        if (borderStyle === 'solid' || borderStyle === undefined)
+                            pixel = 1;
+                        else
+                            pixel = 3;
+                    }
+                    break;
+                case 'large':
+                    {
+                        if (borderStyle === 'solid' || borderStyle === undefined)
+                            pixel = 2;
+                        else
+                            pixel = 3;
+                    }
+                    break;
+            }
+            return `${pixel}px`;
+        };
+        const borderProps = {};
+        if (isLeft) {
+            borderProps.borderLeftWidth = borderWidth ?? getBorderWidth();
+            borderProps.borderLeftStyle = borderStyle ?? 'solid';
+        }
+        if (isTop) {
+            borderProps.borderTopWidth = borderWidth ?? getBorderWidth();
+            borderProps.borderTopStyle = borderStyle ?? 'solid';
+        }
+        if (isRight) {
+            borderProps.borderRightWidth = borderWidth ?? getBorderWidth();
+            borderProps.borderRightStyle = borderStyle ?? 'solid';
+        }
+        if (isBottom) {
+            borderProps.borderBottomWidth = borderWidth ?? getBorderWidth();
+            borderProps.borderBottomStyle = borderStyle ?? 'solid';
+        }
+        return borderProps;
+    }
+    // #endregion
+    // #endregion
+    // #region BorderShadow
+    /**
+     * Получить свойства CSS по тени для границы в виде TCssProperties
+     * @param elevation Относительный размер тени
+     * @param color Цвет
+     * @param shadowAlpha Альфа компонент цвета для тени
+     * @returns Свойства CSS по тени для границы в виде TCssProperties
+     */
+    static getBorderShadowProps(elevation, color, shadowAlpha) {
+        const colorShadow = ThemePaletteHelper.getElementColor(color ?? 'primaryBlack');
+        return { boxShadow: `0px 0px ${elevation}px ${elevation}px ${colorShadow.toCSSRgbValue(shadowAlpha)}` };
+    }
+    // #endregion
+    // #region TransitionColors
+    /**
+     * Получить свойства CSS по переходу цвета и тени в виде TCssProperties
+     * @returns Свойства CSS по переходу цвета и тени в виде TCssProperties
+     */
+    static getTransitionColorsProps() {
+        return {
+            transition: `background-color ${ThemeConstant.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    box-shadow ${ThemeConstant.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    border-color ${ThemeConstant.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    color ${ThemeConstant.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1);`
+        };
+    }
+    // #endregion
+    // #region BoxShadow
+    /**
+     * Получить свойства CSS по тени в виде TCssProperties
+     * @param elevation Относительный размер тени
+     * @param color Цвет
+     * @param colorVariant Вариант цвета
+     * @returns Свойства CSS по тени в виде TCssProperties
+     */
+    static getBoxShadowProps(elevation, color) {
+        const colorShadow = ThemePaletteHelper.getElementColor(color ?? 'primaryBlack');
+        const rgba02 = colorShadow.toCSSRgbValue(0.2);
+        const rgba014 = colorShadow.toCSSRgbValue(0.14);
+        const rgba012 = colorShadow.toCSSRgbValue(0.12);
+        let boxShadowValue = '';
+        switch (elevation) {
+            case 1:
+                boxShadowValue = `0px 2px 1px -1px ${rgba02},0px 1px 1px 0px ${rgba014},0px 1px 3px 0px ${rgba012}`;
+                break;
+            case 2:
+                boxShadowValue = `0px 3px 1px -2px ${rgba02},0px 2px 2px 0px ${rgba014},0px 1px 5px 0px ${rgba012}`;
+                break;
+            case 3:
+                boxShadowValue = `0px 3px 3px -2px ${rgba02},0px 3px 4px 0px ${rgba014},0px 1px 8px 0px ${rgba012}`;
+                break;
+            case 4:
+                boxShadowValue = `0px 2px 4px -1px ${rgba02},0px 4px 5px 0px ${rgba014},0px 1px 10px 0px ${rgba012}`;
+                break;
+            case 5:
+                boxShadowValue = `0px 3px 5px -1px ${rgba02},0px 5px 8px 0px ${rgba014},0px 1px 14px 0px ${rgba012}`;
+                break;
+            case 6:
+                boxShadowValue = `0px 3px 5px -1px ${rgba02},0px 6px 10px 0px ${rgba014},0px 1px 18px 0px ${rgba012}`;
+                break;
+            case 7:
+                boxShadowValue = `0px 4px 5px -2px ${rgba02},0px 7px 10px 1px ${rgba014},0px 2px 16px 1px ${rgba012}`;
+                break;
+            case 8:
+                boxShadowValue = `0px 5px 5px -3px ${rgba02},0px 8px 10px 1px ${rgba014},0px 3px 14px 2px ${rgba012}`;
+                break;
+            case 9:
+                boxShadowValue = `0px 5px 6px -3px ${rgba02},0px 9px 12px 1px ${rgba014},0px 3px 16px 2px ${rgba012}`;
+                break;
+            case 10:
+                boxShadowValue = `0px 6px 6px -3px ${rgba02},0px 10px 14px 1px ${rgba014},0px 4px 18px 3px ${rgba012}`;
+                break;
+            case 11:
+                boxShadowValue = `0px 6px 7px -4px ${rgba02},0px 11px 15px 1px ${rgba014},0px 4px 20px 3px ${rgba012}`;
+                break;
+            case 12:
+                boxShadowValue = `0px 7px 8px -4px ${rgba02},0px 12px 17px 2px ${rgba014},0px 5px 22px 4px ${rgba012}`;
+                break;
+            case 13:
+                boxShadowValue = `0px 7px 8px -4px ${rgba02},0px 13px 19px 2px ${rgba014},0px 5px 24px 4px ${rgba012}`;
+                break;
+            case 14:
+                boxShadowValue = `0px 7px 9px -4px ${rgba02},0px 14px 21px 2px ${rgba014},0px 5px 26px 4px ${rgba012}`;
+                break;
+            case 15:
+                boxShadowValue = `0px 8px 9px -5px ${rgba02},0px 15px 22px 2px ${rgba014},0px 6px 28px 5px ${rgba012}`;
+                break;
+            case 16:
+                boxShadowValue = `0px 8px 10px -5px ${rgba02},0px 16px 24px 2px ${rgba014},0px 6px 30px 5px ${rgba012}`;
+                break;
+            case 17:
+                boxShadowValue = `0px 8px 11px -5px ${rgba02},0px 17px 26px 2px ${rgba014},0px 6px 32px 5px ${rgba012}`;
+                break;
+            case 18:
+                boxShadowValue = `0px 9px 11px -5px ${rgba02},0px 18px 28px 2px ${rgba014},0px 7px 34px 6px ${rgba012}`;
+                break;
+            case 19:
+                boxShadowValue = `0px 9px 12px -6px ${rgba02},0px 19px 29px 2px ${rgba014},0px 7px 36px 6px ${rgba012}`;
+                break;
+            case 20:
+                boxShadowValue = `0px 10px 13px -6px ${rgba02},0px 20px 31px 3px ${rgba014},0px 8px 38px 7px ${rgba012}`;
+                break;
+            case 21:
+                boxShadowValue = `0px 10px 13px -6px ${rgba02},0px 21px 33px 3px ${rgba014},0px 8px 40px 7px ${rgba012}`;
+                break;
+            case 22:
+                boxShadowValue = `0px 10px 14px -6px ${rgba02},0px 22px 35px 3px ${rgba014},0px 8px 42px 7px ${rgba012}`;
+                break;
+            case 23:
+                boxShadowValue = `0px 11px 14px -7px ${rgba02},0px 23px 36px 3px ${rgba014},0px 9px 44px 8px ${rgba012}`;
+                break;
+            case 24:
+                boxShadowValue = `0px 11px 15px -7px ${rgba02},0px 24px 38px 3px ${rgba014},0px 9px 46px 8px ${rgba012}`;
+                break;
+        }
+        return { boxShadow: boxShadowValue };
+    }
+    // #endregion
+    // #region TransformScale
+    /**
+     * Получить свойства CSS по трансформации масштабирования в виде TCssProperties
+     * @param scale Масштаб
+     * @returns Свойства CSS трансформации масштабирования в виде TCssProperties
+     */
+    static getTransformScaleProps(scale) {
+        if (scale) {
+            return { transform: `scale(${scale});` };
+        }
+        return {};
+    }
+}
+
+class CssPropertiesBuilder {
+    static buildElement(props, context) {
+        // Element
+        const borderRadius = ObjectHelper.getValueByPropertyPath(props, 'borderRadius');
+        const size = ObjectHelper.getValueByPropertyPath(props, 'size');
+        const paddingControl = ObjectHelper.getValueByPropertyPath(props, 'paddingControl');
+        // Text
+        const fontBold = ObjectHelper.getValueByPropertyPath(props, 'fontBold');
+        const fontAccent = ObjectHelper.getValueByPropertyPath(props, 'fontAccent');
+        const textEffect = ObjectHelper.getValueByPropertyPath(props, 'textEffect');
+        const textAlign = ObjectHelper.getValueByPropertyPath(props, 'textAlign');
+        // Status
+        Boolean(props.disabled || props.isDisabled);
+        Boolean(props.isSelected || context?.isSelected);
+        // Settings
+        const leftRight = ((context && context.leftRight) ? context.leftRight : 'normal');
+        const topBottom = ((context && context.topBottom) ? context.topBottom : 'half');
+        const isBorderRadiusIndividual = context && (context.isBottomLeft ?? context.isBottomRight ?? context.isTopLeft ?? context.isTopRight);
+        return {
+            // Element
+            ...CssSizerHelper.getPaddingProps(size, paddingControl, leftRight, topBottom),
+            ...(isBorderRadiusIndividual
+                ? CssPropertiesHelper.getBorderRadiusIndividualProps(size, borderRadius, context?.isTopLeft, context?.isTopRight, context?.isBottomLeft, context?.isBottomRight)
+                : CssPropertiesHelper.getBorderRadiusProps(size, borderRadius)),
+            // Text
+            ...CssPropertiesHelper.getFontProps(size, fontBold, fontAccent),
+            ...CssPropertiesHelper.getTextEffectProps(size, textEffect, textAlign)
+        };
+    }
+    static buildInteractivityElement(model, props, context) {
+        // Status
+        const isDisabled = Boolean(props.disabled || props.isDisabled);
+        const isSelected = Boolean(context?.isSelected || props.isSelected);
+        // Background
+        const backColor = ObjectHelper.getValueByPropertyPath(props, 'backColor');
+        // BackgroundEffect
+        const hasRippleEffect = Boolean(ObjectHelper.getValueByPropertyPath(props, 'hasRippleEffect'));
+        const hasScaleEffect = Boolean(ObjectHelper.getValueByPropertyPath(props, 'hasScaleEffect'));
+        const hasShadowBorderEffect = Boolean(ObjectHelper.getValueByPropertyPath(props, 'hasShadowBorderEffect'));
+        const hasShadowBoxEffect = Boolean(ObjectHelper.getValueByPropertyPath(props, 'hasShadowBoxEffect'));
+        const effectContext = {
+            isDisabled: isDisabled,
+            isSelected: isSelected,
+            hasRippleEffect: hasRippleEffect
+        };
+        return {
+            ...CssPropertiesBuilder.buildElement(props, context),
+            ...CssPropertiesHelper.getTransitionColorsProps(),
+            ...InteractivityLogic.getEffectProps(model, 'normal', props, effectContext),
+            ...((!isDisabled && hasShadowBoxEffect) ? CssPropertiesHelper.getBoxShadowProps(isSelected ? 8 : 2, backColor) : {}),
+            ...((!isDisabled && hasShadowBorderEffect && isSelected) ? CssPropertiesHelper.getBorderShadowProps(6, backColor, ThemeConstant.OpacityForBorderShadowActive) : {}),
+            ...((!isDisabled && hasScaleEffect && isSelected) ? CssPropertiesHelper.getTransformScaleProps(1.2) : {}),
+            // @ts-expect-error IInteractivityBackgroundEffect 
+            '&:hover': {
+                ...InteractivityLogic.getEffectProps(model, 'hover', props, effectContext),
+                ...((!isDisabled && hasShadowBorderEffect && !isSelected) ? CssPropertiesHelper.getBorderShadowProps(4, backColor, ThemeConstant.OpacityForBorderShadowHover) : {}),
+                ...((!isDisabled && hasShadowBoxEffect && !isSelected) ? CssPropertiesHelper.getBoxShadowProps(4, backColor) : {}),
+                ...((!isDisabled && hasScaleEffect && !isSelected) ? CssPropertiesHelper.getTransformScaleProps(1.05) : {})
+            },
+            '&:active': {
+                ...InteractivityLogic.getEffectProps(model, 'pressed', props, effectContext),
+                ...((!isDisabled && hasShadowBorderEffect) ? CssPropertiesHelper.getBorderShadowProps(6, backColor, ThemeConstant.OpacityForBorderShadowActive) : {}),
+                ...((!isDisabled && hasShadowBoxEffect) ? CssPropertiesHelper.getBoxShadowProps(8, backColor) : {}),
+                ...((!isDisabled && hasScaleEffect && !isSelected) ? CssPropertiesHelper.getTransformScaleProps(0.95) : {})
+            },
+            '&:checked': {
+                ...InteractivityLogic.getEffectProps(model, 'normal', props, effectContext),
+                ...((!isDisabled && hasShadowBorderEffect) ? CssPropertiesHelper.getBorderShadowProps(6, backColor, ThemeConstant.OpacityForBorderShadowActive) : {}),
+                ...((!isDisabled && hasShadowBoxEffect) ? CssPropertiesHelper.getBoxShadowProps(8, backColor) : {}),
+                ...((!isDisabled && hasScaleEffect) ? CssPropertiesHelper.getTransformScaleProps(1.2) : {})
+            },
+            '&:disabled': {
+                ...InteractivityLogic.getEffectProps(model, 'normal', props, effectContext)
+            }
+        };
+    }
+}
+
+class CssContainerHelper {
+    // #region FlexRowContainer
+    /**
+     * Получить оптимальный размер пространства между элементами по горизонтали для Flex контейнера
+     * @param size Размер элемента
+     * @param paddingControl Внутренний отступ
+     * @returns Размер пространства в rem
+     */
+    static getColumnGapFromSizeInRem(size, paddingControl) {
+        switch (size) {
+            case 'smaller':
+                {
+                    switch (paddingControl) {
+                        case 'minimum': return 0.12;
+                        case 'normal': return 0.15;
+                        case 'enlarged': return 0.2;
+                    }
+                }
+                break;
+            case 'small':
+                {
+                    switch (paddingControl) {
+                        case 'minimum': return 0.15;
+                        case 'normal': return 0.2;
+                        case 'enlarged': return 0.25;
+                    }
+                }
+                break;
+            case 'medium':
+                {
+                    switch (paddingControl) {
+                        case 'minimum': return 0.25;
+                        case 'normal': return 0.3;
+                        case 'enlarged': return 0.375;
+                    }
+                }
+                break;
+            case 'large':
+                {
+                    switch (paddingControl) {
+                        case 'minimum': return 0.2;
+                        case 'normal': return 0.35;
+                        case 'enlarged': return 0.45;
+                    }
+                }
+                break;
+        }
+        return 0.3;
+    }
+    /**
+     * Получить оптимальные настройки Flex контейнера по горизонтали в виде TCssProperties
+     * @param size Размер элемента
+     * @param paddingControl Внутренний отступ
+     * @param isReverse Обратный порядок элементов
+     * @param horizontalAlign Распределение элементов по ширине
+     * @param verticalAlign Выравнивание элементов по вертикали
+     * @returns Настройки Flex контейнера в виде TCssProperties
+     */
+    static getFlexRowContainer(size, paddingControl, isReverse = false, horizontalAlign = 'flex-start', verticalAlign = 'center') {
+        return {
+            display: 'flex',
+            flexDirection: isReverse ? 'row-reverse' : 'row',
+            justifyContent: horizontalAlign,
+            alignItems: verticalAlign,
+            columnGap: `${CssContainerHelper.getColumnGapFromSizeInRem(size, paddingControl)}rem`
+        };
+    }
+    // #endregion
+    // #region FlexColumnContainer
+    /**
+     * Получить оптимальный размер пространства между элементами по вертикали для Flex контейнера
+     * @param size Размер элемента
+     * @param paddingControl Внутренний отступ
+     * @returns Размер пространства в rem
+     */
+    static getRowGapFromSizeInRem(size, paddingControl) {
+        switch (size) {
+            case 'smaller':
+                {
+                    switch (paddingControl) {
+                        case 'minimum': return 0.24;
+                        case 'normal': return 0.3;
+                        case 'enlarged': return 0.4;
+                    }
+                }
+                break;
+            case 'small':
+                {
+                    switch (paddingControl) {
+                        case 'minimum': return 0.3;
+                        case 'normal': return 0.4;
+                        case 'enlarged': return 0.5;
+                    }
+                }
+                break;
+            case 'medium':
+                {
+                    switch (paddingControl) {
+                        case 'minimum': return 0.5;
+                        case 'normal': return 0.6;
+                        case 'enlarged': return 0.75;
+                    }
+                }
+                break;
+            case 'large':
+                {
+                    switch (paddingControl) {
+                        case 'minimum': return 0.4;
+                        case 'normal': return 0.7;
+                        case 'enlarged': return 0.9;
+                    }
+                }
+                break;
+        }
+        return 0.6;
+    }
+    /**
+     * Получить оптимальные настройки Flex контейнера по вертикали в виде TCssProperties
+     * @param size Размер элемента
+     * @param paddingControl Внутренний отступ
+     * @param isReverse Обратный порядок элементов
+     * @param verticalAlign Распределение элементов по высоте
+     * @param horizontalAlign Выравнивание элементов по горизонтали
+     * @returns Настройки Flex контейнера в виде TCssProperties
+     */
+    static getFlexColumnContainer(size, paddingControl, isReverse = false, verticalAlign = 'flex-start', horizontalAlign = 'center') {
+        return {
+            display: 'flex',
+            flexDirection: isReverse ? 'column-reverse' : 'column',
+            justifyContent: verticalAlign,
+            alignItems: horizontalAlign,
+            rowGap: `${CssContainerHelper.getRowGapFromSizeInRem(size, paddingControl)}rem`
+        };
+    }
+    // #endregion
+    /**
+     * Получить оптимальные настройки Flex контейнера для расположения иконки
+     * @param iconPlacement Вариант размещения иконки
+     * @param size Размер элемента
+     * @param paddingControl Внутренний отступ
+     * @returns Настройки Flex контейнера в виде TCssProperties
+     */
+    static getFlexContainerByIcon(iconPlacement, size, paddingControl) {
+        switch (iconPlacement) {
+            case 'left': return CssContainerHelper.getFlexRowContainer(size, paddingControl);
+            case 'right': return CssContainerHelper.getFlexRowContainer(size, paddingControl, true);
+            case 'top': return CssContainerHelper.getFlexColumnContainer(size, paddingControl);
+            case 'bottom': return CssContainerHelper.getFlexColumnContainer(size, paddingControl, true);
+        }
+        return {};
+    }
+}
+
+const TControlPaddings = ['minimum', 'normal', 'enlarged'];
+
+const TControlSizes = ['smaller', 'small', 'medium', 'large'];
+
+const TCssBorderStyles = ['solid', 'inset', 'outset', 'double', 'groove', 'ridge', 'dotted'];
+
+const TIconPlacements = ['left', 'right', 'top', 'bottom'];
+
+const TShadowElevations = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+
+const TTextEffects = ['shadow', 'stroke', 'glow'];
+
+/**
  *
  * @param timeoutInMs
  * @returns
@@ -5103,4 +7380,4 @@ function sleep(timeoutInMs) {
     return new Promise((resolve) => setTimeout(resolve, timeoutInMs));
 }
 
-export { ApiService, ArrayHelper, Assert, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariants, ColorVariantsHelper, Colors, CommandService, CommandServiceClass, CookiesHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionDescriptors, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfo, OptionHelper, PathHelper, PropertyTypeDescriptors, RandomHelper, RequestHelper, Route, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfColorVariantName, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };
+export { ApiService, ArrayHelper, Assert, BaseCommand, BooleanHelper, BrowserHelper, Color, ColorHelper, ColorNames, ColorVariants, ColorVariantsHelper, Colors, CommandService, CommandServiceClass, CookiesHelper, CssContainerHelper, CssPropertiesBuilder, CssPropertiesHelper, CssSizerHelper, DateHelper, DelimiterCommand, DelimiterCommandDefault, EnumHelper, EventCommand, EventCommandKey, FilterFunctionDescriptors, FilterPropertyHelper, FunctionHelper, GroupFilterFunctionsArray, GroupFilterFunctionsEnum, GroupFilterFunctionsNumber, GroupFilterFunctionsString, HumanizerByteSize, HumanizerDateTime, HumanizerNumber, HumanizerPerson, HumanizerString, InteractivityBackgroundLogic, InteractivityBorderLogic, InteractivityLogic, InteractivityTextLogic, NavigationCommand, NumberHelper, ObjectHelper, ObjectInfo, OptionHelper, PathHelper, PropertyTypeDescriptors, RandomHelper, RequestHelper, Route, SortPropertyHelper, StringHelper, TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexWhite, TColorVariantNames, TControlPaddings, TControlSizes, TCssBorderStyles, TIconPlacements, TShadowElevations, TTextEffects, TThemeColors, TThemeModes, Theme, ThemeColorOptions, ThemeColorPalettes, ThemeColorVariantHelper, ThemeColorVariants, ThemeConstant, ThemeModeOptions, ThemePaletteHelper, ValidationResultSuccess, ValidationSuccess, Vector2, Vector3, XMath, checkOfColorVariantName, checkOfConstantable, checkOfEditable, checkOfGrouping, checkOfResult, checkOfThemeColor, hasBorderProperties, hasBorderProps, instanceOfConstantable, instanceOfEditable, instanceOfGrouping, instanceOfResult, localizationCore, sleep };

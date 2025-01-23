@@ -1,4 +1,4 @@
-export { TControlPaddings, type TControlPadding } from './ControlPadding';
+export { TControlPaddings, type TControlPadding, type TControlPaddingOffset } from './ControlPadding';
 export { TControlSizes, type TControlSize } from './ControlSize';
 export {
   TCssBorderStyles,

@@ -37,7 +37,8 @@ export class ThemeColorVariantHelper
    */
   public static create(color: TThemeColor, colorVariant: TColorVariantName): TThemeColorVariant
   {
-    return `${color}${StringHelper.capitalizeFirstLetter(colorVariant ?? 'main')}` as TThemeColorVariant;
+    if(colorVariant == 'main') return color as TThemeColorVariant;
+    return `${color}${StringHelper.capitalizeFirstLetter(colorVariant)}` as TThemeColorVariant;
   }
 
   /**
@@ -49,6 +50,8 @@ export class ThemeColorVariantHelper
   {
     if (typeof color == 'string')
     {
+      if(checkOfThemeColor(color)) return { themeColor: color, colorVariant: 'main' }
+
       for (let index = color.length - 1; index >= 0; index--)
       {
         const c = color[index];
